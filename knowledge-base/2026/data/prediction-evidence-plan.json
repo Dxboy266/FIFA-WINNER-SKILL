@@ -1,0 +1,403 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-10T00:00:00+08:00",
+  "mode": "worldcup-prediction-evidence-plan",
+  "status": "written",
+  "plan_path": "data/editions/2026/prediction-evidence-plan.json",
+  "markdown_path": "wiki/体育/世界杯/2026/synthesis/prediction-evidence-plan.md",
+  "summary": {
+    "requirements": 10,
+    "complete": 1,
+    "partial": 3,
+    "blocked": 6,
+    "optional": 2
+  },
+  "items": [
+    {
+      "evidence_id": "official_fixtures",
+      "name": "官方赛程和比赛事实",
+      "why_needed": "确定 match_id、开球时间、场馆、阶段、对阵和每天可预测比赛。",
+      "required": true,
+      "source_ids": [
+        "fifa-match-schedule"
+      ],
+      "minimum_status_for_prediction": "partial",
+      "confidence_impact": "missing_or_placeholder_fixtures_block_daily_prediction_for_real_matches",
+      "status": "partial",
+      "current_counts": {
+        "matches": 104,
+        "matches_with_kickoff": 0
+      },
+      "blockers": [
+        "fixture_schedule_not_imported"
+      ],
+      "artifacts": [
+        "data/editions/2026/match-ledger.json",
+        "raw/体育/世界杯/2026/snapshots/fifa-match-schedule-2026-06-09.bin"
+      ],
+      "source_refs": [
+        {
+          "source_id": "fifa-match-schedule",
+          "tier": "T0",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums",
+          "allowed_use": "metadata_and_short_summary"
+        }
+      ]
+    },
+    {
+      "evidence_id": "official_rosters",
+      "name": "官方球队阵容",
+      "why_needed": "确认 48 队大名单、教练、球员位置、俱乐部和基础身份，支撑阵容深度判断。",
+      "required": true,
+      "source_ids": [
+        "fifa-squad-lists-pdf",
+        "national-fa-official-sites"
+      ],
+      "minimum_status_for_prediction": "complete",
+      "confidence_impact": "missing_rosters_cap_confidence_at_low",
+      "status": "complete",
+      "current_counts": {
+        "teams": 48,
+        "players": 1248,
+        "coaches": 48
+      },
+      "blockers": [],
+      "artifacts": [
+        "data/editions/2026/rosters/fifa-squad-lists.json"
+      ],
+      "source_refs": [
+        {
+          "source_id": "fifa-squad-lists-pdf",
+          "tier": "T0",
+          "url": "https://fdp.fifa.org/assetspublic/ce281/pdf/SquadLists-English.pdf",
+          "allowed_use": "metadata_and_short_summary"
+        },
+        {
+          "source_id": "national-fa-official-sites",
+          "tier": "T0",
+          "url": "",
+          "allowed_use": "metadata_and_short_summary"
+        }
+      ]
+    },
+    {
+      "evidence_id": "fifa_rankings",
+      "name": "FIFA 男足排名",
+      "why_needed": "提供跨队伍强弱基线，不能单独决定胜负，但影响数据模型基础分。",
+      "required": true,
+      "source_ids": [
+        "fifa-men-ranking"
+      ],
+      "minimum_status_for_prediction": "partial",
+      "confidence_impact": "missing_rankings_cap_confidence_at_low",
+      "status": "partial",
+      "current_counts": {
+        "ranked_teams": 0
+      },
+      "blockers": [
+        "ranking_snapshot_not_parsed"
+      ],
+      "artifacts": [
+        "raw/体育/世界杯/2026/snapshots/fifa-men-ranking-2026-06-09.bin"
+      ],
+      "source_refs": [
+        {
+          "source_id": "fifa-men-ranking",
+          "tier": "T0",
+          "url": "https://inside.fifa.com/fifa-world-ranking/men",
+          "allowed_use": "metadata_and_short_summary"
+        }
+      ]
+    },
+    {
+      "evidence_id": "historical_worldcup_results",
+      "name": "历届世界杯成绩和比赛结果",
+      "why_needed": "补足国家队世界杯经验、淘汰赛韧性、进球/失球历史基线。",
+      "required": true,
+      "source_ids": [
+        "openfootball",
+        "openfootball-worldcup-json",
+        "wikipedia"
+      ],
+      "minimum_status_for_prediction": "partial",
+      "confidence_impact": "missing_history_reduces_knockout_context",
+      "status": "blocked",
+      "current_counts": {
+        "snapshots": 0
+      },
+      "blockers": [
+        "historical_results_snapshot_missing",
+        "historical_results_fetch_failed",
+        "source_fetch_failed"
+      ],
+      "artifacts": [],
+      "source_refs": [
+        {
+          "source_id": "openfootball",
+          "tier": "T1",
+          "url": "https://github.com/openfootball/worldcup",
+          "allowed_use": "open_structured_data_when_license_checked"
+        },
+        {
+          "source_id": "openfootball-worldcup-json",
+          "tier": "T1",
+          "url": "https://api.github.com/repos/openfootball/worldcup.json/contents",
+          "allowed_use": "open_structured_data_when_license_checked"
+        },
+        {
+          "source_id": "wikipedia",
+          "tier": "T1",
+          "url": "https://www.wikipedia.org/",
+          "allowed_use": "summary_and_url_only"
+        }
+      ]
+    },
+    {
+      "evidence_id": "recent_form_results",
+      "name": "近期国家队战绩",
+      "why_needed": "反映近 6-12 个月状态、进攻/防守趋势和教练体系稳定性。",
+      "required": true,
+      "source_ids": [
+        "football-data-org",
+        "api-football",
+        "worldfootball-elo",
+        "national-fa-official-sites"
+      ],
+      "minimum_status_for_prediction": "partial",
+      "confidence_impact": "missing_recent_form_cap_confidence_at_low_or_medium",
+      "status": "blocked",
+      "current_counts": {
+        "matches": 0
+      },
+      "blockers": [
+        "recent_form_results_missing"
+      ],
+      "artifacts": [],
+      "source_refs": [
+        {
+          "source_id": "football-data-org",
+          "tier": "T2",
+          "url": "https://www.football-data.org/documentation/quickstart",
+          "allowed_use": "api_metadata_with_key_limit_license_record"
+        },
+        {
+          "source_id": "api-football",
+          "tier": "T2",
+          "url": "https://www.api-football.com/documentation-v3",
+          "allowed_use": "api_metadata_with_key_limit_license_record"
+        },
+        {
+          "source_id": "worldfootball-elo",
+          "tier": "T1",
+          "url": "https://www.eloratings.net/",
+          "allowed_use": "metadata_and_short_summary_with_terms_check"
+        },
+        {
+          "source_id": "national-fa-official-sites",
+          "tier": "T0",
+          "url": "",
+          "allowed_use": "metadata_and_short_summary"
+        }
+      ]
+    },
+    {
+      "evidence_id": "squad_depth_position_balance",
+      "name": "阵容深度和位置平衡",
+      "why_needed": "根据官方大名单统计门将、后卫、中场、前锋结构，识别板凳深度和位置短板。",
+      "required": true,
+      "source_ids": [
+        "fifa-squad-lists-pdf"
+      ],
+      "minimum_status_for_prediction": "partial",
+      "confidence_impact": "missing_depth_features_keep_model_at_seed_baseline",
+      "status": "partial",
+      "current_counts": {
+        "teams": 48,
+        "players": 1248,
+        "coaches": 48
+      },
+      "blockers": [
+        "position_depth_features_not_compiled"
+      ],
+      "artifacts": [
+        "data/editions/2026/rosters/fifa-squad-lists.json"
+      ],
+      "source_refs": [
+        {
+          "source_id": "fifa-squad-lists-pdf",
+          "tier": "T0",
+          "url": "https://fdp.fifa.org/assetspublic/ce281/pdf/SquadLists-English.pdf",
+          "allowed_use": "metadata_and_short_summary"
+        }
+      ]
+    },
+    {
+      "evidence_id": "injury_availability",
+      "name": "伤停、停赛和赛前可用性",
+      "why_needed": "关键球员缺阵会显著影响胜平负和总进球倾向，必须赛前每日更新。",
+      "required": true,
+      "source_ids": [
+        "national-fa-official-sites",
+        "espn-soccer",
+        "fbref",
+        "statbunker"
+      ],
+      "minimum_status_for_prediction": "partial",
+      "confidence_impact": "missing_availability_cap_confidence_at_low",
+      "status": "blocked",
+      "current_counts": {
+        "items": 0
+      },
+      "blockers": [
+        "daily_injury_availability_check_missing"
+      ],
+      "artifacts": [],
+      "source_refs": [
+        {
+          "source_id": "national-fa-official-sites",
+          "tier": "T0",
+          "url": "",
+          "allowed_use": "metadata_and_short_summary"
+        },
+        {
+          "source_id": "espn-soccer",
+          "tier": "T3",
+          "url": "https://www.espn.com/soccer/",
+          "allowed_use": "reference_only_no_unauthorized_bulk_scrape"
+        },
+        {
+          "source_id": "fbref",
+          "tier": "T3",
+          "url": "https://fbref.com/",
+          "allowed_use": "reference_only_no_unauthorized_bulk_scrape"
+        },
+        {
+          "source_id": "statbunker",
+          "tier": "T3",
+          "url": "https://www.statbunker.com/",
+          "allowed_use": "reference_only_no_unauthorized_bulk_scrape"
+        }
+      ]
+    },
+    {
+      "evidence_id": "venue_rest_travel",
+      "name": "场馆、休息天数和旅行因素",
+      "why_needed": "根据赛程计算休息间隔、跨城市旅行和主办国/近主场因素。",
+      "required": true,
+      "source_ids": [
+        "fifa-match-schedule"
+      ],
+      "minimum_status_for_prediction": "partial",
+      "confidence_impact": "missing_rest_travel_reduces_total_goals_confidence",
+      "status": "blocked",
+      "current_counts": {
+        "matches": 104,
+        "matches_with_kickoff": 0
+      },
+      "blockers": [
+        "fixture_schedule_required_for_rest_travel",
+        "fixture_schedule_not_imported"
+      ],
+      "artifacts": [
+        "data/editions/2026/match-ledger.json",
+        "raw/体育/世界杯/2026/snapshots/fifa-match-schedule-2026-06-09.bin"
+      ],
+      "source_refs": [
+        {
+          "source_id": "fifa-match-schedule",
+          "tier": "T0",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums",
+          "allowed_use": "metadata_and_short_summary"
+        }
+      ]
+    },
+    {
+      "evidence_id": "head_to_head",
+      "name": "交锋历史",
+      "why_needed": "作为低权重参考，帮助解释风格克制和历史心理因素。",
+      "required": false,
+      "source_ids": [
+        "openfootball",
+        "openfootball-worldcup-json",
+        "wikipedia"
+      ],
+      "minimum_status_for_prediction": "optional",
+      "confidence_impact": "missing_h2h_does_not_block_prediction",
+      "status": "blocked",
+      "current_counts": {
+        "items": 0
+      },
+      "blockers": [
+        "head_to_head_dataset_missing"
+      ],
+      "artifacts": [],
+      "source_refs": [
+        {
+          "source_id": "openfootball",
+          "tier": "T1",
+          "url": "https://github.com/openfootball/worldcup",
+          "allowed_use": "open_structured_data_when_license_checked"
+        },
+        {
+          "source_id": "openfootball-worldcup-json",
+          "tier": "T1",
+          "url": "https://api.github.com/repos/openfootball/worldcup.json/contents",
+          "allowed_use": "open_structured_data_when_license_checked"
+        },
+        {
+          "source_id": "wikipedia",
+          "tier": "T1",
+          "url": "https://www.wikipedia.org/",
+          "allowed_use": "summary_and_url_only"
+        }
+      ]
+    },
+    {
+      "evidence_id": "player_identity_enrichment",
+      "name": "球员身份和别名补强",
+      "why_needed": "用 Wikidata/Wikipedia 对齐球员别名、出生日期、国家队/俱乐部关系，方便后续深档和海报。",
+      "required": false,
+      "source_ids": [
+        "wikidata-sparql",
+        "wikipedia"
+      ],
+      "minimum_status_for_prediction": "optional",
+      "confidence_impact": "missing_identity_enrichment_does_not_block_prediction_but_limits_player_storytelling",
+      "status": "blocked",
+      "current_counts": {
+        "players": 0
+      },
+      "blockers": [
+        "wikidata_identity_enrichment_missing"
+      ],
+      "artifacts": [],
+      "source_refs": [
+        {
+          "source_id": "wikidata-sparql",
+          "tier": "T1",
+          "url": "https://query.wikidata.org/",
+          "allowed_use": "structured_open_metadata"
+        },
+        {
+          "source_id": "wikipedia",
+          "tier": "T1",
+          "url": "https://www.wikipedia.org/",
+          "allowed_use": "summary_and_url_only"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    "T0 official sources drive fixtures, rosters, rankings and match facts.",
+    "T1 open structured sources can enrich identity and historical context after license check.",
+    "T2 API sources require API key, rate limit and license records before use.",
+    "T3 sources are reference-only and must not be bulk-scraped without permission.",
+    "Missing injury, lineup, recent-form or fixture evidence downgrades prediction confidence."
+  ],
+  "safety_invariants": [
+    "prediction_evidence_plan_marks_missing_sources_partial_or_blocked",
+    "prediction_evidence_plan_does_not_fetch_sources",
+    "source_refs_include_tier_url_and_allowed_use"
+  ]
+}
