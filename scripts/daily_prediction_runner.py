@@ -122,7 +122,9 @@ def run_daily_predictions(
         "safety_invariants": [
             "predictions_only_for_not_started_matches",
             "existing_daily_reports_are_locked_not_overwritten",
-            "divination_overlay_weight_lte_0_15",
+            "data_model_weight_is_0_60",
+            "tianji_overlay_weight_is_0_40",
+            "tianji_calculated_from_venue_local_time_when_known",
             "no_betting_amounts_or_guaranteed_win_language",
         ],
     }

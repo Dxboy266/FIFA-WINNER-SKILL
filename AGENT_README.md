@@ -65,7 +65,7 @@ ${CODEX_HOME:-$HOME/.codex}/skills/fifa-winner-skill
 
 After install, Codex should read:
 
-- `SKILL.md`
+- `skills/fifa-winner-skill/SKILL.md`
 - `AGENT_README.md`
 - `knowledge-base/agent/AGENT_CARD.json`
 
@@ -78,7 +78,7 @@ Claude Code or another runtime can use this repo directly as a CLI tool. The rec
 3. `knowledge-base/agent/TOOL_CATALOG.json`
 4. `knowledge-base/agent/RUNBOOK.md`
 5. `knowledge-base/agent/GUARDRAILS.md`
-6. `SKILL.md`
+6. `skills/fifa-winner-skill/SKILL.md`
 7. `schema/daily-prediction-report.schema.json`
 
 ## Agent Design Alignment
@@ -105,10 +105,11 @@ Required caller behavior:
 1. Check whether `knowledge-base/<edition>/data/match-ledger.json` exists.
 2. If missing, initialize the edition.
 3. Check source readiness and prediction evidence status before making strong claims.
-4. Add or refresh daily evidence before daily predictions when possible.
-5. Generate predictions only for matches that have not started.
-6. Treat pre-match reports as locked after generation.
-7. Evaluate only after final scores are recorded.
+4. Sync external reference-source alignment when the caller asks whether this agent has been compared with other World Cup agents.
+5. Add or refresh daily evidence before daily predictions when possible.
+6. Generate predictions only for matches that have not started.
+7. Treat pre-match reports as locked after generation.
+8. Evaluate only after final scores are recorded.
 
 ## Tool Resource Prompt Discovery
 
@@ -176,14 +177,23 @@ Main outputs:
 ```bash
 python scripts/worldcup_source_readiness_auditor.py write --edition 2026 --root .
 python scripts/worldcup_prediction_evidence_planner.py write --edition 2026 --root .
+python scripts/sync_external_reference_sources.py write --edition 2026 --root .
 ```
 
 Read:
 
 - `knowledge-base/2026/data/source-readiness.json`
 - `knowledge-base/2026/data/prediction-evidence-plan.json`
+- `knowledge-base/2026/data/external-reference-sources.json`
 
 If evidence is `partial` or `blocked`, keep that uncertainty visible in the final answer.
+
+External reference alignment currently covers:
+
+- `ZhangCraigXG/work-cup-2026`: useful as a coach-view skill workflow and Chinese source-lead map for schedule, group, team, player-status and rules checks. Treat it as T3 reference/design material, not an official match-fact source.
+- `Crain99/worldcut-2026`: useful for Sporttery fixed-bonus source discovery, SQLite cache patterns, odds snapshots, prediction-history storage, and multi-tool intelligence design. Treat its static predictions as cross-check material only.
+
+Do not import third-party project code into this agent. Register source leads, verify terms, and snapshot or fetch through this repo's own tools.
 
 ### 3. Add Matchday Evidence
 
@@ -226,12 +236,25 @@ knowledge-base/2026/data/reports/daily-predictions/<date>.json
 Important fields for other agents:
 
 - `predictions[].prediction`
+- `predictions[].prediction.scoreline_distribution`
+- `predictions[].prediction.clean_sheet_probability`
+- `predictions[].prediction.venue_adaptation_context`
+- `predictions[].prediction.result_confidence`
+- `predictions[].prediction.score_confidence`
+- `predictions[].prediction.total_goals_confidence`
+- `predictions[].venue_adaptation_context`
 - `predictions[].data_score`
 - `predictions[].analysis_layers`
 - `predictions[].scenario_analysis`
 - `predictions[].decision_audit`
 - `predictions[].play_card`
 - `predictions[].disclaimer`
+
+Prediction reading rules:
+
+- Result direction confidence is not exact-score confidence.
+- Summarize `scoreline_distribution` and `clean_sheet_probability` instead of treating `prediction.score` as certain.
+- Treat `venue_adaptation_context` as static baseline evidence, not live weather or confirmed travel routing.
 
 ### 5. Build A Human Report Prompt
 

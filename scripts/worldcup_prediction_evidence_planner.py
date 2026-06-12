@@ -240,6 +240,52 @@ def derive_status(root: Path, edition: str, evidence_id: str) -> dict:
         return file_backed_status(root, edition, "evidence/head-to-head.json", "items", "head_to_head_dataset_missing")
     if evidence_id == "player_identity_enrichment":
         return file_backed_status(root, edition, "evidence/player-identity-enrichment.json", "players", "wikidata_identity_enrichment_missing")
+    if evidence_id == "market_odds_signal":
+        daily_dir = edition_data_root(root, edition) / "daily-evidence"
+        odds_files = []
+        if daily_dir.exists():
+            for path in sorted(daily_dir.glob("*.json")):
+                try:
+                    payload = load_json(path)
+                except json.JSONDecodeError:
+                    continue
+                if payload.get("odds") or payload.get("market_signals") or payload.get("source_refs"):
+                    odds_files.append(path)
+        reference_report = edition_data_root(root, edition) / "external-reference-sources.json"
+        artifacts = [str(path) for path in odds_files[-5:]]
+        if reference_report.exists():
+            artifacts.append(str(reference_report))
+        if odds_files:
+            return {
+                "status": "partial",
+                "current_counts": {"daily_evidence_files_with_market_refs": len(odds_files)},
+                "blockers": ["live_market_feed_not_required_for_prediction_but_should_be_refreshed_near_kickoff"],
+                "artifacts": artifacts,
+            }
+        return {
+            "status": "blocked",
+            "current_counts": {"daily_evidence_files_with_market_refs": 0},
+            "blockers": ["market_odds_snapshot_missing"],
+            "artifacts": artifacts,
+        }
+    if evidence_id == "reference_agent_source_alignment":
+        path = edition_data_root(root, edition) / "external-reference-sources.json"
+        if not path.exists():
+            return {
+                "status": "blocked",
+                "current_counts": {"reference_projects": 0},
+                "blockers": ["external_reference_source_sync_missing"],
+                "artifacts": [],
+            }
+        payload = load_json(path)
+        projects = payload.get("projects", [])
+        usable = [item for item in projects if item.get("status") == "checked"]
+        return {
+            "status": "complete" if len(usable) >= 2 else "partial",
+            "current_counts": {"reference_projects": len(projects), "checked_reference_projects": len(usable)},
+            "blockers": [] if len(usable) >= 2 else ["not_all_reference_projects_checked"],
+            "artifacts": [str(path)],
+        }
     return {"status": "blocked", "current_counts": {}, "blockers": ["unknown_evidence_requirement"], "artifacts": []}
 
 

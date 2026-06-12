@@ -30,11 +30,37 @@ SHICHEN_NAMES = [
 ]
 
 
+VENUE_TIMEZONES = {
+    "mexico city": "America/Mexico_City",
+    "zapopan": "America/Mexico_City",
+    "guadalupe": "America/Monterrey",
+    "toronto": "America/Toronto",
+    "vancouver": "America/Vancouver",
+    "seattle": "America/Los_Angeles",
+    "santa clara": "America/Los_Angeles",
+    "inglewood": "America/Los_Angeles",
+    "atlanta": "America/New_York",
+    "east rutherford": "America/New_York",
+    "foxborough": "America/New_York",
+    "philadelphia": "America/New_York",
+    "miami gardens": "America/New_York",
+    "houston": "America/Chicago",
+    "arlington": "America/Chicago",
+    "kansas city": "America/Chicago",
+}
+
+
+def timezone_for_venue(venue: str | None) -> str:
+    haystack = str(venue or "").lower()
+    for key, tz_name in VENUE_TIMEZONES.items():
+        if key in haystack:
+            return tz_name
+    return "Asia/Shanghai"
+
+
 def get_lunar_date_2026(dt: datetime) -> tuple[int, int]:
     """Convert solar datetime in June/July 2026 to lunar (month, day)."""
-    # Convert input to local date in Asia/Shanghai
-    loc_dt = dt.astimezone(ZoneInfo("Asia/Shanghai"))
-    d = loc_dt.date()
+    d = dt.date()
 
     # 2026-06-01 is Month 4, Day 16 (四月十六)
     ref = date(2026, 6, 1)
@@ -58,7 +84,7 @@ def get_shichen_idx(hour: int) -> int:
     return (hour + 1) // 2 % 12
 
 
-def compute_tianji_overlay(kickoff_str: str, match_id: str) -> dict:
+def compute_tianji_overlay(kickoff_str: str, match_id: str, venue: str | None = None) -> dict:
     """Compute the Tianji astrology overlay for a match.
 
     Args:
@@ -73,8 +99,8 @@ def compute_tianji_overlay(kickoff_str: str, match_id: str) -> dict:
     except Exception:
         dt = datetime.now(ZoneInfo("Asia/Shanghai"))
 
-    # Convert to local time zone (Asia/Shanghai)
-    dt_local = dt.astimezone(ZoneInfo("Asia/Shanghai"))
+    calculation_timezone = timezone_for_venue(venue)
+    dt_local = dt.astimezone(ZoneInfo(calculation_timezone))
     lunar_month, lunar_day = get_lunar_date_2026(dt_local)
     shichen_idx = get_shichen_idx(dt_local.hour)
     shichen_name = SHICHEN_NAMES[shichen_idx]
@@ -169,6 +195,8 @@ def compute_tianji_overlay(kickoff_str: str, match_id: str) -> dict:
         "away_modifier": away_mod,
         "interpretation": interpretation,
         "has_physical_conflict": has_conflict,
+        "calculation_timezone": calculation_timezone,
+        "local_kickoff_at": dt_local.isoformat(),
     }
 
 

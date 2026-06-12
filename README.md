@@ -66,7 +66,7 @@ graph TD
 ### 2. 《天纪》排盘气运术
 结合国学经典《天纪》的思想，给娱乐预测注入趣味玄学：
 *   **命迁移对照**：将主客队分别作为命宫与迁移宫，根据开球时辰排出紫微命盘。
-*   **气运微调**：紫微、天府、太阳等吉星入命宫，则增加主队运势；若化忌、擎羊、陀罗等凶煞星照会，则扣减运势并提示粗野对抗风险。玄学权重严格控制在 **15%** 以内，仅作为趣味娱乐微调，绝不主导结果。
+*   **天纪娱乐层**：紫微、天府、太阳等吉星入命宫，则增加主队运势；若化忌、擎羊、陀罗等凶煞星照会，则扣减运势并提示粗野对抗风险。当前发布契约为数据模型 **60%**、天纪娱乐层 **40%**，天纪只做娱乐叙事，不能覆盖硬数据。
 
 ---
 
@@ -87,7 +87,7 @@ graph TD
 
 所有世界杯届次的数据与资料均被整理存放在统一的知识库路径中，便于 Agent 极速读取与理解：
 
-*   `knowledge-base/agent/`：包含 Agent 的 [ARCHITECTURE.md](knowledge-base/agent/ARCHITECTURE.md) 设计架构、[SKILL.md](knowledge-base/agent/SKILL.md) 蒸馏特征、[AGENT_CARD.json](knowledge-base/agent/AGENT_CARD.json) 能力卡、[TOOL_CATALOG.json](knowledge-base/agent/TOOL_CATALOG.json) 工具目录，以及 runtime agent 可读的 [RUNBOOK.md](knowledge-base/agent/RUNBOOK.md)、[GUARDRAILS.md](knowledge-base/agent/GUARDRAILS.md)、[HANDOFFS.md](knowledge-base/agent/HANDOFFS.md)、[TRACE_EVENTS.md](knowledge-base/agent/TRACE_EVENTS.md)。
+*   `knowledge-base/agent/`：包含 Agent 的 [ARCHITECTURE.md](knowledge-base/agent/ARCHITECTURE.md) 设计架构、[AGENT_CARD.json](knowledge-base/agent/AGENT_CARD.json) 能力卡、[TOOL_CATALOG.json](knowledge-base/agent/TOOL_CATALOG.json) 工具目录，以及 runtime agent 可读的 [RUNBOOK.md](knowledge-base/agent/RUNBOOK.md)、[GUARDRAILS.md](knowledge-base/agent/GUARDRAILS.md)、[HANDOFFS.md](knowledge-base/agent/HANDOFFS.md)、[TRACE_EVENTS.md](knowledge-base/agent/TRACE_EVENTS.md)。Codex skill 入口在 [skills/fifa-winner-skill/SKILL.md](skills/fifa-winner-skill/SKILL.md)。
 *   `knowledge-base/<edition>/`：按届次隔离（如 `2026/`），包含：
     *   `raw/`：最原始的数据（FIFA 官方 PDF、Fixtures 抓取快照）。
     *   `wiki/`：整理后的世界知识主图谱与赛前合成信息。
@@ -151,12 +151,24 @@ python3 scripts/octopus_paul_agent.py predict --edition 2026 --all
 
 在每次代码提交或发布前，可通过以下工具确保代码规范与 100% 单元测试通过：
 ```bash
+# 记录外部 Agent / 数据源参考对齐（ZhangCraigXG/work-cup-2026、Crain99/worldcut-2026）
+python3 scripts/sync_external_reference_sources.py write --edition 2026 --root .
+
 # 运行自动化审计脚本
 python3 scripts/worldcup_github_readiness_auditor.py write --edition 2026 --root .
 
 # 运行单元测试套件
 python3 -m unittest tests/test_worldcup_predictor_system.py
 ```
+
+### 外部参考源对齐
+
+本项目已将两个指定参考项目登记为 T3 参考/设计源，而不是官方事实源：
+
+*   **[ZhangCraigXG/work-cup-2026](https://github.com/ZhangCraigXG/work-cup-2026)**：参考其教练视角分析工作流、中文赛程/小组/球队/球员状态入口，以及 Skill 文件组织方式。
+*   **[Crain99/worldcut-2026](https://github.com/Crain99/worldcut-2026)**：参考其体彩固定奖金源线索、SQLite 缓存/历史记录模式、盘口快照与多工具情报链设计。
+
+执行 `scripts/sync_external_reference_sources.py` 后会生成 `knowledge-base/2026/data/external-reference-sources.json` 和对应 Wiki 摘要，方便 Codex、Claude Code 等 runtime agent 复查本项目到底对齐了哪些外部设计。
 
 ---
 
@@ -184,6 +196,8 @@ python3 -m unittest tests/test_worldcup_predictor_system.py
 
 *   **[Nuwa skill](https://github.com/alchaincyf/nuwa-skill)**：提供了本项目的核心技能框架设计与底层结构启发。
 *   **[open-source football data](https://github.com/openfootball)**：提供了丰富的开源世界杯历史赛程与基础足球数据。
+*   **[ZhangCraigXG/work-cup-2026](https://github.com/ZhangCraigXG/work-cup-2026)**：提供了教练视角球队分析、中文赛程/球队/球员状态源入口与 Skill 组织方式参考。
+*   **[Crain99/worldcut-2026](https://github.com/Crain99/worldcut-2026)**：提供了体彩固定奖金源、SQLite 缓存、盘口快照和多工具情报链的实现参考。
 *   **[LINUX DO 社区](https://linux.do/)**：提供了关于 AI Skill 趣味性与可玩性的灵感碰撞。
 *   **[天纪算法 (Tianji)](https://github.com/Renhuai123/ziwei-doushu)**：提供了开球时辰紫微斗数排盘、气运修正与物理羊陀冲突判定（黄红牌预警）的算法创意源泉。
 *   **[Hermes Agent (Nous Research)](https://github.com/NousResearch/hermes-agent)**：提供了自改进闭环学习、自主 ReAct 任务拆解与工具链自动调用的架构规划参考。

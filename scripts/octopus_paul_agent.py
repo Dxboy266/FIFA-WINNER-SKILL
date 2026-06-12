@@ -40,6 +40,7 @@ from prediction_scoring_model import (  # noqa: E402
     _build_squad_index,
     _build_evidence_index,
     predict_match,
+    load_hyperparameters as load_scoring_hyperparameters,
 )
 
 
@@ -131,6 +132,7 @@ def run_custom_predictions(
     predict_all: bool = False,
     now: str | None = None,
 ) -> dict:
+    load_scoring_hyperparameters(root, edition)
     generated_at = iso_now(now)
     now_dt = now_datetime(now)
     ed_root = edition_data_root(root, edition)

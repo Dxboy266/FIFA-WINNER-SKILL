@@ -97,7 +97,6 @@ def export_standalone(*, root: Path, edition: str, output: Path, now: str | None
         ".github",
         "knowledge-base/agent",
         "AGENT_README.md",
-        "SKILL.md",
         "README.md",
         "TODO.md",
         "LICENSE",

@@ -74,6 +74,23 @@
       "safety_profile": "evidence_boundary"
     },
     {
+      "id": "sync_external_reference_sources",
+      "kind": "cli_tool",
+      "description": "Record alignment with ZhangCraigXG/work-cup-2026 and Crain99/worldcut-2026, including source leads, HEAD commits, usable patterns, and limitations.",
+      "command_template": "python scripts/sync_external_reference_sources.py write --edition <edition> --root .",
+      "inputs": ["edition", "root", "now"],
+      "outputs": [
+        "knowledge-base/<edition>/data/external-reference-sources.json",
+        "knowledge-base/<edition>/wiki/synthesis/external-reference-sources.md"
+      ],
+      "reads": [
+        "https://github.com/ZhangCraigXG/work-cup-2026",
+        "https://github.com/Crain99/worldcut-2026"
+      ],
+      "idempotency": "safe_to_rerun",
+      "safety_profile": "reference_only_no_code_import"
+    },
+    {
       "id": "collect_daily_evidence",
       "kind": "cli_tool",
       "description": "Initialize or enrich the matchday evidence file with odds, news, injuries, referees, and manual notes.",
@@ -107,6 +124,13 @@
       ],
       "important_fields": [
         "predictions[].prediction",
+        "predictions[].prediction.scoreline_distribution",
+        "predictions[].prediction.clean_sheet_probability",
+        "predictions[].prediction.venue_adaptation_context",
+        "predictions[].prediction.result_confidence",
+        "predictions[].prediction.score_confidence",
+        "predictions[].prediction.total_goals_confidence",
+        "predictions[].venue_adaptation_context",
         "predictions[].analysis_layers",
         "predictions[].scenario_analysis",
         "predictions[].decision_audit",
@@ -246,6 +270,12 @@
       "kind": "json",
       "path": "knowledge-base/<edition>/data/reports/daily-predictions/<YYYY-MM-DD>.json",
       "description": "Locked pre-match prediction report with multi-layer analysis and safety disclaimer."
+    },
+    {
+      "id": "external_reference_sources",
+      "kind": "json",
+      "path": "knowledge-base/<edition>/data/external-reference-sources.json",
+      "description": "Reference-agent alignment report for ZhangCraigXG/work-cup-2026, Crain99/worldcut-2026, adopted source leads, and limitations."
     },
     {
       "id": "sqlite_query_index",

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Explainable prediction scoring model for World Cup matches.
 
-Computes a data-driven score (85%) combined with a deterministic
-divination overlay (15%) for each upcoming match on a given date.
+Computes a data-driven score (60%) combined with a deterministic
+Tianji entertainment overlay (40%) for each upcoming match on a given date.
 """
 
 from __future__ import annotations
@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -46,18 +47,97 @@ W_HISTORICAL_PROXY = 0.20
 W_REST_TRAVEL = 0.15
 W_EVIDENCE_COMPLETENESS = 0.15
 
+
+def load_hyperparameters(root: Path, edition: str) -> None:
+    """Load hyperparameters from JSON and update global weight values."""
+    global W_RANKING_STRENGTH, W_SQUAD_DEPTH, W_HISTORICAL_PROXY, W_REST_TRAVEL, W_EVIDENCE_COMPLETENESS
+    global DATA_WEIGHT, DIVINATION_WEIGHT
+    from worldcup_core import edition_data_root, load_json
+    import worldcup_core
+
+    # First trigger worldcup_core reload
+    worldcup_core.load_hyperparameters(root, edition)
+    DATA_WEIGHT = worldcup_core.DATA_WEIGHT
+    DIVINATION_WEIGHT = worldcup_core.DIVINATION_WEIGHT
+
+    path = edition_data_root(root, edition) / "model-hyperparameters.json"
+    if path.exists():
+        try:
+            data = load_json(path, {})
+            comp = data.get("component_weights", {})
+            if "ranking_strength" in comp:
+                W_RANKING_STRENGTH = float(comp["ranking_strength"])
+            if "squad_depth" in comp:
+                W_SQUAD_DEPTH = float(comp["squad_depth"])
+            if "historical_proxy" in comp:
+                W_HISTORICAL_PROXY = float(comp["historical_proxy"])
+            if "rest_travel" in comp:
+                W_REST_TRAVEL = float(comp["rest_travel"])
+            if "evidence_completeness" in comp:
+                W_EVIDENCE_COMPLETENESS = float(comp["evidence_completeness"])
+        except Exception as e:
+            print(f"Warning: Failed to load hyperparameters from {path}: {e}", file=sys.stderr)
+
 # Ranking points range for normalisation (approximate FIFA men's range)
 _RANKING_POINTS_MIN = 1200.0
 _RANKING_POINTS_MAX = 1900.0
 
-# Maximum data_score before divination overlay
-_DATA_SCORE_CAP = 85.0
+# Maximum data_score before Tianji overlay
+_DATA_SCORE_CAP = 100.0
 
 # Maximum divination modifier (absolute value)
 _DIVINATION_MODIFIER_MAX = 3.0
 
 # Host nations for 2026 (home advantage bonus)
 _HOST_NATIONS_2026 = {"mex", "usa", "can"}
+
+_VENUE_CONTEXTS = {
+    "mexico city": {"city": "Mexico City", "country": "Mexico", "lat": 19.4326, "lon": -99.1332, "june_temp_c": 18.0, "altitude_m": 2240, "climate_profile": "high_altitude_mild"},
+    "zapopan": {"city": "Zapopan", "country": "Mexico", "lat": 20.6597, "lon": -103.3496, "june_temp_c": 23.0, "altitude_m": 1560, "climate_profile": "warm_highland"},
+    "guadalupe": {"city": "Guadalupe", "country": "Mexico", "lat": 25.6866, "lon": -100.3161, "june_temp_c": 28.0, "altitude_m": 540, "climate_profile": "hot_semidry"},
+    "toronto": {"city": "Toronto", "country": "Canada", "lat": 43.6532, "lon": -79.3832, "june_temp_c": 20.0, "altitude_m": 76, "climate_profile": "temperate_lakeside"},
+    "atlanta": {"city": "Atlanta", "country": "United States", "lat": 33.7490, "lon": -84.3880, "june_temp_c": 26.0, "altitude_m": 320, "climate_profile": "warm_humid"},
+    "santa clara": {"city": "Santa Clara", "country": "United States", "lat": 37.3541, "lon": -121.9552, "june_temp_c": 18.0, "altitude_m": 22, "climate_profile": "mild_marine"},
+    "inglewood": {"city": "Inglewood", "country": "United States", "lat": 33.9533, "lon": -118.3390, "june_temp_c": 20.0, "altitude_m": 40, "climate_profile": "mild_coastal"},
+    "vancouver": {"city": "Vancouver", "country": "Canada", "lat": 49.2827, "lon": -123.1207, "june_temp_c": 17.0, "altitude_m": 70, "climate_profile": "cool_marine"},
+    "seattle": {"city": "Seattle", "country": "United States", "lat": 47.6062, "lon": -122.3321, "june_temp_c": 17.0, "altitude_m": 52, "climate_profile": "cool_marine"},
+    "east rutherford": {"city": "East Rutherford", "country": "United States", "lat": 40.8339, "lon": -74.0971, "june_temp_c": 22.0, "altitude_m": 20, "climate_profile": "warm_temperate"},
+    "foxborough": {"city": "Foxborough", "country": "United States", "lat": 42.0654, "lon": -71.2478, "june_temp_c": 20.0, "altitude_m": 88, "climate_profile": "temperate"},
+    "philadelphia": {"city": "Philadelphia", "country": "United States", "lat": 39.9526, "lon": -75.1652, "june_temp_c": 24.0, "altitude_m": 12, "climate_profile": "warm_humid"},
+    "miami gardens": {"city": "Miami Gardens", "country": "United States", "lat": 25.9420, "lon": -80.2456, "june_temp_c": 28.5, "altitude_m": 2, "climate_profile": "hot_humid"},
+    "houston": {"city": "Houston", "country": "United States", "lat": 29.7604, "lon": -95.3698, "june_temp_c": 29.0, "altitude_m": 13, "climate_profile": "hot_humid"},
+    "arlington": {"city": "Arlington", "country": "United States", "lat": 32.7357, "lon": -97.1081, "june_temp_c": 29.0, "altitude_m": 184, "climate_profile": "hot_inland"},
+    "kansas city": {"city": "Kansas City", "country": "United States", "lat": 39.0997, "lon": -94.5786, "june_temp_c": 25.0, "altitude_m": 277, "climate_profile": "warm_inland"},
+}
+
+_TEAM_HOME_CONTEXTS = {
+    "arg": {"city": "Buenos Aires", "lat": -34.6037, "lon": -58.3816, "june_temp_c": 12.0, "altitude_m": 25, "climate_profile": "cool_temperate"},
+    "aus": {"city": "Sydney", "lat": -33.8688, "lon": 151.2093, "june_temp_c": 13.0, "altitude_m": 58, "climate_profile": "cool_coastal"},
+    "bel": {"city": "Brussels", "lat": 50.8503, "lon": 4.3517, "june_temp_c": 17.0, "altitude_m": 13, "climate_profile": "temperate_marine"},
+    "bih": {"city": "Sarajevo", "lat": 43.8563, "lon": 18.4131, "june_temp_c": 19.0, "altitude_m": 518, "climate_profile": "temperate_highland"},
+    "bra": {"city": "Rio de Janeiro", "lat": -22.9068, "lon": -43.1729, "june_temp_c": 22.0, "altitude_m": 5, "climate_profile": "warm_coastal"},
+    "can": {"city": "Toronto", "lat": 43.6532, "lon": -79.3832, "june_temp_c": 20.0, "altitude_m": 76, "climate_profile": "temperate_lakeside"},
+    "col": {"city": "Bogota", "lat": 4.7110, "lon": -74.0721, "june_temp_c": 14.0, "altitude_m": 2640, "climate_profile": "cool_high_altitude"},
+    "cze": {"city": "Prague", "lat": 50.0755, "lon": 14.4378, "june_temp_c": 18.0, "altitude_m": 200, "climate_profile": "temperate"},
+    "ecu": {"city": "Quito", "lat": -0.1807, "lon": -78.4678, "june_temp_c": 14.0, "altitude_m": 2850, "climate_profile": "cool_high_altitude"},
+    "egy": {"city": "Cairo", "lat": 30.0444, "lon": 31.2357, "june_temp_c": 28.0, "altitude_m": 23, "climate_profile": "hot_dry"},
+    "eng": {"city": "London", "lat": 51.5074, "lon": -0.1278, "june_temp_c": 17.0, "altitude_m": 11, "climate_profile": "temperate_marine"},
+    "esp": {"city": "Madrid", "lat": 40.4168, "lon": -3.7038, "june_temp_c": 24.0, "altitude_m": 667, "climate_profile": "warm_highland"},
+    "fra": {"city": "Paris", "lat": 48.8566, "lon": 2.3522, "june_temp_c": 19.0, "altitude_m": 35, "climate_profile": "temperate"},
+    "ger": {"city": "Berlin", "lat": 52.5200, "lon": 13.4050, "june_temp_c": 18.0, "altitude_m": 34, "climate_profile": "temperate"},
+    "gha": {"city": "Accra", "lat": 5.6037, "lon": -0.1870, "june_temp_c": 26.0, "altitude_m": 61, "climate_profile": "hot_humid"},
+    "irn": {"city": "Tehran", "lat": 35.6892, "lon": 51.3890, "june_temp_c": 28.0, "altitude_m": 1200, "climate_profile": "hot_highland"},
+    "jpn": {"city": "Tokyo", "lat": 35.6762, "lon": 139.6503, "june_temp_c": 22.0, "altitude_m": 40, "climate_profile": "warm_humid"},
+    "kor": {"city": "Seoul", "lat": 37.5665, "lon": 126.9780, "june_temp_c": 22.0, "altitude_m": 38, "climate_profile": "warm_humid"},
+    "mar": {"city": "Rabat", "lat": 34.0209, "lon": -6.8416, "june_temp_c": 22.0, "altitude_m": 75, "climate_profile": "warm_mediterranean"},
+    "mex": {"city": "Mexico City", "lat": 19.4326, "lon": -99.1332, "june_temp_c": 18.0, "altitude_m": 2240, "climate_profile": "high_altitude_mild"},
+    "ned": {"city": "Amsterdam", "lat": 52.3676, "lon": 4.9041, "june_temp_c": 16.0, "altitude_m": 2, "climate_profile": "temperate_marine"},
+    "por": {"city": "Lisbon", "lat": 38.7223, "lon": -9.1393, "june_temp_c": 21.0, "altitude_m": 2, "climate_profile": "warm_mediterranean"},
+    "rsa": {"city": "Johannesburg", "lat": -26.2041, "lon": 28.0473, "june_temp_c": 10.0, "altitude_m": 1753, "climate_profile": "cool_highland"},
+    "sui": {"city": "Bern", "lat": 46.9480, "lon": 7.4474, "june_temp_c": 17.0, "altitude_m": 540, "climate_profile": "temperate_highland"},
+    "uru": {"city": "Montevideo", "lat": -34.9011, "lon": -56.1645, "june_temp_c": 12.0, "altitude_m": 43, "climate_profile": "cool_temperate"},
+    "usa": {"city": "Kansas City", "lat": 39.0997, "lon": -94.5786, "june_temp_c": 25.0, "altitude_m": 277, "climate_profile": "warm_inland"},
+}
 
 # 64 hexagrams of the I Ching (Zhouyi) with short interpretations
 _HEXAGRAMS = [
@@ -204,6 +284,166 @@ def _get_last_match_date(team_id: str, matches: list[dict], current_kickoff: dat
             if latest is None or kickoff > latest:
                 latest = kickoff
     return latest
+
+
+def _match_venue_context(venue: str) -> dict | None:
+    haystack = str(venue or "").lower()
+    for key, context in _VENUE_CONTEXTS.items():
+        if key in haystack:
+            result = dict(context)
+            result["matched_key"] = key
+            return result
+    return None
+
+
+def _haversine_km(origin: dict, destination: dict) -> float | None:
+    try:
+        lat1 = math.radians(float(origin["lat"]))
+        lon1 = math.radians(float(origin["lon"]))
+        lat2 = math.radians(float(destination["lat"]))
+        lon2 = math.radians(float(destination["lon"]))
+    except (KeyError, TypeError, ValueError):
+        return None
+    d_lat = lat2 - lat1
+    d_lon = lon2 - lon1
+    a = math.sin(d_lat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(d_lon / 2) ** 2
+    return round(6371.0 * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a)), 1)
+
+
+def _signed_delta(value: float | int | None, *, unit: str = "") -> str:
+    if value is None:
+        return "unknown"
+    number = float(value)
+    sign = "+" if number > 0 else ""
+    if unit == "km":
+        return f"{sign}{number:.0f}km"
+    if unit == "m":
+        return f"{sign}{number:.0f}m"
+    if unit == "c":
+        return f"{sign}{number:.1f}C"
+    return f"{sign}{number:.1f}"
+
+
+def _adaptation_risk_score(*, travel_km: float | None, temperature_delta_c: float | None, altitude_delta_m: float | None) -> tuple[int, str]:
+    if travel_km is None or temperature_delta_c is None or altitude_delta_m is None:
+        return 0, "unknown"
+    score = 0
+    if travel_km >= 9000:
+        score += 2
+    elif travel_km >= 5000:
+        score += 1
+    if abs(temperature_delta_c) >= 10:
+        score += 2
+    elif abs(temperature_delta_c) >= 6:
+        score += 1
+    if altitude_delta_m >= 1500:
+        score += 2
+    elif altitude_delta_m >= 800:
+        score += 1
+    if score >= 4:
+        return score, "high"
+    if score >= 2:
+        return score, "medium"
+    return score, "low"
+
+
+def _build_team_adaptation_context(team_id: str, venue_context: dict | None) -> dict:
+    team_key = str(team_id or "").lower()
+    team_context = _TEAM_HOME_CONTEXTS.get(team_key)
+    missing_context: list[str] = []
+    if not team_context:
+        missing_context.append("team_home_context_missing")
+    if not venue_context:
+        missing_context.append("venue_context_missing")
+
+    base = {
+        "team_id": team_key,
+        "status": "missing_context" if missing_context else "estimated_static_context",
+        "baseline_city": team_context.get("city") if team_context else None,
+        "baseline_climate_profile": team_context.get("climate_profile") if team_context else None,
+        "missing_context": missing_context,
+    }
+    if missing_context:
+        base.update(
+            {
+                "travel_km": None,
+                "temperature_delta_c": None,
+                "altitude_delta_m": None,
+                "adaptation_risk": "unknown",
+                "adaptation_risk_score": 0,
+                "adaptation_notes": ["Static baseline context is incomplete for this side."],
+            }
+        )
+        return base
+
+    travel_km = _haversine_km(team_context, venue_context)
+    temperature_delta_c = round(float(venue_context["june_temp_c"]) - float(team_context["june_temp_c"]), 1)
+    altitude_delta_m = int(round(float(venue_context["altitude_m"]) - float(team_context["altitude_m"])))
+    risk_score, risk_label = _adaptation_risk_score(
+        travel_km=travel_km,
+        temperature_delta_c=temperature_delta_c,
+        altitude_delta_m=altitude_delta_m,
+    )
+
+    notes: list[str] = []
+    if travel_km is not None:
+        if travel_km >= 9000:
+            notes.append("long-haul travel load")
+        elif travel_km >= 5000:
+            notes.append("intercontinental travel load")
+        elif travel_km <= 500:
+            notes.append("short travel footprint")
+        else:
+            notes.append("moderate travel footprint")
+    if abs(temperature_delta_c) >= 6:
+        direction = "hotter" if temperature_delta_c > 0 else "cooler"
+        notes.append(f"venue baseline is {abs(temperature_delta_c):.1f}C {direction} than home baseline")
+    else:
+        notes.append("temperature baseline is broadly familiar")
+    if altitude_delta_m >= 1500:
+        notes.append("major altitude gain")
+    elif altitude_delta_m >= 800:
+        notes.append("meaningful altitude gain")
+    elif altitude_delta_m <= -800:
+        notes.append("large altitude drop")
+
+    base.update(
+        {
+            "travel_km": travel_km,
+            "temperature_delta_c": temperature_delta_c,
+            "altitude_delta_m": altitude_delta_m,
+            "adaptation_risk": risk_label,
+            "adaptation_risk_score": risk_score,
+            "adaptation_notes": notes,
+        }
+    )
+    return base
+
+
+def _build_venue_adaptation_context(match: dict, home_id: str, away_id: str) -> dict:
+    venue_context = _match_venue_context(str(match.get("venue", "")))
+    home_context = _build_team_adaptation_context(home_id, venue_context)
+    away_context = _build_team_adaptation_context(away_id, venue_context)
+    missing_context: list[str] = []
+    if not venue_context:
+        missing_context.append("venue_context_missing")
+    missing_context.extend(f"home_{item}" for item in home_context.get("missing_context", []) if item != "venue_context_missing")
+    missing_context.extend(f"away_{item}" for item in away_context.get("missing_context", []) if item != "venue_context_missing")
+    status = "unavailable" if not venue_context else "partial_static_context" if missing_context else "estimated_static_context"
+    return {
+        "status": status,
+        "source": "static_venue_team_baseline_v1",
+        "venue": str(match.get("venue", "")),
+        "venue_context": venue_context,
+        "home": home_context,
+        "away": away_context,
+        "missing_context": missing_context,
+        "limitations": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+            "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data.",
+        ],
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -486,6 +726,118 @@ def _estimate_scoreline(home_final: float, away_final: float, predicted_outcome:
     return {"home": loser_goals, "away": winner_goals}
 
 
+def _goal_expectation(score: float, opponent_score: float) -> float:
+    edge = score - opponent_score
+    value = 0.85 + score / 80.0 + edge / 55.0
+    return round(max(0.25, min(3.2, value)), 2)
+
+
+def _clean_sheet_probability(team_final: float, opponent_final: float, opponent_expected_goals: float) -> float:
+    edge = team_final - opponent_final
+    probability = 0.34 - opponent_expected_goals * 0.09 + edge * 0.004
+    return round(max(0.08, min(0.62, probability)), 2)
+
+
+def _score_probability(candidate: dict, home_xg: float, away_xg: float, predicted_outcome: str) -> float:
+    home_goals = int(candidate["home"])
+    away_goals = int(candidate["away"])
+    distance = abs(home_goals - home_xg) + abs(away_goals - away_xg)
+    probability = max(0.05, 0.38 - distance * 0.075)
+    outcome = "draw" if home_goals == away_goals else "home_win" if home_goals > away_goals else "away_win"
+    if outcome == predicted_outcome:
+        probability += 0.08
+    return probability
+
+
+def _scoreline_reason(candidate: dict, base_score: dict, clean_sheet: dict, predicted_outcome: str) -> str:
+    score_text = f"{candidate['home']}-{candidate['away']}"
+    base_text = f"{base_score['home']}-{base_score['away']}"
+    if candidate == base_score:
+        return f"Primary point estimate from the current model edge ({base_text})."
+    if candidate["away"] == 0 and predicted_outcome == "home_win":
+        return f"Clean-sheet branch; home clean-sheet chance {clean_sheet['home']:.0%} keeps {score_text} live."
+    if candidate["home"] == 0 and predicted_outcome == "away_win":
+        return f"Clean-sheet branch; away clean-sheet chance {clean_sheet['away']:.0%} keeps {score_text} live."
+    if candidate["home"] + candidate["away"] > base_score["home"] + base_score["away"]:
+        return "Higher-event branch if set pieces, substitutions, cards, or chase-game state lift the total."
+    return "Lower-event branch if tempo stays controlled and the trailing side lacks final-third quality."
+
+
+def _build_scoreline_distribution(
+    *,
+    home_final: float,
+    away_final: float,
+    predicted_outcome: str,
+    base_score: dict,
+) -> tuple[list[dict], dict, float, float]:
+    home_xg = _goal_expectation(home_final, away_final)
+    away_xg = _goal_expectation(away_final, home_final)
+    clean_sheet = {
+        "home": _clean_sheet_probability(home_final, away_final, away_xg),
+        "away": _clean_sheet_probability(away_final, home_final, home_xg),
+    }
+    candidates = {(int(base_score["home"]), int(base_score["away"]))}
+    if predicted_outcome == "home_win":
+        candidates.update({(2, 0), (2, 1), (1, 0), (3, 1)})
+    elif predicted_outcome == "away_win":
+        candidates.update({(0, 2), (1, 2), (0, 1), (1, 3)})
+    else:
+        candidates.update({(0, 0), (1, 1), (2, 2), (1, 0), (0, 1)})
+
+    scored = []
+    for home_goals, away_goals in candidates:
+        candidate = {"home": home_goals, "away": away_goals}
+        scored.append(
+            {
+                "score": candidate,
+                "raw_probability": _score_probability(candidate, home_xg, away_xg, predicted_outcome),
+            }
+        )
+    scored.sort(key=lambda item: item["raw_probability"], reverse=True)
+    top = scored[:4]
+    total = sum(item["raw_probability"] for item in top) or 1.0
+    distribution = []
+    for item in top:
+        candidate = item["score"]
+        distribution.append(
+            {
+                "score": candidate,
+                "probability": round(item["raw_probability"] / total, 3),
+                "reason": _scoreline_reason(candidate, base_score, clean_sheet, predicted_outcome),
+            }
+        )
+    return distribution, clean_sheet, home_xg, away_xg
+
+
+def _split_confidence_fields(
+    *,
+    result_confidence: str,
+    scoreline_distribution: list[dict],
+    clean_sheet_probability: dict,
+    evidence_gaps: list[str],
+) -> dict:
+    top_probability = float(scoreline_distribution[0]["probability"]) if scoreline_distribution else 0.0
+    clean_gap = abs(float(clean_sheet_probability.get("home", 0)) - float(clean_sheet_probability.get("away", 0)))
+    score_confidence = "medium" if top_probability >= 0.35 and not evidence_gaps else "low"
+    if result_confidence == "high" and clean_gap >= 0.12 and not evidence_gaps:
+        total_goals_confidence = "medium"
+    elif result_confidence == "low" or evidence_gaps:
+        total_goals_confidence = "low"
+    else:
+        total_goals_confidence = "medium"
+    return {
+        "result_confidence": result_confidence,
+        "score_confidence": score_confidence,
+        "total_goals_confidence": total_goals_confidence,
+        "confidence_note": "Result direction confidence is not exact-score confidence.",
+    }
+
+
+def _tianji_score(base_score: float, modifier: float) -> float:
+    """Convert Tianji modifier into a 0-100 side score for 60/40 blending."""
+    return round(max(0.0, min(100.0, base_score + modifier * 8.0)), 1)
+
+
 # ---------------------------------------------------------------------------
 # Play card builder
 # ---------------------------------------------------------------------------
@@ -677,6 +1029,52 @@ def _component_drivers(ctx: dict) -> tuple[list[str], list[str]]:
     elif ctx["ec_modifier"] > 0:
         drivers.append(f"Evidence completeness supports model confidence (+{ctx['ec_modifier']})")
     return drivers, counters
+
+
+def _venue_adaptation_verdict(venue_adaptation: dict) -> str:
+    if not venue_adaptation or venue_adaptation.get("status") == "unavailable":
+        return "untracked"
+    home = venue_adaptation.get("home", {}) or {}
+    away = venue_adaptation.get("away", {}) or {}
+    if home.get("adaptation_risk") == "unknown" or away.get("adaptation_risk") == "unknown":
+        return "partial_static_context"
+    home_score = int(home.get("adaptation_risk_score", 0))
+    away_score = int(away.get("adaptation_risk_score", 0))
+    if away_score - home_score >= 2:
+        return "home_adaptation_edge"
+    if home_score - away_score >= 2:
+        return "away_adaptation_edge"
+    return "balanced_static_context"
+
+
+def _venue_adaptation_drivers(ctx: dict) -> tuple[list[str], list[str]]:
+    venue_adaptation = ctx.get("venue_adaptation_context", {}) or {}
+    venue_context = venue_adaptation.get("venue_context") or {}
+    home = venue_adaptation.get("home", {}) or {}
+    away = venue_adaptation.get("away", {}) or {}
+    drivers: list[str] = []
+    if venue_context:
+        drivers.append(
+            "Venue baseline: "
+            f"{venue_context.get('city', 'unknown')} "
+            f"{venue_context.get('june_temp_c', 'unknown')}C, "
+            f"{venue_context.get('altitude_m', 'unknown')}m, "
+            f"{venue_context.get('climate_profile', 'unknown')}"
+        )
+    else:
+        drivers.append("Venue baseline is not mapped yet.")
+    for label, team_name, item in (("Home", ctx["home_name"], home), ("Away", ctx["away_name"], away)):
+        if item.get("status") == "missing_context":
+            drivers.append(f"{label} {team_name}: static adaptation context missing.")
+            continue
+        drivers.append(
+            f"{label} {team_name}: travel {item.get('travel_km', 'unknown')}km, "
+            f"temperature delta {_signed_delta(item.get('temperature_delta_c'), unit='c')}, "
+            f"altitude delta {_signed_delta(item.get('altitude_delta_m'), unit='m')}, "
+            f"risk={item.get('adaptation_risk', 'unknown')}."
+        )
+    limitations = venue_adaptation.get("limitations", []) or []
+    return drivers, limitations[:2]
 
 
 def _build_scenario_analysis(ctx: dict) -> dict:
@@ -874,6 +1272,29 @@ def _build_analysis_layers(ctx: dict) -> list[dict]:
         )
     )
 
+    venue_drivers, venue_limitations = _venue_adaptation_drivers(ctx)
+    venue_adaptation = ctx.get("venue_adaptation_context", {}) or {}
+    layers.append(
+        _layer(
+            layer_id="venue_adaptation",
+            title="Venue Adaptation",
+            verdict=_venue_adaptation_verdict(venue_adaptation),
+            confidence="medium" if venue_adaptation.get("status") == "estimated_static_context" else "low",
+            summary=(
+                "Static venue, travel, temperature and altitude baselines are exposed as evidence. "
+                "This is not live kickoff weather and does not override verified lineup or injury news."
+            ),
+            key_drivers=venue_drivers,
+            counter_signals=venue_limitations,
+            missing_context=venue_adaptation.get("missing_context", []),
+            watch_triggers=[
+                "replace static baseline with live venue weather",
+                "confirm team camp/base location",
+                "add humidity, wind, pitch and player acclimatization notes",
+            ],
+        )
+    )
+
     if ctx.get("odds"):
         implied = ctx.get("implied_probs") or {}
         market_drivers = [
@@ -909,6 +1330,36 @@ def _build_analysis_layers(ctx: dict) -> list[dict]:
             summary=scenario["base_case"],
             key_drivers=[scenario["base_case"], scenario["upset_case"], scenario["draw_case"]],
             watch_triggers=scenario["watch_triggers"],
+        )
+    )
+
+    scoreline_distribution = ctx.get("scoreline_distribution", []) or []
+    clean_sheet = ctx.get("clean_sheet_probability", {}) or {}
+    top_scores = []
+    for item in scoreline_distribution[:3]:
+        score = item.get("score", {}) or {}
+        top_scores.append(
+            f"{score.get('home', '-')}-{score.get('away', '-')} ({float(item.get('probability', 0)):.0%})"
+        )
+    layers.append(
+        _layer(
+            layer_id="score_distribution",
+            title="Scoreline Distribution",
+            verdict=ctx["confidence_split"]["score_confidence"],
+            confidence=ctx["confidence_split"]["score_confidence"],
+            summary=(
+                "Exact score is modeled as a distribution, not a single certainty. "
+                f"Top branches: {', '.join(top_scores) if top_scores else 'unavailable'}."
+            ),
+            key_drivers=[
+                f"Expected goals proxy: {ctx.get('home_expected_goals')}-{ctx.get('away_expected_goals')}",
+                f"Clean-sheet probability home/away: {float(clean_sheet.get('home', 0)):.0%}/{float(clean_sheet.get('away', 0)):.0%}",
+            ],
+            counter_signals=[
+                "Cards, penalties, set pieces, and chase-game states can move the total-goals branch quickly."
+            ],
+            missing_context=[gap for gap in ctx.get("evidence_gaps", []) if not str(gap).endswith("_resolved")],
+            watch_triggers=["confirmed lineup", "set-piece mismatch", "red card or early goal", "second-half substitution state"],
         )
     )
 
@@ -988,6 +1439,7 @@ def predict_match(
         all_matches=all_matches,
         edition=edition,
     )
+    venue_adaptation_context = _build_venue_adaptation_context(match, home_id, away_id)
 
     ec_modifier = score_evidence_completeness(evidence_index)
 
@@ -1093,16 +1545,22 @@ def predict_match(
     data_away = round(min(_DATA_SCORE_CAP, max(0.0, raw_away)), 1)
 
     # --- Divination overlay (Tianji Purple Star Astrology) ---
-    divination = compute_tianji_overlay(match.get("kickoff_at", ""), match.get("match_id", ""))
+    divination = compute_tianji_overlay(
+        match.get("kickoff_at", ""),
+        match.get("match_id", ""),
+        venue=str(match.get("venue", "")),
+    )
     # Compatibility mapping for original keys
     divination["hexagram_name"] = divination["shichen"]
     divination["hexagram_number"] = 0
     divination["hexagram"] = divination["shichen"]
     divination["weight"] = DIVINATION_WEIGHT
 
-    # --- Final scores ---
-    home_final = round(min(100.0, max(0.0, data_home + divination["home_modifier"])), 1)
-    away_final = round(min(100.0, max(0.0, data_away + divination["away_modifier"])), 1)
+    # --- Final scores: 60% data model + 40% Tianji entertainment overlay ---
+    tianji_home_score = _tianji_score(data_home, float(divination["home_modifier"]))
+    tianji_away_score = _tianji_score(data_away, float(divination["away_modifier"]))
+    home_final = round((data_home * DATA_WEIGHT) + (tianji_home_score * DIVINATION_WEIGHT), 1)
+    away_final = round((data_away * DATA_WEIGHT) + (tianji_away_score * DIVINATION_WEIGHT), 1)
 
     # --- Predicted outcome (Fundamentals Track) ---
     gap = home_final - away_final
@@ -1115,6 +1573,12 @@ def predict_match(
     predicted_score = _estimate_scoreline(home_final, away_final, predicted_outcome)
     total_goals = int(predicted_score["home"]) + int(predicted_score["away"])
     goals_line_2_5 = "over" if total_goals >= 3 else "under"
+    scoreline_distribution, clean_sheet_probability, home_expected_goals, away_expected_goals = _build_scoreline_distribution(
+        home_final=home_final,
+        away_final=away_final,
+        predicted_outcome=predicted_outcome,
+        base_score=predicted_score,
+    )
 
     # --- Odds & Market Track & Divergence Analysis ---
     implied_probs = None
@@ -1182,6 +1646,12 @@ def predict_match(
         # Fallback to the original global gaps logic
         evidence_gaps = _collect_evidence_gaps(evidence_index)
         confidence, confidence_label = _determine_confidence(avg_data, evidence_gaps)
+    confidence_split = _split_confidence_fields(
+        result_confidence=confidence,
+        scoreline_distribution=scoreline_distribution,
+        clean_sheet_probability=clean_sheet_probability,
+        evidence_gaps=evidence_gaps,
+    )
 
     analysis_context = {
         "home_name": home_name,
@@ -1201,8 +1671,14 @@ def predict_match(
         "away_final": away_final,
         "predicted_outcome": predicted_outcome,
         "predicted_score": predicted_score,
+        "scoreline_distribution": scoreline_distribution,
+        "clean_sheet_probability": clean_sheet_probability,
+        "home_expected_goals": home_expected_goals,
+        "away_expected_goals": away_expected_goals,
+        "venue_adaptation_context": venue_adaptation_context,
         "confidence": confidence,
         "confidence_label": confidence_label,
+        "confidence_split": confidence_split,
         "evidence_gaps": evidence_gaps,
         "local_gaps": local_gaps,
         "daily_evidence": daily_evidence,
@@ -1308,8 +1784,13 @@ def predict_match(
                 },
             },
         },
+        "venue_adaptation_context": venue_adaptation_context,
         "divination_overlay": divination,
         "prediction": {
+            "home_final": home_final,
+            "away_final": away_final,
+            "result": predicted_outcome,
+            "predicted_outcome": predicted_outcome,
             "home_final": home_final,
             "away_final": away_final,
             "result": predicted_outcome,
@@ -1319,6 +1800,17 @@ def predict_match(
             "goals_line_2_5": goals_line_2_5,
             "confidence": confidence,
             "confidence_label": confidence_label,
+            "result_confidence": confidence_split["result_confidence"],
+            "score_confidence": confidence_split["score_confidence"],
+            "total_goals_confidence": confidence_split["total_goals_confidence"],
+            "confidence_note": confidence_split["confidence_note"],
+            "scoreline_distribution": scoreline_distribution,
+            "clean_sheet_probability": clean_sheet_probability,
+            "expected_goals_proxy": {
+                "home": home_expected_goals,
+                "away": away_expected_goals,
+            },
+            "venue_adaptation_context": venue_adaptation_context,
             "evidence_gaps": evidence_gaps,
         },
         "referee_analysis": {
@@ -1362,6 +1854,7 @@ def run_scoring_model(
     dry_run: bool = False,
 ) -> dict:
     """Run the prediction scoring model for all matches on *date*."""
+    load_hyperparameters(root, edition)
     generated_at = iso_now(now)
     now_dt = now_datetime(now)
     ed_root = edition_data_root(root, edition)
@@ -1454,10 +1947,9 @@ def run_scoring_model(
         "predictions": predictions,
         "disclaimer": DISCLAIMER,
         "safety_invariants": [
-            "data_model_weight_is_0_85",
-            "divination_overlay_weight_is_0_15",
-            "divination_overlay_capped_at_15_points",
-            "data_score_capped_at_85_points",
+            "data_model_weight_is_0_60",
+            "tianji_overlay_weight_is_0_40",
+            "tianji_calculated_from_venue_local_time_when_known",
             "no_betting_language_in_output",
             "missing_evidence_downgrades_confidence",
             "disclaimer_included_in_every_report",

@@ -165,7 +165,6 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
             self.assertGreaterEqual(result["path_sanitization"]["changed_files"], 1)
             self.assertTrue((output / "scripts/worldcup_core.py").exists())
             self.assertTrue((output / "schema/match-ledger.schema.json").exists())
-            self.assertTrue((output / "SKILL.md").exists())
             self.assertTrue((output / "skills/fifa-winner-skill/SKILL.md").exists())
             self.assertTrue((output / "TODO.md").exists())
             self.assertTrue((output / "LICENSE").exists())
@@ -241,7 +240,7 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
             self.assertEqual(first["summary"]["matches_skipped_started"], 1)
             self.assertIn("娱乐预测，非投注建议", first["disclaimer"])
             prediction = first["predictions"][0]
-            self.assertLessEqual(prediction["divination_overlay"]["weight"], 0.15)
+            self.assertEqual(prediction["divination_overlay"]["weight"], 0.4)
             play_card = prediction["play_card"]
             self.assertIn("share_title", play_card)
             self.assertIn("poster_caption", play_card)
@@ -543,6 +542,7 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
                 "prediction_report_prompt_builder.py",
                 "worldcup_prediction_evidence_planner.py",
                 "worldcup_source_snapshot_tool.py",
+                "sync_external_reference_sources.py",
                 "poster_generator.py",
             ]:
                 (root / "scripts" / name).write_text("# marker\n", encoding="utf-8")
@@ -645,7 +645,6 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
                 encoding="utf-8",
             )
             (root / "knowledge-base/agent/ARCHITECTURE.md").write_text("# Agent Architecture\n", encoding="utf-8")
-            (root / "knowledge-base/agent/SKILL.md").write_text("# Agent Skill\n", encoding="utf-8")
             (root / "knowledge-base/agent/RUNBOOK.md").write_text("# Runbook\n", encoding="utf-8")
             (root / "knowledge-base/agent/GUARDRAILS.md").write_text("# Guardrails\n", encoding="utf-8")
             (root / "knowledge-base/agent/HANDOFFS.md").write_text("# Handoffs\n", encoding="utf-8")
@@ -878,6 +877,170 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
             history_text = history_path.read_text(encoding="utf-8")
             self.assertIn("2098-GA-02", history_text)
             self.assertNotIn("2098-GA-01", history_text)
+
+    def test_visual_dashboard_generation(self):
+        init_module = load_script("worldcup_edition_init.py")
+        db_module = load_script("worldcup_db.py")
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+            
+            from worldcup_core import edition_data_root, wiki_edition_root
+            db_path = edition_data_root(root, "2098") / "worldcup_2098.db"
+            
+            conn = db_module.get_db_connection(db_path)
+            try:
+                # Save matches, predictions, evaluations, corrective actions
+                with conn:
+                    db_module.save_match(conn, {
+                        "match_id": "2098-GA-01",
+                        "edition": "2098",
+                        "phase": "group",
+                        "home_team": {"team_id": "t1", "name": "Team A"},
+                        "away_team": {"team_id": "t2", "name": "Team B"},
+                        "status": "fixture_official"
+                    })
+                    db_module.save_prediction(conn, {
+                        "match_id": "2098-GA-01",
+                        "prediction_date": "2026-06-11",
+                        "status": "locked_pre_match_prediction",
+                        "prediction": {
+                            "result": "home_win",
+                            "score": {"home": 2, "away": 1},
+                            "confidence": "medium"
+                        }
+                    })
+                    db_module.save_evaluation(conn, {
+                        "match_id": "2098-GA-01",
+                        "actual_score_home": 2,
+                        "actual_score_away": 1,
+                        "is_result_correct": True,
+                        "is_score_correct": True,
+                        "primary_error": "No error",
+                        "model_issue_tags_str": "none",
+                        "evaluated_at": "2026-06-12T12:00:00+08:00"
+                    })
+                    db_module.save_corrective_action(conn, {
+                        "action_id": "act1",
+                        "priority": "P0",
+                        "description": "Fix alignment",
+                        "status": "open",
+                        "created_at": "2026-06-12 12:00:00"
+                    })
+            finally:
+                conn.close()
+                
+            res = dashboard_module.write_visual_dashboard(root=root, edition="2098", now="2026-06-12T12:00:00+08:00")
+            self.assertEqual(res["status"], "written")
+            self.assertEqual(res["summary"]["predictions"], 1)
+            self.assertEqual(res["summary"]["evaluated_matches"], 1)
+            self.assertEqual(len(res["corrective_actions"]), 1)
+            self.assertEqual(res["corrective_actions"][0]["action_id"], "act1")
+            
+            html_file = wiki_edition_root(root, "2098") / "dashboard" / "index.html"
+            self.assertTrue(html_file.exists())
+            html_content = html_file.read_text(encoding="utf-8")
+            self.assertIn("Team A", html_content)
+            self.assertIn("Team B", html_content)
+            self.assertIn("Fix alignment", html_content)
+
+    def test_octopus_reflection_tuning(self):
+        init_module = load_script("worldcup_edition_init.py")
+        db_module = load_script("worldcup_db.py")
+        tuning_module = load_script("octopus_reflection_tuning.py")
+        
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+            
+            from worldcup_core import edition_data_root, wiki_edition_root
+            db_path = edition_data_root(root, "2098") / "worldcup_2098.db"
+            db_module.init_database(db_path)
+            
+            conn = db_module.get_db_connection(db_path)
+            try:
+                with conn:
+                    db_module.save_team(conn, {
+                        "team_id": "alpha",
+                        "code": "ALP",
+                        "name_en": "Alpha Team",
+                        "name_zh": "阿尔法队",
+                    })
+                    db_module.save_team(conn, {
+                        "team_id": "beta",
+                        "code": "BET",
+                        "name_en": "Beta Team",
+                        "name_zh": "贝塔队",
+                    })
+                    db_module.save_match(conn, {
+                        "match_id": "2098-GA-01",
+                        "edition": "2098",
+                        "phase": "group",
+                        "home_team": {"team_id": "alpha", "name": "Alpha Team"},
+                        "away_team": {"team_id": "beta", "name": "Beta Team"},
+                        "status": "fixture_official",
+                        "kickoff_at": "2026-06-12T18:00:00+08:00",
+                    })
+                    db_module.save_prediction(conn, {
+                        "match_id": "2098-GA-01",
+                        "prediction_date": "2026-06-11",
+                        "status": "locked_pre_match_prediction",
+                        "prediction": {
+                            "result": "home_win",
+                            "score": {"home": 2, "away": 1},
+                            "confidence": "medium",
+                            "confidence_label": "medium",
+                        }
+                    })
+                    db_module.save_evaluation(conn, {
+                        "match_id": "2098-GA-01",
+                        "actual_score_home": 0,
+                        "actual_score_away": 2,
+                        "is_result_correct": 0,
+                        "is_score_correct": 0,
+                        "primary_error": "Underestimated Away team",
+                        "model_issue_tags_str": "ranking_strength_underweighted",
+                        "evaluated_at": "2026-06-12T21:00:00+08:00"
+                    })
+            finally:
+                conn.close()
+                
+            hyper_path = edition_data_root(root, "2098") / "model-hyperparameters.json"
+            hyper_data = {
+                "data_weight": 0.60,
+                "divination_weight": 0.40,
+                "component_weights": {
+                    "ranking_strength": 0.30,
+                    "squad_depth": 0.20,
+                    "historical_proxy": 0.20,
+                    "rest_travel": 0.15,
+                    "evidence_completeness": 0.15
+                }
+            }
+            hyper_path.write_text(json.dumps(hyper_data, ensure_ascii=False, indent=2))
+            
+            res = tuning_module.run_tuning_loop(root=root, edition="2098", lr=0.05)
+            
+            self.assertEqual(res["status"], "success")
+            self.assertEqual(res["journal_entries_written"], 1)
+            self.assertTrue(res["tuned_any_weights"])
+            
+            journal_file = wiki_edition_root(root, "2098") / "synthesis" / "self-reflection-journal.md"
+            self.assertTrue(journal_file.exists())
+            journal_content = journal_file.read_text(encoding="utf-8")
+            self.assertIn("Match 2098-GA-01", journal_content)
+            self.assertIn("Prediction**: 2-1", journal_content)
+            self.assertIn("Actual**: 0-2", journal_content)
+            
+            tuned_hyper = json.loads(hyper_path.read_text(encoding="utf-8"))
+            tuned_comp = tuned_hyper["component_weights"]
+            self.assertAlmostEqual(sum(tuned_comp.values()), 1.0)
+            for k, v in tuned_comp.items():
+                self.assertTrue(0.05 <= v <= 0.50)
+                
+            self.assertGreaterEqual(tuned_hyper["data_weight"], 0.60)
+            self.assertLessEqual(tuned_hyper["divination_weight"], 0.40)
 
 
 if __name__ == "__main__":

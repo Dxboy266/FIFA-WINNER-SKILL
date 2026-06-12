@@ -16,8 +16,25 @@ PROJECT_REL = Path("_meta/projects/世界杯预测")
 SPORT_DOMAIN = "体育"
 WORLD_CUP_TOPIC = "世界杯"
 DISCLAIMER = "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。"
-DIVINATION_WEIGHT = 0.15
-DATA_WEIGHT = 0.85
+DIVINATION_WEIGHT = 0.40
+DATA_WEIGHT = 0.60
+
+
+def load_hyperparameters(root: Path, edition: str) -> None:
+    """Load hyperparameters from JSON and update global weight values."""
+    global DATA_WEIGHT, DIVINATION_WEIGHT
+    path = edition_data_root(root, edition) / "model-hyperparameters.json"
+    if path.exists():
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if "data_weight" in data:
+                DATA_WEIGHT = float(data["data_weight"])
+            if "divination_weight" in data:
+                DIVINATION_WEIGHT = float(data["divination_weight"])
+        except Exception as e:
+            import sys
+            print(f"Warning: Failed to load core weights from {path}: {e}", file=sys.stderr)
 
 SOURCE_REGISTRY = [
     {

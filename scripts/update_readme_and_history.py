@@ -23,6 +23,7 @@ from worldcup_core import (  # noqa: E402
     now_datetime,
     parse_datetime,
     project_root,
+    wiki_edition_root,
     write_text,
 )
 
@@ -181,6 +182,13 @@ def update_readme_and_history(*, root: Path, edition: str, date_str: str | None 
             )
 
     history_lines.append("")
+    # Append self-reflection journal if exists
+    journal_path = wiki_edition_root(root, edition) / "synthesis" / "self-reflection-journal.md"
+    if journal_path.exists():
+        history_lines.append("## Model Self-Reflection Journal / 模型自反思日志\n")
+        history_lines.append(journal_path.read_text(encoding="utf-8"))
+        history_lines.append("")
+
     write_text(repo_root / "HISTORY.md", "\n".join(history_lines))
 
     # 7. Update README.md

@@ -11,7 +11,7 @@
     "working_directory": "repository_root",
     "command_template": "python scripts/<tool>.py <command> --edition <edition> --root .",
     "canonical_human_readme": "AGENT_README.md",
-    "canonical_skill_file": "SKILL.md"
+    "canonical_skill_file": "skills/fifa-winner-skill/SKILL.md"
   },
   "discovery": {
     "agent_readme": "AGENT_README.md",
@@ -135,6 +135,23 @@
     "query_index": "SQLite file knowledge-base/<edition>/data/worldcup_<edition>.db",
     "conflict_policy": "Prefer locked JSON reports over SQLite rows and report any mismatch."
   },
+  "prediction_contract": {
+    "data_model_weight": 0.6,
+    "tianji_overlay_weight": 0.4,
+    "tianji_time_rule": "Calculate Tianji from match-local venue time when venue timezone is known; display converted time separately.",
+    "required_layers": [
+      "evidence_integrity",
+      "fundamentals",
+      "matchup",
+      "live_context",
+      "venue_adaptation",
+      "market_track",
+      "scenario_tree",
+      "score_distribution",
+      "adversarial_review"
+    ],
+    "evaluation_policy": "Report result direction, exact score, and total-goals hits separately. Direction hit alone is a partial hit, not full success."
+  },
   "inputs": {
     "required": [
       "edition"
@@ -166,11 +183,13 @@
       "title": "Audit source readiness and prediction evidence",
       "commands": [
         "python scripts/worldcup_source_readiness_auditor.py write --edition <edition> --root .",
-        "python scripts/worldcup_prediction_evidence_planner.py write --edition <edition> --root ."
+        "python scripts/worldcup_prediction_evidence_planner.py write --edition <edition> --root .",
+        "python scripts/sync_external_reference_sources.py write --edition <edition> --root ."
       ],
       "outputs": [
         "knowledge-base/<edition>/data/source-readiness.json",
-        "knowledge-base/<edition>/data/prediction-evidence-plan.json"
+        "knowledge-base/<edition>/data/prediction-evidence-plan.json",
+        "knowledge-base/<edition>/data/external-reference-sources.json"
       ]
     },
     {
@@ -211,6 +230,13 @@
       ],
       "important_fields": [
         "predictions[].prediction",
+        "predictions[].prediction.scoreline_distribution",
+        "predictions[].prediction.clean_sheet_probability",
+        "predictions[].prediction.venue_adaptation_context",
+        "predictions[].prediction.result_confidence",
+        "predictions[].prediction.score_confidence",
+        "predictions[].prediction.total_goals_confidence",
+        "predictions[].venue_adaptation_context",
         "predictions[].analysis_layers",
         "predictions[].scenario_analysis",
         "predictions[].decision_audit",

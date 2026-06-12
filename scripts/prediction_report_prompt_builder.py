@@ -64,7 +64,7 @@ def build_single_report_prompt(item: dict) -> dict:
 
 硬性要求：
 1. 报告必须清楚给出胜平负、预测比分、总进球数、信心等级。
-2. 必须说明数据模型权重 85%，周易娱乐层最多 15%，周易只做娱乐叙事，不能覆盖硬数据。
+2. 必须说明数据模型权重 60%，天纪娱乐层权重 40%，天纪只做娱乐叙事，不能覆盖硬数据。
 3. 必须写出关键证据和证据缺口，缺失资料要标注为风险，不要假装完整。
 4. 必须包含免责声明：{DISCLAIMER}
 5. 禁止出现投注金额、下注建议、赔率建议、稳赢、稳胆、保证命中等赌博相关措辞。
@@ -80,6 +80,9 @@ def build_single_report_prompt(item: dict) -> dict:
 - 总进球数：{total_goals}
 - 大小球倾向：{prediction.get('goals_line_2_5', '')}
 - 信心：{confidence}
+- 结果信心：{prediction.get('result_confidence', confidence)}
+- 比分信心：{prediction.get('score_confidence', '')}
+- 总进球信心：{prediction.get('total_goals_confidence', '')}
 
 模型证据：
 - 主队数据分：{data_score.get('home', '')}
@@ -87,6 +90,9 @@ def build_single_report_prompt(item: dict) -> dict:
 - 主队最终分：{prediction.get('home_final', '')}
 - 客队最终分：{prediction.get('away_final', '')}
 - 证据缺口：{', '.join(evidence_gaps) if evidence_gaps else '暂无'}
+- 比分分布：{json.dumps(prediction.get('scoreline_distribution', []), ensure_ascii=False)}
+- 零封概率：{json.dumps(prediction.get('clean_sheet_probability', {}), ensure_ascii=False)}
+- 场馆适应：{json.dumps(prediction.get('venue_adaptation_context', item.get('venue_adaptation_context', {})), ensure_ascii=False)}
 
 周易娱乐层：
 - 卦象：{divination.get('hexagram_name') or divination.get('hexagram', '')}
@@ -128,7 +134,7 @@ def build_single_report_prompt(item: dict) -> dict:
         "away_team": away,
         "prediction": prediction,
         "prompt": prompt,
-        "required_text": [home, away, DISCLAIMER, "数据模型权重 85%", "周易娱乐层最多 15%"],
+        "required_text": [home, away, DISCLAIMER, "数据模型权重 60%", "天纪娱乐层权重 40%"],
         "forbidden_text": ["投注金额", "下注", "赔率建议", "稳赢", "稳胆", "保证命中"],
     }
 
