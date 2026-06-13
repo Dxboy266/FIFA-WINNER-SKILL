@@ -1,0 +1,401 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-13",
+  "generated_at": "2026-06-13T17:30:00+08:00",
+  "mode": "worldcup-matchday-intelligence-briefing",
+  "status": "partial",
+  "data_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\intelligence\\2026-06-13.json",
+  "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\reports\\intelligence\\2026-06-13.md",
+  "summary": {
+    "matches": 3,
+    "complete_matches": 0,
+    "partial_matches": 2,
+    "blocked_matches": 1,
+    "unique_information_gaps": [
+      "away_probable_lineup_missing",
+      "home_probable_lineup_missing",
+      "referee_missing",
+      "team_availability_unconfirmed"
+    ],
+    "source_readiness_status": "unknown"
+  },
+  "evidence_statuses": {
+    "official_fixtures": "partial",
+    "official_rosters": "complete",
+    "fifa_rankings": "partial",
+    "historical_worldcup_results": "blocked",
+    "recent_form_results": "blocked",
+    "squad_depth_position_balance": "partial",
+    "injury_availability": "blocked",
+    "venue_rest_travel": "blocked",
+    "head_to_head": "blocked",
+    "player_identity_enrichment": "blocked",
+    "market_odds_signal": "partial",
+    "reference_agent_source_alignment": "complete"
+  },
+  "matches": [
+    {
+      "match_id": "2026-GB-02",
+      "home_team": {
+        "team_id": "qat",
+        "name": "Qatar",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "sui",
+        "name": "Switzerland",
+        "slot": 4
+      },
+      "kickoff_at": "2026-06-13T19:00:00Z",
+      "local_time": {
+        "local_kickoff_at": "2026-06-13T12:00:00-07:00",
+        "timezone": "America/Los_Angeles",
+        "timezone_source": "venue"
+      },
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "group": "B",
+      "phase": "group",
+      "status": "blocked",
+      "information_gaps": [
+        "referee_missing",
+        "home_probable_lineup_missing",
+        "away_probable_lineup_missing",
+        "team_availability_unconfirmed"
+      ],
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "injuries": {
+        "home": [],
+        "away": []
+      },
+      "suspensions": {
+        "home": [],
+        "away": []
+      },
+      "late_news": {
+        "home": [],
+        "away": []
+      },
+      "profile_task_summary": {
+        "team_tasks_partial": 2,
+        "player_tasks_partial": 52,
+        "teams": {
+          "qat": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          },
+          "sui": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          }
+        }
+      },
+      "information_officer_summary": "情报链仍有缺口，预测信心必须降档显示。",
+      "agent_actions": [
+        {
+          "command": "python scripts/daily_evidence_input.py add-referee --edition 2026 --date 2026-06-13 --match-id 2026-GB-02 --referee-name <name> --strictness <high|medium|low> --root .",
+          "why": "add referee strictness before card and tempo analysis"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-13 --team-code QAT --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the home team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-13 --team-code SUI --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the away team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/extract_injuries_from_news.py --edition 2026 --date 2026-06-13 --root .",
+          "why": "extract injury and suspension hints from collected news"
+        }
+      ]
+    },
+    {
+      "match_id": "2026-GC-01",
+      "home_team": {
+        "team_id": "bra",
+        "name": "Brazil",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "mar",
+        "name": "Morocco",
+        "slot": 2
+      },
+      "kickoff_at": "2026-06-13T22:00:00Z",
+      "local_time": {
+        "local_kickoff_at": "2026-06-13T18:00:00-04:00",
+        "timezone": "America/New_York",
+        "timezone_source": "venue"
+      },
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "group": "C",
+      "phase": "group",
+      "status": "partial",
+      "information_gaps": [
+        "referee_missing",
+        "home_probable_lineup_missing",
+        "away_probable_lineup_missing"
+      ],
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "injuries": {
+        "home": [],
+        "away": []
+      },
+      "suspensions": {
+        "home": [],
+        "away": []
+      },
+      "late_news": {
+        "home": [
+          {
+            "headline": "For Brazil, 24 years after their last World Cup ti...",
+            "detail": "Brazil are the most successful team in World Cup history. But after not winning the title in 24 years, can Carlo Ancelotti's side finally end that run?",
+            "sentiment": "positive",
+            "team_code": "bra",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-12T21:54:22.857412+08:00"
+          },
+          {
+            "headline": "Ancelotti: 'Beautiful moment' to lead Brazil at WC...",
+            "detail": "Carlo Ancelotti has said he is ready for a \"beautiful moment\" in his already stellar coaching career, as he prepares to take charge of his first game at the World Cup.",
+            "sentiment": "neutral",
+            "team_code": "bra",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:53.631431+08:00"
+          }
+        ],
+        "away": []
+      },
+      "profile_task_summary": {
+        "team_tasks_partial": 2,
+        "player_tasks_partial": 52,
+        "teams": {
+          "bra": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          },
+          "mar": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          }
+        }
+      },
+      "information_officer_summary": "情报链仍有缺口，预测信心必须降档显示。",
+      "agent_actions": [
+        {
+          "command": "python scripts/daily_evidence_input.py add-referee --edition 2026 --date 2026-06-13 --match-id 2026-GC-01 --referee-name <name> --strictness <high|medium|low> --root .",
+          "why": "add referee strictness before card and tempo analysis"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-13 --team-code BRA --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the home team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-13 --team-code MAR --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the away team's likely tactical shell"
+        }
+      ]
+    },
+    {
+      "match_id": "2026-GD-01",
+      "home_team": {
+        "team_id": "usa",
+        "name": "United States",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "par",
+        "name": "Paraguay",
+        "slot": 2
+      },
+      "kickoff_at": "2026-06-13T01:00:00Z",
+      "local_time": {
+        "local_kickoff_at": "2026-06-12T18:00:00-07:00",
+        "timezone": "America/Los_Angeles",
+        "timezone_source": "venue"
+      },
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "group": "D",
+      "phase": "group",
+      "status": "partial",
+      "information_gaps": [
+        "referee_missing",
+        "home_probable_lineup_missing",
+        "away_probable_lineup_missing"
+      ],
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "injuries": {
+        "home": [],
+        "away": []
+      },
+      "suspensions": {
+        "home": [],
+        "away": []
+      },
+      "late_news": {
+        "home": [
+          {
+            "headline": "Marsch 'had to beg' U.S. players to sing anthem",
+            "detail": "Former United States men's national team (USMNT) assistant coach Jesse March has revealed he sometimes \"had to beg\" the American players to sing the national anthem.",
+            "sentiment": "neutral",
+            "team_code": "usa",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-12T21:54:22.857387+08:00"
+          },
+          {
+            "headline": "Palestine FA boss: U.S. denied my WCup visa",
+            "detail": "The head of the Palestinian Football Association is waiting in Mexico City for permission to enter the United States with other federation heads attending the 2026 FIFA World Cup.",
+            "sentiment": "neutral",
+            "team_code": "usa",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-12T21:54:22.857409+08:00"
+          },
+          {
+            "headline": "Four goals and an electric display: USMNT's World ...",
+            "detail": "World Cup co-hosts the United States banished any doubts hanging over the team with a decisive 4-1 victory over Paraguay on Friday.",
+            "sentiment": "neutral",
+            "team_code": "usa",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:53.631393+08:00"
+          },
+          {
+            "headline": "Pulisic subbed off at halftime, 'hoping it's nothi...",
+            "detail": "United States winger Christian Pulisic was substituted at halftime of his team's World Cup opener against Paraguay on Friday, with the Americans leading 3-0 at the break.",
+            "sentiment": "positive",
+            "team_code": "usa",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:53.631419+08:00"
+          },
+          {
+            "headline": "Dempsey slams Marsch over anthem: Stay in lane",
+            "detail": "United States legend Clint Dempsey had some choice words for former national team assistant Jesse Marsch, who suggested Thursday that some American players needed encouragement to sing the anthem ahead of games.",
+            "sentiment": "neutral",
+            "team_code": "usa",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:53.631427+08:00"
+          }
+        ],
+        "away": [
+          {
+            "headline": "Poch: 'Too late' for motivational speeches for U.S...",
+            "detail": "USMNT coach Mauricio Pochettino said that the time for fiery speeches is over and that his side is ready for Friday's World Cup opener against Paraguay.",
+            "sentiment": "neutral",
+            "team_code": "par",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-12T21:54:22.857405+08:00"
+          },
+          {
+            "headline": "Four goals and an electric display: USMNT's World ...",
+            "detail": "World Cup co-hosts the United States banished any doubts hanging over the team with a decisive 4-1 victory over Paraguay on Friday.",
+            "sentiment": "neutral",
+            "team_code": "par",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:53.631410+08:00"
+          },
+          {
+            "headline": "Balogun living WC 'dream' as U.S. choice pays off",
+            "detail": "USMNT striker Folarin Balogun, who could have played for England or Nigeria, said his two goals in Friday's 4-1 World Cup victory over Paraguay made for a \"dreamy night.\"",
+            "sentiment": "positive",
+            "team_code": "par",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:53.631416+08:00"
+          },
+          {
+            "headline": "Pulisic subbed off at halftime, 'hoping it's nothi...",
+            "detail": "United States winger Christian Pulisic was substituted at halftime of his team's World Cup opener against Paraguay on Friday, with the Americans leading 3-0 at the break.",
+            "sentiment": "positive",
+            "team_code": "par",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:53.631423+08:00"
+          },
+          {
+            "headline": "Balogun makes this USMNT side better, including it...",
+            "detail": "Friday's 4-1 blowout of Paraguay showed that the U.S. men's national team has its star. What if it now has its scorer, too?",
+            "sentiment": "negative",
+            "team_code": "par",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:53.631437+08:00"
+          },
+          {
+            "headline": "VAR review: What was the 'mistaken identity' check...",
+            "detail": "After originally giving USMNT defender Tim Ream a yellow card, the referee was called to the screen and reissued it to Paraguay's Miguel Almirón.",
+            "sentiment": "neutral",
+            "team_code": "par",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:53.631440+08:00"
+          }
+        ]
+      },
+      "profile_task_summary": {
+        "team_tasks_partial": 2,
+        "player_tasks_partial": 52,
+        "teams": {
+          "par": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          },
+          "usa": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          }
+        }
+      },
+      "information_officer_summary": "情报链仍有缺口，预测信心必须降档显示。",
+      "agent_actions": [
+        {
+          "command": "python scripts/daily_evidence_input.py add-referee --edition 2026 --date 2026-06-13 --match-id 2026-GD-01 --referee-name <name> --strictness <high|medium|low> --root .",
+          "why": "add referee strictness before card and tempo analysis"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-13 --team-code USA --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the home team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-13 --team-code PAR --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the away team's likely tactical shell"
+        }
+      ]
+    }
+  ],
+  "agent_roles": {
+    "information_officer": "collects and marks matchday evidence gaps before analysis",
+    "analyst": "uses this briefing plus prediction reports to refresh the visual dashboard"
+  },
+  "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+  "safety_invariants": [
+    "information_gaps_remain_visible",
+    "briefing_does_not_rewrite_locked_predictions",
+    "no_betting_or_stake_advice"
+  ]
+}

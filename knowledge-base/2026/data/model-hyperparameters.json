@@ -1,0 +1,11 @@
+{
+  "data_weight": 0.6,
+  "divination_weight": 0.4,
+  "component_weights": {
+    "ranking_strength": 0.3,
+    "squad_depth": 0.2,
+    "historical_proxy": 0.2,
+    "rest_travel": 0.15,
+    "evidence_completeness": 0.15
+  }
+}

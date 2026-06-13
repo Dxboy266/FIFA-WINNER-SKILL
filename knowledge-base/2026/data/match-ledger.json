@@ -1,0 +1,2879 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-13T09:23:08.220844+00:00",
+  "mode": "worldcup-local-match-ledger-compat-view",
+  "summary": {
+    "match_count": 104,
+    "group_stage_matches": 72,
+    "knockout_matches": 32,
+    "source_policy": "canonical_fifa_schedule_facts_only_local_predictions_excluded",
+    "public_base": true,
+    "local_overrides": 103,
+    "compat_note": "Canonical facts live in knowledge-base/public; local match state lives in match-overrides.json."
+  },
+  "matches": [
+    {
+      "match_id": "2026-GA-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "A",
+      "match_number": 1,
+      "kickoff_at": "2026-06-11T19:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "status": "final",
+      "home_team": {
+        "team_id": "mex",
+        "name": "Mexico",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "rsa",
+        "name": "South Africa",
+        "slot": 2
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-11.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": {
+        "home": 2,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-12T09:20:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn-match-centre",
+            "tier": "T3",
+            "url": "https://www.espn.co.uk/football/match/_/gameId/760415/south-africa-mexico",
+            "observed_result": "Mexico 2-0 South Africa"
+          },
+          {
+            "source_id": "ap-live-report",
+            "tier": "T3",
+            "url": "https://apnews.com/live/world-cup-mexico-south-africa-2026-updates",
+            "observed_result": "Mexico 2-0 South Africa"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GA-01",
+        "status": "evaluated",
+        "fixture": "Mexico vs South Africa",
+        "evaluated_at": "2026-06-12T21:22:00+08:00",
+        "prediction_snapshot": {
+          "predicted_result": "home_win",
+          "predicted_score": {
+            "home": 2,
+            "away": 1
+          },
+          "predicted_total_goals": 3,
+          "goals_line_2_5": "over",
+          "confidence": "medium"
+        },
+        "predicted_result": "home_win",
+        "predicted_score": {
+          "home": 2,
+          "away": 1
+        },
+        "predicted_total_goals": 3,
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 2,
+          "away": 0
+        },
+        "actual_total_goals": 2,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "goal_errors": {
+          "home_goal_error": 0,
+          "away_goal_error": -1,
+          "total_goal_error": -1,
+          "goal_margin_error": 1
+        },
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GA-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "A",
+      "match_number": 2,
+      "kickoff_at": "2026-06-12T02:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "status": "final",
+      "home_team": {
+        "team_id": "kor",
+        "name": "South Korea",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "cze",
+        "name": "Czechia",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-12.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": {
+        "home": 2,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-12T09:20:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn-match-centre",
+            "tier": "T3",
+            "url": "https://www.espn.com.au/football/match/_/gameId/760414/czechia-south-korea",
+            "observed_result": "South Korea 2-1 Czechia"
+          },
+          {
+            "source_id": "sky-sports-match-report",
+            "tier": "T3",
+            "url": "https://www.skysports.com/football/korea-rep-vs-czech-rep/report/549766",
+            "observed_result": "South Korea 2-1 Czechia"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GA-02",
+        "status": "evaluated",
+        "fixture": "South Korea vs Czechia",
+        "evaluated_at": "2026-06-12T21:22:00+08:00",
+        "prediction_snapshot": {
+          "predicted_result": "home_win",
+          "predicted_score": {
+            "home": 1,
+            "away": 0
+          },
+          "predicted_total_goals": 1,
+          "goals_line_2_5": "under",
+          "confidence": "medium"
+        },
+        "predicted_result": "home_win",
+        "predicted_score": {
+          "home": 1,
+          "away": 0
+        },
+        "predicted_total_goals": 1,
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 2,
+          "away": 1
+        },
+        "actual_total_goals": 3,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "goal_errors": {
+          "home_goal_error": 1,
+          "away_goal_error": 1,
+          "total_goal_error": 2,
+          "goal_margin_error": 0
+        },
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GA-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "A",
+      "match_number": 3,
+      "kickoff_at": "2026-06-18T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "cze",
+        "name": "Czechia",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "rsa",
+        "name": "South Africa",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-18.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GA-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "A",
+      "match_number": 4,
+      "kickoff_at": "2026-06-19T03:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "mex",
+        "name": "Mexico",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "kor",
+        "name": "South Korea",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-19.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GA-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "A",
+      "match_number": 5,
+      "kickoff_at": "2026-06-25T01:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "cze",
+        "name": "Czechia",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "mex",
+        "name": "Mexico",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GA-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "A",
+      "match_number": 6,
+      "kickoff_at": "2026-06-25T01:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "rsa",
+        "name": "South Africa",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "kor",
+        "name": "South Korea",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "B",
+      "match_number": 7,
+      "kickoff_at": "2026-06-12T19:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "status": "final",
+      "home_team": {
+        "team_id": "can",
+        "name": "Canada",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "bih",
+        "name": "Bosnia and Herzegovina",
+        "slot": 2
+      },
+      "prediction_report": "data/editions/2026/reports/daily-predictions/2026-06-12.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": {
+        "home": 1,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-13T12:00:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn-match-centre",
+            "tier": "T3",
+            "url": "https://www.espn.com.au/football/match/_/gameId/760416/bosnia-herzegovina-canada",
+            "observed_result": "Canada 1-1 Bosnia and Herzegovina"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GB-01",
+        "status": "evaluated",
+        "fixture": "Canada vs Bosnia and Herzegovina",
+        "evaluated_at": "2026-06-13T20:00:00+08:00",
+        "prediction_snapshot": {
+          "predicted_result": "draw",
+          "predicted_score": {
+            "home": 1,
+            "away": 1
+          },
+          "predicted_total_goals": 2,
+          "goals_line_2_5": "under",
+          "confidence": "low"
+        },
+        "predicted_result": "draw",
+        "predicted_score": {
+          "home": 1,
+          "away": 1
+        },
+        "predicted_total_goals": 2,
+        "prediction_confidence": "low",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 1,
+          "away": 1
+        },
+        "actual_total_goals": 2,
+        "result_hit": true,
+        "score_hit": true,
+        "total_goals_hit": true,
+        "goal_errors": {
+          "home_goal_error": 0,
+          "away_goal_error": 0,
+          "total_goal_error": 0,
+          "goal_margin_error": 0
+        },
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "B",
+      "match_number": 8,
+      "kickoff_at": "2026-06-13T19:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "qat",
+        "name": "Qatar",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "sui",
+        "name": "Switzerland",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-13.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "B",
+      "match_number": 9,
+      "kickoff_at": "2026-06-18T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "sui",
+        "name": "Switzerland",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "bih",
+        "name": "Bosnia and Herzegovina",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-18.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "B",
+      "match_number": 10,
+      "kickoff_at": "2026-06-18T22:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "can",
+        "name": "Canada",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "qat",
+        "name": "Qatar",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-18.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "B",
+      "match_number": 11,
+      "kickoff_at": "2026-06-24T19:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "sui",
+        "name": "Switzerland",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "can",
+        "name": "Canada",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "B",
+      "match_number": 12,
+      "kickoff_at": "2026-06-24T19:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "bih",
+        "name": "Bosnia and Herzegovina",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "qat",
+        "name": "Qatar",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "C",
+      "match_number": 13,
+      "kickoff_at": "2026-06-13T22:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "bra",
+        "name": "Brazil",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "mar",
+        "name": "Morocco",
+        "slot": 2
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-13.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "C",
+      "match_number": 14,
+      "kickoff_at": "2026-06-14T01:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "hai",
+        "name": "Haiti",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "sco",
+        "name": "Scotland",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "C",
+      "match_number": 15,
+      "kickoff_at": "2026-06-19T22:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "sco",
+        "name": "Scotland",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "mar",
+        "name": "Morocco",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-19.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "C",
+      "match_number": 16,
+      "kickoff_at": "2026-06-20T01:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "bra",
+        "name": "Brazil",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "hai",
+        "name": "Haiti",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-20.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "C",
+      "match_number": 17,
+      "kickoff_at": "2026-06-24T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "sco",
+        "name": "Scotland",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "bra",
+        "name": "Brazil",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "C",
+      "match_number": 18,
+      "kickoff_at": "2026-06-24T22:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "mar",
+        "name": "Morocco",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "hai",
+        "name": "Haiti",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GD-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "D",
+      "match_number": 19,
+      "kickoff_at": "2026-06-13T01:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "status": "final",
+      "home_team": {
+        "team_id": "usa",
+        "name": "United States",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "par",
+        "name": "Paraguay",
+        "slot": 2
+      },
+      "prediction_report": "",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": {
+        "home": 4,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-13T12:00:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn-match-centre",
+            "tier": "T3",
+            "url": "https://www.espn.co.uk/football/match/_/gameId/760417/paraguay-united-states",
+            "observed_result": "United States 4-1 Paraguay"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GD-01",
+        "status": "evaluated",
+        "fixture": "United States vs Paraguay",
+        "evaluated_at": "2026-06-13T20:00:00+08:00",
+        "prediction_snapshot": {
+          "predicted_result": "home_win",
+          "predicted_score": {
+            "home": 2,
+            "away": 1
+          },
+          "predicted_total_goals": 3,
+          "goals_line_2_5": "over",
+          "confidence": "low"
+        },
+        "predicted_result": "home_win",
+        "predicted_score": {
+          "home": 2,
+          "away": 1
+        },
+        "predicted_total_goals": 3,
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 4,
+          "away": 1
+        },
+        "actual_total_goals": 5,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "goal_errors": {
+          "home_goal_error": 2,
+          "away_goal_error": 0,
+          "total_goal_error": 2,
+          "goal_margin_error": 2
+        },
+        "prediction_kept_locked": true
+      }
+    },
+    {
+      "match_id": "2026-GD-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "D",
+      "match_number": 20,
+      "kickoff_at": "2026-06-14T04:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "aus",
+        "name": "Australia",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "tur",
+        "name": "Türkiye",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GD-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "D",
+      "match_number": 21,
+      "kickoff_at": "2026-06-19T19:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "usa",
+        "name": "United States",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "aus",
+        "name": "Australia",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-19.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GD-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "D",
+      "match_number": 22,
+      "kickoff_at": "2026-06-20T04:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "tur",
+        "name": "Türkiye",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "par",
+        "name": "Paraguay",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-20.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GD-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "D",
+      "match_number": 23,
+      "kickoff_at": "2026-06-26T02:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "tur",
+        "name": "Türkiye",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "usa",
+        "name": "United States",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-26.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GD-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "D",
+      "match_number": 24,
+      "kickoff_at": "2026-06-26T02:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "par",
+        "name": "Paraguay",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "aus",
+        "name": "Australia",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-26.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "E",
+      "match_number": 25,
+      "kickoff_at": "2026-06-14T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "ger",
+        "name": "Germany",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "cuw",
+        "name": "Curaçao",
+        "slot": 2
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "E",
+      "match_number": 26,
+      "kickoff_at": "2026-06-14T23:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "civ",
+        "name": "Ivory Coast",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "ecu",
+        "name": "Ecuador",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "E",
+      "match_number": 27,
+      "kickoff_at": "2026-06-20T20:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "ger",
+        "name": "Germany",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "civ",
+        "name": "Ivory Coast",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-20.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "E",
+      "match_number": 28,
+      "kickoff_at": "2026-06-21T00:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "ecu",
+        "name": "Ecuador",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "cuw",
+        "name": "Curaçao",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "E",
+      "match_number": 29,
+      "kickoff_at": "2026-06-25T20:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "ecu",
+        "name": "Ecuador",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "ger",
+        "name": "Germany",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "E",
+      "match_number": 30,
+      "kickoff_at": "2026-06-25T20:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "cuw",
+        "name": "Curaçao",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "civ",
+        "name": "Ivory Coast",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "F",
+      "match_number": 31,
+      "kickoff_at": "2026-06-14T20:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "ned",
+        "name": "Netherlands",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "jpn",
+        "name": "Japan",
+        "slot": 2
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "F",
+      "match_number": 32,
+      "kickoff_at": "2026-06-15T02:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "swe",
+        "name": "Sweden",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "tun",
+        "name": "Tunisia",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-15.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "F",
+      "match_number": 33,
+      "kickoff_at": "2026-06-20T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "ned",
+        "name": "Netherlands",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "swe",
+        "name": "Sweden",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-20.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "F",
+      "match_number": 34,
+      "kickoff_at": "2026-06-21T04:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "tun",
+        "name": "Tunisia",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "jpn",
+        "name": "Japan",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "F",
+      "match_number": 35,
+      "kickoff_at": "2026-06-25T23:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "jpn",
+        "name": "Japan",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "swe",
+        "name": "Sweden",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "F",
+      "match_number": 36,
+      "kickoff_at": "2026-06-25T23:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "tun",
+        "name": "Tunisia",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "ned",
+        "name": "Netherlands",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "G",
+      "match_number": 37,
+      "kickoff_at": "2026-06-15T22:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "bel",
+        "name": "Belgium",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "egy",
+        "name": "Egypt",
+        "slot": 2
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-15.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "G",
+      "match_number": 38,
+      "kickoff_at": "2026-06-16T04:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "irn",
+        "name": "Iran",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "nzl",
+        "name": "New Zealand",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-16.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "G",
+      "match_number": 39,
+      "kickoff_at": "2026-06-21T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "bel",
+        "name": "Belgium",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "irn",
+        "name": "Iran",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "G",
+      "match_number": 40,
+      "kickoff_at": "2026-06-22T01:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "nzl",
+        "name": "New Zealand",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "egy",
+        "name": "Egypt",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-22.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "G",
+      "match_number": 41,
+      "kickoff_at": "2026-06-27T03:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "egy",
+        "name": "Egypt",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "irn",
+        "name": "Iran",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "G",
+      "match_number": 42,
+      "kickoff_at": "2026-06-27T03:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "nzl",
+        "name": "New Zealand",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "bel",
+        "name": "Belgium",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "H",
+      "match_number": 43,
+      "kickoff_at": "2026-06-15T17:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "esp",
+        "name": "Spain",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "cpv",
+        "name": "Cape Verde",
+        "slot": 2
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-15.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "H",
+      "match_number": 44,
+      "kickoff_at": "2026-06-15T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "ksa",
+        "name": "Saudi Arabia",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "uru",
+        "name": "Uruguay",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-15.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "H",
+      "match_number": 45,
+      "kickoff_at": "2026-06-21T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "esp",
+        "name": "Spain",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "ksa",
+        "name": "Saudi Arabia",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "H",
+      "match_number": 46,
+      "kickoff_at": "2026-06-21T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "uru",
+        "name": "Uruguay",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "cpv",
+        "name": "Cape Verde",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "H",
+      "match_number": 47,
+      "kickoff_at": "2026-06-27T00:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "cpv",
+        "name": "Cape Verde",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "ksa",
+        "name": "Saudi Arabia",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "H",
+      "match_number": 48,
+      "kickoff_at": "2026-06-27T00:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "uru",
+        "name": "Uruguay",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "esp",
+        "name": "Spain",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "I",
+      "match_number": 49,
+      "kickoff_at": "2026-06-16T19:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "fra",
+        "name": "France",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "sen",
+        "name": "Senegal",
+        "slot": 2
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-16.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "I",
+      "match_number": 50,
+      "kickoff_at": "2026-06-16T22:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "irq",
+        "name": "Iraq",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "nor",
+        "name": "Norway",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-16.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "I",
+      "match_number": 51,
+      "kickoff_at": "2026-06-22T21:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "fra",
+        "name": "France",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "irq",
+        "name": "Iraq",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-22.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "I",
+      "match_number": 52,
+      "kickoff_at": "2026-06-23T00:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "nor",
+        "name": "Norway",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "sen",
+        "name": "Senegal",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "I",
+      "match_number": 53,
+      "kickoff_at": "2026-06-26T19:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "nor",
+        "name": "Norway",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "fra",
+        "name": "France",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-26.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "I",
+      "match_number": 54,
+      "kickoff_at": "2026-06-26T19:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "sen",
+        "name": "Senegal",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "irq",
+        "name": "Iraq",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-26.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "J",
+      "match_number": 55,
+      "kickoff_at": "2026-06-17T01:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "arg",
+        "name": "Argentina",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "alg",
+        "name": "Algeria",
+        "slot": 2
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "J",
+      "match_number": 56,
+      "kickoff_at": "2026-06-17T04:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "aut",
+        "name": "Austria",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "jor",
+        "name": "Jordan",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "J",
+      "match_number": 57,
+      "kickoff_at": "2026-06-22T17:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "arg",
+        "name": "Argentina",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "aut",
+        "name": "Austria",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-22.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "J",
+      "match_number": 58,
+      "kickoff_at": "2026-06-23T03:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "jor",
+        "name": "Jordan",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "alg",
+        "name": "Algeria",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "J",
+      "match_number": 59,
+      "kickoff_at": "2026-06-28T02:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "alg",
+        "name": "Algeria",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "aut",
+        "name": "Austria",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-28.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "J",
+      "match_number": 60,
+      "kickoff_at": "2026-06-28T02:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "jor",
+        "name": "Jordan",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "arg",
+        "name": "Argentina",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-28.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "K",
+      "match_number": 61,
+      "kickoff_at": "2026-06-17T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "por",
+        "name": "Portugal",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "cod",
+        "name": "DR Congo",
+        "slot": 2
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "K",
+      "match_number": 62,
+      "kickoff_at": "2026-06-18T02:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "uzb",
+        "name": "Uzbekistan",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "col",
+        "name": "Colombia",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-18.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "K",
+      "match_number": 63,
+      "kickoff_at": "2026-06-23T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "por",
+        "name": "Portugal",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "uzb",
+        "name": "Uzbekistan",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "K",
+      "match_number": 64,
+      "kickoff_at": "2026-06-24T02:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "col",
+        "name": "Colombia",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "cod",
+        "name": "DR Congo",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "K",
+      "match_number": 65,
+      "kickoff_at": "2026-06-27T23:30:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "col",
+        "name": "Colombia",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "por",
+        "name": "Portugal",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "K",
+      "match_number": 66,
+      "kickoff_at": "2026-06-27T23:30:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "cod",
+        "name": "DR Congo",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "uzb",
+        "name": "Uzbekistan",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-01",
+      "edition": "2026",
+      "phase": "group",
+      "group": "L",
+      "match_number": 67,
+      "kickoff_at": "2026-06-17T20:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "eng",
+        "name": "England",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "cro",
+        "name": "Croatia",
+        "slot": 2
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-02",
+      "edition": "2026",
+      "phase": "group",
+      "group": "L",
+      "match_number": 68,
+      "kickoff_at": "2026-06-17T23:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "gha",
+        "name": "Ghana",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "pan",
+        "name": "Panama",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-03",
+      "edition": "2026",
+      "phase": "group",
+      "group": "L",
+      "match_number": 69,
+      "kickoff_at": "2026-06-23T20:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "eng",
+        "name": "England",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "gha",
+        "name": "Ghana",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-04",
+      "edition": "2026",
+      "phase": "group",
+      "group": "L",
+      "match_number": 70,
+      "kickoff_at": "2026-06-23T23:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "pan",
+        "name": "Panama",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "cro",
+        "name": "Croatia",
+        "slot": 4
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-05",
+      "edition": "2026",
+      "phase": "group",
+      "group": "L",
+      "match_number": 71,
+      "kickoff_at": "2026-06-27T21:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "pan",
+        "name": "Panama",
+        "slot": 4
+      },
+      "away_team": {
+        "team_id": "eng",
+        "name": "England",
+        "slot": 1
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-06",
+      "edition": "2026",
+      "phase": "group",
+      "group": "L",
+      "match_number": 72,
+      "kickoff_at": "2026-06-27T21:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "status": "fixture_official",
+      "home_team": {
+        "team_id": "cro",
+        "name": "Croatia",
+        "slot": 2
+      },
+      "away_team": {
+        "team_id": "gha",
+        "name": "Ghana",
+        "slot": 3
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-01",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 73,
+      "kickoff_at": "2026-06-28T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-1",
+        "name": "Group A runners-up"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-1",
+        "name": "Group B runners-up"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-28.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-02",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 74,
+      "kickoff_at": "2026-06-29T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-2",
+        "name": "Group C winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-2",
+        "name": "Group F runners-up"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-29.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-03",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 75,
+      "kickoff_at": "2026-06-29T20:30:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-3",
+        "name": "Group E winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-3",
+        "name": "Group A/B/C/D/F third place"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-29.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-04",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 76,
+      "kickoff_at": "2026-06-30T01:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-4",
+        "name": "Group F winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-4",
+        "name": "Group C runners-up"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-30.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-05",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 77,
+      "kickoff_at": "2026-06-30T17:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-5",
+        "name": "Group E runners-up"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-5",
+        "name": "Group I runners-up"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-30.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-06",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 78,
+      "kickoff_at": "2026-06-30T21:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-6",
+        "name": "Group I winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-6",
+        "name": "Group C/D/F/G/H third place"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-30.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-07",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 79,
+      "kickoff_at": "2026-07-01T01:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-7",
+        "name": "Group A winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-7",
+        "name": "Group C/E/F/H/I third place"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-01.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-08",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 80,
+      "kickoff_at": "2026-07-01T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-8",
+        "name": "Group L winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-8",
+        "name": "Group E/H/I/J/K third place"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-01.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-09",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 81,
+      "kickoff_at": "2026-07-01T20:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-9",
+        "name": "Group G winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-9",
+        "name": "Group A/E/H/I/J third place"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-01.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-10",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 82,
+      "kickoff_at": "2026-07-02T00:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-10",
+        "name": "Group D winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-10",
+        "name": "Group B/E/F/I/J third place"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-02.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-11",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 83,
+      "kickoff_at": "2026-07-02T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-11",
+        "name": "Group H winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-11",
+        "name": "Group J runners-up"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-02.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-12",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 84,
+      "kickoff_at": "2026-07-02T23:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-12",
+        "name": "Group K runners-up"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-12",
+        "name": "Group L runners-up"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-02.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-13",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 85,
+      "kickoff_at": "2026-07-03T03:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-13",
+        "name": "Group B winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-13",
+        "name": "Group E/F/G/I/J third place"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-03.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-14",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 86,
+      "kickoff_at": "2026-07-03T18:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-14",
+        "name": "Group D runners-up"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-14",
+        "name": "Group G runners-up"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-03.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-15",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 87,
+      "kickoff_at": "2026-07-03T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-15",
+        "name": "Group J winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-15",
+        "name": "Group H runners-up"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-03.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-16",
+      "edition": "2026",
+      "phase": "round_of_32",
+      "group": "",
+      "match_number": 88,
+      "kickoff_at": "2026-07-04T01:30:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_32-home-16",
+        "name": "Group K winners"
+      },
+      "away_team": {
+        "team_id": "round_of_32-away-16",
+        "name": "Group D/E/I/J/L third place"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-04.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-01",
+      "edition": "2026",
+      "phase": "round_of_16",
+      "group": "",
+      "match_number": 89,
+      "kickoff_at": "2026-07-04T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_16-home-1",
+        "name": "W73"
+      },
+      "away_team": {
+        "team_id": "round_of_16-away-1",
+        "name": "W74"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-04.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-02",
+      "edition": "2026",
+      "phase": "round_of_16",
+      "group": "",
+      "match_number": 90,
+      "kickoff_at": "2026-07-04T21:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_16-home-2",
+        "name": "W75"
+      },
+      "away_team": {
+        "team_id": "round_of_16-away-2",
+        "name": "W76"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-04.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-03",
+      "edition": "2026",
+      "phase": "round_of_16",
+      "group": "",
+      "match_number": 91,
+      "kickoff_at": "2026-07-05T20:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_16-home-3",
+        "name": "W77"
+      },
+      "away_team": {
+        "team_id": "round_of_16-away-3",
+        "name": "W78"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-05.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-04",
+      "edition": "2026",
+      "phase": "round_of_16",
+      "group": "",
+      "match_number": 92,
+      "kickoff_at": "2026-07-06T00:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_16-home-4",
+        "name": "W79"
+      },
+      "away_team": {
+        "team_id": "round_of_16-away-4",
+        "name": "W80"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-06.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-05",
+      "edition": "2026",
+      "phase": "round_of_16",
+      "group": "",
+      "match_number": 93,
+      "kickoff_at": "2026-07-06T19:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_16-home-5",
+        "name": "W81"
+      },
+      "away_team": {
+        "team_id": "round_of_16-away-5",
+        "name": "W82"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-06.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-06",
+      "edition": "2026",
+      "phase": "round_of_16",
+      "group": "",
+      "match_number": 94,
+      "kickoff_at": "2026-07-06T21:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_16-home-6",
+        "name": "W83"
+      },
+      "away_team": {
+        "team_id": "round_of_16-away-6",
+        "name": "W84"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-06.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-07",
+      "edition": "2026",
+      "phase": "round_of_16",
+      "group": "",
+      "match_number": 95,
+      "kickoff_at": "2026-07-07T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_16-home-7",
+        "name": "W85"
+      },
+      "away_team": {
+        "team_id": "round_of_16-away-7",
+        "name": "W86"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-07.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-08",
+      "edition": "2026",
+      "phase": "round_of_16",
+      "group": "",
+      "match_number": 96,
+      "kickoff_at": "2026-07-07T20:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "round_of_16-home-8",
+        "name": "W87"
+      },
+      "away_team": {
+        "team_id": "round_of_16-away-8",
+        "name": "W88"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-07.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-QF-01",
+      "edition": "2026",
+      "phase": "quarter_final",
+      "group": "",
+      "match_number": 97,
+      "kickoff_at": "2026-07-09T20:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "quarter_final-home-1",
+        "name": "W89"
+      },
+      "away_team": {
+        "team_id": "quarter_final-away-1",
+        "name": "W90"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-09.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-QF-02",
+      "edition": "2026",
+      "phase": "quarter_final",
+      "group": "",
+      "match_number": 98,
+      "kickoff_at": "2026-07-10T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "quarter_final-home-2",
+        "name": "W91"
+      },
+      "away_team": {
+        "team_id": "quarter_final-away-2",
+        "name": "W92"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-10.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-QF-03",
+      "edition": "2026",
+      "phase": "quarter_final",
+      "group": "",
+      "match_number": 99,
+      "kickoff_at": "2026-07-11T21:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "quarter_final-home-3",
+        "name": "W93"
+      },
+      "away_team": {
+        "team_id": "quarter_final-away-3",
+        "name": "W94"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-11.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-QF-04",
+      "edition": "2026",
+      "phase": "quarter_final",
+      "group": "",
+      "match_number": 100,
+      "kickoff_at": "2026-07-12T01:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "quarter_final-home-4",
+        "name": "W95"
+      },
+      "away_team": {
+        "team_id": "quarter_final-away-4",
+        "name": "W96"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-12.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-SF-01",
+      "edition": "2026",
+      "phase": "semi_final",
+      "group": "",
+      "match_number": 101,
+      "kickoff_at": "2026-07-14T19:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "semi_final-home-1",
+        "name": "W97"
+      },
+      "away_team": {
+        "team_id": "semi_final-away-1",
+        "name": "W98"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-14.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-SF-02",
+      "edition": "2026",
+      "phase": "semi_final",
+      "group": "",
+      "match_number": 102,
+      "kickoff_at": "2026-07-15T19:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "semi_final-home-2",
+        "name": "W99"
+      },
+      "away_team": {
+        "team_id": "semi_final-away-2",
+        "name": "W100"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-15.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-TP-01",
+      "edition": "2026",
+      "phase": "third_place",
+      "group": "",
+      "match_number": 103,
+      "kickoff_at": "2026-07-18T21:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "third_place-home-1",
+        "name": "L101"
+      },
+      "away_team": {
+        "team_id": "third_place-away-1",
+        "name": "L102"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-18.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-F-01",
+      "edition": "2026",
+      "phase": "final",
+      "group": "",
+      "match_number": 104,
+      "kickoff_at": "2026-07-19T19:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "status": "knockout_placeholder_until_teams_known",
+      "home_team": {
+        "team_id": "final-home-1",
+        "name": "W101"
+      },
+      "away_team": {
+        "team_id": "final-away-1",
+        "name": "W102"
+      },
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-19.json",
+      "poster_manifest": "",
+      "poster_outputs": [],
+      "final_score": null,
+      "evaluation": null,
+      "prediction_status": "locked_pre_match_prediction"
+    }
+  ],
+  "safety_invariants": [
+    "public_ledger_contains_canonical_104_match_ids_only",
+    "local_prediction_reports_and_evaluations_are_not_stored_in_public_layer",
+    "external_reference_schedules_must_be_reviewed_before_promotion_to_canonical",
+    "public_facts_are_loaded_before_local_prediction_overrides",
+    "legacy_local_match_ledgers_cannot_add_noncanonical_fixture_cards"
+  ]
+}

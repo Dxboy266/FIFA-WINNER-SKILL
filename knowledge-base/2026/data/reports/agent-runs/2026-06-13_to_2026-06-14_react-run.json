@@ -1,0 +1,361 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-13T17:30:00+08:00",
+  "mode": "octopus-bounded-react-runner",
+  "date_range": {
+    "start": "2026-06-13",
+    "end": "2026-06-14"
+  },
+  "dates": [
+    "2026-06-13",
+    "2026-06-14"
+  ],
+  "summary": {
+    "matches_inspected": 8,
+    "predictions_created": 7,
+    "matches_skipped_started_or_locked": 1,
+    "sporttery_raw_count": 44,
+    "sporttery_matched_count": 0,
+    "sporttery_unavailable_count": 8,
+    "news_items": 0
+  },
+  "days": [
+    {
+      "date": "2026-06-13",
+      "matches": [
+        {
+          "match_id": "2026-GB-02",
+          "kickoff_at": "2026-06-13T19:00:00Z",
+          "home": "Qatar",
+          "away": "Switzerland",
+          "status": "fixture_official"
+        },
+        {
+          "match_id": "2026-GC-01",
+          "kickoff_at": "2026-06-13T22:00:00Z",
+          "home": "Brazil",
+          "away": "Morocco",
+          "status": "fixture_official"
+        },
+        {
+          "match_id": "2026-GD-01",
+          "kickoff_at": "2026-06-13T01:00:00Z",
+          "home": "United States",
+          "away": "Paraguay",
+          "status": "final"
+        }
+      ],
+      "actions": {
+        "sporttery": {
+          "status": "sporttery_odds_updated",
+          "date": "2026-06-13",
+          "matches_count": 3,
+          "sporttery_raw_count": 22,
+          "matched_count": 0,
+          "unavailable_count": 3,
+          "source_url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+          "error": "",
+          "matches": [
+            {
+              "match_id": "2026-GB-02",
+              "referee": null,
+              "odds": {
+                "status": "unavailable",
+                "source": "odds_unavailable",
+                "reason": "sporttery odds not matched",
+                "is_mock": false
+              },
+              "sentiment": null
+            },
+            {
+              "match_id": "2026-GC-01",
+              "referee": null,
+              "odds": {
+                "status": "unavailable",
+                "source": "odds_unavailable",
+                "reason": "sporttery odds not matched",
+                "is_mock": false
+              },
+              "sentiment": null
+            },
+            {
+              "match_id": "2026-GD-01",
+              "referee": null,
+              "odds": {
+                "status": "unavailable",
+                "source": "odds_unavailable",
+                "reason": "sporttery odds not matched",
+                "is_mock": false
+              },
+              "sentiment": null
+            }
+          ]
+        },
+        "news": {
+          "status": "news_updated",
+          "date": "2026-06-13",
+          "added_count": 0,
+          "total_news_count": 13
+        },
+        "briefing": {
+          "data_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\intelligence\\2026-06-13.json",
+          "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\reports\\intelligence\\2026-06-13.md",
+          "matches": 3
+        },
+        "predictions": {
+          "status": "created",
+          "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-13.json",
+          "predictions_created": 2,
+          "locked_existing_predictions": 0,
+          "matches_skipped_started": 1
+        }
+      }
+    },
+    {
+      "date": "2026-06-14",
+      "matches": [
+        {
+          "match_id": "2026-GC-02",
+          "kickoff_at": "2026-06-14T01:00:00Z",
+          "home": "Haiti",
+          "away": "Scotland",
+          "status": "fixture_official"
+        },
+        {
+          "match_id": "2026-GD-02",
+          "kickoff_at": "2026-06-14T04:00:00Z",
+          "home": "Australia",
+          "away": "Türkiye",
+          "status": "fixture_official"
+        },
+        {
+          "match_id": "2026-GE-01",
+          "kickoff_at": "2026-06-14T17:00:00Z",
+          "home": "Germany",
+          "away": "Curaçao",
+          "status": "fixture_official"
+        },
+        {
+          "match_id": "2026-GE-02",
+          "kickoff_at": "2026-06-14T23:00:00Z",
+          "home": "Ivory Coast",
+          "away": "Ecuador",
+          "status": "fixture_official"
+        },
+        {
+          "match_id": "2026-GF-01",
+          "kickoff_at": "2026-06-14T20:00:00Z",
+          "home": "Netherlands",
+          "away": "Japan",
+          "status": "fixture_official"
+        }
+      ],
+      "actions": {
+        "sporttery": {
+          "status": "sporttery_odds_updated",
+          "date": "2026-06-14",
+          "matches_count": 5,
+          "sporttery_raw_count": 22,
+          "matched_count": 0,
+          "unavailable_count": 5,
+          "source_url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+          "error": "",
+          "matches": [
+            {
+              "match_id": "2026-GC-02",
+              "referee": null,
+              "odds": {
+                "status": "unavailable",
+                "source": "odds_unavailable",
+                "reason": "sporttery odds not matched",
+                "is_mock": false
+              },
+              "sentiment": null
+            },
+            {
+              "match_id": "2026-GD-02",
+              "referee": null,
+              "odds": {
+                "status": "unavailable",
+                "source": "odds_unavailable",
+                "reason": "sporttery odds not matched",
+                "is_mock": false
+              },
+              "sentiment": null
+            },
+            {
+              "match_id": "2026-GE-01",
+              "referee": null,
+              "odds": {
+                "status": "unavailable",
+                "source": "odds_unavailable",
+                "reason": "sporttery odds not matched",
+                "is_mock": false
+              },
+              "sentiment": null
+            },
+            {
+              "match_id": "2026-GE-02",
+              "referee": null,
+              "odds": {
+                "status": "unavailable",
+                "source": "odds_unavailable",
+                "reason": "sporttery odds not matched",
+                "is_mock": false
+              },
+              "sentiment": null
+            },
+            {
+              "match_id": "2026-GF-01",
+              "referee": null,
+              "odds": {
+                "status": "unavailable",
+                "source": "odds_unavailable",
+                "reason": "sporttery odds not matched",
+                "is_mock": false
+              },
+              "sentiment": null
+            }
+          ]
+        },
+        "news": {
+          "status": "news_updated",
+          "date": "2026-06-14",
+          "added_count": 0,
+          "total_news_count": 2
+        },
+        "briefing": {
+          "data_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\intelligence\\2026-06-14.json",
+          "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\reports\\intelligence\\2026-06-14.md",
+          "matches": 5
+        },
+        "predictions": {
+          "status": "created",
+          "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+          "predictions_created": 5,
+          "locked_existing_predictions": 0,
+          "matches_skipped_started": 0
+        }
+      }
+    }
+  ],
+  "dashboard": {
+    "data_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\dashboard\\prediction-dashboard.json",
+    "html_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\dashboard\\index.html",
+    "cards": 104
+  },
+  "trace": [
+    {
+      "step": "2026-06-13:inspect_schedule",
+      "thought": "Identify canonical matches before touching evidence or predictions.",
+      "action": "load_match_ledger + canonical_matches",
+      "result": {
+        "matches": 3
+      }
+    },
+    {
+      "step": "2026-06-13:fetch_sporttery_odds",
+      "thought": "Market odds are useful only when sourced and matched; unmatched odds are marked unavailable.",
+      "action": "update_sporttery_odds_in_evidence",
+      "result": {
+        "raw": 22,
+        "matched": 0,
+        "unavailable": 3
+      }
+    },
+    {
+      "step": "2026-06-13:fetch_news",
+      "thought": "Late news can affect confidence and evidence completeness.",
+      "action": "update_news_in_evidence",
+      "result": {
+        "status": "news_updated",
+        "items": 0
+      }
+    },
+    {
+      "step": "2026-06-13:write_briefing",
+      "thought": "Generate an evidence gap briefing before locking predictions.",
+      "action": "write_intelligence_briefing",
+      "result": {
+        "data_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\intelligence\\2026-06-13.json",
+        "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\reports\\intelligence\\2026-06-13.md",
+        "matches": 3
+      }
+    },
+    {
+      "step": "2026-06-13:run_predictions",
+      "thought": "Lock only pre-match predictions; existing daily reports are not overwritten.",
+      "action": "run_daily_predictions",
+      "result": {
+        "status": "created",
+        "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-13.json",
+        "predictions_created": 2,
+        "locked_existing_predictions": 0,
+        "matches_skipped_started": 1
+      }
+    },
+    {
+      "step": "2026-06-14:inspect_schedule",
+      "thought": "Identify canonical matches before touching evidence or predictions.",
+      "action": "load_match_ledger + canonical_matches",
+      "result": {
+        "matches": 5
+      }
+    },
+    {
+      "step": "2026-06-14:fetch_sporttery_odds",
+      "thought": "Market odds are useful only when sourced and matched; unmatched odds are marked unavailable.",
+      "action": "update_sporttery_odds_in_evidence",
+      "result": {
+        "raw": 22,
+        "matched": 0,
+        "unavailable": 5
+      }
+    },
+    {
+      "step": "2026-06-14:fetch_news",
+      "thought": "Late news can affect confidence and evidence completeness.",
+      "action": "update_news_in_evidence",
+      "result": {
+        "status": "news_updated",
+        "items": 0
+      }
+    },
+    {
+      "step": "2026-06-14:write_briefing",
+      "thought": "Generate an evidence gap briefing before locking predictions.",
+      "action": "write_intelligence_briefing",
+      "result": {
+        "data_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\intelligence\\2026-06-14.json",
+        "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\reports\\intelligence\\2026-06-14.md",
+        "matches": 5
+      }
+    },
+    {
+      "step": "2026-06-14:run_predictions",
+      "thought": "Lock only pre-match predictions; existing daily reports are not overwritten.",
+      "action": "run_daily_predictions",
+      "result": {
+        "status": "created",
+        "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+        "predictions_created": 5,
+        "locked_existing_predictions": 0,
+        "matches_skipped_started": 0
+      }
+    },
+    {
+      "step": "write_dashboard",
+      "thought": "Refresh the user-facing data product after evidence and predictions change.",
+      "action": "write_visual_dashboard",
+      "result": {
+        "data_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\dashboard\\prediction-dashboard.json",
+        "html_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\dashboard\\index.html",
+        "cards": 104
+      }
+    }
+  ],
+  "disclaimer": "娱乐预测与数据研究用途，非投注建议，不得作为购彩、投注或资金决策依据。",
+  "data_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\agent-runs\\2026-06-13_to_2026-06-14_react-run.json",
+  "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\reports\\agent-runs\\2026-06-13_to_2026-06-14_react-run.md"
+}

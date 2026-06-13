@@ -1,0 +1,935 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-12T23:22:43.144674+08:00",
+  "mode": "openfootball-compile",
+  "status": "compiled",
+  "output_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\history\\team-wc-history.json",
+  "summary": {
+    "editions_processed": 19,
+    "editions_with_data": 19,
+    "editions_empty": [],
+    "teams_with_history": 37,
+    "teams_without_history": 11,
+    "total_teams": 48
+  },
+  "teams": [
+    {
+      "team_id": "alg",
+      "name": "Algeria",
+      "code": "ALG",
+      "wc_appearances": 4,
+      "wc_titles": 0,
+      "wc_best_result": "round_of_16",
+      "wc_recent_form": {
+        "2014": "round_of_16",
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 11,
+      "wc_wins": 3,
+      "wc_draws": 2,
+      "wc_losses": 6,
+      "wc_goals_for": 12,
+      "wc_goals_against": 17
+    },
+    {
+      "team_id": "arg",
+      "name": "Argentina",
+      "code": "ARG",
+      "wc_appearances": 16,
+      "wc_titles": 3,
+      "wc_best_result": "winner",
+      "wc_recent_form": {
+        "2014": "runner_up",
+        "2018": "round_of_16",
+        "2022": "winner"
+      },
+      "wc_total_matches": 68,
+      "wc_wins": 42,
+      "wc_draws": 7,
+      "wc_losses": 19,
+      "wc_goals_for": 117,
+      "wc_goals_against": 73
+    },
+    {
+      "team_id": "aus",
+      "name": "Australia",
+      "code": "AUS",
+      "wc_appearances": 4,
+      "wc_titles": 0,
+      "wc_best_result": "round_of_16",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "group_stage",
+        "2022": "round_of_16"
+      },
+      "wc_total_matches": 11,
+      "wc_wins": 2,
+      "wc_draws": 3,
+      "wc_losses": 6,
+      "wc_goals_for": 9,
+      "wc_goals_against": 19
+    },
+    {
+      "team_id": "aut",
+      "name": "Austria",
+      "code": "AUT",
+      "wc_appearances": 6,
+      "wc_titles": 0,
+      "wc_best_result": "third",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 25,
+      "wc_wins": 10,
+      "wc_draws": 4,
+      "wc_losses": 11,
+      "wc_goals_for": 36,
+      "wc_goals_against": 40
+    },
+    {
+      "team_id": "bel",
+      "name": "Belgium",
+      "code": "BEL",
+      "wc_appearances": 12,
+      "wc_titles": 0,
+      "wc_best_result": "fourth",
+      "wc_recent_form": {
+        "2014": "quarterfinal",
+        "2018": "semi_final",
+        "2022": "group_stage"
+      },
+      "wc_total_matches": 40,
+      "wc_wins": 14,
+      "wc_draws": 9,
+      "wc_losses": 17,
+      "wc_goals_for": 45,
+      "wc_goals_against": 58
+    },
+    {
+      "team_id": "bih",
+      "name": "Bosnia And Herzegovina",
+      "code": "BIH",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    },
+    {
+      "team_id": "bra",
+      "name": "Brazil",
+      "code": "BRA",
+      "wc_appearances": 18,
+      "wc_titles": 4,
+      "wc_best_result": "winner",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "group_stage",
+        "2022": "quarterfinal"
+      },
+      "wc_total_matches": 82,
+      "wc_wins": 58,
+      "wc_draws": 10,
+      "wc_losses": 14,
+      "wc_goals_for": 180,
+      "wc_goals_against": 74
+    },
+    {
+      "team_id": "cpv",
+      "name": "Cabo Verde",
+      "code": "CPV",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    },
+    {
+      "team_id": "can",
+      "name": "Canada",
+      "code": "CAN",
+      "wc_appearances": 2,
+      "wc_titles": 0,
+      "wc_best_result": "group_stage",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": "group_stage"
+      },
+      "wc_total_matches": 6,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 6,
+      "wc_goals_for": 2,
+      "wc_goals_against": 12
+    },
+    {
+      "team_id": "col",
+      "name": "Colombia",
+      "code": "COL",
+      "wc_appearances": 6,
+      "wc_titles": 0,
+      "wc_best_result": "quarterfinal",
+      "wc_recent_form": {
+        "2014": "quarterfinal",
+        "2018": "group_stage",
+        "2022": null
+      },
+      "wc_total_matches": 16,
+      "wc_wins": 5,
+      "wc_draws": 2,
+      "wc_losses": 9,
+      "wc_goals_for": 19,
+      "wc_goals_against": 25
+    },
+    {
+      "team_id": "cod",
+      "name": "Congo DR",
+      "code": "COD",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    },
+    {
+      "team_id": "civ",
+      "name": "Côte D'Ivoire",
+      "code": "CIV",
+      "wc_appearances": 2,
+      "wc_titles": 0,
+      "wc_best_result": "group_stage",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 4,
+      "wc_wins": 1,
+      "wc_draws": 0,
+      "wc_losses": 3,
+      "wc_goals_for": 6,
+      "wc_goals_against": 7
+    },
+    {
+      "team_id": "cro",
+      "name": "Croatia",
+      "code": "CRO",
+      "wc_appearances": 5,
+      "wc_titles": 0,
+      "wc_best_result": "runner_up",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "runner_up",
+        "2022": "third"
+      },
+      "wc_total_matches": 23,
+      "wc_wins": 13,
+      "wc_draws": 3,
+      "wc_losses": 7,
+      "wc_goals_for": 30,
+      "wc_goals_against": 23
+    },
+    {
+      "team_id": "cuw",
+      "name": "Curaçao",
+      "code": "CUW",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    },
+    {
+      "team_id": "cze",
+      "name": "Czechia",
+      "code": "CZE",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    },
+    {
+      "team_id": "ecu",
+      "name": "Ecuador",
+      "code": "ECU",
+      "wc_appearances": 4,
+      "wc_titles": 0,
+      "wc_best_result": "round_of_16",
+      "wc_recent_form": {
+        "2014": "group_stage",
+        "2018": null,
+        "2022": "group_stage"
+      },
+      "wc_total_matches": 10,
+      "wc_wins": 4,
+      "wc_draws": 1,
+      "wc_losses": 5,
+      "wc_goals_for": 11,
+      "wc_goals_against": 11
+    },
+    {
+      "team_id": "egy",
+      "name": "Egypt",
+      "code": "EGY",
+      "wc_appearances": 2,
+      "wc_titles": 0,
+      "wc_best_result": "group_stage",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "group_stage",
+        "2022": null
+      },
+      "wc_total_matches": 5,
+      "wc_wins": 0,
+      "wc_draws": 2,
+      "wc_losses": 3,
+      "wc_goals_for": 3,
+      "wc_goals_against": 7
+    },
+    {
+      "team_id": "eng",
+      "name": "England",
+      "code": "ENG",
+      "wc_appearances": 15,
+      "wc_titles": 1,
+      "wc_best_result": "winner",
+      "wc_recent_form": {
+        "2014": "group_stage",
+        "2018": "fourth",
+        "2022": "quarterfinal"
+      },
+      "wc_total_matches": 61,
+      "wc_wins": 27,
+      "wc_draws": 16,
+      "wc_losses": 18,
+      "wc_goals_for": 88,
+      "wc_goals_against": 59
+    },
+    {
+      "team_id": "fra",
+      "name": "France",
+      "code": "FRA",
+      "wc_appearances": 15,
+      "wc_titles": 1,
+      "wc_best_result": "winner",
+      "wc_recent_form": {
+        "2014": "group_stage",
+        "2018": "group_stage",
+        "2022": "runner_up"
+      },
+      "wc_total_matches": 60,
+      "wc_wins": 34,
+      "wc_draws": 7,
+      "wc_losses": 19,
+      "wc_goals_for": 115,
+      "wc_goals_against": 70
+    },
+    {
+      "team_id": "ger",
+      "name": "Germany",
+      "code": "GER",
+      "wc_appearances": 9,
+      "wc_titles": 0,
+      "wc_best_result": "runner_up",
+      "wc_recent_form": {
+        "2014": "group_stage",
+        "2018": "group_stage",
+        "2022": "group_stage"
+      },
+      "wc_total_matches": 30,
+      "wc_wins": 19,
+      "wc_draws": 5,
+      "wc_losses": 6,
+      "wc_goals_for": 60,
+      "wc_goals_against": 31
+    },
+    {
+      "team_id": "gha",
+      "name": "Ghana",
+      "code": "GHA",
+      "wc_appearances": 4,
+      "wc_titles": 0,
+      "wc_best_result": "quarterfinal",
+      "wc_recent_form": {
+        "2014": "group_stage",
+        "2018": null,
+        "2022": "group_stage"
+      },
+      "wc_total_matches": 11,
+      "wc_wins": 4,
+      "wc_draws": 1,
+      "wc_losses": 6,
+      "wc_goals_for": 14,
+      "wc_goals_against": 18
+    },
+    {
+      "team_id": "hai",
+      "name": "Haiti",
+      "code": "HAI",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    },
+    {
+      "team_id": "irn",
+      "name": "IR Iran",
+      "code": "IRN",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    },
+    {
+      "team_id": "irq",
+      "name": "Iraq",
+      "code": "IRQ",
+      "wc_appearances": 1,
+      "wc_titles": 0,
+      "wc_best_result": "group_stage",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 3,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 3,
+      "wc_goals_for": 1,
+      "wc_goals_against": 4
+    },
+    {
+      "team_id": "jpn",
+      "name": "Japan",
+      "code": "JPN",
+      "wc_appearances": 6,
+      "wc_titles": 0,
+      "wc_best_result": "round_of_16",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "round_of_16",
+        "2022": "round_of_16"
+      },
+      "wc_total_matches": 17,
+      "wc_wins": 6,
+      "wc_draws": 1,
+      "wc_losses": 10,
+      "wc_goals_for": 19,
+      "wc_goals_against": 20
+    },
+    {
+      "team_id": "jor",
+      "name": "Jordan",
+      "code": "JOR",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    },
+    {
+      "team_id": "kor",
+      "name": "Korea Republic",
+      "code": "KOR",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    },
+    {
+      "team_id": "mex",
+      "name": "Mexico",
+      "code": "MEX",
+      "wc_appearances": 16,
+      "wc_titles": 0,
+      "wc_best_result": "quarterfinal",
+      "wc_recent_form": {
+        "2014": "round_of_16",
+        "2018": "round_of_16",
+        "2022": "group_stage"
+      },
+      "wc_total_matches": 49,
+      "wc_wins": 12,
+      "wc_draws": 10,
+      "wc_losses": 27,
+      "wc_goals_for": 49,
+      "wc_goals_against": 91
+    },
+    {
+      "team_id": "mar",
+      "name": "Morocco",
+      "code": "MAR",
+      "wc_appearances": 5,
+      "wc_titles": 0,
+      "wc_best_result": "fourth",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "group_stage",
+        "2022": "fourth"
+      },
+      "wc_total_matches": 19,
+      "wc_wins": 6,
+      "wc_draws": 5,
+      "wc_losses": 8,
+      "wc_goals_for": 18,
+      "wc_goals_against": 20
+    },
+    {
+      "team_id": "ned",
+      "name": "Netherlands",
+      "code": "NED",
+      "wc_appearances": 9,
+      "wc_titles": 0,
+      "wc_best_result": "runner_up",
+      "wc_recent_form": {
+        "2014": "third",
+        "2018": null,
+        "2022": "quarterfinal"
+      },
+      "wc_total_matches": 34,
+      "wc_wins": 16,
+      "wc_draws": 8,
+      "wc_losses": 10,
+      "wc_goals_for": 58,
+      "wc_goals_against": 38
+    },
+    {
+      "team_id": "nzl",
+      "name": "New Zealand",
+      "code": "NZL",
+      "wc_appearances": 2,
+      "wc_titles": 0,
+      "wc_best_result": "group_stage",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 5,
+      "wc_wins": 0,
+      "wc_draws": 2,
+      "wc_losses": 3,
+      "wc_goals_for": 3,
+      "wc_goals_against": 13
+    },
+    {
+      "team_id": "nor",
+      "name": "Norway",
+      "code": "NOR",
+      "wc_appearances": 3,
+      "wc_titles": 0,
+      "wc_best_result": "round_of_16",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 8,
+      "wc_wins": 2,
+      "wc_draws": 3,
+      "wc_losses": 3,
+      "wc_goals_for": 7,
+      "wc_goals_against": 8
+    },
+    {
+      "team_id": "pan",
+      "name": "Panama",
+      "code": "PAN",
+      "wc_appearances": 1,
+      "wc_titles": 0,
+      "wc_best_result": "group_stage",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "group_stage",
+        "2022": null
+      },
+      "wc_total_matches": 2,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 2,
+      "wc_goals_for": 1,
+      "wc_goals_against": 9
+    },
+    {
+      "team_id": "par",
+      "name": "Paraguay",
+      "code": "PAR",
+      "wc_appearances": 8,
+      "wc_titles": 0,
+      "wc_best_result": "round_of_16",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 23,
+      "wc_wins": 6,
+      "wc_draws": 8,
+      "wc_losses": 9,
+      "wc_goals_for": 28,
+      "wc_goals_against": 37
+    },
+    {
+      "team_id": "por",
+      "name": "Portugal",
+      "code": "POR",
+      "wc_appearances": 8,
+      "wc_titles": 0,
+      "wc_best_result": "third",
+      "wc_recent_form": {
+        "2014": "group_stage",
+        "2018": "round_of_16",
+        "2022": "quarterfinal"
+      },
+      "wc_total_matches": 26,
+      "wc_wins": 12,
+      "wc_draws": 3,
+      "wc_losses": 11,
+      "wc_goals_for": 43,
+      "wc_goals_against": 35
+    },
+    {
+      "team_id": "qat",
+      "name": "Qatar",
+      "code": "QAT",
+      "wc_appearances": 1,
+      "wc_titles": 0,
+      "wc_best_result": "group_stage",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": "group_stage"
+      },
+      "wc_total_matches": 3,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 3,
+      "wc_goals_for": 1,
+      "wc_goals_against": 7
+    },
+    {
+      "team_id": "ksa",
+      "name": "Saudi Arabia",
+      "code": "KSA",
+      "wc_appearances": 6,
+      "wc_titles": 0,
+      "wc_best_result": "round_of_16",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "group_stage",
+        "2022": "group_stage"
+      },
+      "wc_total_matches": 16,
+      "wc_wins": 3,
+      "wc_draws": 2,
+      "wc_losses": 11,
+      "wc_goals_for": 12,
+      "wc_goals_against": 38
+    },
+    {
+      "team_id": "sco",
+      "name": "Scotland",
+      "code": "SCO",
+      "wc_appearances": 7,
+      "wc_titles": 0,
+      "wc_best_result": "group_stage",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 20,
+      "wc_wins": 3,
+      "wc_draws": 5,
+      "wc_losses": 12,
+      "wc_goals_for": 22,
+      "wc_goals_against": 40
+    },
+    {
+      "team_id": "sen",
+      "name": "Senegal",
+      "code": "SEN",
+      "wc_appearances": 3,
+      "wc_titles": 0,
+      "wc_best_result": "quarterfinal",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "group_stage",
+        "2022": "round_of_16"
+      },
+      "wc_total_matches": 11,
+      "wc_wins": 5,
+      "wc_draws": 3,
+      "wc_losses": 3,
+      "wc_goals_for": 16,
+      "wc_goals_against": 16
+    },
+    {
+      "team_id": "rsa",
+      "name": "South Africa",
+      "code": "RSA",
+      "wc_appearances": 3,
+      "wc_titles": 0,
+      "wc_best_result": "group_stage",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 7,
+      "wc_wins": 2,
+      "wc_draws": 3,
+      "wc_losses": 2,
+      "wc_goals_for": 10,
+      "wc_goals_against": 12
+    },
+    {
+      "team_id": "esp",
+      "name": "Spain",
+      "code": "ESP",
+      "wc_appearances": 14,
+      "wc_titles": 1,
+      "wc_best_result": "winner",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "group_stage",
+        "2022": "round_of_16"
+      },
+      "wc_total_matches": 53,
+      "wc_wins": 26,
+      "wc_draws": 10,
+      "wc_losses": 17,
+      "wc_goals_for": 86,
+      "wc_goals_against": 57
+    },
+    {
+      "team_id": "swe",
+      "name": "Sweden",
+      "code": "SWE",
+      "wc_appearances": 9,
+      "wc_titles": 0,
+      "wc_best_result": "runner_up",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "group_stage",
+        "2022": null
+      },
+      "wc_total_matches": 35,
+      "wc_wins": 13,
+      "wc_draws": 8,
+      "wc_losses": 14,
+      "wc_goals_for": 62,
+      "wc_goals_against": 57
+    },
+    {
+      "team_id": "sui",
+      "name": "Switzerland",
+      "code": "SUI",
+      "wc_appearances": 11,
+      "wc_titles": 0,
+      "wc_best_result": "quarterfinal",
+      "wc_recent_form": {
+        "2014": "round_of_16",
+        "2018": "round_of_16",
+        "2022": "round_of_16"
+      },
+      "wc_total_matches": 33,
+      "wc_wins": 11,
+      "wc_draws": 5,
+      "wc_losses": 17,
+      "wc_goals_for": 42,
+      "wc_goals_against": 60
+    },
+    {
+      "team_id": "tun",
+      "name": "Tunisia",
+      "code": "TUN",
+      "wc_appearances": 6,
+      "wc_titles": 0,
+      "wc_best_result": "group_stage",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": "group_stage",
+        "2022": "group_stage"
+      },
+      "wc_total_matches": 16,
+      "wc_wins": 3,
+      "wc_draws": 4,
+      "wc_losses": 9,
+      "wc_goals_for": 11,
+      "wc_goals_against": 22
+    },
+    {
+      "team_id": "tur",
+      "name": "Türkiye",
+      "code": "TUR",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    },
+    {
+      "team_id": "uru",
+      "name": "Uruguay",
+      "code": "URU",
+      "wc_appearances": 12,
+      "wc_titles": 2,
+      "wc_best_result": "winner",
+      "wc_recent_form": {
+        "2014": "round_of_16",
+        "2018": "group_stage",
+        "2022": "group_stage"
+      },
+      "wc_total_matches": 39,
+      "wc_wins": 18,
+      "wc_draws": 9,
+      "wc_losses": 12,
+      "wc_goals_for": 68,
+      "wc_goals_against": 50
+    },
+    {
+      "team_id": "usa",
+      "name": "USA",
+      "code": "USA",
+      "wc_appearances": 8,
+      "wc_titles": 0,
+      "wc_best_result": "semi_final",
+      "wc_recent_form": {
+        "2014": "round_of_16",
+        "2018": null,
+        "2022": "round_of_16"
+      },
+      "wc_total_matches": 25,
+      "wc_wins": 7,
+      "wc_draws": 7,
+      "wc_losses": 11,
+      "wc_goals_for": 29,
+      "wc_goals_against": 35
+    },
+    {
+      "team_id": "uzb",
+      "name": "Uzbekistan",
+      "code": "UZB",
+      "wc_appearances": 0,
+      "wc_titles": 0,
+      "wc_best_result": "none",
+      "wc_recent_form": {
+        "2014": null,
+        "2018": null,
+        "2022": null
+      },
+      "wc_total_matches": 0,
+      "wc_wins": 0,
+      "wc_draws": 0,
+      "wc_losses": 0,
+      "wc_goals_for": 0,
+      "wc_goals_against": 0
+    }
+  ],
+  "safety_invariants": [
+    "compile_only_reads_snapshots_never_fetches",
+    "team_history_uses_2026_roster_as_reference_set",
+    "missing_team_names_get_zero_stats_not_errors"
+  ]
+}

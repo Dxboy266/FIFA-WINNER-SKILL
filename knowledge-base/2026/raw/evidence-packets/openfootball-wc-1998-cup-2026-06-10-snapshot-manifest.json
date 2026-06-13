@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "wc_year": 1998,
+  "file_tag": "cup",
+  "url": "https://raw.githubusercontent.com/openfootball/worldcup/master/1998--france/cup.txt",
+  "generated_at": "2026-06-10T19:21:57.188463+08:00",
+  "mode": "openfootball-snapshot",
+  "status": "snapshot_written",
+  "snapshot_path": "raw/体育/世界杯/2026/snapshots/openfootball-wc-1998-cup-2026-06-10.txt",
+  "manifest_path": "raw/体育/世界杯/2026/evidence-packets/openfootball-wc-1998-cup-2026-06-10-snapshot-manifest.json",
+  "bytes": 4373,
+  "sha256": "0c9ef5415de9ce6084a408e4e9d5d66dd1d9ceefc0ce697cd861b494684601d7",
+  "summary": {
+    "fetches_performed": 1,
+    "raw_writes_performed": 2
+  },
+  "safety_invariants": [
+    "raw_snapshot_preserves_original_source_bytes",
+    "snapshot_manifest_records_url_hash_and_byte_count"
+  ]
+}

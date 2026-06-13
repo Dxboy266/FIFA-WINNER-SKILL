@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "wc_year": 2022,
+  "file_tag": "cup",
+  "url": "https://raw.githubusercontent.com/openfootball/worldcup/master/2022--qatar/cup.txt",
+  "generated_at": "2026-06-10T19:22:18.065540+08:00",
+  "mode": "openfootball-snapshot",
+  "status": "snapshot_written",
+  "snapshot_path": "raw/体育/世界杯/2026/snapshots/openfootball-wc-2022-cup-2026-06-10.txt",
+  "manifest_path": "raw/体育/世界杯/2026/evidence-packets/openfootball-wc-2022-cup-2026-06-10-snapshot-manifest.json",
+  "bytes": 8301,
+  "sha256": "37b3a3027f954f2b9dca76a7a8946cb04ee85d3227058fe79defd7d0d764917b",
+  "summary": {
+    "fetches_performed": 1,
+    "raw_writes_performed": 2
+  },
+  "safety_invariants": [
+    "raw_snapshot_preserves_original_source_bytes",
+    "snapshot_manifest_records_url_hash_and_byte_count"
+  ]
+}

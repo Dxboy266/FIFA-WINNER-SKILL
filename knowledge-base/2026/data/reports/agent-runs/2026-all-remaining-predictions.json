@@ -1,0 +1,311 @@
+{
+  "edition": "2026",
+  "now": "2026-06-13T17:30:00+08:00",
+  "dates": [
+    "2026-06-13",
+    "2026-06-14",
+    "2026-06-15",
+    "2026-06-16",
+    "2026-06-17",
+    "2026-06-18",
+    "2026-06-19",
+    "2026-06-20",
+    "2026-06-21",
+    "2026-06-22",
+    "2026-06-23",
+    "2026-06-24",
+    "2026-06-25",
+    "2026-06-26",
+    "2026-06-27",
+    "2026-06-28",
+    "2026-06-29",
+    "2026-06-30",
+    "2026-07-01",
+    "2026-07-02",
+    "2026-07-03",
+    "2026-07-04",
+    "2026-07-05",
+    "2026-07-06",
+    "2026-07-07",
+    "2026-07-09",
+    "2026-07-10",
+    "2026-07-11",
+    "2026-07-12",
+    "2026-07-14",
+    "2026-07-15",
+    "2026-07-18",
+    "2026-07-19"
+  ],
+  "summary": {
+    "dates_processed": 33,
+    "predictions_created": 100,
+    "skipped_started": 1
+  },
+  "results": [
+    {
+      "date": "2026-06-13",
+      "status": "created",
+      "predictions_created": 2,
+      "skipped_started": 1,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-13.json"
+    },
+    {
+      "date": "2026-06-14",
+      "status": "created",
+      "predictions_created": 5,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json"
+    },
+    {
+      "date": "2026-06-15",
+      "status": "created",
+      "predictions_created": 4,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-15.json"
+    },
+    {
+      "date": "2026-06-16",
+      "status": "created",
+      "predictions_created": 3,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-16.json"
+    },
+    {
+      "date": "2026-06-17",
+      "status": "created",
+      "predictions_created": 5,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json"
+    },
+    {
+      "date": "2026-06-18",
+      "status": "created",
+      "predictions_created": 4,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-18.json"
+    },
+    {
+      "date": "2026-06-19",
+      "status": "created",
+      "predictions_created": 3,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-19.json"
+    },
+    {
+      "date": "2026-06-20",
+      "status": "created",
+      "predictions_created": 4,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-20.json"
+    },
+    {
+      "date": "2026-06-21",
+      "status": "created",
+      "predictions_created": 5,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json"
+    },
+    {
+      "date": "2026-06-22",
+      "status": "created",
+      "predictions_created": 3,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-22.json"
+    },
+    {
+      "date": "2026-06-23",
+      "status": "created",
+      "predictions_created": 5,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json"
+    },
+    {
+      "date": "2026-06-24",
+      "status": "created",
+      "predictions_created": 5,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json"
+    },
+    {
+      "date": "2026-06-25",
+      "status": "created",
+      "predictions_created": 6,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json"
+    },
+    {
+      "date": "2026-06-26",
+      "status": "created",
+      "predictions_created": 4,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-26.json"
+    },
+    {
+      "date": "2026-06-27",
+      "status": "created",
+      "predictions_created": 8,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json"
+    },
+    {
+      "date": "2026-06-28",
+      "status": "created",
+      "predictions_created": 3,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-28.json"
+    },
+    {
+      "date": "2026-06-29",
+      "status": "created",
+      "predictions_created": 2,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-29.json"
+    },
+    {
+      "date": "2026-06-30",
+      "status": "created",
+      "predictions_created": 3,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-30.json"
+    },
+    {
+      "date": "2026-07-01",
+      "status": "created",
+      "predictions_created": 3,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-01.json"
+    },
+    {
+      "date": "2026-07-02",
+      "status": "created",
+      "predictions_created": 3,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-02.json"
+    },
+    {
+      "date": "2026-07-03",
+      "status": "created",
+      "predictions_created": 3,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-03.json"
+    },
+    {
+      "date": "2026-07-04",
+      "status": "created",
+      "predictions_created": 3,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-04.json"
+    },
+    {
+      "date": "2026-07-05",
+      "status": "created",
+      "predictions_created": 1,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-05.json"
+    },
+    {
+      "date": "2026-07-06",
+      "status": "created",
+      "predictions_created": 3,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-06.json"
+    },
+    {
+      "date": "2026-07-07",
+      "status": "created",
+      "predictions_created": 2,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-07.json"
+    },
+    {
+      "date": "2026-07-09",
+      "status": "created",
+      "predictions_created": 1,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-09.json"
+    },
+    {
+      "date": "2026-07-10",
+      "status": "created",
+      "predictions_created": 1,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-10.json"
+    },
+    {
+      "date": "2026-07-11",
+      "status": "created",
+      "predictions_created": 1,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-11.json"
+    },
+    {
+      "date": "2026-07-12",
+      "status": "created",
+      "predictions_created": 1,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-12.json"
+    },
+    {
+      "date": "2026-07-14",
+      "status": "created",
+      "predictions_created": 1,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-14.json"
+    },
+    {
+      "date": "2026-07-15",
+      "status": "created",
+      "predictions_created": 1,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-15.json"
+    },
+    {
+      "date": "2026-07-18",
+      "status": "created",
+      "predictions_created": 1,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-18.json"
+    },
+    {
+      "date": "2026-07-19",
+      "status": "created",
+      "predictions_created": 1,
+      "skipped_started": 0,
+      "skipped_missing_kickoff": 0,
+      "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-19.json"
+    }
+  ],
+  "mode": "worldcup-all-remaining-predictions-batch"
+}

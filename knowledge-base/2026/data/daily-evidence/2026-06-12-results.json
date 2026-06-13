@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-12",
+  "generated_at": "2026-06-12T20:58:19+08:00",
+  "mode": "daily-result-evidence",
+  "status": "recorded",
+  "latest_results_pulled_at": "2026-06-12T21:28:53+08:00",
+  "latest_results_verification": {
+    "checked_at": "2026-06-12T21:28:53+08:00",
+    "status": "cross_checked_media_reports",
+    "note": "Latest result pull confirmed Mexico 2-0 South Africa and South Korea 2-1 Czechia from AP, Guardian and Sky Sports reports. FIFA official article fetch returned no readable content in this run, so the snapshot keeps media-sourced cross-checks until an official match-centre source is available."
+  },
+  "results": [
+    {
+      "match_id": "2026-GA-01",
+      "fixture": "Mexico vs South Africa",
+      "kickoff_at": "2026-06-11T19:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "final_score": {
+        "home": 2,
+        "away": 0
+      },
+      "actual_result": "home_win",
+      "prediction_snapshot": {
+        "predicted_result": "home_win",
+        "predicted_score": {
+          "home": 2,
+          "away": 1
+        },
+        "predicted_total_goals": 3,
+        "goals_line_2_5": "over",
+        "confidence": "medium",
+        "report_path": "knowledge-base/2026/data/reports/daily-predictions/2026-06-11.json"
+      },
+      "evaluation": {
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "goal_errors": {
+          "home_goal_error": 0,
+          "away_goal_error": -1,
+          "total_goal_error": -1,
+          "goal_margin_error": 1
+        },
+        "plain_verdict": "Direction hit, exact score and total-goals missed. Do not count as a fully correct prediction."
+      },
+      "plain_chinese_review": "胜负方向命中，但比分和总进球都没有命中。核心问题是模型默认给南非一个安慰球，没有显式计算墨西哥零封分支。",
+      "match_observations": [
+        "Mexico won 2-0; the pre-match model had Mexico winning 2-1.",
+        "The model gave South Africa a baseline consolation goal that did not materialize.",
+        "The review sample should train the model to price clean-sheet branches explicitly."
+      ],
+      "model_issue_tags": [
+        "clean_sheet_probability_missing",
+        "event_volatility_not_connected_to_goal_distribution",
+        "away_floor_goal_rate_too_high",
+        "single_point_scoreline"
+      ],
+      "source_refs": [
+        {
+          "source_id": "guardian-live-report",
+          "tier": "T3",
+          "url": "https://www.theguardian.com/football/live/2026/jun/11/mexico-v-south-africa-world-cup-2026-opening-match-live",
+          "observed_result": "Mexico 2-0 South Africa",
+          "used_for": [
+            "final_score",
+            "event_context",
+            "goal_timeline"
+          ]
+        },
+        {
+          "source_id": "espn-match-centre",
+          "tier": "T3",
+          "url": "https://www.espn.co.uk/football/match/_/gameId/760415/south-africa-mexico",
+          "observed_result": "Mexico 2-0 South Africa",
+          "used_for": [
+            "candidate_cross_check"
+          ]
+        },
+        {
+          "source_id": "ap-live-report",
+          "tier": "T3",
+          "url": "https://apnews.com/live/world-cup-mexico-south-africa-2026-updates",
+          "observed_result": "Mexico 2-0 South Africa",
+          "used_for": [
+            "candidate_cross_check"
+          ]
+        }
+      ]
+    },
+    {
+      "match_id": "2026-GA-02",
+      "fixture": "South Korea vs Czechia",
+      "kickoff_at": "2026-06-12T02:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "final_score": {
+        "home": 2,
+        "away": 1
+      },
+      "actual_result": "home_win",
+      "prediction_snapshot": {
+        "predicted_result": "home_win",
+        "predicted_score": {
+          "home": 1,
+          "away": 0
+        },
+        "predicted_total_goals": 1,
+        "goals_line_2_5": "under",
+        "confidence": "medium",
+        "report_path": "knowledge-base/2026/data/reports/daily-predictions/2026-06-12.json"
+      },
+      "evaluation": {
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "goal_errors": {
+          "home_goal_error": 1,
+          "away_goal_error": 1,
+          "total_goal_error": 2,
+          "goal_margin_error": 0
+        },
+        "plain_verdict": "Direction hit, exact score and total-goals missed. The model underpriced second-half expansion."
+      },
+      "plain_chinese_review": "胜负方向命中，但比分和总进球都没有命中。核心问题是模型把比赛压成低事件 1-0，低估了捷克定位球进球路径和韩国下半场提速。",
+      "match_observations": [
+        "South Korea won 2-1; the pre-match model had South Korea winning 1-0.",
+        "Czechia's route to a goal and South Korea's late attacking response were under-modeled.",
+        "This sample should train the model to separate result confidence from score and total-goals confidence."
+      ],
+      "model_issue_tags": [
+        "second_half_state_model_missing",
+        "set_piece_threat_underweighted",
+        "substitution_impact_underweighted",
+        "score_confidence_not_separated_from_result_confidence",
+        "single_point_scoreline"
+      ],
+      "source_refs": [
+        {
+          "source_id": "ap-match-report",
+          "tier": "T3",
+          "url": "https://apnews.com/article/world-cup-south-korea-czech-republic-score-496e7772dde95ca0af90b5074fdb13d9",
+          "observed_result": "South Korea 2-1 Czechia",
+          "used_for": [
+            "final_score",
+            "comeback_context",
+            "goal_timeline"
+          ]
+        },
+        {
+          "source_id": "sky-sports-match-report",
+          "tier": "T3",
+          "url": "https://www.skysports.com/football/korea-rep-vs-czech-rep/report/549766",
+          "observed_result": "South Korea 2-1 Czechia",
+          "used_for": [
+            "final_score",
+            "scorers",
+            "match_report"
+          ]
+        },
+        {
+          "source_id": "guardian-live-report",
+          "tier": "T3",
+          "url": "https://www.theguardian.com/football/live/2026/jun/12/fifa-world-cup-2026-live-south-korea-v-czechia-updates-kor-vs-cze-group-a-match-score-latest",
+          "observed_result": "South Korea 2-1 Czechia",
+          "used_for": [
+            "final_score",
+            "second_half_context"
+          ]
+        }
+      ]
+    }
+  ],
+  "governance_notes": [
+    "This file records post-match facts and must not modify locked pre-match prediction reports.",
+    "Both reviewed predictions hit the result direction but missed exact score and total-goals layers; they must be treated as partial hits only.",
+    "Final-score evidence is media-sourced in this snapshot and should be cross-checked against FIFA official match-centre data when available.",
+    "Error tags in this file are model-training hints, not betting or financial advice."
+  ],
+  "safety_invariants": [
+    "post_match_result_evidence_does_not_rewrite_locked_predictions",
+    "source_tier_and_url_are_recorded",
+    "prediction_and_actual_score_snapshots_are_stored_together",
+    "entertainment_prediction_only_no_betting_use"
+  ]
+}

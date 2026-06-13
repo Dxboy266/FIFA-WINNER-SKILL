@@ -1,0 +1,256 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-12T21:28:53+08:00",
+  "mode": "worldcup-prediction-model-review",
+  "status": "written",
+  "scope": {
+    "dates": [
+      "2026-06-11",
+      "2026-06-12"
+    ],
+    "match_ids": [
+      "2026-GA-01",
+      "2026-GA-02"
+    ],
+    "review_type": "post_match_error_analysis"
+  },
+  "summary": {
+    "evaluated_matches": 2,
+    "result_hits": 2,
+    "score_hits": 0,
+    "total_goals_hits": 0,
+    "headline": "Result direction was right, but the score and total-goals layers were too thin.",
+    "plain_summary": "This was not a fully correct prediction round. Both result directions hit, but both exact-score and total-goals layers missed.",
+    "plain_chinese_summary": "这轮不能算预测完全正确：两场胜负方向都中了，但两场比分和总进球都没中。问题不在于方向判断完全失效，而在于比分层、总进球层和比赛状态树太薄。",
+    "scoring_policy": "Treat these as partial hits only: result_hit=true, score_hit=false, total_goals_hit=false.",
+    "artifact_policy": "Evaluation uses locked daily-predictions snapshots as canonical: 2026-GA-01 predicted 2-1, 2026-GA-02 predicted 1-0. Parallel or older report artifacts are not treated as the final accountable prediction."
+  },
+  "matches": [
+    {
+      "match_id": "2026-GA-01",
+      "fixture": "Mexico vs South Africa",
+      "evaluation_date": "2026-06-11",
+      "prediction": {
+        "result": "home_win",
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "total_goals": 3,
+        "goals_line_2_5": "over",
+        "confidence": "medium"
+      },
+      "actual": {
+        "result": "home_win",
+        "score": {
+          "home": 2,
+          "away": 0
+        },
+        "total_goals": 2
+      },
+      "hits": {
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false
+      },
+      "goal_errors": {
+        "home_goal_error": 0,
+        "away_goal_error": -1,
+        "total_goal_error": -1,
+        "goal_margin_error": 1
+      },
+      "error_analysis": {
+        "primary_error": "The model gave South Africa a baseline consolation goal instead of explicitly pricing a Mexico clean-sheet scenario.",
+        "plain_chinese": "墨西哥胜出的方向判断对了，但模型没有显式计算零封概率，默认给南非一个安慰球，导致 2-0 分支输给了更粗糙的 2-1 点估计。",
+        "what_went_right": [
+          "Mexico's win direction was correctly identified.",
+          "The model correctly treated Mexico as the stronger side before kickoff."
+        ],
+        "what_went_wrong": [
+          "Clean-sheet probability was not an explicit output, so a 2-0 branch lost to the simpler 2-1 point estimate.",
+          "Referee and card volatility existed as text, but did not change the away-goal probability.",
+          "The model did not lower South Africa's attacking floor enough after a Mexico-control script."
+        ],
+        "model_issue_tags": [
+          "clean_sheet_probability_missing",
+          "event_volatility_not_connected_to_goal_distribution",
+          "away_floor_goal_rate_too_high",
+          "single_point_scoreline"
+        ]
+      }
+    },
+    {
+      "match_id": "2026-GA-02",
+      "fixture": "South Korea vs Czechia",
+      "evaluation_date": "2026-06-12",
+      "prediction": {
+        "result": "home_win",
+        "score": {
+          "home": 1,
+          "away": 0
+        },
+        "total_goals": 1,
+        "goals_line_2_5": "under",
+        "confidence": "medium"
+      },
+      "actual": {
+        "result": "home_win",
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "total_goals": 3
+      },
+      "hits": {
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false
+      },
+      "goal_errors": {
+        "home_goal_error": 1,
+        "away_goal_error": 1,
+        "total_goal_error": 2,
+        "goal_margin_error": 0
+      },
+      "error_analysis": {
+        "primary_error": "The model compressed the match into a low-event 1-0 and missed the second-half comeback and transition script.",
+        "plain_chinese": "韩国胜出的方向判断对了，但模型把比赛压成低事件 1-0，低估了捷克定位球得分路径，也低估了韩国下半场提速和换人带来的二次进球。",
+        "what_went_right": [
+          "South Korea's win direction was correctly identified.",
+          "The model was right to keep confidence at medium rather than high."
+        ],
+        "what_went_wrong": [
+          "Czechia's set-piece route to a goal was underweighted.",
+          "South Korea's late tempo increase and substitute impact were not modeled as a separate second-half state.",
+          "Result confidence and score confidence were bundled together, making a fragile 1-0 scoreline look more stable than it was."
+        ],
+        "model_issue_tags": [
+          "second_half_state_model_missing",
+          "set_piece_threat_underweighted",
+          "substitution_impact_underweighted",
+          "score_confidence_not_separated_from_result_confidence",
+          "single_point_scoreline"
+        ]
+      }
+    }
+  ],
+  "root_cause_analysis": [
+    {
+      "cause_id": "single_point_scoreline",
+      "finding": "The model emits one score too early, so nearby alternatives such as 2-0, 2-1, 1-0 and 1-1 are not compared explicitly.",
+      "impact": "Exact-score misses look like surprises even when the result direction is right."
+    },
+    {
+      "cause_id": "score_confidence_conflated",
+      "finding": "The confidence field mainly describes result direction, but readers can interpret it as confidence in the exact score.",
+      "impact": "A medium result read can make a thin scoreline look stronger than it is."
+    },
+    {
+      "cause_id": "event_volatility_is_text_only",
+      "finding": "Cards, penalties, set pieces and referee strictness are written as narrative risks but do not move goal distributions enough.",
+      "impact": "Mexico's clean sheet and South Korea/Czechia's second-half goal expansion were not priced correctly."
+    },
+    {
+      "cause_id": "match_state_tree_too_shallow",
+      "finding": "The current scenario layer says base/upset/draw, but does not simulate leading, trailing and level states after halftime.",
+      "impact": "Comeback matches and late substitution goals are systematically under-modeled."
+    },
+    {
+      "cause_id": "live_evidence_gap",
+      "finding": "Confirmed lineups, late injury notes, live weather, travel/adaptation context and market quality gates are not yet hard requirements before publishing.",
+      "impact": "The analysis layer is directionally useful but too thin for score and total-goals precision."
+    },
+    {
+      "cause_id": "prediction_artifact_drift",
+      "finding": "Multiple pre-match report artifacts can exist for the same fixture; without a canonical registry, later review can confuse an older parallel report with the locked accountable prediction.",
+      "impact": "Post-match learning becomes noisy because the agent may evaluate the wrong prediction snapshot or explain a prediction the user did not actually receive."
+    },
+    {
+      "cause_id": "partial_hit_overstatement",
+      "finding": "Dashboard and public copy can overstate a round when result direction hits but score and total-goals miss.",
+      "impact": "The agent can sound more accurate than it was unless result, score and total-goals are reported separately."
+    }
+  ],
+  "corrective_actions": [
+    {
+      "action_id": "add_scoreline_distribution",
+      "priority": "P0",
+      "description": "Add scoreline_distribution with at least three candidate scores, probabilities and reasons."
+    },
+    {
+      "action_id": "add_clean_sheet_probability",
+      "priority": "P0",
+      "description": "Calculate clean-sheet probability for both teams and feed it into score selection."
+    },
+    {
+      "action_id": "connect_event_volatility_to_goals",
+      "priority": "P0",
+      "description": "Convert referee strictness, red-card risk, penalty risk and set-piece threat into total-goals and team-goals adjustments."
+    },
+    {
+      "action_id": "add_second_half_state_layer",
+      "priority": "P1",
+      "description": "Model halftime-level, leading and trailing states separately, including substitution and chase-game effects."
+    },
+    {
+      "action_id": "split_confidence_fields",
+      "priority": "P1",
+      "description": "Emit result_confidence, score_confidence and total_goals_confidence instead of one shared confidence label."
+    },
+    {
+      "action_id": "source_quality_gate",
+      "priority": "P1",
+      "description": "Do not allow mock odds or low-quality evidence to upgrade dual-track alignment or prediction confidence."
+    },
+    {
+      "action_id": "add_prediction_artifact_registry",
+      "priority": "P0",
+      "description": "Add a canonical prediction registry per match that points to the locked accountable report and labels older parallel reports as superseded or non-canonical."
+    },
+    {
+      "action_id": "separate_public_hit_labels",
+      "priority": "P0",
+      "description": "Public reports and dashboards must show partial hit / full hit separately: result direction is not the same as exact-score success."
+    }
+  ],
+  "source_refs": [
+    {
+      "source_id": "guardian-mex-rsa-live",
+      "tier": "T3",
+      "url": "https://www.theguardian.com/football/live/2026/jun/11/mexico-v-south-africa-world-cup-2026-opening-match-live",
+      "used_for": "Mexico final score and event context"
+    },
+    {
+      "source_id": "espn-mex-rsa-match-centre",
+      "tier": "T3",
+      "url": "https://www.espn.co.uk/football/match/_/gameId/760415/south-africa-mexico",
+      "used_for": "candidate cross-check for Mexico final score"
+    },
+    {
+      "source_id": "ap-kor-cze-report",
+      "tier": "T3",
+      "url": "https://apnews.com/article/world-cup-south-korea-czech-republic-score-496e7772dde95ca0af90b5074fdb13d9",
+      "used_for": "South Korea final score and comeback context"
+    },
+    {
+      "source_id": "sky-kor-cze-report",
+      "tier": "T3",
+      "url": "https://www.skysports.com/football/korea-rep-vs-czech-rep/report/549766",
+      "used_for": "South Korea final score, scorers and minute timeline"
+    },
+    {
+      "source_id": "guardian-kor-cze-live",
+      "tier": "T3",
+      "url": "https://www.theguardian.com/football/live/2026/jun/12/fifa-world-cup-2026-live-south-korea-v-czechia-updates-kor-vs-cze-group-a-match-score-latest",
+      "used_for": "South Korea final score and live context"
+    }
+  ],
+  "safety_invariants": [
+    "post_match_review_does_not_rewrite_locked_pre_match_prediction",
+    "review_improves_entertainment_model_only",
+    "partial_hits_are_not_counted_as_full_prediction_success",
+    "canonical_daily_prediction_snapshot_used_for_evaluation",
+    "no_betting_or_financial_advice"
+  ]
+}

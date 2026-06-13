@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "wc_year": 1954,
+  "file_tag": "cup",
+  "url": "https://raw.githubusercontent.com/openfootball/worldcup/master/1954--switzerland/cup.txt",
+  "generated_at": "2026-06-10T19:20:57.745092+08:00",
+  "mode": "openfootball-snapshot",
+  "status": "snapshot_written",
+  "snapshot_path": "raw/体育/世界杯/2026/snapshots/openfootball-wc-1954-cup-2026-06-10.txt",
+  "manifest_path": "raw/体育/世界杯/2026/evidence-packets/openfootball-wc-1954-cup-2026-06-10-snapshot-manifest.json",
+  "bytes": 2708,
+  "sha256": "77b9c85052996c26bf07b405d62caf580ffafea4851f46abcad026a84d107657",
+  "summary": {
+    "fetches_performed": 1,
+    "raw_writes_performed": 2
+  },
+  "safety_invariants": [
+    "raw_snapshot_preserves_original_source_bytes",
+    "snapshot_manifest_records_url_hash_and_byte_count"
+  ]
+}

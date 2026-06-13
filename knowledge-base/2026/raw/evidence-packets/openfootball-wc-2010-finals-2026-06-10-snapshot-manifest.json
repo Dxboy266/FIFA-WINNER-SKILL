@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "wc_year": 2010,
+  "file_tag": "finals",
+  "url": "https://raw.githubusercontent.com/openfootball/worldcup/master/2010--south-africa/cup_finals.txt",
+  "generated_at": "2026-06-10T19:22:07.702129+08:00",
+  "mode": "openfootball-snapshot",
+  "status": "snapshot_written",
+  "snapshot_path": "raw/体育/世界杯/2026/snapshots/openfootball-wc-2010-finals-2026-06-10.txt",
+  "manifest_path": "raw/体育/世界杯/2026/evidence-packets/openfootball-wc-2010-finals-2026-06-10-snapshot-manifest.json",
+  "bytes": 1799,
+  "sha256": "aa5f7c883eb7007a65fd33860641d3ee85f7208706fe136d81e3f46f61711a3b",
+  "summary": {
+    "fetches_performed": 1,
+    "raw_writes_performed": 2
+  },
+  "safety_invariants": [
+    "raw_snapshot_preserves_original_source_bytes",
+    "snapshot_manifest_records_url_hash_and_byte_count"
+  ]
+}

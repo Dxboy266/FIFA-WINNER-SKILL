@@ -1,0 +1,482 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-14",
+  "generated_at": "2026-06-13T17:30:00+08:00",
+  "mode": "worldcup-matchday-intelligence-briefing",
+  "status": "partial",
+  "data_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\intelligence\\2026-06-14.json",
+  "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\reports\\intelligence\\2026-06-14.md",
+  "summary": {
+    "matches": 5,
+    "complete_matches": 0,
+    "partial_matches": 2,
+    "blocked_matches": 3,
+    "unique_information_gaps": [
+      "away_probable_lineup_missing",
+      "home_probable_lineup_missing",
+      "referee_missing",
+      "team_availability_unconfirmed"
+    ],
+    "source_readiness_status": "unknown"
+  },
+  "evidence_statuses": {
+    "official_fixtures": "partial",
+    "official_rosters": "complete",
+    "fifa_rankings": "partial",
+    "historical_worldcup_results": "blocked",
+    "recent_form_results": "blocked",
+    "squad_depth_position_balance": "partial",
+    "injury_availability": "blocked",
+    "venue_rest_travel": "blocked",
+    "head_to_head": "blocked",
+    "player_identity_enrichment": "blocked",
+    "market_odds_signal": "partial",
+    "reference_agent_source_alignment": "complete"
+  },
+  "matches": [
+    {
+      "match_id": "2026-GC-02",
+      "home_team": {
+        "team_id": "hai",
+        "name": "Haiti",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "sco",
+        "name": "Scotland",
+        "slot": 4
+      },
+      "kickoff_at": "2026-06-14T01:00:00Z",
+      "local_time": {
+        "local_kickoff_at": "2026-06-13T21:00:00-04:00",
+        "timezone": "America/New_York",
+        "timezone_source": "venue"
+      },
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "group": "C",
+      "phase": "group",
+      "status": "partial",
+      "information_gaps": [
+        "referee_missing",
+        "home_probable_lineup_missing",
+        "away_probable_lineup_missing"
+      ],
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "injuries": {
+        "home": [],
+        "away": []
+      },
+      "suspensions": {
+        "home": [],
+        "away": []
+      },
+      "late_news": {
+        "home": [],
+        "away": [
+          {
+            "headline": "The Tartan Army has shown up in force. Now Scotlan...",
+            "detail": "Scotland fans and players are united by Andy Robertson's message: \"I don't want any regrets,\" writes ESPN's Tom Hamilton.",
+            "sentiment": "neutral",
+            "team_code": "sco",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:54.729515+08:00"
+          }
+        ]
+      },
+      "profile_task_summary": {
+        "team_tasks_partial": 2,
+        "player_tasks_partial": 52,
+        "teams": {
+          "hai": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          },
+          "sco": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          }
+        }
+      },
+      "information_officer_summary": "情报链仍有缺口，预测信心必须降档显示。",
+      "agent_actions": [
+        {
+          "command": "python scripts/daily_evidence_input.py add-referee --edition 2026 --date 2026-06-14 --match-id 2026-GC-02 --referee-name <name> --strictness <high|medium|low> --root .",
+          "why": "add referee strictness before card and tempo analysis"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-14 --team-code HAI --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the home team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-14 --team-code SCO --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the away team's likely tactical shell"
+        }
+      ]
+    },
+    {
+      "match_id": "2026-GD-02",
+      "home_team": {
+        "team_id": "aus",
+        "name": "Australia",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "tur",
+        "name": "Türkiye",
+        "slot": 4
+      },
+      "kickoff_at": "2026-06-14T04:00:00Z",
+      "local_time": {
+        "local_kickoff_at": "2026-06-13T21:00:00-07:00",
+        "timezone": "America/Vancouver",
+        "timezone_source": "venue"
+      },
+      "venue": "BC Place, Vancouver, Canada",
+      "group": "D",
+      "phase": "group",
+      "status": "blocked",
+      "information_gaps": [
+        "referee_missing",
+        "home_probable_lineup_missing",
+        "away_probable_lineup_missing",
+        "team_availability_unconfirmed"
+      ],
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "injuries": {
+        "home": [],
+        "away": []
+      },
+      "suspensions": {
+        "home": [],
+        "away": []
+      },
+      "late_news": {
+        "home": [],
+        "away": []
+      },
+      "profile_task_summary": {
+        "team_tasks_partial": 2,
+        "player_tasks_partial": 52,
+        "teams": {
+          "aus": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          },
+          "tur": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          }
+        }
+      },
+      "information_officer_summary": "情报链仍有缺口，预测信心必须降档显示。",
+      "agent_actions": [
+        {
+          "command": "python scripts/daily_evidence_input.py add-referee --edition 2026 --date 2026-06-14 --match-id 2026-GD-02 --referee-name <name> --strictness <high|medium|low> --root .",
+          "why": "add referee strictness before card and tempo analysis"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-14 --team-code AUS --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the home team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-14 --team-code TUR --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the away team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/extract_injuries_from_news.py --edition 2026 --date 2026-06-14 --root .",
+          "why": "extract injury and suspension hints from collected news"
+        }
+      ]
+    },
+    {
+      "match_id": "2026-GE-01",
+      "home_team": {
+        "team_id": "ger",
+        "name": "Germany",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "cuw",
+        "name": "Curaçao",
+        "slot": 2
+      },
+      "kickoff_at": "2026-06-14T17:00:00Z",
+      "local_time": {
+        "local_kickoff_at": "2026-06-14T12:00:00-05:00",
+        "timezone": "America/Chicago",
+        "timezone_source": "venue"
+      },
+      "venue": "NRG Stadium, Houston",
+      "group": "E",
+      "phase": "group",
+      "status": "blocked",
+      "information_gaps": [
+        "referee_missing",
+        "home_probable_lineup_missing",
+        "away_probable_lineup_missing",
+        "team_availability_unconfirmed"
+      ],
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "injuries": {
+        "home": [],
+        "away": []
+      },
+      "suspensions": {
+        "home": [],
+        "away": []
+      },
+      "late_news": {
+        "home": [],
+        "away": []
+      },
+      "profile_task_summary": {
+        "team_tasks_partial": 2,
+        "player_tasks_partial": 52,
+        "teams": {
+          "cuw": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          },
+          "ger": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          }
+        }
+      },
+      "information_officer_summary": "情报链仍有缺口，预测信心必须降档显示。",
+      "agent_actions": [
+        {
+          "command": "python scripts/daily_evidence_input.py add-referee --edition 2026 --date 2026-06-14 --match-id 2026-GE-01 --referee-name <name> --strictness <high|medium|low> --root .",
+          "why": "add referee strictness before card and tempo analysis"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-14 --team-code GER --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the home team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-14 --team-code CUW --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the away team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/extract_injuries_from_news.py --edition 2026 --date 2026-06-14 --root .",
+          "why": "extract injury and suspension hints from collected news"
+        }
+      ]
+    },
+    {
+      "match_id": "2026-GE-02",
+      "home_team": {
+        "team_id": "civ",
+        "name": "Ivory Coast",
+        "slot": 3
+      },
+      "away_team": {
+        "team_id": "ecu",
+        "name": "Ecuador",
+        "slot": 4
+      },
+      "kickoff_at": "2026-06-14T23:00:00Z",
+      "local_time": {
+        "local_kickoff_at": "2026-06-14T19:00:00-04:00",
+        "timezone": "America/New_York",
+        "timezone_source": "venue"
+      },
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "group": "E",
+      "phase": "group",
+      "status": "partial",
+      "information_gaps": [
+        "referee_missing",
+        "home_probable_lineup_missing",
+        "away_probable_lineup_missing"
+      ],
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "injuries": {
+        "home": [],
+        "away": []
+      },
+      "suspensions": {
+        "home": [],
+        "away": []
+      },
+      "late_news": {
+        "home": [],
+        "away": [
+          {
+            "headline": "With a rock-solid defense, can Ecuador make surpri...",
+            "detail": "Ecuador has produced incredible talents and has been one of South America's most competitive nations in the last few years, but can they surprise people at the World Cup?",
+            "sentiment": "neutral",
+            "team_code": "ecu",
+            "source": "espn_rss",
+            "recorded_at": "2026-06-13T17:36:54.729526+08:00"
+          }
+        ]
+      },
+      "profile_task_summary": {
+        "team_tasks_partial": 2,
+        "player_tasks_partial": 52,
+        "teams": {
+          "civ": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          },
+          "ecu": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          }
+        }
+      },
+      "information_officer_summary": "情报链仍有缺口，预测信心必须降档显示。",
+      "agent_actions": [
+        {
+          "command": "python scripts/daily_evidence_input.py add-referee --edition 2026 --date 2026-06-14 --match-id 2026-GE-02 --referee-name <name> --strictness <high|medium|low> --root .",
+          "why": "add referee strictness before card and tempo analysis"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-14 --team-code CIV --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the home team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-14 --team-code ECU --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the away team's likely tactical shell"
+        }
+      ]
+    },
+    {
+      "match_id": "2026-GF-01",
+      "home_team": {
+        "team_id": "ned",
+        "name": "Netherlands",
+        "slot": 1
+      },
+      "away_team": {
+        "team_id": "jpn",
+        "name": "Japan",
+        "slot": 2
+      },
+      "kickoff_at": "2026-06-14T20:00:00Z",
+      "local_time": {
+        "local_kickoff_at": "2026-06-14T15:00:00-05:00",
+        "timezone": "America/Chicago",
+        "timezone_source": "venue"
+      },
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "group": "F",
+      "phase": "group",
+      "status": "blocked",
+      "information_gaps": [
+        "referee_missing",
+        "home_probable_lineup_missing",
+        "away_probable_lineup_missing",
+        "team_availability_unconfirmed"
+      ],
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "injuries": {
+        "home": [],
+        "away": []
+      },
+      "suspensions": {
+        "home": [],
+        "away": []
+      },
+      "late_news": {
+        "home": [],
+        "away": []
+      },
+      "profile_task_summary": {
+        "team_tasks_partial": 2,
+        "player_tasks_partial": 52,
+        "teams": {
+          "jpn": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          },
+          "ned": {
+            "partial": 27,
+            "complete": 0,
+            "blocked": 0,
+            "unknown": 0
+          }
+        }
+      },
+      "information_officer_summary": "情报链仍有缺口，预测信心必须降档显示。",
+      "agent_actions": [
+        {
+          "command": "python scripts/daily_evidence_input.py add-referee --edition 2026 --date 2026-06-14 --match-id 2026-GF-01 --referee-name <name> --strictness <high|medium|low> --root .",
+          "why": "add referee strictness before card and tempo analysis"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-14 --team-code NED --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the home team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/daily_evidence_input.py add-lineup --edition 2026 --date 2026-06-14 --team-code JPN --formation <shape> --players \"<comma-separated players>\" --source national_fa --root .",
+          "why": "confirm the away team's likely tactical shell"
+        },
+        {
+          "command": "python scripts/extract_injuries_from_news.py --edition 2026 --date 2026-06-14 --root .",
+          "why": "extract injury and suspension hints from collected news"
+        }
+      ]
+    }
+  ],
+  "agent_roles": {
+    "information_officer": "collects and marks matchday evidence gaps before analysis",
+    "analyst": "uses this briefing plus prediction reports to refresh the visual dashboard"
+  },
+  "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+  "safety_invariants": [
+    "information_gaps_remain_visible",
+    "briefing_does_not_rewrite_locked_predictions",
+    "no_betting_or_stake_advice"
+  ]
+}

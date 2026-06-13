@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "source_id": "openfootball-worldcup-json",
+  "source_name": "OpenFootball World Cup JSON datasets",
+  "source_tier": "T1",
+  "url": "https://api.github.com/repos/openfootball/worldcup.json/contents",
+  "generated_at": "2026-06-09T23:45:00+08:00",
+  "mode": "source-snapshot-apply",
+  "status": "blocked_fetch_failed",
+  "snapshot_path": "raw/体育/世界杯/2026/snapshots/openfootball-worldcup-json-2026-06-09.bin",
+  "manifest_path": "raw/体育/世界杯/2026/evidence-packets/openfootball-worldcup-json-2026-06-09-snapshot-manifest.json",
+  "allowed_use": "open_structured_data_when_license_checked",
+  "error_type": "HTTPError",
+  "error_message": "HTTP Error 403: rate limit exceeded",
+  "summary": {
+    "fetches_performed": 1,
+    "raw_writes_performed": 1
+  },
+  "blockers": [
+    "source_fetch_failed"
+  ],
+  "safety_invariants": [
+    "failed_source_fetches_write_manifest_instead_of_silent_success",
+    "blocked_fetch_failed_does_not_create_raw_snapshot_bytes"
+  ]
+}

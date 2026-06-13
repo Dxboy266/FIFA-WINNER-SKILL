@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-12",
+  "generated_at": "2026-06-12T23:34:31.620894+08:00",
+  "mode": "daily-evidence",
+  "status": "updated",
+  "matches": [
+    {
+      "match_id": "2026-GA-02",
+      "referee": null,
+      "odds": {
+        "home_win": 5.2,
+        "draw": 3.75,
+        "away_win": 1.6,
+        "source": "mock_bookmaker"
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GB-01",
+      "referee": null,
+      "odds": {
+        "home_win": 1.7,
+        "draw": 3.5,
+        "away_win": 4.8,
+        "source": "mock_bookmaker"
+      },
+      "sentiment": null
+    }
+  ],
+  "injuries": [],
+  "suspensions": [],
+  "probable_lineups": [],
+  "late_news": [
+    {
+      "headline": "Hwang's magic sparks South Korea comeback win",
+      "detail": "Hwang In-Beom leads South Korea to a 2-1 comeback win over Czechia in the World Cup in a game played in front of hundreds of empty seats at Mexico's Guadalajara Stadium.",
+      "sentiment": "positive",
+      "team_code": "kor",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-12T21:51:43.812379+08:00"
+    },
+    {
+      "headline": "Hwang's magic sparks South Korea comeback win",
+      "detail": "Hwang In-Beom leads South Korea to a 2-1 comeback win over Czechia in the World Cup in a game played in front of hundreds of empty seats at Mexico's Guadalajara Stadium.",
+      "sentiment": "positive",
+      "team_code": "cze",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-12T21:51:43.812406+08:00"
+    },
+    {
+      "headline": "South Korea produce stirring revival to get off to...",
+      "detail": "For the first time since 2010, South Korea won their opening game at the FIFA World Cup.",
+      "sentiment": "neutral",
+      "team_code": "kor",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-12T21:51:43.812411+08:00"
+    },
+    {
+      "headline": "Snubbed by the U.S., Jesse Marsch marches Canada i...",
+      "detail": "Jesse Marsch was certain he was going to be the next USMNT manager. He wasn't. Now he's determined to make his mark at this World Cup with Canada.",
+      "sentiment": "neutral",
+      "team_code": "can",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-12T21:51:43.812415+08:00"
+    }
+  ],
+  "source_refs": [
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-12T21:51:43.812423+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-12T23:34:31.620916+08:00"
+    }
+  ],
+  "injuries_extracted": {
+    "edition": "2026",
+    "date": "2026-06-12",
+    "teams": {
+      "MEX": {
+        "team_code": "MEX",
+        "team_name": "Mexico",
+        "injuries": [],
+        "suspensions": []
+      }
+    },
+    "summary": {
+      "total_teams": 1,
+      "total_injuries": 0,
+      "total_suspensions": 0
+    },
+    "extraction_method": "nlp_from_news",
+    "confidence": "low"
+  }
+}

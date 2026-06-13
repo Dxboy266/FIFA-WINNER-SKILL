@@ -1,0 +1,578 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-13",
+  "generated_at": "2026-06-12T23:50:41.098487+08:00",
+  "mode": "worldcup-prediction-scoring-model",
+  "filters": {
+    "match_id": "2026-GD-01",
+    "teams": []
+  },
+  "model_weights": {
+    "data_model": 0.6,
+    "divination_overlay": 0.4,
+    "component_weights": {
+      "ranking_strength": 0.3,
+      "squad_depth": 0.2,
+      "historical_proxy": 0.2,
+      "rest_travel": 0.15,
+      "evidence_completeness": 0.15
+    }
+  },
+  "status": "created",
+  "summary": {
+    "predictions_created": 1,
+    "matches_skipped_started": 0,
+    "matches_skipped_missing_kickoff": 0
+  },
+  "predictions": [
+    {
+      "match_id": "2026-GD-01",
+      "kickoff_at": "2026-06-13T01:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "group": "D",
+      "phase": "group",
+      "home_team": {
+        "team_id": "usa",
+        "name": "United States",
+        "ranking": 16,
+        "points": 1673.13
+      },
+      "away_team": {
+        "team_id": "par",
+        "name": "Paraguay",
+        "ranking": 40,
+        "points": 1503.5
+      },
+      "data_score": {
+        "home": 63.4,
+        "away": 52.1,
+        "components": {
+          "ranking_strength": {
+            "home": 67.59,
+            "away": 43.36,
+            "weight": 0.3
+          },
+          "squad_depth": {
+            "home": 89.83,
+            "away": 91.1,
+            "weight": 0.2
+          },
+          "historical_proxy": {
+            "home": 50.95,
+            "away": 37.02,
+            "weight": 0.2
+          },
+          "rest_travel": {
+            "home": 95.0,
+            "away": 85.0,
+            "weight": 0.15
+          },
+          "evidence_completeness": {
+            "home": 4.71,
+            "away": 4.71,
+            "weight": 0.15
+          }
+        }
+      },
+      "venue_adaptation_context": {
+        "status": "partial_static_context",
+        "source": "static_venue_team_baseline_v1",
+        "venue": "SoFi Stadium, Inglewood, Calif.",
+        "venue_context": {
+          "city": "Inglewood",
+          "country": "United States",
+          "lat": 33.9533,
+          "lon": -118.339,
+          "june_temp_c": 20.0,
+          "altitude_m": 40,
+          "climate_profile": "mild_coastal",
+          "matched_key": "inglewood"
+        },
+        "home": {
+          "team_id": "usa",
+          "status": "estimated_static_context",
+          "baseline_city": "Kansas City",
+          "baseline_climate_profile": "warm_inland",
+          "missing_context": [],
+          "travel_km": 2191.8,
+          "temperature_delta_c": -5.0,
+          "altitude_delta_m": -237,
+          "adaptation_risk": "low",
+          "adaptation_risk_score": 0,
+          "adaptation_notes": [
+            "moderate travel footprint",
+            "temperature baseline is broadly familiar"
+          ]
+        },
+        "away": {
+          "team_id": "par",
+          "status": "missing_context",
+          "baseline_city": null,
+          "baseline_climate_profile": null,
+          "missing_context": [
+            "team_home_context_missing"
+          ],
+          "travel_km": null,
+          "temperature_delta_c": null,
+          "altitude_delta_m": null,
+          "adaptation_risk": "unknown",
+          "adaptation_risk_score": 0,
+          "adaptation_notes": [
+            "Static baseline context is incomplete for this side."
+          ]
+        },
+        "missing_context": [
+          "away_team_home_context_missing"
+        ],
+        "limitations": [
+          "Static baseline only; not live kickoff weather.",
+          "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+          "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data."
+        ]
+      },
+      "divination_overlay": {
+        "lunar_date": "农历：丙午马年 4月27日 酉时 (17:00-18:59)",
+        "shichen": "酉时 (17:00-18:59)",
+        "host_palace_branch": "午",
+        "guest_palace_branch": "子",
+        "home_stars": [],
+        "away_stars": [
+          "太阳 (Taiyang)",
+          "太阴 (Taiyin)"
+        ],
+        "home_modifier": 0.0,
+        "away_modifier": 1.0,
+        "interpretation": "双方星盘吉凶平稳，气运相持，最终走向更依赖战术和硬实力硬战。",
+        "has_physical_conflict": false,
+        "calculation_timezone": "America/Los_Angeles",
+        "local_kickoff_at": "2026-06-12T18:00:00-07:00",
+        "hexagram_name": "酉时 (17:00-18:59)",
+        "hexagram_number": 0,
+        "hexagram": "酉时 (17:00-18:59)",
+        "weight": 0.4
+      },
+      "prediction": {
+        "home_final": 63.4,
+        "away_final": 55.3,
+        "result": "home_win",
+        "predicted_outcome": "home_win",
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "total_goals": 3,
+        "goals_line_2_5": "over",
+        "confidence": "low",
+        "confidence_label": "低信心",
+        "result_confidence": "low",
+        "score_confidence": "low",
+        "total_goals_confidence": "low",
+        "confidence_note": "Result direction confidence is not exact-score confidence.",
+        "scoreline_distribution": [
+          {
+            "score": {
+              "home": 2,
+              "away": 1
+            },
+            "probability": 0.298,
+            "reason": "Primary point estimate from the current model edge (2-1)."
+          },
+          {
+            "score": {
+              "home": 2,
+              "away": 0
+            },
+            "probability": 0.244,
+            "reason": "Clean-sheet branch; home clean-sheet chance 25% keeps 2-0 live."
+          },
+          {
+            "score": {
+              "home": 3,
+              "away": 1
+            },
+            "probability": 0.244,
+            "reason": "Higher-event branch if set pieces, substitutions, cards, or chase-game state lift the total."
+          },
+          {
+            "score": {
+              "home": 1,
+              "away": 0
+            },
+            "probability": 0.213,
+            "reason": "Clean-sheet branch; home clean-sheet chance 25% keeps 1-0 live."
+          }
+        ],
+        "clean_sheet_probability": {
+          "home": 0.25,
+          "away": 0.15
+        },
+        "expected_goals_proxy": {
+          "home": 1.79,
+          "away": 1.39
+        },
+        "venue_adaptation_context": {
+          "status": "partial_static_context",
+          "source": "static_venue_team_baseline_v1",
+          "venue": "SoFi Stadium, Inglewood, Calif.",
+          "venue_context": {
+            "city": "Inglewood",
+            "country": "United States",
+            "lat": 33.9533,
+            "lon": -118.339,
+            "june_temp_c": 20.0,
+            "altitude_m": 40,
+            "climate_profile": "mild_coastal",
+            "matched_key": "inglewood"
+          },
+          "home": {
+            "team_id": "usa",
+            "status": "estimated_static_context",
+            "baseline_city": "Kansas City",
+            "baseline_climate_profile": "warm_inland",
+            "missing_context": [],
+            "travel_km": 2191.8,
+            "temperature_delta_c": -5.0,
+            "altitude_delta_m": -237,
+            "adaptation_risk": "low",
+            "adaptation_risk_score": 0,
+            "adaptation_notes": [
+              "moderate travel footprint",
+              "temperature baseline is broadly familiar"
+            ]
+          },
+          "away": {
+            "team_id": "par",
+            "status": "missing_context",
+            "baseline_city": null,
+            "baseline_climate_profile": null,
+            "missing_context": [
+              "team_home_context_missing"
+            ],
+            "travel_km": null,
+            "temperature_delta_c": null,
+            "altitude_delta_m": null,
+            "adaptation_risk": "unknown",
+            "adaptation_risk_score": 0,
+            "adaptation_notes": [
+              "Static baseline context is incomplete for this side."
+            ]
+          },
+          "missing_context": [
+            "away_team_home_context_missing"
+          ],
+          "limitations": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+            "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data."
+          ]
+        },
+        "evidence_gaps": [
+          "official_fixtures_partial",
+          "historical_worldcup_results_partial",
+          "recent_form_results_blocked",
+          "injury_availability_blocked",
+          "venue_rest_travel_blocked"
+        ]
+      },
+      "referee_analysis": null,
+      "market_odds": {
+        "odds": {
+          "home_win": 5.2,
+          "draw": 3.75,
+          "away_win": 1.6,
+          "source": "mock_bookmaker"
+        },
+        "implied_probabilities": {
+          "home": 0.177,
+          "draw": 0.246,
+          "away": 0.577
+        },
+        "market_outcome": "away_win"
+      },
+      "dual_track": {
+        "alignment": "divergent",
+        "divergence_analysis": "【双轨背离】硬实力基本面支持【United States】，但市场赔率反向看好【Paraguay】。章鱼哥在箱子前摇摆游离，谨防诱盘或爆冷！"
+      },
+      "analysis_layers": [
+        {
+          "layer_id": "evidence_integrity",
+          "title": "证据完整度层",
+          "verdict": "thin_evidence",
+          "confidence": "low",
+          "summary": "Evidence has gaps; the model keeps uncertainty visible instead of overclaiming.",
+          "key_drivers": [
+            "matchday evidence file available",
+            "market odds available",
+            "4 late-news items scanned"
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "official_fixtures_partial",
+            "historical_worldcup_results_partial",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked",
+            "referee_missing"
+          ],
+          "watch_triggers": [
+            "refresh daily evidence before kickoff",
+            "mark mock sources separately from live sources"
+          ]
+        },
+        {
+          "layer_id": "fundamentals",
+          "title": "基本面强弱层",
+          "verdict": "home_edge",
+          "confidence": "low",
+          "summary": "Fundamentals plus capped overlay lean United States 倾向不败或取胜 with final delta +8.1.",
+          "key_drivers": [
+            "FIFA ranking strength: United States edge +24.2",
+            "Historical proxy: United States edge +13.9",
+            "Rest/travel context: United States edge +10.0",
+            "Evidence completeness supports model confidence (+4.71)"
+          ],
+          "counter_signals": [
+            "Squad depth and balance: near-even delta -1.3"
+          ],
+          "missing_context": [],
+          "watch_triggers": [
+            "ranking and roster updates",
+            "rest-day recalculation after previous matches"
+          ]
+        },
+        {
+          "layer_id": "matchup",
+          "title": "阵容对位层",
+          "verdict": "balanced",
+          "confidence": "low",
+          "summary": "This layer turns roster shape into concrete matchup pressure rather than only a total score.",
+          "key_drivers": [
+            "United States shape: GK3/DF10/MF6/FW7; avg age 26.9, avg height 183.4cm",
+            "Paraguay shape: GK3/DF8/MF9/FW6; avg age 29.0, avg height 181.6cm",
+            "Squad-balance score is close; tactical execution matters more than raw depth."
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "starting XI",
+            "formation change",
+            "set-piece personnel"
+          ]
+        },
+        {
+          "layer_id": "live_context",
+          "title": "临场变量层",
+          "verdict": "home_edge",
+          "confidence": "low",
+          "summary": "Late news, rest, travel and referee profile are handled as separate pressure rather than hidden inside one score.",
+          "key_drivers": [
+            "Rest/travel delta: +10.0",
+            "News sentiment delta: 0.0"
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "referee profile missing"
+          ],
+          "watch_triggers": [
+            "team news within 24h",
+            "referee assignment correction",
+            "late travel/weather disruption"
+          ]
+        },
+        {
+          "layer_id": "venue_adaptation",
+          "title": "Venue Adaptation",
+          "verdict": "partial_static_context",
+          "confidence": "low",
+          "summary": "Static venue, travel, temperature and altitude baselines are exposed as evidence. This is not live kickoff weather and does not override verified lineup or injury news.",
+          "key_drivers": [
+            "Venue baseline: Inglewood 20.0C, 40m, mild_coastal",
+            "Home United States: travel 2191.8km, temperature delta -5.0C, altitude delta -237m, risk=low.",
+            "Away Paraguay: static adaptation context missing."
+          ],
+          "counter_signals": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing."
+          ],
+          "missing_context": [
+            "away_team_home_context_missing"
+          ],
+          "watch_triggers": [
+            "replace static baseline with live venue weather",
+            "confirm team camp/base location",
+            "add humidity, wind, pitch and player acclimatization notes"
+          ]
+        },
+        {
+          "layer_id": "market_track",
+          "title": "市场背离层",
+          "verdict": "divergent",
+          "confidence": "low",
+          "summary": "【双轨背离】硬实力基本面支持【United States】，但市场赔率反向看好【Paraguay】。章鱼哥在箱子前摇摆游离，谨防诱盘或爆冷！",
+          "key_drivers": [
+            "Market favorite: Paraguay",
+            "Implied probabilities home/draw/away: 0.177/0.246/0.577"
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "odds refresh",
+            "large implied-probability movement",
+            "market/fundamental divergence near kickoff"
+          ]
+        },
+        {
+          "layer_id": "scenario_tree",
+          "title": "比赛剧本层",
+          "verdict": "home_win",
+          "confidence": "low",
+          "summary": "Base case: United States 倾向不败或取胜, reference score 2-1. The model edge is +8.1 after fundamentals and Tianji overlay.",
+          "key_drivers": [
+            "Base case: United States 倾向不败或取胜, reference score 2-1. The model edge is +8.1 after fundamentals and Tianji overlay.",
+            "Counter case: Paraguay changes the read if lineup news improves, set pieces land, or the favorite is forced into a slow first half.",
+            "Draw case: becomes live if the first 30 minutes stay low-event and both sides protect transition space."
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "confirmed starting XI differs from roster-depth baseline",
+            "late injury or suspension changes the strongest positional unit",
+            "market probability moves against the model by more than 8 percentage points",
+            "market and fundamentals remain divergent close to kickoff"
+          ]
+        },
+        {
+          "layer_id": "score_distribution",
+          "title": "Scoreline Distribution",
+          "verdict": "low",
+          "confidence": "low",
+          "summary": "Exact score is modeled as a distribution, not a single certainty. Top branches: 2-1 (30%), 2-0 (24%), 3-1 (24%).",
+          "key_drivers": [
+            "Expected goals proxy: 1.79-1.39",
+            "Clean-sheet probability home/away: 25%/15%"
+          ],
+          "counter_signals": [
+            "Cards, penalties, set pieces, and chase-game states can move the total-goals branch quickly."
+          ],
+          "missing_context": [
+            "official_fixtures_partial",
+            "historical_worldcup_results_partial",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked"
+          ],
+          "watch_triggers": [
+            "confirmed lineup",
+            "set-piece mismatch",
+            "red card or early goal",
+            "second-half substitution state"
+          ]
+        },
+        {
+          "layer_id": "adversarial_review",
+          "title": "反方审稿层",
+          "verdict": "high",
+          "confidence": "low",
+          "summary": "This layer records why the pick could be wrong before publishing the final entertainment call.",
+          "key_drivers": [
+            "Final model edge +8.1 points toward United States 倾向不败或取胜.",
+            "Fundamentals and market disagree, so the pick is kept with explicit upset risk."
+          ],
+          "counter_signals": [
+            "new injury/lineup evidence changes the strongest positional edge",
+            "fresh odds imply a different market favorite",
+            "post-match calibration shows this confidence bucket underperforming",
+            "blocked or partial evidence must be resolved before raising confidence"
+          ],
+          "missing_context": [
+            "official_fixtures_partial",
+            "historical_worldcup_results_partial",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked"
+          ],
+          "watch_triggers": [
+            "new injury/lineup evidence changes the strongest positional edge",
+            "fresh odds imply a different market favorite",
+            "post-match calibration shows this confidence bucket underperforming",
+            "blocked or partial evidence must be resolved before raising confidence"
+          ]
+        }
+      ],
+      "scenario_analysis": {
+        "base_case": "Base case: United States 倾向不败或取胜, reference score 2-1. The model edge is +8.1 after fundamentals and Tianji overlay.",
+        "upset_case": "Counter case: Paraguay changes the read if lineup news improves, set pieces land, or the favorite is forced into a slow first half.",
+        "draw_case": "Draw case: becomes live if the first 30 minutes stay low-event and both sides protect transition space.",
+        "watch_triggers": [
+          "confirmed starting XI differs from roster-depth baseline",
+          "late injury or suspension changes the strongest positional unit",
+          "market probability moves against the model by more than 8 percentage points",
+          "market and fundamentals remain divergent close to kickoff"
+        ]
+      },
+      "decision_audit": {
+        "risk_level": "high",
+        "why_this_pick": [
+          "Final model edge +8.1 points toward United States 倾向不败或取胜.",
+          "Fundamentals and market disagree, so the pick is kept with explicit upset risk."
+        ],
+        "what_would_change_the_pick": [
+          "new injury/lineup evidence changes the strongest positional edge",
+          "fresh odds imply a different market favorite",
+          "post-match calibration shows this confidence bucket underperforming",
+          "blocked or partial evidence must be resolved before raising confidence"
+        ],
+        "thin_evidence_warnings": [
+          "official_fixtures_partial",
+          "historical_worldcup_results_partial",
+          "recent_form_results_blocked",
+          "injury_availability_blocked",
+          "venue_rest_travel_blocked"
+        ]
+      },
+      "analysis_summary": {
+        "layer_count": 9,
+        "risk_level": "high",
+        "primary_edge": "home_edge",
+        "storage_note": "JSON report remains the audit artifact; SQLite is an optional query/index layer."
+      },
+      "play_card": {
+        "share_title": "章鱼哥神算 | United States vs Paraguay | 娱乐预测 2-1",
+        "match_hook": "United States 倾向胜出，总进球参考 3 球。D组对决，SoFi Stadium, Inglewood, Calif.。",
+        "poster_caption": "AI预测比分 2-1，United States主线占优，胜负趋势指向主队。",
+        "watch_points": [
+          "多层分析主线：Final model edge +8.1 points toward United States 倾向不败或取胜.",
+          "【双轨背离】硬实力基本面支持【United States】，但市场赔率反向看好【Paraguay】。章鱼哥在箱子前摇摆游离，谨防诱盘或爆冷！",
+          "双方实力接近，临场发挥将决定走向",
+          "中场控制权和定位球效率是关键",
+          "小组赛积分策略可能影响比赛节奏"
+        ],
+        "risk_flags": [
+          "历史战绩数据不足",
+          "近期战绩数据缺失",
+          "伤停信息不完整",
+          "休息和旅行因素未充分计算"
+        ],
+        "poster_angle": "United States vs Paraguay, SoFi Stadium, Inglewood, Calif., vibrant crowd atmosphere, 酉时 (17:00-18:59) aesthetic overlay, predicted score 2-1, total goals 3",
+        "confidence_meter": "数据 60% | 玄学 40% | 信心: 低信心",
+        "gameplay_tags": [
+          "胜平负",
+          "比分",
+          "总进球",
+          "看点"
+        ]
+      },
+      "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。"
+    }
+  ],
+  "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+  "safety_invariants": [
+    "data_model_weight_is_0_60",
+    "tianji_overlay_weight_is_0_40",
+    "tianji_calculated_from_venue_local_time_when_known",
+    "no_betting_language_in_output",
+    "missing_evidence_downgrades_confidence",
+    "disclaimer_included_in_every_report"
+  ]
+}

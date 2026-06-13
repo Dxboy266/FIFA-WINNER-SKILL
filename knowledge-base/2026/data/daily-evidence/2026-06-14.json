@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-14",
+  "generated_at": "2026-06-13T17:41:49.093393+08:00",
+  "mode": "daily-evidence",
+  "status": "updated",
+  "matches": [
+    {
+      "match_id": "2026-GC-02",
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GD-02",
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GE-01",
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GE-02",
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GF-01",
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "sentiment": null
+    }
+  ],
+  "injuries": [],
+  "suspensions": [],
+  "probable_lineups": [],
+  "late_news": [
+    {
+      "headline": "The Tartan Army has shown up in force. Now Scotlan...",
+      "detail": "Scotland fans and players are united by Andy Robertson's message: \"I don't want any regrets,\" writes ESPN's Tom Hamilton.",
+      "sentiment": "neutral",
+      "team_code": "sco",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:54.729515+08:00"
+    },
+    {
+      "headline": "With a rock-solid defense, can Ecuador make surpri...",
+      "detail": "Ecuador has produced incredible talents and has been one of South America's most competitive nations in the last few years, but can they surprise people at the World Cup?",
+      "sentiment": "neutral",
+      "team_code": "ecu",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:54.729526+08:00"
+    }
+  ],
+  "source_refs": [
+    {
+      "source": "sporttery_fixed_odds",
+      "name": "中国体育彩票竞彩网固定奖金",
+      "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+      "recorded_at": "2026-06-13T17:36:53.798169+08:00",
+      "status": "ok",
+      "note": "Fixed bonus odds snapshot for entertainment analysis; not betting advice."
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-13T17:36:54.729532+08:00"
+    },
+    {
+      "source": "sporttery_fixed_odds",
+      "name": "中国体育彩票竞彩网固定奖金",
+      "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+      "recorded_at": "2026-06-13T17:41:48.206151+08:00",
+      "status": "ok",
+      "note": "Fixed bonus odds snapshot for entertainment analysis; not betting advice."
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-13T17:41:49.093403+08:00"
+    }
+  ]
+}

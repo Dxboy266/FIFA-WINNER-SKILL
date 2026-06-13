@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "wc_year": 2002,
+  "file_tag": "finals",
+  "url": "https://raw.githubusercontent.com/openfootball/worldcup/master/2002--south-korea-n-japan/cup_finals.txt",
+  "generated_at": "2026-06-10T19:22:00.365210+08:00",
+  "mode": "openfootball-snapshot",
+  "status": "snapshot_written",
+  "snapshot_path": "raw/体育/世界杯/2026/snapshots/openfootball-wc-2002-finals-2026-06-10.txt",
+  "manifest_path": "raw/体育/世界杯/2026/evidence-packets/openfootball-wc-2002-finals-2026-06-10-snapshot-manifest.json",
+  "bytes": 1420,
+  "sha256": "78f6fe6fbbc966307676de7fdfa2682cebd62264bae5443c510198f18af7d438",
+  "summary": {
+    "fetches_performed": 1,
+    "raw_writes_performed": 2
+  },
+  "safety_invariants": [
+    "raw_snapshot_preserves_original_source_bytes",
+    "snapshot_manifest_records_url_hash_and_byte_count"
+  ]
+}

@@ -1,0 +1,761 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-13T17:57:10.900019+08:00",
+  "mode": "worldcup-local-match-overrides",
+  "summary": {
+    "overrides": 104
+  },
+  "matches": [
+    {
+      "match_id": "2026-GA-01",
+      "status": "final",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-11.json",
+      "prediction_status": "locked_pre_match_prediction",
+      "final_score": {
+        "home": 2,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-12T09:20:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn-match-centre",
+            "tier": "T3",
+            "url": "https://www.espn.co.uk/football/match/_/gameId/760415/south-africa-mexico",
+            "observed_result": "Mexico 2-0 South Africa"
+          },
+          {
+            "source_id": "ap-live-report",
+            "tier": "T3",
+            "url": "https://apnews.com/live/world-cup-mexico-south-africa-2026-updates",
+            "observed_result": "Mexico 2-0 South Africa"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GA-01",
+        "status": "evaluated",
+        "fixture": "Mexico vs South Africa",
+        "evaluated_at": "2026-06-12T21:22:00+08:00",
+        "prediction_snapshot": {
+          "predicted_result": "home_win",
+          "predicted_score": {
+            "home": 2,
+            "away": 1
+          },
+          "predicted_total_goals": 3,
+          "goals_line_2_5": "over",
+          "confidence": "medium"
+        },
+        "predicted_result": "home_win",
+        "predicted_score": {
+          "home": 2,
+          "away": 1
+        },
+        "predicted_total_goals": 3,
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 2,
+          "away": 0
+        },
+        "actual_total_goals": 2,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "goal_errors": {
+          "home_goal_error": 0,
+          "away_goal_error": -1,
+          "total_goal_error": -1,
+          "goal_margin_error": 1
+        },
+        "prediction_kept_locked": true
+      }
+    },
+    {
+      "match_id": "2026-GA-02",
+      "status": "final",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-12.json",
+      "prediction_status": "locked_pre_match_prediction",
+      "final_score": {
+        "home": 2,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-12T09:20:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn-match-centre",
+            "tier": "T3",
+            "url": "https://www.espn.com.au/football/match/_/gameId/760414/czechia-south-korea",
+            "observed_result": "South Korea 2-1 Czechia"
+          },
+          {
+            "source_id": "sky-sports-match-report",
+            "tier": "T3",
+            "url": "https://www.skysports.com/football/korea-rep-vs-czech-rep/report/549766",
+            "observed_result": "South Korea 2-1 Czechia"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GA-02",
+        "status": "evaluated",
+        "fixture": "South Korea vs Czechia",
+        "evaluated_at": "2026-06-12T21:22:00+08:00",
+        "prediction_snapshot": {
+          "predicted_result": "home_win",
+          "predicted_score": {
+            "home": 1,
+            "away": 0
+          },
+          "predicted_total_goals": 1,
+          "goals_line_2_5": "under",
+          "confidence": "medium"
+        },
+        "predicted_result": "home_win",
+        "predicted_score": {
+          "home": 1,
+          "away": 0
+        },
+        "predicted_total_goals": 1,
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 2,
+          "away": 1
+        },
+        "actual_total_goals": 3,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "goal_errors": {
+          "home_goal_error": 1,
+          "away_goal_error": 1,
+          "total_goal_error": 2,
+          "goal_margin_error": 0
+        },
+        "prediction_kept_locked": true
+      }
+    },
+    {
+      "match_id": "2026-GA-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-18.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GA-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-19.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GA-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GA-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-01",
+      "status": "final",
+      "prediction_report": "data/editions/2026/reports/daily-predictions/2026-06-12.json",
+      "prediction_status": "locked_pre_match_prediction",
+      "final_score": {
+        "home": 1,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-13T12:00:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn-match-centre",
+            "tier": "T3",
+            "url": "https://www.espn.com.au/football/match/_/gameId/760416/bosnia-herzegovina-canada",
+            "observed_result": "Canada 1-1 Bosnia and Herzegovina"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GB-01",
+        "status": "evaluated",
+        "fixture": "Canada vs Bosnia and Herzegovina",
+        "evaluated_at": "2026-06-13T20:00:00+08:00",
+        "prediction_snapshot": {
+          "predicted_result": "draw",
+          "predicted_score": {
+            "home": 1,
+            "away": 1
+          },
+          "predicted_total_goals": 2,
+          "goals_line_2_5": "under",
+          "confidence": "low"
+        },
+        "predicted_result": "draw",
+        "predicted_score": {
+          "home": 1,
+          "away": 1
+        },
+        "predicted_total_goals": 2,
+        "prediction_confidence": "low",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 1,
+          "away": 1
+        },
+        "actual_total_goals": 2,
+        "result_hit": true,
+        "score_hit": true,
+        "total_goals_hit": true,
+        "goal_errors": {
+          "home_goal_error": 0,
+          "away_goal_error": 0,
+          "total_goal_error": 0,
+          "goal_margin_error": 0
+        },
+        "prediction_kept_locked": true
+      }
+    },
+    {
+      "match_id": "2026-GB-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-13.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-18.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-18.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GB-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-13.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-19.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-20.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GC-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GD-01",
+      "status": "final",
+      "final_score": {
+        "home": 4,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-13T12:00:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn-match-centre",
+            "tier": "T3",
+            "url": "https://www.espn.co.uk/football/match/_/gameId/760417/paraguay-united-states",
+            "observed_result": "United States 4-1 Paraguay"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GD-01",
+        "status": "evaluated",
+        "fixture": "United States vs Paraguay",
+        "evaluated_at": "2026-06-13T20:00:00+08:00",
+        "prediction_snapshot": {
+          "predicted_result": "home_win",
+          "predicted_score": {
+            "home": 2,
+            "away": 1
+          },
+          "predicted_total_goals": 3,
+          "goals_line_2_5": "over",
+          "confidence": "low"
+        },
+        "predicted_result": "home_win",
+        "predicted_score": {
+          "home": 2,
+          "away": 1
+        },
+        "predicted_total_goals": 3,
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 4,
+          "away": 1
+        },
+        "actual_total_goals": 5,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "goal_errors": {
+          "home_goal_error": 2,
+          "away_goal_error": 0,
+          "total_goal_error": 2,
+          "goal_margin_error": 2
+        },
+        "prediction_kept_locked": true
+      }
+    },
+    {
+      "match_id": "2026-GD-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GD-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-19.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GD-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-20.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GD-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-26.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GD-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-26.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-20.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GE-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-14.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-15.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-20.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GF-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-15.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-16.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-22.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GG-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-15.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-15.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-21.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GH-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-16.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-16.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-22.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-26.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GI-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-26.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-22.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-28.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GJ-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-28.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-18.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-24.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GK-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-17.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-23.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-GL-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-28.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-29.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-29.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-30.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-30.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-30.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-07",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-01.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-08",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-01.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-09",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-01.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-10",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-02.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-11",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-02.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-12",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-02.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-13",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-03.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-14",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-03.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-15",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-03.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R32-16",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-04.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-04.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-04.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-05.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-06.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-05",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-06.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-06",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-06.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-07",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-07.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-R16-08",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-07.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-QF-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-09.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-QF-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-10.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-QF-03",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-11.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-QF-04",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-12.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-SF-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-14.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-SF-02",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-15.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-TP-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-18.json",
+      "prediction_status": "locked_pre_match_prediction"
+    },
+    {
+      "match_id": "2026-F-01",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-19.json",
+      "prediction_status": "locked_pre_match_prediction"
+    }
+  ],
+  "safety_invariants": [
+    "local_overrides_do_not_define_the_canonical_fixture_list",
+    "public_match_ledger_remains_the_base_for_schedule_and_teams"
+  ]
+}

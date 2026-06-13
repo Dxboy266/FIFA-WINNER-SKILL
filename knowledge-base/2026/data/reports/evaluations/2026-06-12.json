@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-12",
+  "generated_at": "2026-06-12T21:22:00+08:00",
+  "mode": "worldcup-prediction-post-match-evaluation",
+  "summary": {
+    "evaluations": 2,
+    "evaluated_matches": 1,
+    "blocked_missing_final_score": 1,
+    "result_hits": 1,
+    "score_hits": 0,
+    "total_goals_hits": 0,
+    "confidence_calibration": {
+      "medium": {
+        "evaluated_matches": 1,
+        "result_hits": 1,
+        "result_hit_rate": 1.0
+      }
+    }
+  },
+  "evaluations": [
+    {
+      "match_id": "2026-GA-02",
+      "status": "evaluated",
+      "fixture": "South Korea vs Czechia",
+      "evaluated_at": "2026-06-12T21:22:00+08:00",
+      "prediction_snapshot": {
+        "predicted_result": "home_win",
+        "predicted_score": {
+          "home": 1,
+          "away": 0
+        },
+        "predicted_total_goals": 1,
+        "goals_line_2_5": "under",
+        "confidence": "medium"
+      },
+      "predicted_result": "home_win",
+      "predicted_score": {
+        "home": 1,
+        "away": 0
+      },
+      "predicted_total_goals": 1,
+      "prediction_confidence": "medium",
+      "actual_result": "home_win",
+      "actual_score": {
+        "home": 2,
+        "away": 1
+      },
+      "actual_total_goals": 3,
+      "result_hit": true,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "goal_errors": {
+        "home_goal_error": 1,
+        "away_goal_error": 1,
+        "total_goal_error": 2,
+        "goal_margin_error": 0
+      },
+      "prediction_kept_locked": true
+    },
+    {
+      "match_id": "2026-GB-01",
+      "status": "blocked_missing_final_score",
+      "fixture": "Canada vs Bosnia and Herzegovina",
+      "prediction_confidence": "low",
+      "prediction_kept_locked": true
+    }
+  ],
+  "safety_invariants": [
+    "post_match_evaluation_does_not_rewrite_locked_pre_match_predictions",
+    "evaluation_records_prediction_and_actual_score_snapshots"
+  ]
+}

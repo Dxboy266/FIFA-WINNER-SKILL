@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-11",
+  "generated_at": "2026-06-11T23:26:52.216010+08:00",
+  "mode": "daily-evidence",
+  "status": "updated",
+  "matches": [
+    {
+      "match_id": "2026-GA-01",
+      "referee": {
+        "name": "Clement Turpin",
+        "strictness": "high",
+        "yellow_cards_per_match": 4.5,
+        "red_cards_per_match": 0.25,
+        "penalties_per_match": 0.35
+      },
+      "odds": {
+        "home_win": 5.2,
+        "draw": 3.75,
+        "away_win": 1.6,
+        "source": "mock_bookmaker"
+      },
+      "sentiment": null
+    }
+  ],
+  "injuries": [],
+  "suspensions": [],
+  "probable_lineups": [],
+  "late_news": [
+    {
+      "headline": "World Cup Daily LIVE: One day to go as Mexico prep...",
+      "detail": "Get all the updates from our reporters across the U.S., Mexico and Canada U.S., Mexico and Canada as the World Cup starts on Thursday.",
+      "sentiment": "neutral",
+      "team_code": "mex",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-10T21:51:20.605722+08:00"
+    },
+    {
+      "headline": "Mexico's Mora is poised to be World Cup's breakout...",
+      "detail": "Getting beyond the quarterfinals would be historic for Mexico. Lucky for El Tri, they have a 17-year-old who can't stop making history.",
+      "sentiment": "neutral",
+      "team_code": "mex",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-10T21:51:20.605737+08:00"
+    },
+    {
+      "headline": "Mexico key midfielder returns to training ahead of crucial clash",
+      "detail": "Good news for the coach as the squad receives a boost with players recovering from minor knocks.",
+      "sentiment": "positive",
+      "team_code": "mex",
+      "source": "mock_espn",
+      "recorded_at": "2026-06-11T23:13:46.054400+08:00"
+    },
+    {
+      "headline": "South Africa key midfielder returns to training ahead of crucial clash",
+      "detail": "Good news for the coach as the squad receives a boost with players recovering from minor knocks.",
+      "sentiment": "positive",
+      "team_code": "rsa",
+      "source": "mock_espn",
+      "recorded_at": "2026-06-11T23:13:46.054417+08:00"
+    }
+  ],
+  "source_refs": [
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-10T21:51:20.605743+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-11T23:13:46.054423+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-11T23:26:52.216023+08:00"
+    }
+  ],
+  "safety_invariants": [
+    "missing_daily_evidence_is_marked_partial_or_blocked",
+    "daily_evidence_does_not_overwrite_prediction_reports"
+  ]
+}

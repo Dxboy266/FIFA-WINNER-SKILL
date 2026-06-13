@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FIFA-WINNER-SKILL Hero Animation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c12;--surface:rgba(14,20,36,0.9);--text:#e8ecf4;--muted:#64748b;
+  --cyan:#22d3ee;--cyan-dim:rgba(34,211,238,0.15);
+  --purple:#a78bfa;--purple-dim:rgba(167,139,250,0.15);
+  --green:#34d399;--green-dim:rgba(52,211,153,0.15);
+  --amber:#fbbf24;--amber-dim:rgba(251,191,36,0.15);
+  --border:rgba(255,255,255,0.06);
+  --font:'Space Grotesk',-apple-system,sans-serif;
+  --font-display:'Chakra Petch','Space Grotesk',sans-serif;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);display:flex;align-items:center;justify-content:center;min-height:100vh;-webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(ellipse at 50% 45%,rgba(34,211,238,0.05) 0%,transparent 55%),
+    radial-gradient(ellipse at 25% 75%,rgba(167,139,250,0.04) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 70%,rgba(52,211,153,0.03) 0%,transparent 45%);
+}
+.stage{
+  position:relative;width:720px;height:420px;border-radius:16px;overflow:hidden;
+  border:1px solid var(--border);
+  background:
+    linear-gradient(180deg,rgba(10,12,18,1) 0%,rgba(14,18,30,1) 100%);
+}
+/* Corner frame */
+.c{position:absolute;width:44px;height:44px;border-color:rgba(34,211,238,0.12);border-style:solid;pointer-events:none;z-index:1}
+.c.tl{top:14px;left:14px;border-width:1px 0 0 1px}
+.c.tr{top:14px;right:14px;border-width:1px 1px 0 0}
+.c.bl{bottom:14px;left:14px;border-width:0 0 1px 1px}
+.c.br{bottom:14px;right:14px;border-width:0 1px 1px 0}
+
+/* Orbit rings */
+.orbit{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  border-radius:50%;border:1px solid rgba(255,255,255,0.02);pointer-events:none;z-index:1}
+.orbit-1{width:200px;height:200px;animation:spin 28s linear infinite}
+.orbit-2{width:300px;height:300px;animation:spin 42s linear infinite reverse}
+.orbit-3{width:400px;height:400px;animation:spin 56s linear infinite}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* Center icon */
+.center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:3;display:flex;flex-direction:column;align-items:center;gap:14px}
+.icon{width:76px;height:76px;border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  display:flex;align-items:center;justify-content:center;font-size:34px;color:#fff;
+  box-shadow:0 0 50px rgba(34,211,238,0.22),0 0 90px rgba(167,139,250,0.14);
+  animation:glow 3s ease-in-out infinite}
+@keyframes glow{
+  0%,100%{box-shadow:0 0 50px rgba(34,211,238,0.22),0 0 90px rgba(167,139,250,0.14)}
+  50%{box-shadow:0 0 72px rgba(34,211,238,0.32),0 0 130px rgba(167,139,250,0.22)}
+}
+.center-title{font-family:var(--font-display);font-size:18px;font-weight:700;
+  color:#fff;text-align:center;letter-spacing:.02em;
+  background:linear-gradient(135deg,#fff 35%,var(--cyan) 65%,var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.center-sub{font-size:11px;color:var(--muted);text-align:center;letter-spacing:.08em;text-transform:uppercase}
+
+/* Floating tags */
+.tag{position:absolute;z-index:2;padding:7px 15px;border-radius:99px;
+  font-size:11.5px;font-weight:600;letter-spacing:.03em;white-space:nowrap;
+  background:rgba(10,12,18,0.88);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.07);color:var(--text);
+  box-shadow:0 4px 18px rgba(0,0,0,0.35);
+  animation:float var(--dur,6s) var(--del,0s) ease-in-out infinite}
+.tag.t-cyan{color:var(--cyan);border-color:rgba(34,211,238,0.18);background:rgba(34,211,238,0.05)}
+.tag.t-purple{color:var(--purple);border-color:rgba(167,139,250,0.18);background:rgba(167,139,250,0.05)}
+.tag.t-green{color:var(--green);border-color:rgba(52,211,153,0.18);background:rgba(52,211,153,0.05)}
+.tag.t-amber{color:var(--amber);border-color:rgba(251,191,36,0.18);background:rgba(251,191,36,0.05)}
+.tag sub{display:block;font-size:8.5px;color:var(--muted);font-weight:500;margin-top:1px;letter-spacing:.1em;text-transform:uppercase}
+@keyframes float{
+  0%,100%{transform:translate(0,0)}
+  25%{transform:translate(var(--x,6px),var(--y,-9px))}
+  50%{transform:translate(var(--x2,-4px),var(--y2,5px))}
+  75%{transform:translate(var(--x3,-5px),var(--y3,-3px))}
+}
+
+/* Particles */
+.p{position:absolute;width:2.5px;height:2.5px;border-radius:50%;
+  opacity:0;animation:pf var(--pd,4s) var(--pdl,0s) ease-in-out infinite}
+.p.c-p{background:var(--cyan)}.p.c-g{background:var(--green)}.p.c-v{background:var(--purple)} .p.c-a{background:var(--amber)}
+@keyframes pf{
+  0%{opacity:0;transform:translateY(0) scale(.5)}
+  20%{opacity:.65}
+  80%{opacity:.25}
+  100%{opacity:0;transform:translateY(-110px) scale(1)}
+}
+
+/* Header text area */
+.header{position:absolute;top:24px;left:0;right:0;text-align:center;z-index:5;pointer-events:none}
+.header-label{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--cyan);background:var(--cyan-dim);
+  padding:4px 14px;border-radius:99px;border:1px solid rgba(34,211,238,0.18)}
+
+/* Footer credit */
+.credit{position:absolute;bottom:10px;right:16px;z-index:6;font-size:8.5px;color:var(--muted);
+  letter-spacing:.05em;opacity:.4}
+.credit a{color:var(--cyan);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <!-- Corners -->
+  <div class="c tl"></div><div class="c tr"></div>
+  <div class="c bl"></div><div class="c br"></div>
+
+  <!-- Orbits -->
+  <div class="orbit orbit-1"></div>
+  <div class="orbit orbit-2"></div>
+  <div class="orbit orbit-3"></div>
+
+  <!-- Header -->
+  <div class="header"><span class="header-label">FIFA-WINNER-SKILL</span></div>
+
+  <!-- Tags - orbiting around center -->
+  <span class="tag t-cyan" style="top:10%;left:13%;--dur:7s;--del:.2s;--x:8px;--y:-10px;--x2:-5px;--y2:6px;--x3:4px;--y3:-4px">「AI 概率模型」<sub>Model</sub></span>
+  <span class="tag t-purple" style="top:7%;right:18%;--dur:8s;--del:1s;--x:-7px;--y:-9px;--x2:6px;--y2:4px;--x3:-3px;--y3:-6px">「天纪气运修正」<sub>Qi</sub></span>
+  <span class="tag t-green" style="top:26%;left:4%;--dur:6.5s;--del:.5s;--x:10px;--y:-6px;--x2:-8px;--y2:8px;--x3:5px;--y3:-3px">「章鱼哥」<sub>Octopus</sub></span>
+  <span class="tag t-amber" style="top:21%;right:6%;--dur:7.5s;--del:1.5s;--x:-9px;--y:-7px;--x2:7px;--y2:5px;--x3:-4px;--y3:-8px">「48 强争霸」<sub>Teams</sub></span>
+  <span class="tag t-cyan" style="top:53%;left:2%;--dur:8.5s;--del:.8s;--x:6px;--y:9px;--x2:-4px;--y2:-7px;--x3:8px;--y3:4px">「数据驱动」<sub>Data</sub></span>
+  <span class="tag t-purple" style="top:57%;right:4%;--dur:6s;--del:1.8s;--x:-8px;--y:7px;--x2:5px;--y2:-5px;--x3:-6px;--y3:9px">「概率预测」<sub>Prob</sub></span>
+  <span class="tag t-green" style="bottom:20%;left:12%;--dur:7.2s;--del:.3s;--x:9px;--y:5px;--x2:-6px;--y2:-9px;--x3:3px;--y3:6px">「小组赛 72 场」<sub>Group Stage</sub></span>
+  <span class="tag t-amber" style="bottom:17%;right:14%;--dur:6.8s;--del:1.2s;--x:-6px;--y:8px;--x2:8px;--y2:-4px;--x3:-7px;--y3:5px">「淘汰赛 32 场」<sub>Knockout</sub></span>
+  <span class="tag t-cyan" style="bottom:7%;left:33%;--dur:8.2s;--del:.6s;--x:4px;--y:-6px;--x2:-9px;--y2:3px;--x3:6px;--y3:-8px">「Brier 校准」<sub>Metric</sub></span>
+  <span class="tag t-purple" style="bottom:9%;right:32%;--dur:7.8s;--del:1.6s;--x:-5px;--y:-8px;--x2:7px;--y2:6px;--x3:-8px;--y3:-4px">「ReAct 规划」<sub>Agent</sub></span>
+  <span class="tag t-green" style="top:40%;left:1%;--dur:6.3s;--del:.9s;--x:11px;--y:-4px;--x2:-7px;--y2:9px;--x3:-2px;--y3:-7px">「反思自调整」<sub>Reflect</sub></span>
+  <span class="tag t-amber" style="top:43%;right:2%;--dur:8.8s;--del:1.3s;--x:-10px;--y:-5px;--x2:9px;--y2:-8px;--x3:-5px;--y3:6px">「多模型集成」<sub>Ensemble</sub></span>
+
+  <!-- Particles -->
+  <div class="p c-p" style="left:18%;bottom:18%;--pd:4s;--pdl:0s"></div>
+  <div class="p c-v" style="left:38%;bottom:22%;--pd:5s;--pdl:1s"></div>
+  <div class="p c-p" style="left:58%;bottom:16%;--pd:4.5s;--pdl:2s"></div>
+  <div class="p c-g" style="left:78%;bottom:26%;--pd:5.5s;--pdl:.5s"></div>
+  <div class="p c-v" style="left:28%;bottom:13%;--pd:6s;--pdl:1.5s"></div>
+  <div class="p c-p" style="left:68%;bottom:20%;--pd:4.8s;--pdl:2.5s"></div>
+
+  <!-- Center -->
+  <div class="center">
+    <div class="icon">⚽</div>
+    <div class="center-title">AI 章鱼哥预测看板</div>
+    <div class="center-sub">Data Model + Qi Fortune Correction</div>
+  </div>
+
+  <!-- Credit -->
+  <div class="credit">动画灵感来自 <a href="https://github.com/alchaincyf/huashu-design" target="_blank">huashu-design</a></div>
+</div>
+
+</body>
+</html>

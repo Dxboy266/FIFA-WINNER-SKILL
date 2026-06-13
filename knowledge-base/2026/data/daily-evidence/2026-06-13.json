@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-13",
+  "generated_at": "2026-06-13T17:41:48.102256+08:00",
+  "mode": "daily-evidence",
+  "status": "updated",
+  "matches": [
+    {
+      "match_id": "2026-GB-02",
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GC-01",
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GD-01",
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "sporttery odds not matched",
+        "is_mock": false
+      },
+      "sentiment": null
+    }
+  ],
+  "injuries": [],
+  "suspensions": [],
+  "probable_lineups": [],
+  "late_news": [
+    {
+      "headline": "Marsch 'had to beg' U.S. players to sing anthem",
+      "detail": "Former United States men's national team (USMNT) assistant coach Jesse March has revealed he sometimes \"had to beg\" the American players to sing the national anthem.",
+      "sentiment": "neutral",
+      "team_code": "usa",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-12T21:54:22.857387+08:00"
+    },
+    {
+      "headline": "Poch: 'Too late' for motivational speeches for U.S...",
+      "detail": "USMNT coach Mauricio Pochettino said that the time for fiery speeches is over and that his side is ready for Friday's World Cup opener against Paraguay.",
+      "sentiment": "neutral",
+      "team_code": "par",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-12T21:54:22.857405+08:00"
+    },
+    {
+      "headline": "Palestine FA boss: U.S. denied my WCup visa",
+      "detail": "The head of the Palestinian Football Association is waiting in Mexico City for permission to enter the United States with other federation heads attending the 2026 FIFA World Cup.",
+      "sentiment": "neutral",
+      "team_code": "usa",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-12T21:54:22.857409+08:00"
+    },
+    {
+      "headline": "For Brazil, 24 years after their last World Cup ti...",
+      "detail": "Brazil are the most successful team in World Cup history. But after not winning the title in 24 years, can Carlo Ancelotti's side finally end that run?",
+      "sentiment": "positive",
+      "team_code": "bra",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-12T21:54:22.857412+08:00"
+    },
+    {
+      "headline": "Four goals and an electric display: USMNT's World ...",
+      "detail": "World Cup co-hosts the United States banished any doubts hanging over the team with a decisive 4-1 victory over Paraguay on Friday.",
+      "sentiment": "neutral",
+      "team_code": "usa",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:53.631393+08:00"
+    },
+    {
+      "headline": "Four goals and an electric display: USMNT's World ...",
+      "detail": "World Cup co-hosts the United States banished any doubts hanging over the team with a decisive 4-1 victory over Paraguay on Friday.",
+      "sentiment": "neutral",
+      "team_code": "par",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:53.631410+08:00"
+    },
+    {
+      "headline": "Balogun living WC 'dream' as U.S. choice pays off",
+      "detail": "USMNT striker Folarin Balogun, who could have played for England or Nigeria, said his two goals in Friday's 4-1 World Cup victory over Paraguay made for a \"dreamy night.\"",
+      "sentiment": "positive",
+      "team_code": "par",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:53.631416+08:00"
+    },
+    {
+      "headline": "Pulisic subbed off at halftime, 'hoping it's nothi...",
+      "detail": "United States winger Christian Pulisic was substituted at halftime of his team's World Cup opener against Paraguay on Friday, with the Americans leading 3-0 at the break.",
+      "sentiment": "positive",
+      "team_code": "usa",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:53.631419+08:00"
+    },
+    {
+      "headline": "Pulisic subbed off at halftime, 'hoping it's nothi...",
+      "detail": "United States winger Christian Pulisic was substituted at halftime of his team's World Cup opener against Paraguay on Friday, with the Americans leading 3-0 at the break.",
+      "sentiment": "positive",
+      "team_code": "par",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:53.631423+08:00"
+    },
+    {
+      "headline": "Dempsey slams Marsch over anthem: Stay in lane",
+      "detail": "United States legend Clint Dempsey had some choice words for former national team assistant Jesse Marsch, who suggested Thursday that some American players needed encouragement to sing the anthem ahead of games.",
+      "sentiment": "neutral",
+      "team_code": "usa",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:53.631427+08:00"
+    },
+    {
+      "headline": "Ancelotti: 'Beautiful moment' to lead Brazil at WC...",
+      "detail": "Carlo Ancelotti has said he is ready for a \"beautiful moment\" in his already stellar coaching career, as he prepares to take charge of his first game at the World Cup.",
+      "sentiment": "neutral",
+      "team_code": "bra",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:53.631431+08:00"
+    },
+    {
+      "headline": "Balogun makes this USMNT side better, including it...",
+      "detail": "Friday's 4-1 blowout of Paraguay showed that the U.S. men's national team has its star. What if it now has its scorer, too?",
+      "sentiment": "negative",
+      "team_code": "par",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:53.631437+08:00"
+    },
+    {
+      "headline": "VAR review: What was the 'mistaken identity' check...",
+      "detail": "After originally giving USMNT defender Tim Ream a yellow card, the referee was called to the screen and reissued it to Paraguay's Miguel Almirón.",
+      "sentiment": "neutral",
+      "team_code": "par",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-13T17:36:53.631440+08:00"
+    }
+  ],
+  "source_refs": [
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-12T21:54:22.857417+08:00"
+    },
+    {
+      "source": "sporttery_fixed_odds",
+      "name": "中国体育彩票竞彩网固定奖金",
+      "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+      "recorded_at": "2026-06-13T17:13:15.038828+08:00",
+      "status": "ok",
+      "note": "Fixed bonus odds snapshot for entertainment analysis; not betting advice."
+    },
+    {
+      "source": "sporttery_fixed_odds",
+      "name": "中国体育彩票竞彩网固定奖金",
+      "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+      "recorded_at": "2026-06-13T17:36:52.888870+08:00",
+      "status": "ok",
+      "note": "Fixed bonus odds snapshot for entertainment analysis; not betting advice."
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-13T17:36:53.631446+08:00"
+    },
+    {
+      "source": "sporttery_fixed_odds",
+      "name": "中国体育彩票竞彩网固定奖金",
+      "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+      "recorded_at": "2026-06-13T17:41:47.231205+08:00",
+      "status": "ok",
+      "note": "Fixed bonus odds snapshot for entertainment analysis; not betting advice."
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-13T17:41:48.102265+08:00"
+    }
+  ]
+}

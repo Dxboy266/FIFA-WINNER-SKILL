@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "edition": "2026",
+  "generated_at": "2026-06-10T19:55:00+08:00",
+  "mode": "worldcup-edition-todolist",
+  "summary": {
+    "todo": 0,
+    "done": 15,
+    "p0": 0,
+    "p1": 0,
+    "p2": 0
+  },
+  "items": [],
+  "done": [
+    "Initialize reusable edition structure for 2026",
+    "Snapshot and parse FIFA official squad PDF",
+    "Generate team/player dossiers from official roster data",
+    "Add prediction evidence plan and source readiness guardrails",
+    "Add GitHub readiness gate",
+    "Add play_card for prediction playability",
+    "Parse official FIFA schedule and update match ledger (104 matches, 72 official)",
+    "Parse FIFA men's ranking (48 qualified teams with points)",
+    "Compile squad depth and position-balance features (48 teams, 1248 players)",
+    "Design explainable prediction scoring model (5 components + Zhouyi overlay)",
+    "Add daily evidence input tool (injuries, suspensions, lineups, news)",
+    "Restore OpenFootball historical data (19 editions, 37 teams with history)",
+    "Add GitHub packaging polish (LICENSE, .env.example, examples and CI)",
+    "Add poster generation examples for image2 blocked/generated provenance",
+    "Add aggregate post-match review dashboard with hit-rate and confidence calibration buckets"
+  ],
+  "safety_invariants": [
+    "todo_items_do_not_claim_data_completeness",
+    "p0_tasks_are_complete_and_no_longer_block_predictions",
+    "p2_tasks_are_complete_for_github_ready_package_cut",
+    "prediction_work_remains_entertainment_only"
+  ]
+}
