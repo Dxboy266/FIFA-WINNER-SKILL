@@ -1,0 +1,877 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-09T22:55:00+08:00",
+  "mode": "worldcup-teams-from-fifa-squad-pdf",
+  "teams": [
+    {
+      "team_id": "alg",
+      "name": "Algeria",
+      "code": "ALG",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 1,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "PETKOVIC Vladimir",
+        "first_names": "Vladimir",
+        "last_names": "PETKOVIĆ",
+        "nationality": "Switzerland"
+      }
+    },
+    {
+      "team_id": "arg",
+      "name": "Argentina",
+      "code": "ARG",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 2,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "SCALONI Lionel",
+        "first_names": "Lionel Sebastián",
+        "last_names": "SCALONI",
+        "nationality": "Argentina"
+      }
+    },
+    {
+      "team_id": "aus",
+      "name": "Australia",
+      "code": "AUS",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 3,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "POPOVIC Tony",
+        "first_names": "Tony",
+        "last_names": "POPOVIC",
+        "nationality": "Australia"
+      }
+    },
+    {
+      "team_id": "aut",
+      "name": "Austria",
+      "code": "AUT",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 4,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "RANGNICK Ralf",
+        "first_names": "Ralf Dietrich",
+        "last_names": "RANGNICK",
+        "nationality": "Germany"
+      }
+    },
+    {
+      "team_id": "bel",
+      "name": "Belgium",
+      "code": "BEL",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 5,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "GARCIA Rudi",
+        "first_names": "Rudi José",
+        "last_names": "GARCIA",
+        "nationality": "France"
+      }
+    },
+    {
+      "team_id": "bih",
+      "name": "Bosnia And Herzegovina",
+      "code": "BIH",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 6,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "BARBAREZ Sergej",
+        "first_names": "Sergej",
+        "last_names": "BARBAREZ",
+        "nationality": "Bosnia And Herzegovina"
+      }
+    },
+    {
+      "team_id": "bra",
+      "name": "Brazil",
+      "code": "BRA",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 7,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "ANCELOTTI Carlo",
+        "first_names": "Carlo",
+        "last_names": "ANCELOTTI",
+        "nationality": "Italy"
+      }
+    },
+    {
+      "team_id": "cpv",
+      "name": "Cabo Verde",
+      "code": "CPV",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 8,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "BUBISTA",
+        "first_names": "Pedro",
+        "last_names": "LEITÃO BRITO",
+        "nationality": "Cabo Verde"
+      }
+    },
+    {
+      "team_id": "can",
+      "name": "Canada",
+      "code": "CAN",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 9,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "MARSCH Jesse",
+        "first_names": "Jesse Alan",
+        "last_names": "MARSCH",
+        "nationality": "USA"
+      }
+    },
+    {
+      "team_id": "col",
+      "name": "Colombia",
+      "code": "COL",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 10,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "LORENZO Nestor",
+        "first_names": "Nestor Gabriel",
+        "last_names": "LORENZO",
+        "nationality": "Argentina"
+      }
+    },
+    {
+      "team_id": "cod",
+      "name": "Congo DR",
+      "code": "COD",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 11,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "DESABRE Sebastien",
+        "first_names": "Sebastien Serge Louis D",
+        "last_names": "ESABRE",
+        "nationality": "France"
+      }
+    },
+    {
+      "team_id": "civ",
+      "name": "Côte D'Ivoire",
+      "code": "CIV",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 12,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "FAE Emerse",
+        "first_names": "Emerse",
+        "last_names": "FAE",
+        "nationality": "Côte D'Ivoire"
+      }
+    },
+    {
+      "team_id": "cro",
+      "name": "Croatia",
+      "code": "CRO",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 13,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "DALIC Zlatko",
+        "first_names": "Zlatko",
+        "last_names": "DALIĆ",
+        "nationality": "Croatia"
+      }
+    },
+    {
+      "team_id": "cuw",
+      "name": "Curaçao",
+      "code": "CUW",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 14,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "ADVOCAAT Dick",
+        "first_names": "Dirk Nicolaas",
+        "last_names": "ADVOCAAT",
+        "nationality": "Netherlands"
+      }
+    },
+    {
+      "team_id": "cze",
+      "name": "Czechia",
+      "code": "CZE",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 15,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "KOUBEK Miroslav",
+        "first_names": "Miroslav",
+        "last_names": "KOUBEK",
+        "nationality": "Czech Republic"
+      }
+    },
+    {
+      "team_id": "ecu",
+      "name": "Ecuador",
+      "code": "ECU",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 16,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "BECCACECE Sebastian",
+        "first_names": "Sebastián Andrés",
+        "last_names": "BECCACECE",
+        "nationality": "Argentina"
+      }
+    },
+    {
+      "team_id": "egy",
+      "name": "Egypt",
+      "code": "EGY",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 17,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "HOSSAM HASSAN",
+        "first_names": "Hossam Hassan Hassanein",
+        "last_names": "HASSAN",
+        "nationality": "Egypt"
+      }
+    },
+    {
+      "team_id": "eng",
+      "name": "England",
+      "code": "ENG",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 18,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "TUCHEL Thomas",
+        "first_names": "Thomas",
+        "last_names": "TUCHEL",
+        "nationality": "Germany"
+      }
+    },
+    {
+      "team_id": "fra",
+      "name": "France",
+      "code": "FRA",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 19,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "DESCHAMPS Didier",
+        "first_names": "Didier Claude",
+        "last_names": "DESCHAMPS",
+        "nationality": "France"
+      }
+    },
+    {
+      "team_id": "ger",
+      "name": "Germany",
+      "code": "GER",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 20,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "NAGELSMANN Julian",
+        "first_names": "Julian",
+        "last_names": "NAGELSMANN",
+        "nationality": "Germany"
+      }
+    },
+    {
+      "team_id": "gha",
+      "name": "Ghana",
+      "code": "GHA",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 21,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "CARLOS QUEIROZ",
+        "first_names": "Carlos Manuel",
+        "last_names": "BRITO LEAL DE QUEIROZ",
+        "nationality": "Portugal"
+      }
+    },
+    {
+      "team_id": "hai",
+      "name": "Haiti",
+      "code": "HAI",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 22,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "MIGNE Sebastien",
+        "first_names": "Sébastien Bernard Henri C",
+        "last_names": "MIGNÉ",
+        "nationality": "France"
+      }
+    },
+    {
+      "team_id": "irn",
+      "name": "IR Iran",
+      "code": "IRN",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 23,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "GHALEHNOY Amir",
+        "first_names": "Ardeshir",
+        "last_names": "GHALEHNOY",
+        "nationality": "IR Iran"
+      }
+    },
+    {
+      "team_id": "irq",
+      "name": "Iraq",
+      "code": "IRQ",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 24,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "ARNOLD Graham",
+        "first_names": "Graham James",
+        "last_names": "ARNOLD",
+        "nationality": "Australia"
+      }
+    },
+    {
+      "team_id": "jpn",
+      "name": "Japan",
+      "code": "JPN",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 25,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "MORIYASU Hajime",
+        "first_names": "Hajime",
+        "last_names": "MORIYASU",
+        "nationality": "Japan"
+      }
+    },
+    {
+      "team_id": "jor",
+      "name": "Jordan",
+      "code": "JOR",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 26,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "SELLAMI Jamal",
+        "first_names": "Jamal",
+        "last_names": "SELLAMI",
+        "nationality": "Morocco"
+      }
+    },
+    {
+      "team_id": "kor",
+      "name": "Korea Republic",
+      "code": "KOR",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 27,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "HONG Myungbo",
+        "first_names": "Myung Bo",
+        "last_names": "HONG",
+        "nationality": "Korea Republic"
+      }
+    },
+    {
+      "team_id": "mex",
+      "name": "Mexico",
+      "code": "MEX",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 28,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "AGUIRRE Javier",
+        "first_names": "Javier",
+        "last_names": "AGUIRRE ONAINDIA",
+        "nationality": "Mexico"
+      }
+    },
+    {
+      "team_id": "mar",
+      "name": "Morocco",
+      "code": "MAR",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 29,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "OUAHBI Mohamed",
+        "first_names": "Mohamed",
+        "last_names": "OUAHBI",
+        "nationality": "Morocco"
+      }
+    },
+    {
+      "team_id": "ned",
+      "name": "Netherlands",
+      "code": "NED",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 30,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "KOEMAN Ronald",
+        "first_names": "Ronald",
+        "last_names": "KOEMAN",
+        "nationality": "Netherlands"
+      }
+    },
+    {
+      "team_id": "nzl",
+      "name": "New Zealand",
+      "code": "NZL",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 31,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "BAZELEY Darren",
+        "first_names": "Darren Shaun",
+        "last_names": "BAZELEY",
+        "nationality": "New Zealand"
+      }
+    },
+    {
+      "team_id": "nor",
+      "name": "Norway",
+      "code": "NOR",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 32,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "SOLBAKKEN Stale",
+        "first_names": "Ståle",
+        "last_names": "SOLBAKKEN",
+        "nationality": "Norway"
+      }
+    },
+    {
+      "team_id": "pan",
+      "name": "Panama",
+      "code": "PAN",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 33,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "CHRISTIANSEN Thomas",
+        "first_names": "Thomas",
+        "last_names": "CHRISTIANSEN TARIN",
+        "nationality": "Spain"
+      }
+    },
+    {
+      "team_id": "par",
+      "name": "Paraguay",
+      "code": "PAR",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 34,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "ALFARO Gustavo",
+        "first_names": "Gustavo Julio",
+        "last_names": "ALFARO",
+        "nationality": "Argentina"
+      }
+    },
+    {
+      "team_id": "por",
+      "name": "Portugal",
+      "code": "POR",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 35,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "MARTINEZ Roberto",
+        "first_names": "Roberto",
+        "last_names": "MARTÍNEZ MONTOLIU",
+        "nationality": "Spain"
+      }
+    },
+    {
+      "team_id": "qat",
+      "name": "Qatar",
+      "code": "QAT",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 36,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "LOPETEGUI Julen",
+        "first_names": "Julian",
+        "last_names": "LOPETEGUI ARGOTE",
+        "nationality": "Spain"
+      }
+    },
+    {
+      "team_id": "ksa",
+      "name": "Saudi Arabia",
+      "code": "KSA",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 37,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "DONIS Georgios",
+        "first_names": "Georgios",
+        "last_names": "DONIS",
+        "nationality": "Greece"
+      }
+    },
+    {
+      "team_id": "sco",
+      "name": "Scotland",
+      "code": "SCO",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 38,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "CLARKE Steve",
+        "first_names": "Stephen",
+        "last_names": "CLARKE",
+        "nationality": "Scotland"
+      }
+    },
+    {
+      "team_id": "sen",
+      "name": "Senegal",
+      "code": "SEN",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 39,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "THIAW Pape",
+        "first_names": "Pape Bouna",
+        "last_names": "THIAW",
+        "nationality": "Senegal"
+      }
+    },
+    {
+      "team_id": "rsa",
+      "name": "South Africa",
+      "code": "RSA",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 40,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "BROOS Hugo",
+        "first_names": "Hugo Henri",
+        "last_names": "BROOS",
+        "nationality": "Belgium"
+      }
+    },
+    {
+      "team_id": "esp",
+      "name": "Spain",
+      "code": "ESP",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 41,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "DE LA FUENTE Luis",
+        "first_names": "Luis",
+        "last_names": "DE LA FUENTE CASTILLO",
+        "nationality": "Spain"
+      }
+    },
+    {
+      "team_id": "swe",
+      "name": "Sweden",
+      "code": "SWE",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 42,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "POTTER Graham",
+        "first_names": "Graham Stephen",
+        "last_names": "POTTER",
+        "nationality": "England"
+      }
+    },
+    {
+      "team_id": "sui",
+      "name": "Switzerland",
+      "code": "SUI",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 43,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "YAKIN Murat",
+        "first_names": "Murat",
+        "last_names": "YAKIN",
+        "nationality": "Switzerland"
+      }
+    },
+    {
+      "team_id": "tun",
+      "name": "Tunisia",
+      "code": "TUN",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 44,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "LAMOUCHI Sabri",
+        "first_names": "Sabri",
+        "last_names": "LAMOUCHI",
+        "nationality": "France"
+      }
+    },
+    {
+      "team_id": "tur",
+      "name": "Türkiye",
+      "code": "TUR",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 45,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "MONTELLA Vincenzo",
+        "first_names": "Vincenzo",
+        "last_names": "MONTELLA",
+        "nationality": "Italy"
+      }
+    },
+    {
+      "team_id": "uru",
+      "name": "Uruguay",
+      "code": "URU",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 46,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "BIELSA Marcelo",
+        "first_names": "Marcelo Alberto",
+        "last_names": "BIELSA",
+        "nationality": "Argentina"
+      }
+    },
+    {
+      "team_id": "usa",
+      "name": "USA",
+      "code": "USA",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 47,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "POCHETTINO Mauricio",
+        "first_names": "Mauricio Roberto",
+        "last_names": "POCHETTINO TROSSERO",
+        "nationality": "Argentina"
+      }
+    },
+    {
+      "team_id": "uzb",
+      "name": "Uzbekistan",
+      "code": "UZB",
+      "source_integrity": "complete",
+      "status": "official_squad_pdf_parsed",
+      "source_refs": [
+        "fifa-squad-lists-pdf"
+      ],
+      "page_number": 48,
+      "coach": {
+        "role": "Head coach",
+        "coach_name": "CANNAVARO Fabio",
+        "first_names": "Fabio",
+        "last_names": "CANNAVARO",
+        "nationality": "Italy"
+      }
+    }
+  ],
+  "summary": {
+    "team_count": 48,
+    "source_integrity": "complete",
+    "status": "official_squad_pdf_parsed"
+  }
+}

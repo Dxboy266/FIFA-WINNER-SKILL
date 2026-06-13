@@ -350,7 +350,9 @@ def save_prediction(conn: sqlite3.Connection, prediction: dict) -> None:
     goals_line_2_5 = pred_info.get("goals_line_2_5")
     evidence_quality = pred_info.get("evidence_quality") or prediction.get("evidence_quality")
     
-    has_odds = 1 if (prediction.get("market_odds") or pred_info.get("has_odds")) else 0
+    market_status = prediction.get("market_odds_status") or {}
+    has_usable_market_odds = bool(prediction.get("market_odds")) and not market_status.get("is_mock")
+    has_odds = 1 if (has_usable_market_odds or pred_info.get("has_odds")) else 0
     has_referee = 1 if (prediction.get("referee_analysis") or pred_info.get("has_referee")) else 0
     has_news = 1 if (prediction.get("daily_evidence") or pred_info.get("has_news") or prediction.get("late_news")) else 0
     report_json_path = prediction.get("report_json_path") or prediction.get("prediction_report")

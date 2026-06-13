@@ -1,0 +1,168 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-12",
+  "generated_at": "2026-06-10T20:10:00+08:00",
+  "mode": "worldcup-daily-pre-match-entertainment-predictions",
+  "status": "created",
+  "report_path": "data/editions/2026/reports/daily-predictions/2026-06-12.json",
+  "markdown_path": "wiki/体育/世界杯/2026/reports/daily-predictions/2026-06-12.md",
+  "poster_requested": true,
+  "summary": {
+    "predictions_created": 2,
+    "matches_skipped_started": 0,
+    "matches_skipped_missing_kickoff": 0,
+    "locked_existing_predictions": 0
+  },
+  "predictions": [
+    {
+      "match_id": "2026-GA-02",
+      "edition": "2026",
+      "generated_at": "2026-06-10T20:10:00+08:00",
+      "status": "locked_pre_match_prediction",
+      "home_team": "South Korea",
+      "away_team": "Czechia",
+      "kickoff_at": "2026-06-12T02:00:00Z",
+      "prediction": {
+        "result": "home_win",
+        "score": {
+          "home": 1,
+          "away": 0
+        },
+        "total_goals": 1,
+        "goals_line_2_5": "under",
+        "confidence": "medium"
+      },
+      "weights": {
+        "data_model": 0.85,
+        "divination_overlay": 0.15
+      },
+      "evidence_summary": [
+        "T0/T1/T2/T3 sources must be checked before upgrading confidence.",
+        "This deterministic baseline is a pre-match entertainment model until team/player dossiers are complete.",
+        "Missing injury, lineup and recent-form evidence keeps confidence capped."
+      ],
+      "divination_overlay": {
+        "weight": 0.15,
+        "hexagram": "离",
+        "interpretation": "离象仅作娱乐叙事，最多微调倾向，不覆盖球队和球员证据。"
+      },
+      "play_card": {
+        "share_title": "South Korea vs Czechia 娱乐预测：1-0",
+        "match_hook": "South Korea 不败倾向，总进球参考 1 球。",
+        "poster_caption": "AI预测比分 1-0，韩国主线占优，但窄边局仍需防范平局拉扯。",
+        "watch_points": [
+          "定位球防守、二点球保护和禁区前沿犯规",
+          "下半场 60 分钟后的换人质量和体能落差",
+          "如果中场缠斗时间过长，总进球会被压低"
+        ],
+        "risk_flags": [
+          "伤停、首发和临场轮换未确认时，信心必须下调",
+          "赛程、排名或近期状态证据缺口会限制模型解释力"
+        ],
+        "poster_angle": "South Korea vs Czechia，比分 1-0，离象做娱乐氛围，不覆盖硬数据。",
+        "confidence_meter": {
+          "level": "medium",
+          "data_weight": 0.85,
+          "divination_weight": 0.15,
+          "label": "证据越完整，娱乐层越只能做叙事点缀"
+        },
+        "gameplay_tags": [
+          "胜平负",
+          "比分",
+          "总进球",
+          "看点",
+          "赛后复盘"
+        ]
+      },
+      "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+      "forbidden_actions": [
+        "投注金额建议",
+        "稳赢判断",
+        "稳胆措辞"
+      ],
+      "prediction_origin": "octopus_default",
+      "prediction_source": "octopus_default"
+    },
+    {
+      "match_id": "2026-GB-01",
+      "edition": "2026",
+      "generated_at": "2026-06-10T20:10:00+08:00",
+      "status": "locked_pre_match_prediction",
+      "home_team": "Canada",
+      "away_team": "Bosnia and Herzegovina",
+      "kickoff_at": "2026-06-12T19:00:00Z",
+      "prediction": {
+        "result": "draw",
+        "score": {
+          "home": 1,
+          "away": 1
+        },
+        "total_goals": 2,
+        "goals_line_2_5": "under",
+        "confidence": "low"
+      },
+      "weights": {
+        "data_model": 0.85,
+        "divination_overlay": 0.15
+      },
+      "evidence_summary": [
+        "T0/T1/T2/T3 sources must be checked before upgrading confidence.",
+        "This deterministic baseline is a pre-match entertainment model until team/player dossiers are complete.",
+        "Missing injury, lineup and recent-form evidence keeps confidence capped."
+      ],
+      "divination_overlay": {
+        "weight": 0.15,
+        "hexagram": "乾",
+        "interpretation": "乾象仅作娱乐叙事，最多微调倾向，不覆盖球队和球员证据。"
+      },
+      "play_card": {
+        "share_title": "Canada vs Bosnia and Herzegovina 娱乐预测：1-1",
+        "match_hook": "平局拉扯倾向，总进球参考 2 球。",
+        "poster_caption": "AI预测比分 1-1，双方拉扯成局，平局剧本是主线。",
+        "watch_points": [
+          "下半场 60 分钟后的换人质量和体能落差",
+          "开场 15 分钟的压迫强度和失误率",
+          "如果中场缠斗时间过长，总进球会被压低"
+        ],
+        "risk_flags": [
+          "伤停、首发和临场轮换未确认时，信心必须下调",
+          "赛程、排名或近期状态证据缺口会限制模型解释力",
+          "当前只适合娱乐讨论，不适合当作强判断"
+        ],
+        "poster_angle": "Canada vs Bosnia and Herzegovina，比分 1-1，乾象做娱乐氛围，不覆盖硬数据。",
+        "confidence_meter": {
+          "level": "low",
+          "data_weight": 0.85,
+          "divination_weight": 0.15,
+          "label": "证据越完整，娱乐层越只能做叙事点缀"
+        },
+        "gameplay_tags": [
+          "胜平负",
+          "比分",
+          "总进球",
+          "看点",
+          "赛后复盘"
+        ]
+      },
+      "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+      "forbidden_actions": [
+        "投注金额建议",
+        "稳赢判断",
+        "稳胆措辞"
+      ],
+      "prediction_origin": "octopus_default",
+      "prediction_source": "octopus_default"
+    }
+  ],
+  "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+  "safety_invariants": [
+    "predictions_only_for_not_started_matches",
+    "existing_daily_reports_are_locked_not_overwritten",
+    "divination_overlay_weight_lte_0_15",
+    "no_betting_amounts_or_guaranteed_win_language"
+  ],
+  "poster_manifest": "data/editions/2026/reports/posters/2026-06-12-poster-manifest.json",
+  "prediction_origin": "octopus_default",
+  "default_prediction_note": "AI Octopus default prediction bundled with the public knowledge base. User local predictions override this by match_id."
+}

@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "mode": "worldcup-public-default-predictions-manifest",
+  "count": 35,
+  "directory": "knowledge-base\\public\\2026\\default-predictions\\daily-predictions",
+  "override_rule": "User local reports in knowledge-base/{edition}/data/reports/daily-predictions override default predictions by match_id.",
+  "disclaimer": "Entertainment prediction reference only; not betting advice."
+}

@@ -1,0 +1,1296 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-10T18:42:35.860540+08:00",
+  "mode": "worldcup-squad-depth-features",
+  "global_summary": {
+    "total_teams": 48,
+    "total_players": 1248,
+    "global_position_counts": {
+      "GK": 145,
+      "DF": 420,
+      "MF": 373,
+      "FW": 310
+    },
+    "global_avg_age": 27.93,
+    "global_avg_height_cm": 182.8
+  },
+  "teams": [
+    {
+      "team_id": "alg",
+      "name": "Algeria",
+      "code": "ALG",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 7,
+        "FW": 7
+      },
+      "avg_age_years": 26.86,
+      "avg_height_cm": 182.7,
+      "club_country_distribution": {
+        "ALG": 3,
+        "BEL": 1,
+        "ENG": 1,
+        "ESP": 1,
+        "FRA": 5,
+        "GER": 4,
+        "HUN": 1,
+        "ITA": 2,
+        "KSA": 2,
+        "NED": 2,
+        "QAT": 1,
+        "SUI": 2,
+        "TUN": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "arg",
+      "name": "Argentina",
+      "code": "ARG",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 8,
+        "FW": 7
+      },
+      "avg_age_years": 29.05,
+      "avg_height_cm": 179.7,
+      "club_country_distribution": {
+        "ARG": 2,
+        "BRA": 1,
+        "ENG": 5,
+        "ESP": 7,
+        "FRA": 5,
+        "GER": 1,
+        "ITA": 2,
+        "POR": 1,
+        "USA": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "aus",
+      "name": "Australia",
+      "code": "AUS",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 10,
+        "MF": 5,
+        "FW": 8
+      },
+      "avg_age_years": 27.36,
+      "avg_height_cm": 183.6,
+      "club_country_distribution": {
+        "AUS": 5,
+        "AUT": 1,
+        "CYP": 1,
+        "DEN": 1,
+        "ENG": 3,
+        "ESP": 2,
+        "GER": 2,
+        "ITA": 2,
+        "JPN": 2,
+        "NED": 2,
+        "SCO": 1,
+        "USA": 3,
+        "WAL": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "aut",
+      "name": "Austria",
+      "code": "AUT",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 11,
+        "FW": 4
+      },
+      "avg_age_years": 28.54,
+      "avg_height_cm": 184.7,
+      "club_country_distribution": {
+        "AUT": 3,
+        "CZE": 1,
+        "DEN": 1,
+        "ENG": 1,
+        "ESP": 2,
+        "GER": 14,
+        "ITA": 1,
+        "NED": 1,
+        "POR": 1,
+        "SRB": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "bel",
+      "name": "Belgium",
+      "code": "BEL",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 8,
+        "FW": 6
+      },
+      "avg_age_years": 27.62,
+      "avg_height_cm": 185.8,
+      "club_country_distribution": {
+        "BEL": 3,
+        "ENG": 7,
+        "ESP": 2,
+        "FRA": 5,
+        "GER": 1,
+        "ITA": 5,
+        "POR": 2,
+        "SCO": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "bih",
+      "name": "Bosnia And Herzegovina",
+      "code": "BIH",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 8,
+        "FW": 7
+      },
+      "avg_age_years": 26.42,
+      "avg_height_cm": 187.2,
+      "club_country_distribution": {
+        "AUT": 1,
+        "BIH": 1,
+        "CRO": 2,
+        "CYP": 1,
+        "CZE": 2,
+        "DEN": 1,
+        "ENG": 1,
+        "FRA": 1,
+        "GER": 6,
+        "ITA": 3,
+        "KAZ": 1,
+        "NED": 1,
+        "POL": 1,
+        "POR": 1,
+        "ROU": 1,
+        "SUI": 1,
+        "TUR": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "bra",
+      "name": "Brazil",
+      "code": "BRA",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 6,
+        "FW": 9
+      },
+      "avg_age_years": 29.36,
+      "avg_height_cm": 183.1,
+      "club_country_distribution": {
+        "BRA": 7,
+        "ENG": 8,
+        "ESP": 2,
+        "FRA": 2,
+        "ITA": 2,
+        "KSA": 2,
+        "RUS": 2,
+        "TUR": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "cpv",
+      "name": "Cabo Verde",
+      "code": "CPV",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 12,
+        "FW": 3
+      },
+      "avg_age_years": 29.68,
+      "avg_height_cm": 181.3,
+      "club_country_distribution": {
+        "BUL": 2,
+        "CYP": 2,
+        "ESP": 1,
+        "FIN": 1,
+        "HUN": 1,
+        "IRL": 1,
+        "ISR": 1,
+        "NED": 1,
+        "POR": 7,
+        "ROU": 1,
+        "RUS": 2,
+        "TUR": 3,
+        "UAE": 1,
+        "USA": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "can",
+      "name": "Canada",
+      "code": "CAN",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 8,
+        "FW": 6
+      },
+      "avg_age_years": 26.93,
+      "avg_height_cm": 182.1,
+      "club_country_distribution": {
+        "BEL": 3,
+        "CAN": 2,
+        "CRO": 1,
+        "ENG": 5,
+        "ESP": 2,
+        "FRA": 1,
+        "GER": 1,
+        "ITA": 2,
+        "MEX": 1,
+        "SCO": 2,
+        "USA": 6
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "col",
+      "name": "Colombia",
+      "code": "COL",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 8,
+        "FW": 6
+      },
+      "avg_age_years": 30.09,
+      "avg_height_cm": 180.0,
+      "club_country_distribution": {
+        "ARG": 5,
+        "BRA": 4,
+        "COL": 1,
+        "ENG": 2,
+        "ESP": 3,
+        "FRA": 1,
+        "GER": 1,
+        "ITA": 2,
+        "MEX": 2,
+        "POR": 2,
+        "RUS": 1,
+        "TUR": 1,
+        "USA": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "cod",
+      "name": "Congo DR",
+      "code": "COD",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 8,
+        "FW": 7
+      },
+      "avg_age_years": 29.07,
+      "avg_height_cm": 181.0,
+      "club_country_distribution": {
+        "ARM": 1,
+        "BEL": 2,
+        "CYP": 1,
+        "EGY": 1,
+        "ENG": 5,
+        "ESP": 3,
+        "FRA": 5,
+        "GRE": 3,
+        "POL": 1,
+        "RUS": 1,
+        "SCO": 1,
+        "TUR": 1,
+        "UAE": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "civ",
+      "name": "Côte D'Ivoire",
+      "code": "CIV",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 6,
+        "FW": 9
+      },
+      "avg_age_years": 25.85,
+      "avg_height_cm": 182.9,
+      "club_country_distribution": {
+        "BEL": 3,
+        "ENG": 3,
+        "ESP": 1,
+        "FRA": 3,
+        "GER": 2,
+        "GRE": 1,
+        "ITA": 3,
+        "KSA": 1,
+        "POR": 3,
+        "SVN": 1,
+        "TUR": 5
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "cro",
+      "name": "Croatia",
+      "code": "CRO",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 9,
+        "FW": 6
+      },
+      "avg_age_years": 28.33,
+      "avg_height_cm": 184.8,
+      "club_country_distribution": {
+        "CRO": 2,
+        "DEN": 2,
+        "ENG": 3,
+        "ESP": 3,
+        "GER": 5,
+        "ITA": 7,
+        "NED": 2,
+        "USA": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "cuw",
+      "name": "Curaçao",
+      "code": "CUW",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 7,
+        "FW": 8
+      },
+      "avg_age_years": 28.02,
+      "avg_height_cm": 181.9,
+      "club_country_distribution": {
+        "BEL": 1,
+        "ENG": 3,
+        "GRE": 1,
+        "ISR": 1,
+        "KSA": 1,
+        "MAS": 1,
+        "NED": 12,
+        "SUI": 1,
+        "TUR": 3,
+        "USA": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "cze",
+      "name": "Czechia",
+      "code": "CZE",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 7,
+        "FW": 7
+      },
+      "avg_age_years": 27.62,
+      "avg_height_cm": 185.7,
+      "club_country_distribution": {
+        "CZE": 17,
+        "ENG": 2,
+        "FRA": 1,
+        "GER": 4,
+        "NED": 1,
+        "POR": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "ecu",
+      "name": "Ecuador",
+      "code": "ECU",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 8,
+        "FW": 7
+      },
+      "avg_age_years": 26.08,
+      "avg_height_cm": 180.5,
+      "club_country_distribution": {
+        "ARG": 3,
+        "BEL": 4,
+        "BRA": 5,
+        "DEN": 1,
+        "ECU": 2,
+        "ENG": 3,
+        "FRA": 1,
+        "GER": 1,
+        "GRE": 1,
+        "ITA": 2,
+        "MEX": 3
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "egy",
+      "name": "Egypt",
+      "code": "EGY",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 4,
+        "DF": 8,
+        "MF": 7,
+        "FW": 7
+      },
+      "avg_age_years": 29.06,
+      "avg_height_cm": 181.2,
+      "club_country_distribution": {
+        "DEN": 1,
+        "EGY": 17,
+        "ENG": 2,
+        "ESP": 2,
+        "FRA": 1,
+        "KSA": 1,
+        "QAT": 1,
+        "UAE": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "eng",
+      "name": "England",
+      "code": "ENG",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 7,
+        "FW": 7
+      },
+      "avg_age_years": 27.14,
+      "avg_height_cm": 184.2,
+      "club_country_distribution": {
+        "ENG": 21,
+        "ESP": 2,
+        "GER": 2,
+        "KSA": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "fra",
+      "name": "France",
+      "code": "FRA",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 7,
+        "FW": 7
+      },
+      "avg_age_years": 27.0,
+      "avg_height_cm": 184.9,
+      "club_country_distribution": {
+        "ENG": 7,
+        "ESP": 3,
+        "FRA": 8,
+        "GER": 2,
+        "ITA": 4,
+        "KSA": 1,
+        "TUR": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "ger",
+      "name": "Germany",
+      "code": "GER",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 11,
+        "FW": 4
+      },
+      "avg_age_years": 28.05,
+      "avg_height_cm": 186.2,
+      "club_country_distribution": {
+        "ENG": 5,
+        "ESP": 1,
+        "GER": 19,
+        "TUR": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "gha",
+      "name": "Ghana",
+      "code": "GHA",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 6,
+        "FW": 8
+      },
+      "avg_age_years": 26.98,
+      "avg_height_cm": 182.6,
+      "club_country_distribution": {
+        "CYP": 1,
+        "CZE": 1,
+        "DEN": 1,
+        "ENG": 4,
+        "ESP": 4,
+        "FRA": 7,
+        "GER": 1,
+        "GHA": 1,
+        "GRE": 1,
+        "IRL": 1,
+        "ITA": 1,
+        "KSA": 1,
+        "SUI": 1,
+        "TUR": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "hai",
+      "name": "Haiti",
+      "code": "HAI",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 6,
+        "FW": 9
+      },
+      "avg_age_years": 27.58,
+      "avg_height_cm": 181.4,
+      "club_country_distribution": {
+        "BEL": 2,
+        "CAN": 1,
+        "ECU": 1,
+        "ENG": 2,
+        "FRA": 5,
+        "GER": 1,
+        "HAI": 1,
+        "HUN": 1,
+        "IRN": 1,
+        "NED": 1,
+        "POR": 2,
+        "SUI": 2,
+        "SVK": 1,
+        "TUR": 1,
+        "USA": 4
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "irn",
+      "name": "IR Iran",
+      "code": "IRN",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 8,
+        "FW": 6
+      },
+      "avg_age_years": 30.33,
+      "avg_height_cm": 183.7,
+      "club_country_distribution": {
+        "BEL": 2,
+        "GRE": 1,
+        "IRN": 17,
+        "RUS": 1,
+        "UAE": 5
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "irq",
+      "name": "Iraq",
+      "code": "IRQ",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 7,
+        "FW": 7
+      },
+      "avg_age_years": 26.91,
+      "avg_height_cm": 183.0,
+      "club_country_distribution": {
+        "CYP": 1,
+        "CZE": 1,
+        "DEN": 1,
+        "ENG": 1,
+        "IDN": 1,
+        "IRQ": 10,
+        "ITA": 1,
+        "KSA": 1,
+        "NED": 1,
+        "NOR": 1,
+        "POL": 2,
+        "THA": 1,
+        "UAE": 2,
+        "USA": 1,
+        "UZB": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "jpn",
+      "name": "Japan",
+      "code": "JPN",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 10,
+        "FW": 4
+      },
+      "avg_age_years": 27.75,
+      "avg_height_cm": 181.3,
+      "club_country_distribution": {
+        "BEL": 3,
+        "DEN": 1,
+        "ENG": 3,
+        "ESP": 1,
+        "FRA": 2,
+        "GER": 6,
+        "ITA": 1,
+        "JPN": 3,
+        "NED": 5,
+        "SCO": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "jor",
+      "name": "Jordan",
+      "code": "JOR",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 8,
+        "FW": 6
+      },
+      "avg_age_years": 28.46,
+      "avg_height_cm": 180.3,
+      "club_country_distribution": {
+        "EGY": 1,
+        "FRA": 1,
+        "IRQ": 5,
+        "JOR": 12,
+        "KOR": 1,
+        "KSA": 1,
+        "MAR": 1,
+        "MAS": 2,
+        "QAT": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "kor",
+      "name": "Korea Republic",
+      "code": "KOR",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 11,
+        "FW": 3
+      },
+      "avg_age_years": 28.06,
+      "avg_height_cm": 181.9,
+      "club_country_distribution": {
+        "AUT": 1,
+        "CHN": 1,
+        "DEN": 2,
+        "ENG": 3,
+        "FRA": 1,
+        "GER": 3,
+        "JPN": 2,
+        "KOR": 7,
+        "NED": 1,
+        "SCO": 1,
+        "SRB": 1,
+        "TUR": 1,
+        "USA": 1,
+        "WAL": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "mex",
+      "name": "Mexico",
+      "code": "MEX",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 7,
+        "MF": 8,
+        "FW": 8
+      },
+      "avg_age_years": 27.9,
+      "avg_height_cm": 179.5,
+      "club_country_distribution": {
+        "BEL": 1,
+        "CYP": 1,
+        "ENG": 1,
+        "ESP": 2,
+        "GRE": 2,
+        "ITA": 2,
+        "KSA": 1,
+        "MEX": 12,
+        "NED": 1,
+        "RUS": 2,
+        "TUR": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "mar",
+      "name": "Morocco",
+      "code": "MAR",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 9,
+        "FW": 5
+      },
+      "avg_age_years": 26.39,
+      "avg_height_cm": 182.7,
+      "club_country_distribution": {
+        "BEL": 2,
+        "EGY": 1,
+        "ENG": 4,
+        "ESP": 4,
+        "FRA": 5,
+        "GER": 2,
+        "GRE": 1,
+        "ITA": 1,
+        "KSA": 1,
+        "MAR": 2,
+        "NED": 2,
+        "UAE": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "ned",
+      "name": "Netherlands",
+      "code": "NED",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 8,
+        "FW": 7
+      },
+      "avg_age_years": 27.77,
+      "avg_height_cm": 185.2,
+      "club_country_distribution": {
+        "BRA": 1,
+        "ENG": 15,
+        "ESP": 1,
+        "FRA": 1,
+        "GER": 1,
+        "ITA": 4,
+        "NED": 2,
+        "TUR": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "nzl",
+      "name": "New Zealand",
+      "code": "NZL",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 10,
+        "FW": 4
+      },
+      "avg_age_years": 28.12,
+      "avg_height_cm": 183.5,
+      "club_country_distribution": {
+        "AUS": 2,
+        "DEN": 1,
+        "ENG": 6,
+        "FRA": 1,
+        "NED": 1,
+        "NOR": 1,
+        "NZL": 8,
+        "POL": 1,
+        "SCO": 1,
+        "USA": 2,
+        "WAL": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "nor",
+      "name": "Norway",
+      "code": "NOR",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 10,
+        "FW": 5
+      },
+      "avg_age_years": 26.8,
+      "avg_height_cm": 187.2,
+      "club_country_distribution": {
+        "ENG": 9,
+        "ESP": 2,
+        "GER": 3,
+        "ITA": 5,
+        "NOR": 4,
+        "POR": 2,
+        "SCO": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "pan",
+      "name": "Panama",
+      "code": "PAN",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 11,
+        "MF": 8,
+        "FW": 4
+      },
+      "avg_age_years": 30.43,
+      "avg_height_cm": 181.6,
+      "club_country_distribution": {
+        "AUT": 1,
+        "AZE": 1,
+        "CHI": 2,
+        "CRC": 2,
+        "ECU": 2,
+        "ENG": 1,
+        "HON": 1,
+        "ISR": 1,
+        "KSA": 1,
+        "MEX": 4,
+        "PAN": 2,
+        "RUS": 1,
+        "SVK": 1,
+        "TUR": 1,
+        "URU": 1,
+        "USA": 2,
+        "VEN": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "par",
+      "name": "Paraguay",
+      "code": "PAR",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 9,
+        "FW": 6
+      },
+      "avg_age_years": 29.0,
+      "avg_height_cm": 181.6,
+      "club_country_distribution": {
+        "ARG": 5,
+        "BRA": 7,
+        "CAN": 1,
+        "ENG": 3,
+        "FRA": 1,
+        "ITA": 1,
+        "PAR": 3,
+        "RUS": 1,
+        "UAE": 1,
+        "USA": 3
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "por",
+      "name": "Portugal",
+      "code": "POR",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 6,
+        "FW": 8
+      },
+      "avg_age_years": 28.04,
+      "avg_height_cm": 181.5,
+      "club_country_distribution": {
+        "ENG": 7,
+        "ESP": 4,
+        "FRA": 4,
+        "ITA": 2,
+        "KSA": 3,
+        "POR": 5,
+        "TUR": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "qat",
+      "name": "Qatar",
+      "code": "QAT",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 5,
+        "FW": 9
+      },
+      "avg_age_years": 29.51,
+      "avg_height_cm": 179.4,
+      "club_country_distribution": {
+        "ESP": 1,
+        "QAT": 25
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "ksa",
+      "name": "Saudi Arabia",
+      "code": "KSA",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 10,
+        "MF": 6,
+        "FW": 7
+      },
+      "avg_age_years": 28.52,
+      "avg_height_cm": 178.4,
+      "club_country_distribution": {
+        "FRA": 1,
+        "KSA": 25
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "sco",
+      "name": "Scotland",
+      "code": "SCO",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 10,
+        "MF": 6,
+        "FW": 7
+      },
+      "avg_age_years": 29.2,
+      "avg_height_cm": 184.5,
+      "club_country_distribution": {
+        "CRO": 1,
+        "ENG": 12,
+        "ITA": 3,
+        "KSA": 1,
+        "SCO": 8,
+        "WAL": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "sen",
+      "name": "Senegal",
+      "code": "SEN",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 7,
+        "FW": 8
+      },
+      "avg_age_years": 27.09,
+      "avg_height_cm": 184.0,
+      "club_country_distribution": {
+        "ENG": 7,
+        "ESP": 2,
+        "FRA": 8,
+        "GER": 2,
+        "ISR": 1,
+        "ITA": 1,
+        "KSA": 3,
+        "TUR": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "rsa",
+      "name": "South Africa",
+      "code": "RSA",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 10,
+        "MF": 5,
+        "FW": 8
+      },
+      "avg_age_years": 26.81,
+      "avg_height_cm": 178.8,
+      "club_country_distribution": {
+        "CYP": 1,
+        "ENG": 1,
+        "GER": 1,
+        "NOR": 1,
+        "POR": 1,
+        "RSA": 19,
+        "USA": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "esp",
+      "name": "Spain",
+      "code": "ESP",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 7,
+        "FW": 8
+      },
+      "avg_age_years": 26.75,
+      "avg_height_cm": 181.7,
+      "club_country_distribution": {
+        "ENG": 7,
+        "ESP": 17,
+        "FRA": 1,
+        "GER": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "swe",
+      "name": "Sweden",
+      "code": "SWE",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 11,
+        "MF": 7,
+        "FW": 5
+      },
+      "avg_age_years": 27.56,
+      "avg_height_cm": 186.2,
+      "club_country_distribution": {
+        "BEL": 2,
+        "CYP": 1,
+        "ENG": 10,
+        "ESP": 1,
+        "GER": 4,
+        "ITA": 2,
+        "POR": 1,
+        "SCO": 1,
+        "SWE": 3,
+        "USA": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "sui",
+      "name": "Switzerland",
+      "code": "SUI",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 8,
+        "MF": 8,
+        "FW": 7
+      },
+      "avg_age_years": 28.31,
+      "avg_height_cm": 185.2,
+      "club_country_distribution": {
+        "ENG": 4,
+        "ESP": 4,
+        "FRA": 3,
+        "GER": 9,
+        "ITA": 4,
+        "SUI": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "tun",
+      "name": "Tunisia",
+      "code": "TUN",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 10,
+        "MF": 8,
+        "FW": 5
+      },
+      "avg_age_years": 26.64,
+      "avg_height_cm": 184.6,
+      "club_country_distribution": {
+        "CAN": 1,
+        "DEN": 1,
+        "ENG": 2,
+        "FRA": 3,
+        "GER": 4,
+        "RUS": 1,
+        "SCO": 1,
+        "SUI": 3,
+        "SVN": 1,
+        "SWE": 1,
+        "TUN": 6,
+        "TUR": 2
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "tur",
+      "name": "Türkiye",
+      "code": "TUR",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 9,
+        "MF": 5,
+        "FW": 9
+      },
+      "avg_age_years": 27.67,
+      "avg_height_cm": 183.8,
+      "club_country_distribution": {
+        "ENG": 2,
+        "ESP": 1,
+        "GER": 3,
+        "ITA": 3,
+        "KSA": 1,
+        "POR": 1,
+        "TUR": 15
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "uru",
+      "name": "Uruguay",
+      "code": "URU",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 7,
+        "MF": 11,
+        "FW": 5
+      },
+      "avg_age_years": 28.74,
+      "avg_height_cm": 180.5,
+      "club_country_distribution": {
+        "ARG": 2,
+        "BRA": 7,
+        "ENG": 3,
+        "ESP": 4,
+        "GRE": 1,
+        "ITA": 1,
+        "KSA": 1,
+        "MEX": 4,
+        "POR": 2,
+        "USA": 1
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "usa",
+      "name": "USA",
+      "code": "USA",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 10,
+        "MF": 6,
+        "FW": 7
+      },
+      "avg_age_years": 26.9,
+      "avg_height_cm": 183.4,
+      "club_country_distribution": {
+        "CAN": 1,
+        "ENG": 5,
+        "ESP": 1,
+        "FRA": 3,
+        "GER": 3,
+        "ITA": 2,
+        "MEX": 1,
+        "NED": 2,
+        "SCO": 1,
+        "USA": 7
+      },
+      "missing_fields": "none"
+    },
+    {
+      "team_id": "uzb",
+      "name": "Uzbekistan",
+      "code": "UZB",
+      "total_players": 26,
+      "position_counts": {
+        "GK": 3,
+        "DF": 10,
+        "MF": 10,
+        "FW": 3
+      },
+      "avg_age_years": 28.51,
+      "avg_height_cm": 181.8,
+      "club_country_distribution": {
+        "ENG": 1,
+        "IRN": 5,
+        "TUR": 2,
+        "UAE": 3,
+        "UZB": 15
+      },
+      "missing_fields": "none"
+    }
+  ],
+  "source_refs": [
+    "fifa-squad-lists-pdf"
+  ],
+  "safety_invariants": [
+    "squad_depth_features_derived_from_fifa_official_roster_only",
+    "missing_fields_reported_per_team_to_flag_incomplete_player_records",
+    "age_computed_against_explicit_reference_date_for_reproducibility"
+  ]
+}

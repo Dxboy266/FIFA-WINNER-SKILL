@@ -13,8 +13,10 @@ sys.path.insert(0, str(SCRIPT_DIR))
 
 from worldcup_core import (  # noqa: E402
     DISCLAIMER,
+    canonical_matches,
     edition_data_root,
     iso_now,
+    load_edition_data_json,
     load_json,
     load_match_ledger,
     match_on_date,
@@ -43,11 +45,12 @@ def run_daily_predictions(
     date: str,
     now: str | None = None,
     poster: bool = False,
+    force_refresh: bool = False,
 ) -> dict:
     generated_at = iso_now(now)
     now_dt = now_datetime(now)
     report_path = prediction_report_path(root, edition, date)
-    if report_path.exists():
+    if report_path.exists() and not force_refresh:
         existing = json.loads(report_path.read_text(encoding="utf-8"))
         locked = len(existing.get("predictions", []))
         existing["summary"]["predictions_created"] = 0
@@ -57,11 +60,12 @@ def run_daily_predictions(
         return existing
 
     ledger = load_match_ledger(root, edition)
+    ledger_matches = canonical_matches(ledger.get("matches", []) or [])
     ed_root = edition_data_root(root, edition)
 
     # Load scoring model sources
-    rankings_data = load_json(ed_root / "rankings" / "fifa-men-ranking.json", {"rankings": []})
-    squad_data = load_json(ed_root / "squad-depth-features.json", {"teams": [], "global_summary": {}})
+    rankings_data = load_edition_data_json(root, edition, "rankings/fifa-men-ranking.json", {"rankings": []})
+    squad_data = load_edition_data_json(root, edition, "squad-depth-features.json", {"teams": [], "global_summary": {}})
     evidence_plan = load_json(ed_root / "prediction-evidence-plan.json", {"items": []})
 
     ranking_index = _build_ranking_index(rankings_data)
@@ -77,7 +81,7 @@ def run_daily_predictions(
     skipped_started = 0
     skipped_missing_kickoff = 0
 
-    for match in ledger.get("matches", []):
+    for match in ledger_matches:
         if not match_on_date(match, date):
             if not match.get("kickoff_at"):
                 skipped_missing_kickoff += 1
@@ -90,7 +94,7 @@ def run_daily_predictions(
             match=match,
             edition=edition,
             date=date,
-            all_matches=ledger.get("matches", []),
+            all_matches=ledger_matches,
             ranking_index=ranking_index,
             squad_index=squad_index,
             evidence_index=evidence_index,
@@ -122,6 +126,7 @@ def run_daily_predictions(
         "safety_invariants": [
             "predictions_only_for_not_started_matches",
             "existing_daily_reports_are_locked_not_overwritten",
+            "force_refresh_must_be_explicit_when_recomputing_after_model_changes",
             "data_model_weight_is_0_60",
             "tianji_overlay_weight_is_0_40",
             "tianji_calculated_from_venue_local_time_when_known",
@@ -143,7 +148,10 @@ def run_daily_predictions(
     try:
         with conn:
             for p in predictions:
-                matched_ledger_list = [m for m in ledger.get("matches", []) if m["match_id"] == p["match_id"]]
+                p["report_json_path"] = str(report_path)
+                p["generated_at"] = generated_at
+                p["prediction_date"] = date
+                matched_ledger_list = [m for m in ledger_matches if m["match_id"] == p["match_id"]]
                 if matched_ledger_list:
                     save_match(conn, matched_ledger_list[0])
                 save_prediction(conn, p)
@@ -176,6 +184,7 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--date", required=True)
     run.add_argument("--now")
     run.add_argument("--poster", action="store_true")
+    run.add_argument("--force-refresh", action="store_true")
     run.add_argument("--root", default=".")
     return parser
 
@@ -188,6 +197,7 @@ def main(argv: list[str] | None = None) -> int:
         date=args.date,
         now=args.now,
         poster=args.poster,
+        force_refresh=args.force_refresh,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0

@@ -5,3 +5,6 @@ __pycache__/
 .env
 artifacts/
 tmp/
+generated-images/
+scripts/knowledge-base/
+knowledge-base/**/data/*.db

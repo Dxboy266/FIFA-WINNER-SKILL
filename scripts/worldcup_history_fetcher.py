@@ -559,8 +559,9 @@ def _parse_match_line(line: str, current_stage: str) -> dict | None:
     home_part = line[: m.start()].strip()
     rest = line[m.end() :].strip()  # "(ht) away @ venue ..."
 
-    # ---- Home team: strip leading time ----
+    # ---- Home team: strip leading time and date prefixes ----
     home_team = re.sub(r"^\d{1,2}:\d{2}\s*", "", home_part).strip()
+    home_team = re.sub(r"^\d{1,2}\s+[A-Za-z]+\s*", "", home_team).strip()
     if not home_team:
         return None
 

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "mode": "worldcup-public-source-manifest",
+  "description": "Reusable public facts copied from curated local snapshots. User predictions, evaluations, run traces, manual daily evidence, DB caches and hyperparameters stay in the local layer.",
+  "public_files": [
+    "teams.json",
+    "source-registry.json",
+    "external-reference-sources.json",
+    "roster-compiled.json",
+    "squad-depth-features.json"
+  ],
+  "public_dirs": [
+    "rankings",
+    "history",
+    "rosters"
+  ],
+  "rules": [
+    "public layer stores official, fixed or reusable facts",
+    "local layer stores predictions, evaluations, manual evidence and runtime caches",
+    "dashboard merges public facts with local prediction overlays"
+  ]
+}

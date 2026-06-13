@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-12T22:49:52.695698+08:00",
+  "mode": "external-reference-source-alignment",
+  "status": "written",
+  "projects": [
+    {
+      "source_id": "zhangcraigxg-work-cup-2026",
+      "repo": "https://github.com/ZhangCraigXG/work-cup-2026",
+      "kind": "reference_skill",
+      "usable_for": [
+        "coach-view analysis workflow",
+        "Chinese source lead for worldcup2026cn schedule, groups, team pages and player status checks",
+        "A2A skill file layout inspiration"
+      ],
+      "not_usable_for": [
+        "T0 match facts",
+        "direct structured prediction features without separate source verification",
+        "bulk scraping instructions"
+      ],
+      "observed_files": [
+        "SKILL.md",
+        "group-schedule.md",
+        "group-rank.md",
+        "team-data.md",
+        "player-status.md",
+        "32-data.md",
+        "rules.md"
+      ],
+      "source_leads": [
+        {
+          "source_id": "worldcup2026cn",
+          "url": "https://worldcup2026cn.com/",
+          "allowed_use": "manual_cross_check_or_adapter_after_terms_review",
+          "roles": [
+            "fixtures",
+            "groups",
+            "teams",
+            "player_status_reference"
+          ]
+        }
+      ],
+      "status": "checked",
+      "head_commit": "3560ef2c64055a15554c7a1bee66344242359c31"
+    },
+    {
+      "source_id": "crain99-worldcut-2026",
+      "repo": "https://github.com/Crain99/worldcut-2026",
+      "kind": "reference_app",
+      "usable_for": [
+        "Sporttery fixed-bonus source lead",
+        "SQLite cache pattern for prediction history, odds snapshots and simulated account state",
+        "match intelligence tool-chain pattern combining official schedule, rankings, openfootball, APIs and search",
+        "static prediction snapshot fields for cross-checking score/probability presentation"
+      ],
+      "not_usable_for": [
+        "betting advice",
+        "unverified final match facts",
+        "copying UI or server code into this agent"
+      ],
+      "observed_files": [
+        "README.md",
+        "server.py",
+        "index.html"
+      ],
+      "source_leads": [
+        {
+          "source_id": "sporttery-cn-fixed-bonus",
+          "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+          "allowed_use": "api_metadata_after_terms_rate_limit_and_region_check",
+          "roles": [
+            "market_fixed_bonus_snapshot",
+            "market_movement_reference"
+          ]
+        },
+        {
+          "source_id": "worldcup26-api",
+          "url": "https://worldcup26.ir/",
+          "allowed_use": "api_metadata_after_terms_check",
+          "roles": [
+            "fixtures",
+            "groups",
+            "teams"
+          ]
+        },
+        {
+          "source_id": "international-results-csv",
+          "url": "https://github.com/martj42/international_results",
+          "allowed_use": "open_structured_data_when_license_checked",
+          "roles": [
+            "recent_form",
+            "head_to_head"
+          ]
+        }
+      ],
+      "status": "checked",
+      "head_commit": "d7e05173cf9bf7413cf2f121f30285b0dc58a0f7"
+    }
+  ],
+  "source_leads": [
+    {
+      "source_id": "worldcup2026cn",
+      "url": "https://worldcup2026cn.com/",
+      "allowed_use": "manual_cross_check_or_adapter_after_terms_review",
+      "roles": [
+        "fixtures",
+        "groups",
+        "teams",
+        "player_status_reference"
+      ],
+      "from_reference_project": "zhangcraigxg-work-cup-2026"
+    },
+    {
+      "source_id": "sporttery-cn-fixed-bonus",
+      "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+      "allowed_use": "api_metadata_after_terms_rate_limit_and_region_check",
+      "roles": [
+        "market_fixed_bonus_snapshot",
+        "market_movement_reference"
+      ],
+      "from_reference_project": "crain99-worldcut-2026"
+    },
+    {
+      "source_id": "worldcup26-api",
+      "url": "https://worldcup26.ir/",
+      "allowed_use": "api_metadata_after_terms_check",
+      "roles": [
+        "fixtures",
+        "groups",
+        "teams"
+      ],
+      "from_reference_project": "crain99-worldcut-2026"
+    },
+    {
+      "source_id": "international-results-csv",
+      "url": "https://github.com/martj42/international_results",
+      "allowed_use": "open_structured_data_when_license_checked",
+      "roles": [
+        "recent_form",
+        "head_to_head"
+      ],
+      "from_reference_project": "crain99-worldcut-2026"
+    }
+  ],
+  "adoption_decisions": [
+    {
+      "decision": "keep_json_markdown_canonical",
+      "reason": "Reference SQLite patterns are useful for query/cache layers, but audit artifacts stay portable JSON/Markdown."
+    },
+    {
+      "decision": "register_reference_projects_as_t3",
+      "reason": "They are design and source-lead references, not official match-fact authorities."
+    },
+    {
+      "decision": "add_market_signal_as_optional_evidence",
+      "reason": "Market snapshots can explain divergence but must not become betting advice or override verified football evidence."
+    }
+  ],
+  "safety_invariants": [
+    "reference_projects_are_not_treated_as_official_sources",
+    "no_third_party_code_is_imported_by_this_report",
+    "market_sources_remain_entertainment_context_not_betting_advice"
+  ]
+}

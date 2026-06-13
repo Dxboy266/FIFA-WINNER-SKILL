@@ -18,6 +18,7 @@
     "agent_card": "knowledge-base/agent/AGENT_CARD.json",
     "tool_catalog": "knowledge-base/agent/TOOL_CATALOG.json",
     "runbook": "knowledge-base/agent/RUNBOOK.md",
+    "user_data_overlay_guide": "docs/runtime-agent-user-data-overlay-guide.md",
     "guardrails": "knowledge-base/agent/GUARDRAILS.md",
     "handoffs": "knowledge-base/agent/HANDOFFS.md",
     "trace_events": "knowledge-base/agent/TRACE_EVENTS.md",
@@ -69,6 +70,13 @@
       "description": "Generate locked pre-match predictions with data score, Tianji overlay, market/evidence context, scenario analysis, and decision audit.",
       "tags": ["prediction", "analysis_layers", "entertainment_only"],
       "examples": ["Predict Mexico vs South Africa with visible evidence gaps."]
+    },
+    {
+      "id": "public_default_user_overlay",
+      "name": "Public default and user-local overlay",
+      "description": "Merge public facts, bundled AI Octopus default predictions, and user-generated predictions into a dashboard view where user_local replaces octopus_default by match_id.",
+      "tags": ["dashboard", "public_knowledge", "user_local", "a2a"],
+      "examples": ["Show default predictions on a fresh install, then replace them when the user generates local predictions."]
     },
     {
       "id": "shareable_report_and_poster_prompting",
@@ -131,7 +139,21 @@
     ]
   },
   "storage_policy": {
-    "canonical_artifacts": "JSON and Markdown files under knowledge-base/<edition>/",
+    "public_knowledge": "Reusable facts and bundled defaults live under knowledge-base/public/<edition>/.",
+    "user_local_state": "User-generated predictions, local evidence, evaluations, run traces, overrides, dashboard output, and caches live under knowledge-base/<edition>/data/.",
+    "dashboard_merge_view": "prediction_visual_dashboard.py merges public facts, octopus_default predictions, and user_local predictions by match_id.",
+    "prediction_precedence": [
+      "user_local",
+      "octopus_default",
+      "none"
+    ],
+    "dashboard_source_fields": [
+      "prediction_origin",
+      "prediction_source",
+      "prediction_source_path",
+      "data_origin"
+    ],
+    "canonical_artifacts": "JSON and Markdown files under knowledge-base/<edition>/ and knowledge-base/public/<edition>/",
     "query_index": "SQLite file knowledge-base/<edition>/data/worldcup_<edition>.db",
     "conflict_policy": "Prefer locked JSON reports over SQLite rows and report any mismatch."
   },
@@ -270,6 +292,23 @@
       "outputs": [
         "knowledge-base/<edition>/data/reports/posters/*.txt",
         "knowledge-base/<edition>/data/reports/posters/*.json"
+      ]
+    },
+    {
+      "id": "build_visual_dashboard",
+      "title": "Build the public-default plus user-local dashboard merge view",
+      "command": "python scripts/prediction_visual_dashboard.py write --edition <edition> --root .",
+      "outputs": [
+        "knowledge-base/<edition>/data/reports/dashboard/prediction-dashboard.json",
+        "knowledge-base/<edition>/wiki/dashboard/index.html"
+      ],
+      "important_fields": [
+        "cards[].prediction_origin",
+        "cards[].prediction_source",
+        "cards[].prediction_source_path",
+        "cards[].data_origin",
+        "summary.predictions",
+        "summary.fact_cards"
       ]
     },
     {

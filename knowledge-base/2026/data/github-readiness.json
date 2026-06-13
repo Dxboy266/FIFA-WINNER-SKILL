@@ -1,7 +1,7 @@
 {
   "version": 1,
   "edition": "2026",
-  "generated_at": "2026-06-11T00:03:14.129750+08:00",
+  "generated_at": "2026-06-12T23:25:52.098980+08:00",
   "mode": "worldcup-github-readiness",
   "status": "ready_with_known_data_gaps",
   "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\github-readiness.json",
@@ -31,11 +31,6 @@
           "check_id": "file:TODO.md",
           "status": "pass",
           "path": "TODO.md"
-        },
-        {
-          "check_id": "file:SKILL.md",
-          "status": "pass",
-          "path": "SKILL.md"
         },
         {
           "check_id": "file:LICENSE",
@@ -108,11 +103,6 @@
           "path": "knowledge-base/agent/ARCHITECTURE.md"
         },
         {
-          "check_id": "file:knowledge-base/agent/SKILL.md",
-          "status": "pass",
-          "path": "knowledge-base/agent/SKILL.md"
-        },
-        {
           "check_id": "file:knowledge-base/agent/RUNBOOK.md",
           "status": "pass",
           "path": "knowledge-base/agent/RUNBOOK.md"
@@ -156,6 +146,11 @@
           "check_id": "file:scripts/worldcup_source_snapshot_tool.py",
           "status": "pass",
           "path": "scripts/worldcup_source_snapshot_tool.py"
+        },
+        {
+          "check_id": "file:scripts/sync_external_reference_sources.py",
+          "status": "pass",
+          "path": "scripts/sync_external_reference_sources.py"
         },
         {
           "check_id": "file:scripts/poster_generator.py",
@@ -472,6 +467,12 @@
           "missing_fields": []
         },
         {
+          "check_id": "source:international-results-csv",
+          "status": "pass",
+          "tier": "T1",
+          "missing_fields": []
+        },
+        {
           "check_id": "source:worldfootball-elo",
           "status": "pass",
           "tier": "T1",
@@ -496,6 +497,24 @@
           "missing_fields": []
         },
         {
+          "check_id": "source:sporttery-cn-fixed-bonus",
+          "status": "pass",
+          "tier": "T2",
+          "missing_fields": []
+        },
+        {
+          "check_id": "source:the-odds-api",
+          "status": "pass",
+          "tier": "T2",
+          "missing_fields": []
+        },
+        {
+          "check_id": "source:worldcup26-api",
+          "status": "pass",
+          "tier": "T2",
+          "missing_fields": []
+        },
+        {
           "check_id": "source:fbref",
           "status": "pass",
           "tier": "T3",
@@ -515,6 +534,24 @@
         },
         {
           "check_id": "source:espn-soccer",
+          "status": "pass",
+          "tier": "T3",
+          "missing_fields": []
+        },
+        {
+          "check_id": "source:worldcup2026cn",
+          "status": "pass",
+          "tier": "T3",
+          "missing_fields": []
+        },
+        {
+          "check_id": "source:zhangcraigxg-work-cup-2026",
+          "status": "pass",
+          "tier": "T3",
+          "missing_fields": []
+        },
+        {
+          "check_id": "source:crain99-worldcut-2026",
           "status": "pass",
           "tier": "T3",
           "missing_fields": []

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import hashlib
+import copy
 import json
 import os
 import re
@@ -18,6 +19,16 @@ WORLD_CUP_TOPIC = "世界杯"
 DISCLAIMER = "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。"
 DIVINATION_WEIGHT = 0.40
 DATA_WEIGHT = 0.60
+CANONICAL_MATCH_ID_PATTERN = re.compile(r"^\d{4}-(G[A-L]-\d{2}|R32-\d{2}|R16-\d{2}|QF-\d{2}|SF-\d{2}|TP-\d{2}|F-\d{2})$")
+LOCAL_MATCH_OVERLAY_FIELDS = (
+    "status",
+    "prediction_report",
+    "prediction_status",
+    "poster_manifest",
+    "poster_outputs",
+    "final_score",
+    "evaluation",
+)
 
 
 def load_hyperparameters(root: Path, edition: str) -> None:
@@ -124,6 +135,14 @@ SOURCE_REGISTRY = [
         "url": "https://www.api-football.com/documentation-v3",
         "allowed_use": "api_metadata_with_key_limit_license_record",
         "role": "api_fixtures_stats",
+    },
+    {
+        "source_id": "sporttery_fixed_odds",
+        "tier": "T2",
+        "name": "中国体育彩票竞彩网固定奖金",
+        "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+        "allowed_use": "public_fixed_bonus_snapshot_with_timestamp_and_source_url",
+        "role": "market_odds_snapshot",
     },
     {
         "source_id": "thesportsdb",
@@ -275,8 +294,32 @@ def knowledge_base_root(root: Path) -> Path:
     return project_root(root) / "knowledge-base"
 
 
+def public_knowledge_root(root: Path) -> Path:
+    return knowledge_base_root(root) / "public"
+
+
+def public_edition_data_root(root: Path, edition: str) -> Path:
+    return public_knowledge_root(root) / edition
+
+
 def edition_data_root(root: Path, edition: str) -> Path:
     return knowledge_base_root(root) / edition / "data"
+
+
+def edition_data_path(root: Path, edition: str, rel_path: str | Path) -> Path:
+    return edition_data_root(root, edition) / Path(rel_path)
+
+
+def public_edition_data_path(root: Path, edition: str, rel_path: str | Path) -> Path:
+    return public_edition_data_root(root, edition) / Path(rel_path)
+
+
+def load_edition_data_json(root: Path, edition: str, rel_path: str | Path, default: object) -> object:
+    local_path = edition_data_path(root, edition, rel_path)
+    if local_path.exists():
+        return load_json(local_path, default)
+    public_path = public_edition_data_path(root, edition, rel_path)
+    return load_json(public_path, default)
 
 
 def raw_edition_root(root: Path, edition: str) -> Path:
@@ -478,6 +521,99 @@ def default_match_ledger(edition: str, generated_at: str) -> dict:
     }
 
 
+def is_canonical_match(match: dict | str) -> bool:
+    match_id = match.get("match_id", "") if isinstance(match, dict) else str(match or "")
+    return bool(CANONICAL_MATCH_ID_PATTERN.match(match_id))
+
+
+def canonical_matches(matches: list[dict]) -> list[dict]:
+    return [match for match in matches if is_canonical_match(match)]
+
+
+def match_overrides_path(root: Path, edition: str) -> Path:
+    return edition_data_root(root, edition) / "match-overrides.json"
+
+
+def _has_overlay_value(key: str, value: object) -> bool:
+    if key == "status":
+        return bool(value) and value not in {"fixture_official", "knockout_placeholder_until_teams_known"}
+    return value not in (None, "", [], {})
+
+
+def _match_overlay_fields(match: dict) -> dict:
+    overlay = {"match_id": match.get("match_id", "")}
+    for key in LOCAL_MATCH_OVERLAY_FIELDS:
+        value = match.get(key)
+        if _has_overlay_value(key, value):
+            overlay[key] = copy.deepcopy(value)
+    return overlay
+
+
+def match_overrides_from_ledger(ledger: dict, edition: str, generated_at: str) -> dict:
+    overrides = []
+    for match in canonical_matches(ledger.get("matches", []) or []):
+        overlay = _match_overlay_fields(match)
+        if len(overlay) > 1:
+            overrides.append(overlay)
+    return {
+        "version": 1,
+        "edition": edition,
+        "generated_at": generated_at,
+        "mode": "worldcup-local-match-overrides",
+        "summary": {"overrides": len(overrides)},
+        "matches": overrides,
+        "safety_invariants": [
+            "local_overrides_do_not_define_the_canonical_fixture_list",
+            "public_match_ledger_remains_the_base_for_schedule_and_teams",
+        ],
+    }
+
+
+def _apply_match_overlay(base: dict, overlay: dict) -> dict:
+    merged = copy.deepcopy(base)
+    for key in LOCAL_MATCH_OVERLAY_FIELDS:
+        if key in overlay and _has_overlay_value(key, overlay.get(key)):
+            merged[key] = copy.deepcopy(overlay[key])
+    return merged
+
+
+def _merge_public_and_local_ledgers(public_ledger: dict, local_ledger: dict, explicit_overrides: dict) -> dict:
+    base_matches = canonical_matches(public_ledger.get("matches", []) or [])
+    local_by_id = {
+        match.get("match_id"): match
+        for match in canonical_matches(local_ledger.get("matches", []) or [])
+        if match.get("match_id")
+    }
+    override_by_id = {
+        match.get("match_id"): match
+        for match in explicit_overrides.get("matches", []) or []
+        if match.get("match_id")
+    }
+
+    merged_matches = []
+    for match in base_matches:
+        match_id = match.get("match_id")
+        merged = copy.deepcopy(match)
+        if match_id in local_by_id:
+            merged = _apply_match_overlay(merged, local_by_id[match_id])
+        if match_id in override_by_id:
+            merged = _apply_match_overlay(merged, override_by_id[match_id])
+        merged_matches.append(merged)
+
+    result = copy.deepcopy(public_ledger)
+    result["matches"] = merged_matches
+    result["mode"] = "worldcup-match-ledger-merged-public-local"
+    result["summary"] = dict(result.get("summary", {}))
+    result["summary"]["match_count"] = len(merged_matches)
+    result["summary"]["public_base"] = True
+    result["summary"]["local_overrides"] = len(override_by_id)
+    result["safety_invariants"] = list(result.get("safety_invariants", [])) + [
+        "public_facts_are_loaded_before_local_prediction_overrides",
+        "legacy_local_match_ledgers_cannot_add_noncanonical_fixture_cards",
+    ]
+    return result
+
+
 def source_registry_payload(edition: str, generated_at: str) -> dict:
     return {
         "version": 1,
@@ -597,10 +733,29 @@ def ensure_edition_wiki(root: Path, edition: str) -> None:
 
 
 def load_match_ledger(root: Path, edition: str) -> dict:
-    return load_json(edition_data_root(root, edition) / "match-ledger.json", {})
+    local_path = edition_data_root(root, edition) / "match-ledger.json"
+    public_path = public_edition_data_root(root, edition) / "match-ledger.json"
+    overrides_path = match_overrides_path(root, edition)
+    public_ledger = load_json(public_path, {}) if public_path.exists() else {}
+    local_ledger = load_json(local_path, {}) if local_path.exists() else {}
+    explicit_overrides = load_json(overrides_path, {}) if overrides_path.exists() else {}
+    if public_ledger.get("matches"):
+        return _merge_public_and_local_ledgers(public_ledger, local_ledger, explicit_overrides)
+    return local_ledger
 
 
 def save_match_ledger(root: Path, edition: str, ledger: dict) -> None:
+    generated_at = iso_now()
+    overrides = match_overrides_from_ledger(ledger, edition, generated_at)
+    if (public_edition_data_root(root, edition) / "match-ledger.json").exists():
+        write_json(match_overrides_path(root, edition), overrides)
+        local_ledger = copy.deepcopy(ledger)
+        local_ledger["mode"] = "worldcup-local-match-ledger-compat-view"
+        local_ledger["summary"] = dict(local_ledger.get("summary", {}))
+        local_ledger["summary"]["compat_note"] = "Canonical facts live in knowledge-base/public; local match state lives in match-overrides.json."
+        local_ledger["matches"] = canonical_matches(local_ledger.get("matches", []) or [])
+        write_json(edition_data_root(root, edition) / "match-ledger.json", local_ledger)
+        return
     write_json(edition_data_root(root, edition) / "match-ledger.json", ledger)
 
 

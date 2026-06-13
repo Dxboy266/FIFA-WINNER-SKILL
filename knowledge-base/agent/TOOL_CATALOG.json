@@ -14,6 +14,7 @@
   "discovery_files": {
     "agent_card": "knowledge-base/agent/AGENT_CARD.json",
     "human_readme": "AGENT_README.md",
+    "user_data_overlay_guide": "docs/runtime-agent-user-data-overlay-guide.md",
     "guardrails": "knowledge-base/agent/GUARDRAILS.md",
     "handoffs": "knowledge-base/agent/HANDOFFS.md",
     "trace_events": "knowledge-base/agent/TRACE_EVENTS.md"
@@ -160,6 +161,33 @@
       "safety_profile": "entertainment_prediction_only"
     },
     {
+      "id": "build_visual_dashboard",
+      "kind": "cli_tool",
+      "description": "Build the merged dashboard view from public facts, bundled octopus_default predictions, and user_local predictions. User-local predictions replace defaults by match_id.",
+      "command_template": "python scripts/prediction_visual_dashboard.py write --edition <edition> --root .",
+      "inputs": ["edition", "root", "now"],
+      "outputs": [
+        "knowledge-base/<edition>/data/reports/dashboard/prediction-dashboard.json",
+        "knowledge-base/<edition>/wiki/dashboard/index.html"
+      ],
+      "reads": [
+        "knowledge-base/public/<edition>/match-ledger.json",
+        "knowledge-base/public/<edition>/default-predictions/daily-predictions/*.json",
+        "knowledge-base/<edition>/data/reports/daily-predictions/*.json",
+        "knowledge-base/<edition>/data/worldcup_<edition>.db"
+      ],
+      "important_fields": [
+        "cards[].prediction_origin",
+        "cards[].prediction_source",
+        "cards[].prediction_source_path",
+        "cards[].data_origin",
+        "summary.predictions",
+        "summary.fact_cards"
+      ],
+      "idempotency": "safe_to_rerun",
+      "safety_profile": "merge_view_only"
+    },
+    {
       "id": "build_report_prompt",
       "kind": "cli_tool",
       "description": "Build a Chinese long-form report prompt from a structured prediction report.",
@@ -260,6 +288,18 @@
       "description": "Canonical match schedule, teams, status, final scores, and report links."
     },
     {
+      "id": "public_match_ledger",
+      "kind": "json",
+      "path": "knowledge-base/public/<edition>/match-ledger.json",
+      "description": "Reusable public fixture facts used as the base schedule before local match overrides are applied."
+    },
+    {
+      "id": "public_default_predictions",
+      "kind": "json",
+      "path": "knowledge-base/public/<edition>/default-predictions/daily-predictions/*.json",
+      "description": "Bundled AI Octopus default predictions used on fresh installs until user_local predictions exist for the same match_id."
+    },
+    {
       "id": "daily_evidence",
       "kind": "json",
       "path": "knowledge-base/<edition>/data/daily-evidence/<YYYY-MM-DD>.json",
@@ -270,6 +310,12 @@
       "kind": "json",
       "path": "knowledge-base/<edition>/data/reports/daily-predictions/<YYYY-MM-DD>.json",
       "description": "Locked pre-match prediction report with multi-layer analysis and safety disclaimer."
+    },
+    {
+      "id": "visual_dashboard",
+      "kind": "json",
+      "path": "knowledge-base/<edition>/data/reports/dashboard/prediction-dashboard.json",
+      "description": "Merged dashboard cards. Read cards[].prediction_origin to distinguish user_local, octopus_default, and none."
     },
     {
       "id": "external_reference_sources",

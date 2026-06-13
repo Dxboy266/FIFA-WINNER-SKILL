@@ -39,6 +39,22 @@
           },
           "scenario_analysis": {"type": "object", "additionalProperties": true},
           "decision_audit": {"type": "object", "additionalProperties": true},
+          "venue_adaptation_context": {"type": "object", "additionalProperties": true},
+          "prediction": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "scoreline_distribution": {
+                "type": "array",
+                "items": {"type": "object", "additionalProperties": true}
+              },
+              "clean_sheet_probability": {"type": "object", "additionalProperties": true},
+              "venue_adaptation_context": {"type": "object", "additionalProperties": true},
+              "result_confidence": {"type": "string"},
+              "score_confidence": {"type": "string"},
+              "total_goals_confidence": {"type": "string"}
+            }
+          },
           "play_card": {
             "type": "object",
             "required": ["share_title", "match_hook", "watch_points", "risk_flags", "poster_angle", "confidence_meter", "gameplay_tags"],

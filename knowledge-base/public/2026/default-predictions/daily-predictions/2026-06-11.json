@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-11",
+  "generated_at": "2026-06-10T12:00:00+08:00",
+  "mode": "worldcup-daily-pre-match-entertainment-predictions",
+  "status": "created",
+  "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-06-11.json",
+  "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\reports\\daily-predictions\\2026-06-11.md",
+  "poster_requested": false,
+  "summary": {
+    "predictions_created": 1,
+    "matches_skipped_started": 0,
+    "matches_skipped_missing_kickoff": 0,
+    "locked_existing_predictions": 0
+  },
+  "predictions": [
+    {
+      "match_id": "2026-GA-01",
+      "kickoff_at": "2026-06-11T19:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "group": "A",
+      "phase": "group",
+      "home_team": {
+        "team_id": "mex",
+        "name": "Mexico",
+        "ranking": 15,
+        "points": 1681.03
+      },
+      "away_team": {
+        "team_id": "rsa",
+        "name": "South Africa",
+        "ranking": 60,
+        "points": 1429.73
+      },
+      "data_score": {
+        "home": 69.5,
+        "away": 44.5,
+        "components": {
+          "ranking_strength": {
+            "home": 68.72,
+            "away": 32.82,
+            "weight": 0.3
+          },
+          "squad_depth": {
+            "home": 88.8,
+            "away": 81.01,
+            "weight": 0.2
+          },
+          "historical_proxy": {
+            "home": 68.72,
+            "away": 32.82,
+            "weight": 0.2
+          },
+          "rest_travel": {
+            "home": 95.0,
+            "away": 85.0,
+            "weight": 0.15
+          },
+          "evidence_completeness": {
+            "home": 1.02,
+            "away": 1.02,
+            "weight": 0.15
+          }
+        }
+      },
+      "divination_overlay": {
+        "lunar_date": "农历：丙午马年 4月27日 寅时 (03:00-04:59)",
+        "shichen": "寅时 (03:00-04:59)",
+        "host_palace_branch": "丑",
+        "guest_palace_branch": "未",
+        "home_stars": [
+          "紫微 (Ziwei)"
+        ],
+        "away_stars": [
+          "太阴 (Taiyin)",
+          "左辅 (Zuofu)"
+        ],
+        "home_modifier": 1.0,
+        "away_modifier": 1.0,
+        "interpretation": "主队命宫得帝星/府星高照，占据天时地利，发挥较稳健。",
+        "has_physical_conflict": false,
+        "hexagram_name": "寅时 (03:00-04:59)",
+        "hexagram_number": 0,
+        "hexagram": "寅时 (03:00-04:59)",
+        "weight": 0.15
+      },
+      "prediction": {
+        "home_final": 70.5,
+        "away_final": 45.5,
+        "result": "home_win",
+        "predicted_outcome": "home_win",
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "total_goals": 3,
+        "goals_line_2_5": "over",
+        "confidence": "medium",
+        "confidence_label": "中等信心",
+        "evidence_gaps": []
+      },
+      "referee_analysis": {
+        "name": "Clement Turpin",
+        "strictness": "high",
+        "predicted_yellow_cards": 4.5,
+        "predicted_red_cards": 0.25,
+        "predicted_penalties": 0.35
+      },
+      "market_odds": {
+        "odds": {
+          "home_win": 1.85,
+          "draw": 3.4,
+          "away_win": 4.5,
+          "source": "manual"
+        },
+        "implied_probabilities": {
+          "home": 0.511,
+          "draw": 0.278,
+          "away": 0.21
+        },
+        "market_outcome": "home_win"
+      },
+      "dual_track": {
+        "alignment": "aligned",
+        "divergence_analysis": "【双轨共振】数据基本面与市场赔率一致倾向【Mexico】。章鱼哥触手坚定，玄学气运与盘口期望形成合力。"
+      },
+      "play_card": {
+        "share_title": "章鱼哥神算 | Mexico vs South Africa | 娱乐预测 2-1",
+        "match_hook": "Mexico 倾向胜出，总进球参考 3 球。A组对决，Estadio Azteca, Mexico City。",
+        "poster_caption": "AI预测比分 2-1，墨西哥主线占优，双轨共振支撑主队方向。",
+        "watch_points": [
+          "【双轨共振】数据基本面与市场赔率一致倾向【Mexico】。章鱼哥触手坚定，玄学气运与盘口期望形成合力。",
+          "Mexico排名优势明显",
+          "强方能否以冲击力弥补差距",
+          "小组赛积分策略可能影响比赛节奏"
+        ],
+        "risk_flags": [
+          "当前证据链完整度较好",
+          "裁判执法：Clement Turpin (尺度：HIGH)，场均黄牌预估：4.5"
+        ],
+        "poster_angle": "Mexico vs South Africa, Estadio Azteca, Mexico City, vibrant crowd atmosphere, 寅时 (03:00-04:59) aesthetic overlay, predicted score 2-1, total goals 3",
+        "confidence_meter": "数据 85% | 玄学 15% | 信心: 中等信心",
+        "gameplay_tags": [
+          "胜平负",
+          "比分",
+          "总进球",
+          "看点"
+        ]
+      },
+      "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+      "prediction_origin": "octopus_default",
+      "prediction_source": "octopus_default"
+    }
+  ],
+  "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+  "safety_invariants": [
+    "predictions_only_for_not_started_matches",
+    "existing_daily_reports_are_locked_not_overwritten",
+    "divination_overlay_weight_lte_0_15",
+    "no_betting_amounts_or_guaranteed_win_language"
+  ],
+  "prediction_origin": "octopus_default",
+  "default_prediction_note": "AI Octopus default prediction bundled with the public knowledge base. User local predictions override this by match_id."
+}

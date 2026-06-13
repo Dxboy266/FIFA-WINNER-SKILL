@@ -252,6 +252,10 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
             self.assertEqual(prediction["analysis_layers"][0]["layer_id"], "evidence_integrity")
             self.assertIn("scenario_analysis", prediction)
             self.assertIn("decision_audit", prediction)
+            self.assertEqual(
+                prediction["prediction"]["score"],
+                prediction["prediction"]["scoreline_distribution"][0]["score"],
+            )
             play_text = json.dumps(play_card, ensure_ascii=False)
             self.assertNotIn("稳胆", play_text)
             self.assertNotIn("稳赢", play_text)
@@ -816,6 +820,262 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
         self.assertEqual(news[0]["team_code"], "MEX")
         self.assertIn("sentiment", news[0])
 
+    def test_live_fetcher_marks_odds_unavailable_without_api_key(self):
+        init_module = load_script("worldcup_edition_init.py")
+        fetcher_module = load_script("worldcup_live_fetcher.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            from worldcup_core import edition_data_root
+            ledger_path = edition_data_root(root, "2098") / "match-ledger.json"
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            ledger["matches"][0]["kickoff_at"] = "2026-06-13T10:00:00+00:00"
+            ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            res = fetcher_module.update_odds_in_evidence(
+                root=root,
+                edition="2098",
+                date_str="2026-06-13",
+            )
+
+            self.assertEqual(res["status"], "odds_updated")
+            self.assertEqual(res["live_odds_count"], 0)
+            self.assertEqual(res["mock_odds_count"], 0)
+            self.assertEqual(res["unavailable_count"], 1)
+            odds = res["matches"][0]["odds"]
+            self.assertEqual(odds["source"], "odds_unavailable")
+            self.assertFalse(odds["is_mock"])
+
+            evidence = json.loads((edition_data_root(root, "2098") / "daily-evidence" / "2026-06-13.json").read_text(encoding="utf-8"))
+            self.assertEqual(evidence["matches"][0]["odds"]["source"], "odds_unavailable")
+
+    def test_sporttery_odds_adapter_writes_fixed_bonus_snapshot(self):
+        init_module = load_script("worldcup_edition_init.py")
+        fetcher_module = load_script("worldcup_live_fetcher.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            from worldcup_core import edition_data_root
+            ledger_path = edition_data_root(root, "2098") / "match-ledger.json"
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            ledger["matches"][0]["kickoff_at"] = "2026-06-13T10:00:00+00:00"
+            ledger["matches"][0]["home_team"]["name"] = "Mexico"
+            ledger["matches"][0]["away_team"]["name"] = "South Africa"
+            ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            sporttery_payload = {
+                "value": {
+                    "matchList": [
+                        {
+                            "homeTeamName": "Mexico",
+                            "awayTeamName": "South Africa",
+                            "matchNumStr": "周六001",
+                            "matchDate": "2026-06-13",
+                            "matchTime": "18:00",
+                            "oddsList": [
+                                {
+                                    "poolCode": "HAD",
+                                    "h": "1.70",
+                                    "d": "3.50",
+                                    "a": "4.80",
+                                }
+                            ],
+                        }
+                    ]
+                }
+            }
+
+            res = fetcher_module.update_sporttery_odds_in_evidence(
+                root=root,
+                edition="2098",
+                date_str="2026-06-13",
+                payload=sporttery_payload,
+                source_url="memory://sporttery-test",
+            )
+
+            self.assertEqual(res["status"], "sporttery_odds_updated")
+            self.assertEqual(res["matched_count"], 1)
+            odds = res["matches"][0]["odds"]
+            self.assertEqual(odds["source"], "sporttery_fixed_odds")
+            self.assertEqual(odds["match_no"], "周六001")
+            self.assertFalse(odds["is_mock"])
+            self.assertAlmostEqual(odds["home_win"], 1.70)
+
+    def test_public_match_ledger_is_base_and_local_ledger_is_overlay(self):
+        core_module = load_script("worldcup_core.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            public_dir = core_module.public_edition_data_root(root, "2098")
+            local_dir = core_module.edition_data_root(root, "2098")
+            public_dir.mkdir(parents=True)
+            local_dir.mkdir(parents=True)
+            public_ledger = {
+                "version": 1,
+                "edition": "2098",
+                "mode": "worldcup-public-match-ledger",
+                "summary": {"match_count": 1},
+                "matches": [
+                    {
+                        "match_id": "2098-GA-01",
+                        "phase": "group",
+                        "kickoff_at": "2026-06-13T10:00:00+00:00",
+                        "home_team": {"team_id": "alpha", "name": "Alpha"},
+                        "away_team": {"team_id": "beta", "name": "Beta"},
+                        "status": "fixture_official",
+                    }
+                ],
+            }
+            local_ledger = {
+                "version": 1,
+                "edition": "2098",
+                "mode": "worldcup-local-match-ledger",
+                "matches": [
+                    {
+                        "match_id": "2098-GA-01",
+                        "status": "final",
+                        "prediction_report": "local-report.json",
+                        "final_score": {"home": 2, "away": 1},
+                    },
+                    {
+                        "match_id": "2098-20260613-ALPHA-vs-BETA",
+                        "status": "fixture_official",
+                    },
+                ],
+            }
+            (public_dir / "match-ledger.json").write_text(json.dumps(public_ledger, ensure_ascii=False, indent=2), encoding="utf-8")
+            (local_dir / "match-ledger.json").write_text(json.dumps(local_ledger, ensure_ascii=False, indent=2), encoding="utf-8")
+
+            merged = core_module.load_match_ledger(root, "2098")
+
+            self.assertEqual(len(merged["matches"]), 1)
+            self.assertEqual(merged["matches"][0]["match_id"], "2098-GA-01")
+            self.assertEqual(merged["matches"][0]["home_team"]["name"], "Alpha")
+            self.assertEqual(merged["matches"][0]["status"], "final")
+            self.assertEqual(merged["matches"][0]["prediction_report"], "local-report.json")
+            self.assertEqual(merged["matches"][0]["final_score"]["home"], 2)
+
+    def test_dashboard_uses_octopus_default_until_user_prediction_overrides(self):
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+        core_module = load_script("worldcup_core.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            public_dir = core_module.public_edition_data_root(root, "2098")
+            local_dir = core_module.edition_data_root(root, "2098")
+            default_dir = public_dir / "default-predictions" / "daily-predictions"
+            public_dir.mkdir(parents=True)
+            local_dir.mkdir(parents=True)
+            default_dir.mkdir(parents=True)
+            match = {
+                "match_id": "2098-GA-01",
+                "phase": "group",
+                "group": "A",
+                "kickoff_at": "2026-06-13T10:00:00+00:00",
+                "venue": "Test Stadium",
+                "home_team": {"team_id": "alpha", "name": "Alpha"},
+                "away_team": {"team_id": "beta", "name": "Beta"},
+                "status": "fixture_official",
+            }
+            public_ledger = {
+                "version": 1,
+                "edition": "2098",
+                "mode": "worldcup-public-match-ledger",
+                "summary": {"match_count": 1},
+                "matches": [match],
+            }
+            (public_dir / "match-ledger.json").write_text(json.dumps(public_ledger, ensure_ascii=False, indent=2), encoding="utf-8")
+
+            def report(score_home, score_away, origin):
+                item = dict(match)
+                item["prediction_origin"] = origin
+                item["prediction"] = {
+                    "result": "home_win",
+                    "score": {"home": score_home, "away": score_away},
+                    "total_goals": score_home + score_away,
+                    "confidence": "low",
+                    "scoreline_distribution": [
+                        {"score": {"home": score_home, "away": score_away}, "probability": 0.5}
+                    ],
+                }
+                return {"version": 1, "edition": "2098", "predictions": [item]}
+
+            (default_dir / "2026-06-13.json").write_text(json.dumps(report(1, 0, "octopus_default"), ensure_ascii=False, indent=2), encoding="utf-8")
+            default_payload = dashboard_module.build_dashboard_payload(root=root, edition="2098", now="2026-06-12T12:00:00+00:00")
+            default_card = next(c for c in default_payload["cards"] if c["match_id"] == "2098-GA-01")
+            self.assertEqual(default_card["prediction_origin"], "octopus_default")
+            self.assertEqual(default_card["score_text"], "1-0")
+
+            user_dir = local_dir / "reports" / "daily-predictions"
+            user_dir.mkdir(parents=True)
+            (user_dir / "2026-06-13.json").write_text(json.dumps(report(2, 1, "user_local"), ensure_ascii=False, indent=2), encoding="utf-8")
+            user_payload = dashboard_module.build_dashboard_payload(root=root, edition="2098", now="2026-06-12T12:00:00+00:00")
+            user_card = next(c for c in user_payload["cards"] if c["match_id"] == "2098-GA-01")
+            self.assertEqual(user_card["prediction_origin"], "user_local")
+            self.assertEqual(user_card["score_text"], "2-1")
+
+    def test_octopus_react_runner_records_bounded_trace(self):
+        init_module = load_script("worldcup_edition_init.py")
+        react_module = load_script("octopus_react_runner.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            from worldcup_core import edition_data_root
+            ledger_path = edition_data_root(root, "2098") / "match-ledger.json"
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            ledger["matches"] = [ledger["matches"][0]]
+            ledger["matches"][0]["kickoff_at"] = "2026-06-13T10:00:00+00:00"
+            ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            react_module.update_sporttery_odds_in_evidence = lambda **kwargs: {
+                "status": "sporttery_odds_updated",
+                "sporttery_raw_count": 1,
+                "matched_count": 1,
+                "unavailable_count": 0,
+            }
+            react_module.update_news_in_evidence = lambda **kwargs: {
+                "status": "updated",
+                "news": [{"headline": "team news"}],
+            }
+            react_module.write_intelligence_briefing = lambda **kwargs: {
+                "data_path": "memory://briefing.json",
+                "markdown_path": "memory://briefing.md",
+                "matches": [{"match_id": "2098-GA-01"}],
+            }
+            react_module.run_daily_predictions = lambda **kwargs: {
+                "status": "created",
+                "report_path": "memory://prediction.json",
+                "summary": {
+                    "predictions_created": 1,
+                    "locked_existing_predictions": 0,
+                    "matches_skipped_started": 0,
+                },
+            }
+            react_module.write_visual_dashboard = lambda **kwargs: {
+                "data_path": "memory://dashboard.json",
+                "html_path": "memory://dashboard.html",
+                "cards": [{"match_id": "2098-GA-01"}],
+            }
+
+            res = react_module.run_react_plan(
+                root=root,
+                edition="2098",
+                start_date="2026-06-13",
+                now="2026-06-12T12:00:00+00:00",
+            )
+
+            self.assertEqual(res["summary"]["matches_inspected"], 1)
+            self.assertEqual(res["summary"]["predictions_created"], 1)
+            self.assertEqual(res["summary"]["sporttery_matched_count"], 1)
+            self.assertTrue(res["data_path"].endswith("2026-06-13_to_2026-06-13_react-run.json"))
+            self.assertGreaterEqual(len(res["trace"]), 5)
+
     def test_update_readme_and_history_partitions_matches_correctly(self):
         init_module = load_script("worldcup_edition_init.py")
         daily_module = load_script("daily_prediction_runner.py")
@@ -944,6 +1204,184 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
             self.assertIn("Team A", html_content)
             self.assertIn("Team B", html_content)
             self.assertIn("Fix alignment", html_content)
+
+    def test_visual_dashboard_prefers_daily_evidence_odds_status_over_mock_report(self):
+        init_module = load_script("worldcup_edition_init.py")
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            from worldcup_core import edition_data_root
+            data_root = edition_data_root(root, "2098")
+            ledger_path = data_root / "match-ledger.json"
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            match = ledger["matches"][0]
+            match["kickoff_at"] = "2026-06-13T01:00:00+00:00"
+            ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            mid = match["match_id"]
+            report = {
+                "version": 1,
+                "edition": "2098",
+                "predictions": [
+                    {
+                        "match_id": mid,
+                        "kickoff_at": match["kickoff_at"],
+                        "venue": match.get("venue", ""),
+                        "group": match.get("group", "A"),
+                        "phase": "group",
+                        "home_team": match["home_team"],
+                        "away_team": match["away_team"],
+                        "prediction": {
+                            "result": "home_win",
+                            "score": {"home": 1, "away": 0},
+                            "total_goals": 1,
+                            "confidence": "medium",
+                        },
+                        "market_odds": {
+                            "odds": {
+                                "home_win": 1.70,
+                                "draw": 3.50,
+                                "away_win": 4.80,
+                                "source": "mock_bookmaker",
+                                "is_mock": True,
+                            }
+                        },
+                    }
+                ],
+            }
+            report_path = data_root / "reports" / "2026-06-13-test-prediction-report.json"
+            report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            evidence_dir = data_root / "daily-evidence"
+            evidence_dir.mkdir(parents=True, exist_ok=True)
+            evidence = {
+                "version": 1,
+                "edition": "2098",
+                "date": "2026-06-13",
+                "matches": [
+                    {
+                        "match_id": mid,
+                        "odds": {
+                            "status": "unavailable",
+                            "source": "odds_unavailable",
+                            "reason": "THE_ODDS_API_KEY missing",
+                            "is_mock": False,
+                        },
+                    }
+                ],
+            }
+            (evidence_dir / "2026-06-13.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            res = dashboard_module.write_visual_dashboard(root=root, edition="2098", now="2026-06-13T12:00:00+08:00")
+            card = next(c for c in res["cards"] if c["match_id"] == mid)
+
+            self.assertFalse(card["has_odds"])
+            self.assertIsNone(card["market_odds"])
+            self.assertEqual(card["market_odds_status"]["status"], "unavailable")
+            self.assertEqual(card["market_odds_status"]["source"], "odds_unavailable")
+            self.assertFalse(card["market_odds_status"]["is_mock"])
+
+    def test_visual_dashboard_emits_fact_cards_without_local_predictions(self):
+        init_module = load_script("worldcup_edition_init.py")
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            from worldcup_core import edition_data_root
+            data_root = edition_data_root(root, "2098")
+            ledger_path = data_root / "match-ledger.json"
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            ledger["matches"] = [ledger["matches"][0]]
+            ledger["matches"][0]["kickoff_at"] = "2026-06-13T10:00:00+00:00"
+            ledger["matches"][0]["status"] = "final"
+            ledger["matches"][0]["final_score"] = {"home": 2, "away": 0, "status": "final"}
+            ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            db_path = data_root / "worldcup_2098.db"
+            db_path.unlink()
+
+            res = dashboard_module.write_visual_dashboard(root=root, edition="2098", now="2026-06-13T12:00:00+08:00")
+
+            self.assertEqual(res["summary"]["predictions"], 0)
+            self.assertEqual(res["summary"]["fact_cards"], 1)
+            card = res["cards"][0]
+            self.assertEqual(card["prediction_status"], "not_predicted")
+            self.assertEqual(card["data_origin"], "public_facts")
+            self.assertTrue(card["is_completed"])
+            self.assertEqual(card["actual_score_home"], 2)
+            self.assertEqual(card["actual_score_away"], 0)
+
+    def test_visual_dashboard_public_only_ignores_user_local_predictions(self):
+        init_module = load_script("worldcup_edition_init.py")
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            from worldcup_core import edition_data_root, public_edition_data_root
+            data_root = edition_data_root(root, "2098")
+            ledger = json.loads((data_root / "match-ledger.json").read_text(encoding="utf-8"))
+            match = ledger["matches"][0]
+            match_id = match["match_id"]
+
+            public_dir = public_edition_data_root(root, "2098") / "default-predictions" / "daily-predictions"
+            local_dir = data_root / "reports" / "daily-predictions"
+            public_dir.mkdir(parents=True, exist_ok=True)
+            local_dir.mkdir(parents=True, exist_ok=True)
+
+            def report(score_home: int, score_away: int) -> dict:
+                return {
+                    "version": 1,
+                    "edition": "2098",
+                    "predictions": [
+                        {
+                            "match_id": match_id,
+                            "kickoff_at": match["kickoff_at"],
+                            "venue": match.get("venue", ""),
+                            "group": match.get("group", "A"),
+                            "phase": "group",
+                            "home_team": match["home_team"],
+                            "away_team": match["away_team"],
+                            "prediction": {
+                                "result": "home_win",
+                                "score": {"home": score_home, "away": score_away},
+                                "total_goals": score_home + score_away,
+                                "confidence": "medium",
+                            },
+                        }
+                    ],
+                }
+
+            (public_dir / "2026-06-13.json").write_text(
+                json.dumps(report(2, 0), ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            (local_dir / "2026-06-13.json").write_text(
+                json.dumps(report(1, 1), ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            db_path = data_root / "worldcup_2098.db"
+            if db_path.exists():
+                db_path.unlink()
+
+            res = dashboard_module.write_visual_dashboard(
+                root=root,
+                edition="2098",
+                now="2026-06-13T12:00:00+08:00",
+                include_local=False,
+            )
+
+            card = next(c for c in res["cards"] if c["match_id"] == match_id)
+            self.assertEqual(card["prediction_origin"], "octopus_default")
+            self.assertEqual(card["prediction_source"], "octopus_default")
+            self.assertEqual(card["score_text"], "2-0")
 
     def test_octopus_reflection_tuning(self):
         init_module = load_script("worldcup_edition_init.py")

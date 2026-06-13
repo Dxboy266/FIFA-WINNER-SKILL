@@ -22,8 +22,10 @@ from worldcup_core import (  # noqa: E402
     DATA_WEIGHT,
     DISCLAIMER,
     DIVINATION_WEIGHT,
+    canonical_matches,
     edition_data_root,
     iso_now,
+    load_edition_data_json,
     load_json,
     load_match_ledger,
     match_on_date,
@@ -240,6 +242,90 @@ def _build_evidence_index(evidence_plan: dict) -> dict[str, dict]:
         eid = item.get("evidence_id", "")
         if eid:
             index[eid] = item
+    return index
+
+
+def _reconcile_evidence_from_disk(
+    evidence_plan: dict, ed_root: Path
+) -> dict:
+    """Cross-check evidence plan statuses against actual data files on disk.
+
+    When new data files have been added after the evidence plan was generated,
+    this function upgrades stale ``blocked`` / ``partial`` statuses so the
+    evidence gap list reflects reality.  Status is only ever upgraded, never
+    downgraded.
+    """
+    plan = dict(evidence_plan)
+    items = list(plan.get("items", []))
+
+    def _j(rel: str) -> dict:
+        return load_json(ed_root / rel, {})
+
+    def _upgrade(item: dict, new_status: str, new_counts: dict, cleared: list[str] | None = None):
+        old = item.get("status", "blocked")
+        order = {"blocked": 0, "partial": 1, "complete": 2}
+        if order.get(new_status, 0) > order.get(old, 0):
+            item["status"] = new_status
+            if cleared is not None:
+                item["blockers"] = [b for b in item.get("blockers", []) if b not in cleared]
+        if new_counts:
+            item["current_counts"] = new_counts
+
+    for item in items:
+        eid = item.get("evidence_id", "")
+
+        # --- fifa_rankings ---
+        if eid == "fifa_rankings":
+            data = _j("rankings/fifa-men-ranking.json")
+            rankings = data.get("rankings", [])
+            count = len(rankings)
+            if count >= 40:
+                _upgrade(item, "complete", {"ranked_teams": count}, ["ranking_json_empty"])
+
+        # --- historical_worldcup_results ---
+        elif eid == "historical_worldcup_results":
+            data = _j("history/team-wc-history.json")
+            teams = data.get("teams", [])
+            with_hist = sum(1 for t in teams if t.get("wc_appearances", 0) > 0)
+            if with_hist >= 30:
+                _upgrade(
+                    item, "partial",
+                    {"teams_with_history": with_hist, "editions_processed": data.get("summary", {}).get("editions_processed", 0)},
+                    ["historical_results_snapshot_missing", "historical_results_fetch_failed", "source_fetch_failed"],
+                )
+
+        # --- squad_depth_position_balance ---
+        elif eid == "squad_depth_position_balance":
+            data = _j("squad-depth-features.json")
+            teams = data.get("teams", [])
+            with_pos = sum(1 for t in teams if t.get("position_counts"))
+            if with_pos >= 40:
+                _upgrade(item, "complete", {"teams": with_pos}, ["position_depth_features_not_compiled"])
+
+        # --- venue_rest_travel ---
+        elif eid == "venue_rest_travel":
+            ledger = load_json(ed_root.parent.parent / "match-ledger.json", {})
+            matches = ledger.get("matches", [])
+            with_ko = sum(1 for m in matches if m.get("kickoff_at"))
+            if with_ko >= 10:
+                _upgrade(
+                    item, "partial",
+                    {"matches": len(matches), "matches_with_kickoff": with_ko},
+                    ["fixture_schedule_required_for_rest_travel", "fixture_schedule_not_imported"],
+                )
+
+    plan["items"] = items
+    return plan
+
+
+def _build_history_index(root: Path, edition: str) -> dict[str, dict]:
+    """Load team World Cup history and map upper-cased team_id -> record."""
+    data = load_edition_data_json(root, edition, "history/team-wc-history.json", {"teams": []})
+    index: dict[str, dict] = {}
+    for team in data.get("teams", []):
+        tid = str(team.get("team_id", "")).upper()
+        if tid:
+            index[tid] = team
     return index
 
 
@@ -506,17 +592,59 @@ def score_squad_depth(team_squad: dict | None, global_summary: dict | None) -> f
     return round(min(100.0, max(0.0, combined)), 2)
 
 
-def score_historical_proxy(team_ranking: dict | None) -> float:
+def score_historical_proxy(
+    team_ranking: dict | None,
+    team_history: dict | None = None,
+) -> float:
     """Component 3: historical performance proxy (0-100).
 
-    Uses FIFA ranking as a proxy — higher-ranked teams generally have
-    stronger World Cup pedigrees.  This is a placeholder until actual
-    historical results data is ingested.
+    When ``team_history`` (from ``team-wc-history.json``) is available the
+    score blends actual World Cup pedigree (titles, appearances, win-rate,
+    best result) with a FIFA-ranking baseline.  The ranking floor ensures
+    teams with sparse World Cup history but strong current form are not
+    over-penalised.  Falls back to pure ranking when no history exists.
     """
-    if not team_ranking:
-        return 30.0
-    points = float(team_ranking.get("points", 0))
-    return _normalise_ranking_points(points)
+    # --- Ranking baseline (always computed) ---
+    ranking_baseline = 30.0
+    if team_ranking:
+        points = float(team_ranking.get("points", 0))
+        ranking_baseline = _normalise_ranking_points(points)
+
+    # --- Real history path ---
+    if team_history and team_history.get("wc_appearances", 0) > 0:
+        appearances = int(team_history.get("wc_appearances", 0))
+        titles = int(team_history.get("wc_titles", 0))
+        total_matches = int(team_history.get("wc_total_matches", 0))
+        wins = int(team_history.get("wc_wins", 0))
+        best = str(team_history.get("wc_best_result", ""))
+
+        # Titles: 0→0, 1→15, 2→25, 3→32, 4→38, 5+→42
+        title_score = min(42.0, titles * 12.0 + max(0, titles - 1) * 3.0)
+
+        # Appearances: each appearance worth up to 2 pts, cap 20
+        appearance_score = min(20.0, appearances * 2.0)
+
+        # Win rate: (wins / total_matches) * 25
+        win_rate_score = (wins / total_matches * 25.0) if total_matches > 0 else 0.0
+
+        # Best result bonus
+        best_map = {
+            "winner": 15.0, "runner_up": 12.0, "third_place": 10.0,
+            "semi_finals": 9.0, "quarter_finals": 7.0,
+            "round_of_16": 5.0, "group_stage": 2.0,
+        }
+        best_score = best_map.get(best, 3.0)
+
+        history_raw = title_score + appearance_score + win_rate_score + best_score
+
+        # Blend: 40% real history + 60% ranking baseline
+        # This prevents teams with sparse WC history from being over-penalised
+        # while still rewarding genuine World Cup pedigree.
+        blended = history_raw * 0.4 + ranking_baseline * 0.6
+        return round(min(100.0, max(0.0, blended)), 2)
+
+    # --- Fallback: FIFA ranking proxy ---
+    return round(ranking_baseline, 2)
 
 
 def score_rest_travel(
@@ -1397,6 +1525,7 @@ def predict_match(
     evidence_index: dict[str, dict],
     global_summary: dict | None,
     daily_evidence: dict | None = None,
+    history_index: dict[str, dict] | None = None,
 ) -> dict:
     """Compute the full prediction record for a single match."""
     home_team = match.get("home_team", {})
@@ -1411,6 +1540,8 @@ def predict_match(
     away_ranking = _lookup_team(away_id, ranking_index)
     home_squad = _lookup_team(home_id, squad_index)
     away_squad = _lookup_team(away_id, squad_index)
+    home_history = _lookup_team(home_id, history_index or {})
+    away_history = _lookup_team(away_id, history_index or {})
 
     kickoff = parse_datetime(str(match.get("kickoff_at", "")))
     kickoff_dt = kickoff or datetime.now(timezone.utc)
@@ -1422,8 +1553,8 @@ def predict_match(
     sd_home = score_squad_depth(home_squad, global_summary)
     sd_away = score_squad_depth(away_squad, global_summary)
 
-    hp_home = score_historical_proxy(home_ranking)
-    hp_away = score_historical_proxy(away_ranking)
+    hp_home = score_historical_proxy(home_ranking, home_history)
+    hp_away = score_historical_proxy(away_ranking, away_history)
 
     rt_home = score_rest_travel(
         team_id=home_id,
@@ -1455,6 +1586,12 @@ def predict_match(
                 referee = m.get("referee")
                 odds = m.get("odds")
                 break
+    odds_is_usable = bool(
+        odds
+        and not odds.get("is_mock")
+        and odds.get("source") not in {"mock_bookmaker", "odds_unavailable"}
+        and all(odds.get(key) for key in ("home_win", "draw", "away_win"))
+    )
 
     # 1. Referee Rigor Modifier
     referee_home_mod = 0.0
@@ -1579,6 +1716,10 @@ def predict_match(
         predicted_outcome=predicted_outcome,
         base_score=predicted_score,
     )
+    if scoreline_distribution:
+        predicted_score = dict(scoreline_distribution[0]["score"])
+        total_goals = int(predicted_score["home"]) + int(predicted_score["away"])
+        goals_line_2_5 = "over" if total_goals >= 3 else "under"
 
     # --- Odds & Market Track & Divergence Analysis ---
     implied_probs = None
@@ -1586,7 +1727,7 @@ def predict_match(
     dual_track_alignment = "untracked"
     divergence_analysis = ""
 
-    if odds:
+    if odds_is_usable:
         o_home = float(odds.get("home_win", 1.0))
         o_draw = float(odds.get("draw", 1.0))
         o_away = float(odds.get("away_win", 1.0))
@@ -1626,7 +1767,7 @@ def predict_match(
         local_gaps.append("rosters_missing")
     if not referee:
         local_gaps.append("referee_missing")
-    if not odds:
+    if not odds_is_usable:
         local_gaps.append("odds_missing")
 
     avg_data = (data_home + data_away) / 2.0
@@ -1687,7 +1828,9 @@ def predict_match(
         "yellow_cards_pred": yellow_cards_pred,
         "home_news_sentiment": home_news_sentiment,
         "away_news_sentiment": away_news_sentiment,
-        "odds": odds,
+        "odds": odds if odds_is_usable else None,
+        "raw_odds": odds,
+        "odds_source_status": "usable" if odds_is_usable else (odds or {}).get("source", "missing"),
         "implied_probs": implied_probs,
         "market_outcome": market_outcome,
         "dual_track_alignment": dual_track_alignment,
@@ -1824,11 +1967,17 @@ def predict_match(
             "odds": odds,
             "implied_probabilities": implied_probs,
             "market_outcome": market_outcome
-        } if odds else None,
+        } if odds_is_usable else None,
+        "market_odds_status": {
+            "status": "usable" if odds_is_usable else "missing_or_unusable",
+            "source": (odds or {}).get("source", "missing"),
+            "is_mock": bool((odds or {}).get("is_mock") or (odds or {}).get("source") == "mock_bookmaker"),
+            "reason": (odds or {}).get("reason", ""),
+        },
         "dual_track": {
             "alignment": dual_track_alignment,
             "divergence_analysis": divergence_analysis
-        } if odds else None,
+        } if odds_is_usable else None,
         "analysis_layers": analysis_layers,
         "scenario_analysis": scenario_analysis,
         "decision_audit": decision_audit,
@@ -1861,15 +2010,19 @@ def run_scoring_model(
 
     # --- Load data sources ---
     ledger = load_match_ledger(root, edition)
-    rankings_data = load_json(ed_root / "rankings" / "fifa-men-ranking.json", {"rankings": []})
-    squad_data = load_json(ed_root / "squad-depth-features.json", {"teams": [], "global_summary": {}})
+    rankings_data = load_edition_data_json(root, edition, "rankings/fifa-men-ranking.json", {"rankings": []})
+    squad_data = load_edition_data_json(root, edition, "squad-depth-features.json", {"teams": [], "global_summary": {}})
     evidence_plan = load_json(ed_root / "prediction-evidence-plan.json", {"items": []})
+
+    # Reconcile evidence statuses with actual files on disk
+    evidence_plan = _reconcile_evidence_from_disk(evidence_plan, ed_root)
 
     ranking_index = _build_ranking_index(rankings_data)
     squad_index = _build_squad_index(squad_data)
     evidence_index = _build_evidence_index(evidence_plan)
+    history_index = _build_history_index(root, edition)
     global_summary = squad_data.get("global_summary")
-    all_matches = ledger.get("matches", [])
+    all_matches = canonical_matches(ledger.get("matches", []) or [])
 
     # --- Find matches for this date that haven't kicked off ---
     predictions: list[dict] = []
@@ -1907,6 +2060,7 @@ def run_scoring_model(
             evidence_index=evidence_index,
             global_summary=global_summary,
             daily_evidence=daily_evidence,
+            history_index=history_index,
         )
         predictions.append(prediction)
 

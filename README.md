@@ -88,10 +88,27 @@ graph TD
 所有世界杯届次的数据与资料均被整理存放在统一的知识库路径中，便于 Agent 极速读取与理解：
 
 *   `knowledge-base/agent/`：包含 Agent 的 [ARCHITECTURE.md](knowledge-base/agent/ARCHITECTURE.md) 设计架构、[AGENT_CARD.json](knowledge-base/agent/AGENT_CARD.json) 能力卡、[TOOL_CATALOG.json](knowledge-base/agent/TOOL_CATALOG.json) 工具目录，以及 runtime agent 可读的 [RUNBOOK.md](knowledge-base/agent/RUNBOOK.md)、[GUARDRAILS.md](knowledge-base/agent/GUARDRAILS.md)、[HANDOFFS.md](knowledge-base/agent/HANDOFFS.md)、[TRACE_EVENTS.md](knowledge-base/agent/TRACE_EVENTS.md)。Codex skill 入口在 [skills/fifa-winner-skill/SKILL.md](skills/fifa-winner-skill/SKILL.md)。
+*   `knowledge-base/public/<edition>/`：公共知识库，存放官方/既定/可复用事实，例如赛程、球队、排名、阵容、历史数据，以及可作为新用户兜底展示的 AI 章鱼哥默认预测。
 *   `knowledge-base/<edition>/`：按届次隔离（如 `2026/`），包含：
     *   `raw/`：最原始的数据（FIFA 官方 PDF、Fixtures 抓取快照）。
     *   `wiki/`：整理后的世界知识主图谱与赛前合成信息。
-    *   `data/`：包含比赛账本 `match-ledger.json`、球队画像 `profiles/` 以及每日证据快照。
+    *   `data/`：用户本地库，包含本机预测、复盘、运行缓存、手动补充、SQLite 查询索引、每日证据快照和看板输出。
+
+### 公共事实 + 用户预测叠加
+
+本项目现在采用“公共知识库 + 用户本地库”的分层模型：
+
+*   **公共知识库**：官方/既定/可复用事实，以及随仓库发布的 AI 章鱼哥默认预测。
+*   **用户本地库**：用户自己生成的预测、复盘、运行缓存、手动补充证据和 SQLite 索引。
+*   **可视化看板**：公共事实 + AI 章鱼哥默认预测 + 用户预测叠加展示。
+
+看板按 `match_id` 合并数据，优先级为：
+
+1. `user_local`：用户本地预测，优先覆盖默认预测。
+2. `octopus_default`：随仓库发布的 AI 章鱼哥默认预测。
+3. `none`：只有公共事实，没有预测；看板只展示赛程/实际比分等事实。
+
+如果用户拉取最新代码但本地从未跑过预测，看板仍可展示已随仓库提交的公共事实和默认预测；如果用户本地生成过预测，对应比赛会自动替换为 `user_local` 数据。
 
 ---
 
@@ -144,6 +161,39 @@ python3 scripts/octopus_paul_agent.py predict --edition 2026 --teams "France,Bra
 python3 scripts/octopus_paul_agent.py predict --edition 2026 --all
 ```
 自定义预测报告存放在 `knowledge-base/2026/data/reports/custom-predictions/`，对应的 Wiki 存放在 `knowledge-base/2026/wiki/reports/custom-predictions/`。
+
+---
+
+## 🖥️ 可视化看板与 GitHub Pages
+
+生成静态看板：
+
+```bash
+python3 scripts/prediction_visual_dashboard.py write --edition 2026 --root .
+```
+
+本地预览：
+
+```bash
+python3 scripts/prediction_visual_dashboard.py serve --edition 2026 --root . --host 127.0.0.1 --port 8765
+```
+
+核心产物：
+
+*   看板数据：[knowledge-base/2026/data/reports/dashboard/prediction-dashboard.json](knowledge-base/2026/data/reports/dashboard/prediction-dashboard.json)
+*   静态页面：[knowledge-base/2026/wiki/dashboard/index.html](knowledge-base/2026/wiki/dashboard/index.html)
+
+GitHub Pages 发布目录为 `knowledge-base/2026/wiki`。推送到 `main` 后，Actions 会自动部署静态站点；项目页路径通常为：
+
+```text
+https://<github-user>.github.io/FIFA-WINNER-SKILL/dashboard/
+```
+
+当前仓库用户为 `Dxboy266` 时，对应地址为：
+
+```text
+https://dxboy266.github.io/FIFA-WINNER-SKILL/dashboard/
+```
 
 ---
 

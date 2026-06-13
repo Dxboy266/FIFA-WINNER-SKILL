@@ -58,6 +58,10 @@ def timezone_for_venue(venue: str | None) -> str:
     return "Asia/Shanghai"
 
 
+def infer_timezone_from_venue(venue: str | None) -> str:
+    return timezone_for_venue(venue)
+
+
 def get_lunar_date_2026(dt: datetime) -> tuple[int, int]:
     """Convert solar datetime in June/July 2026 to lunar (month, day)."""
     d = dt.date()
