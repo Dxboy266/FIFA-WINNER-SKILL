@@ -1699,6 +1699,7 @@ def _render_daily_stat(stat: dict) -> str:
     brier = stat.get("brier_score_result")
     brier_text = f"{brier:.4f}" if brier is not None else "N/A"
     top_error = _safe(stat.get("top_error", ""))
+    error_html = f'<div class="stat-error">{top_error}</div>' if top_error else ""
     return (
         f'<div class="stat-card">'
         f'<div class="stat-head"><h3>{date}</h3><span>Brier: {brier_text}</span></div>'
@@ -1707,7 +1708,7 @@ def _render_daily_stat(stat: dict) -> str:
         f'<span>赛果 {hits} ({_pct(_rate(hits, evaluated))})</span>'
         f'<span>比分 {score_hits} ({_pct(_rate(score_hits, evaluated))})</span>'
         f'</div>'
-        f'{f"<div class=\"stat-error\">{top_error}</div>" if top_error else ""}'
+        f'{error_html}'
         f'</div>'
     )
 
