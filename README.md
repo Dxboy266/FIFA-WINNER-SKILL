@@ -70,16 +70,26 @@ graph TD
 
 ---
 
-## 🛠️ 模块化拆分与未来规划 (Roadmap)
+## 🛠️ Agent Runtime 能力与未来规划
 
-项目未来将引入以下机制，使章鱼哥从脚本工具进化为具备自成长能力的超级 Agent：
+项目已把章鱼哥从单脚本预测工具升级为可被 Codex、Claude Code 等 runtime agent 调用的有界 Agent。已落地能力如下：
 
-### 1. 自主 ReAct 规划循环 (借鉴 Hermes 风格) **[待实现 / Under Development]**
-我们将重构底层 Runtime，使 Agent 具备常驻规划循环。当接收到“*帮我预测下明天的比赛*”时，Agent 将自主拆解子任务，自动调用 `fetch-odds` 盘口、`fetch-news` 新闻、并在数据缺失时自主发起 web search 补充证据链，最后自动输出报告并合成海报。
+### 1. 有界 ReAct 规划循环 (借鉴 Hermes 风格) **[已落地 / Available]**
+`scripts/octopus_react_runner.py` 已提供可审计的 matchday ReAct runner。它会按日期拆解任务：检查赛程、拉取竞彩固定奖金/盘口快照、拉取新闻证据、生成情报简报、执行赛前预测、刷新可视化看板，并把每一步 thought/action/result 写入 trace，方便其他 agent 复盘调用链。
 
-### 2. 反思与权重自调整 (借鉴 OpenHuman 风格) **[待实现 / Under Development]**
-*   **赛后反思记录**：每场比赛结束后，Agent 会自动录入真实比分，比对预测差异并写入《反思日志》。
-*   **超参自动微调**：若某类预测（如爆冷预测）出现持续偏差，Agent 将通过反射机制微调基本面和玄学权重参数，实现滚雪球式的自适应进化。
+```bash
+python3 scripts/octopus_react_runner.py run --edition 2026 --start-date 2026-06-13 --weekend --root .
+```
+
+### 2. 反思与权重自调整 (借鉴 OpenHuman 风格) **[已落地 / Available]**
+`scripts/octopus_reflection_tuning.py` 已实现赛后反思与胜平负权重微调循环：读取锁定预测和真实赛果评估，写入 self-reflection journal，并在安全边界内微调组件权重。系统约束保持数据模型权重不低于 60%，天纪娱乐层不高于 40%。
+
+```bash
+python3 scripts/octopus_reflection_tuning.py tune --edition 2026 --root .
+```
+
+### 3. 后续增强 **[规划中 / Planned]**
+当前 ReAct runner 是有界执行器，不是无限常驻 daemon；海报生成、外部 web search 和人工补充证据仍建议由 runtime agent 按 RUNBOOK 显式触发。后续可以继续把更多工具接入同一个 trace schema，并增加定时复盘/定时预测编排。
 
 ---
 
