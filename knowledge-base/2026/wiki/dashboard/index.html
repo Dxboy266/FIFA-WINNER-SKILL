@@ -35,14 +35,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 }
 .shell{max-width:1240px;margin:0 auto;padding:0 20px 60px}
 
-/* ===== Hero ===== */
-.hero{position:relative;padding:0;min-height:320px;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;border-radius:var(--radius);overflow:hidden;margin-bottom:36px}
-.hero-banner{position:absolute;inset:0;z-index:0}
-.hero-banner img{width:100%;height:100%;object-fit:cover}
-.hero-overlay{position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,rgba(6,9,15,.45) 0%,rgba(6,9,15,.65) 50%,rgba(6,9,15,.92) 100%)}
-.hero-content{position:relative;z-index:2;text-align:center;padding:60px 20px 44px}
+/* 鈹€鈹€ Hero 鈹€鈹€ */
+.hero{padding:52px 0 40px;text-align:center}
 .hero-eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.12em;
   text-transform:uppercase;color:var(--cyan);background:var(--cyan-dim);
   padding:5px 16px;border-radius:99px;margin-bottom:16px;border:1px solid rgba(34,211,238,0.2)}
@@ -454,7 +448,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 <script type="application/json" id="dashData">{
   "version": 1,
   "edition": "2026",
-  "generated_at": "2026-06-13T22:36:54.843836+08:00",
+  "generated_at": "2026-06-14T00:33:27.895250+08:00",
   "mode": "worldcup-prediction-visual-dashboard",
   "status": "written",
   "data_path": "knowledge-base/2026/data/reports/dashboard/prediction-dashboard.json",
@@ -49840,16 +49834,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 <div class="shell">
   <div class="hero">
-    <div class="hero-banner"><img src="assets/banner.png" alt="banner"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-eyebrow">2026 FIFA 世界杯</span>
-      <h1>AI 章鱼哥预测看板</h1>
-      <p class="hero-sub">数据模型 + 天纪气运修正 | 生成于 2026-06-13 22:36 (北京时间)</p>
-    </div>
+    <span class="hero-eyebrow">2026 FIFA 世界杯</span>
+    <h1>AI 章鱼哥预测看板</h1>
+    <p class="hero-sub">数据模型 + 天纪气运修正 | 生成于 2026-06-14T00:33:27.895250+08:00</p>
   </div>
 
-  <div class="metrics"><div class="metric"><span class="metric-label">已预测场数</span><span class="metric-value">72</span><span class="metric-detail">场</span></div><div class="metric"><span class="metric-label">完成复盘</span><span class="metric-value">4</span><span class="metric-detail">场</span></div><div class="metric"><span class="metric-label">赛果命中</span><span class="metric-value">100.0%</span><span class="metric-detail">胜平负</span></div><div class="metric"><span class="metric-label">比分命中</span><span class="metric-value">25.0%</span><span class="metric-detail">精确比分</span></div><div class="metric"><span class="metric-label">Brier</span><span class="metric-value">0.2025</span><span class="metric-detail">校准度</span></div></div>
+  <div class="metrics"><div class="metric"><span class="metric-label">预测场数</span><span class="metric-value">104</span><span class="metric-detail">场</span></div><div class="metric"><span class="metric-label">完成复盘</span><span class="metric-value">4</span><span class="metric-detail">场</span></div><div class="metric"><span class="metric-label">赛果命中</span><span class="metric-value">100.0%</span><span class="metric-detail">胜平负</span></div><div class="metric"><span class="metric-label">比分命中</span><span class="metric-value">25.0%</span><span class="metric-detail">精确比分</span></div><div class="metric"><span class="metric-label">Brier</span><span class="metric-value">0.2025</span><span class="metric-detail">校准度</span></div></div>
 
   <div class="cmp-bar"><div class="cmp-title">预测 vs 实际 · 完赛统计</div><div class="cmp-row"><span class="cmp-label">赛果命中</span><div class="cmp-track"><div class="cmp-fill cmp-fill-res" style="width:100%"></div></div><span class="cmp-val">4/4 (100%)</span></div><div class="cmp-row"><span class="cmp-label">比分命中</span><div class="cmp-track"><div class="cmp-fill cmp-fill-score" style="width:25%"></div></div><span class="cmp-val">1/4 (25%)</span></div></div>
 
