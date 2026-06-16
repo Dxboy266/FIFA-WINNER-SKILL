@@ -110,10 +110,10 @@ def run_daily_pipeline(
     results = []
     script = str(SCRIPT_DIR)
 
-    # Step 1: Fetch match results (web scraping, no API key needed)
+    # Step 1: Fetch match results (web + football-data.org API fallback)
     results.append(run_step(
         "Fetch Match Results",
-        [sys.executable, f"{script}/fetch_match_results.py", "web",
+        [sys.executable, f"{script}/fetch_match_results.py", "fetch",
          "--edition", edition, "--from", today, "--to", today, "--root", str(root)],
         root,
         skip=skip_fetch,

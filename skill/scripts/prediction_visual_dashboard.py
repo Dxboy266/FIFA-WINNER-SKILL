@@ -638,12 +638,33 @@ def _daily_evidence_details(ed_root: Path, date: str, home_id: str, away_id: str
     details["home_suspensions"].extend(home_inj_data.get("suspensions", []) or [])
     details["away_suspensions"].extend(away_inj_data.get("suspensions", []) or [])
 
-    for inj in dev_data.get("injuries", []) or []:
-        team = str(inj.get("team_code") or "").lower()
-        if team == home_id:
-            details["home_injuries"].append(inj)
-        elif team == away_id:
-            details["away_injuries"].append(inj)
+    # injuries can be a flat list (legacy) or a dict with teams sub-dict (new format)
+    inj_root = dev_data.get("injuries", []) or []
+    if isinstance(inj_root, dict):
+        for _tc, _td in (inj_root.get("teams") or {}).items():
+            if not isinstance(_td, dict):
+                continue
+            for inj in (_td.get("injuries") or []):
+                team = str(inj.get("team_code") or _tc).lower()
+                if team == home_id:
+                    details["home_injuries"].append(inj)
+                elif team == away_id:
+                    details["away_injuries"].append(inj)
+            for susp in (_td.get("suspensions") or []):
+                team = str(susp.get("team_code") or _tc).lower()
+                if team == home_id:
+                    details["home_suspensions"].append(susp)
+                elif team == away_id:
+                    details["away_suspensions"].append(susp)
+    elif isinstance(inj_root, list):
+        for inj in inj_root:
+            if not isinstance(inj, dict):
+                continue
+            team = str(inj.get("team_code") or "").lower()
+            if team == home_id:
+                details["home_injuries"].append(inj)
+            elif team == away_id:
+                details["away_injuries"].append(inj)
 
     for susp in dev_data.get("suspensions", []) or []:
         team = str(susp.get("team_code") or "").lower()

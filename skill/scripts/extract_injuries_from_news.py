@@ -61,7 +61,7 @@ class InjuryExtractor:
         Returns:
             dict: 提取的伤停信息
         """
-        evidence_file = self.root_path / "knowledge-base" / edition / "data" / "daily-evidence" / f"{date}.json"
+        evidence_file = self.root_path / "wiki" / "public" / edition / "daily-evidence" / f"{date}.json"
 
         if not evidence_file.exists():
             print(f"ERROR: Evidence file not found: {evidence_file}")
