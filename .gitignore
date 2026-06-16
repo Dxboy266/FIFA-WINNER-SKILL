@@ -12,15 +12,15 @@ wiki/person/
 wiki/cache/
 
 # ── 旧版残留（v1 路径，v2 不再使用）──
-knowledge-base/
-data/
-scripts/
-schema/
-skills/
-assets/
-docs/
-raw/
-install_as_skill.sh
+/knowledge-base/
+/data/
+/scripts/
+/schema/
+/skills/
+/assets/
+/docs/
+/raw/
+/install_as_skill.sh
 node_modules/
 package.json
 package-lock.json

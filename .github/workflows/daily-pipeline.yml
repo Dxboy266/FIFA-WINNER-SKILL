@@ -1,0 +1,102 @@
+name: Daily Pipeline
+
+on:
+  schedule:
+    # Run daily at 06:00 UTC (14:00 Beijing Time)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date to process (YYYY-MM-DD, leave empty for today)'
+        required: false
+        default: ''
+
+env:
+  EDITION: '2026'
+
+jobs:
+  daily-pipeline:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -e .
+
+      - name: Cache SQLite database
+        uses: actions/cache@v4
+        with:
+          path: wiki/cache/
+          key: db-${{ env.EDITION }}-${{ github.run_id }}
+          restore-keys: |
+            db-${{ env.EDITION }}-
+
+      - name: Determine date
+        id: date
+        run: |
+          if [ -n "${{ github.event.inputs.date }}" ]; then
+            echo "date=${{ github.event.inputs.date }}" >> $GITHUB_OUTPUT
+          else
+            echo "date=$(TZ=Asia/Shanghai date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run daily pipeline
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: |
+          python skill/scripts/daily_pipeline.py run \
+            --edition ${{ env.EDITION }} \
+            --root . \
+            --date "${{ steps.date.outputs.date }}"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git status --porcelain
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "octopus-bot"
+          git config user.email "bot@octopus-paul.dev"
+          git add -A
+          git commit -m "auto: daily pipeline ${{ steps.date.outputs.date }} [skip ci]"
+          git push
+
+      - name: Setup Pages
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: wiki/public/${{ env.EDITION }}/wiki
+
+      - name: Deploy to GitHub Pages
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: actions/deploy-pages@v4

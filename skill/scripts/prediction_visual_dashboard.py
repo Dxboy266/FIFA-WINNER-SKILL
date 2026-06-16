@@ -1347,6 +1347,64 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
             except Exception:
                 pass
 
+    # ── Observation data for model health monitoring ──
+    observation_daily = payload.get("daily_stats", [])
+    # Sort by stat_date ascending for trend charts
+    observation_daily_sorted = sorted(observation_daily, key=lambda x: x.get("stat_date", ""))
+
+    # Error distribution from evaluations
+    error_distribution = []
+    try:
+        if db_path.exists():
+            _obs_conn = sqlite3.connect(str(db_path))
+            _obs_conn.row_factory = sqlite3.Row
+            _obs_tables = [r[0] for r in _obs_conn.execute(
+                "SELECT name FROM sqlite_master WHERE type='table'").fetchall()]
+            if "evaluations" in _obs_tables:
+                _err_rows = _obs_conn.execute("""
+                    SELECT COALESCE(primary_error, 'unknown') AS err_type,
+                           COUNT(*) AS cnt
+                    FROM evaluations
+                    WHERE primary_error IS NOT NULL AND primary_error != ''
+                    GROUP BY primary_error
+                    ORDER BY cnt DESC
+                """).fetchall()
+                error_distribution = [{"error_type": r["err_type"], "count": r["cnt"]}
+                                      for r in _err_rows]
+                # Also add rows with no primary_error as "correct"
+                _correct_row = _obs_conn.execute("""
+                    SELECT COUNT(*) AS cnt FROM evaluations
+                    WHERE primary_error IS NULL OR primary_error = ''
+                """).fetchone()
+                if _correct_row and _correct_row["cnt"] > 0:
+                    error_distribution.insert(0, {
+                        "error_type": "预测正确",
+                        "count": _correct_row["cnt"]
+                    })
+            _obs_conn.close()
+    except Exception:
+        pass
+
+    # Compute model health score (0-100) from latest daily_stats
+    health_score = None
+    if observation_daily_sorted:
+        _latest = observation_daily_sorted[-1]
+        _rhr = float(_latest.get("result_hit_rate", 0) or 0)
+        _brier = float(_latest.get("brier_score_result", 0.25) or 0.25)
+        _hc = float(_latest.get("high_confidence_hit_rate", 0) or 0)
+        # Weighted: 50% result hit rate + 30% brier (inverted) + 20% high-conf
+        _brier_component = max(0, (0.5 - _brier) / 0.5) * 100  # 0.0 brier = 100, 0.5+ = 0
+        health_score = round(
+            0.50 * _rhr + 0.30 * _brier_component + 0.20 * (_hc if _hc else _rhr), 1
+        )
+        health_score = max(0.0, min(100.0, health_score))
+
+    payload["observation"] = {
+        "daily_trends": observation_daily_sorted,
+        "error_distribution": error_distribution,
+        "health_score": health_score,
+    }
+
     return payload
 
 
@@ -2646,6 +2704,33 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
   .date-toolbar button{{min-width:104px}}
   .div-head{{grid-template-columns:1fr}}
 }}
+
+/* ── Observation Tab ── */
+.obs-layout{{display:flex;flex-direction:column;gap:20px}}
+.obs-health-row{{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:14px}}
+.obs-health-card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;text-align:center;backdrop-filter:blur(12px);box-shadow:var(--shadow);
+  position:relative;overflow:hidden}}
+.obs-health-card::before{{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.5}}
+.obs-health-card.obs-health-mini::before{{background:linear-gradient(90deg,transparent,var(--purple),transparent)}}
+.obs-health-label{{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:8px}}
+.obs-health-score{{font-size:42px;font-weight:700;font-family:var(--font-display);
+  color:var(--cyan);font-variant-numeric:tabular-nums;line-height:1.1}}
+.obs-health-sub{{font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:.03em}}
+.obs-charts-row{{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
+.obs-chart-box{{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 20px;backdrop-filter:blur(12px);box-shadow:var(--shadow)}}
+.obs-chart-box h3{{font-size:13px;font-weight:700;color:var(--purple);margin-bottom:12px;letter-spacing:.04em}}
+.obs-chart-dom{{width:100%;height:280px}}
+@media(max-width:900px){{
+  .obs-health-row{{grid-template-columns:1fr 1fr}}
+  .obs-charts-row{{grid-template-columns:1fr}}
+}}
+@media(max-width:600px){{
+  .obs-health-row{{grid-template-columns:1fr}}
+}}
 </style>
 </head>
 <body>
@@ -2668,6 +2753,7 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
     <button class="tab" data-tab="stats">准确率校准</button>
     <button class="tab" data-tab="governance">系统治理</button>
     <button class="tab" data-tab="tuning">决策超参</button>
+    <button class="tab" data-tab="observation">模型观测</button>
   </div>
 
   <div id="p-predictions" class="tab-panel active">
@@ -2837,6 +2923,54 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
     </div>
   </div>
 
+  <div id="p-observation" class="tab-panel">
+    <div class="obs-layout">
+
+      <div class="obs-health-row">
+        <div class="obs-health-card">
+          <div class="obs-health-label">模型健康指数</div>
+          <div class="obs-health-score" id="obsHealthScore">--</div>
+          <div class="obs-health-sub" id="obsHealthSub">综合命中率 · Brier · 置信校准</div>
+        </div>
+        <div class="obs-health-card obs-health-mini">
+          <div class="obs-health-label">最新赛果命中率</div>
+          <div class="obs-health-score" id="obsLatestRHR" style="font-size:28px">--</div>
+        </div>
+        <div class="obs-health-card obs-health-mini">
+          <div class="obs-health-label">最新 Brier 分数</div>
+          <div class="obs-health-score" id="obsLatestBrier" style="font-size:28px">--</div>
+        </div>
+        <div class="obs-health-card obs-health-mini">
+          <div class="obs-health-label">累计评估场次</div>
+          <div class="obs-health-score" id="obsTotalMatches" style="font-size:28px">--</div>
+        </div>
+      </div>
+
+      <div class="obs-charts-row">
+        <div class="obs-chart-box">
+          <h3>命中率趋势</h3>
+          <div id="obsHitTrendChart" class="obs-chart-dom"></div>
+        </div>
+        <div class="obs-chart-box">
+          <h3>Brier 分数漂移</h3>
+          <div id="obsBrierChart" class="obs-chart-dom"></div>
+        </div>
+      </div>
+
+      <div class="obs-charts-row">
+        <div class="obs-chart-box">
+          <h3>置信度校准</h3>
+          <div id="obsCalibChart" class="obs-chart-dom"></div>
+        </div>
+        <div class="obs-chart-box">
+          <h3>误差分布</h3>
+          <div id="obsErrorChart" class="obs-chart-dom"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <p class="footer">仅供娱乐参考，不构成任何投注建议。<br>{_safe(payload.get("disclaimer", ""))}</p>
 </div>
 
@@ -2869,6 +3003,7 @@ function init(){{
       var p=document.getElementById('p-'+t.getAttribute('data-tab'));
       if(p)p.classList.add('active');
       if(t.getAttribute('data-tab')==='stats')initCharts();
+      if(t.getAttribute('data-tab')==='observation')initObsCharts();
     }});
   }}
 
@@ -3417,6 +3552,169 @@ function initCharts(){{
   }}
 
   chartsOk=true;
+}}
+
+var obsChartsOk=false;
+function initObsCharts(){{
+  if(obsChartsOk)return;
+  var obs=D.observation||{{}};
+  var trends=obs.daily_trends||[];
+  var errDist=obs.error_distribution||[];
+  var hs=obs.health_score;
+
+  /* Health score display */
+  var hsEl=document.getElementById('obsHealthScore');
+  if(hsEl){{
+    if(hs!==null&&hs!==undefined){{
+      hsEl.textContent=hs.toFixed(1);
+      if(hs>=70)hsEl.style.color='#34d399';
+      else if(hs>=40)hsEl.style.color='#fbbf24';
+      else hsEl.style.color='#f87171';
+    }} else {{
+      hsEl.textContent='N/A';
+      hsEl.style.color='var(--muted)';
+    }}
+  }}
+
+  /* Latest stats mini cards */
+  if(trends.length>0){{
+    var latest=trends[trends.length-1];
+    var rhrEl=document.getElementById('obsLatestRHR');
+    if(rhrEl)rhrEl.textContent=(latest.result_hit_rate||0).toFixed(1)+'%';
+    var brEl=document.getElementById('obsLatestBrier');
+    if(brEl){{
+      var bv=latest.brier_score_result;
+      brEl.textContent=bv!==null&&bv!==undefined?bv.toFixed(4):'N/A';
+    }}
+    var tmEl=document.getElementById('obsTotalMatches');
+    if(tmEl){{
+      var total=0;
+      for(var i=0;i<trends.length;i++)total+=(trends[i].matches_evaluated||0);
+      tmEl.textContent=total;
+    }}
+  }}
+
+  /* 1. Hit Rate Trend chart */
+  var hitDom=document.getElementById('obsHitTrendChart');
+  if(hitDom&&typeof echarts!=='undefined'&&trends.length){{
+    var dates=[];var rhr=[];var shr=[];var rhrAvg=[];var cumR=0;
+    for(var i=0;i<trends.length;i++){{
+      dates.push(trends[i].stat_date);
+      var rv=trends[i].result_hit_rate||0;
+      var sv=trends[i].score_hit_rate||0;
+      rhr.push(rv);shr.push(sv);
+      cumR+=rv;rhrAvg.push(parseFloat((cumR/(i+1)).toFixed(1)));
+    }}
+    echarts.init(hitDom,null,{{renderer:'canvas'}}).setOption({{
+      backgroundColor:'transparent',
+      tooltip:{{trigger:'axis',backgroundColor:'#0c1220',textStyle:{{color:'#e8ecf4'}},borderColor:'rgba(34,211,238,0.3)'}},
+      legend:{{data:['赛果命中率','比分命中率','累计均值'],top:0,textStyle:{{color:'#64748b'}}}},
+      grid:{{left:'3%',right:'4%',bottom:'3%',containLabel:true}},
+      xAxis:{{type:'category',data:dates,axisLabel:{{color:'#64748b',fontSize:10,rotate:30}},axisLine:{{lineStyle:{{color:'rgba(255,255,255,0.06)'}}}}}},
+      yAxis:{{type:'value',min:0,max:100,axisLabel:{{formatter:'{{value}}%',color:'#64748b'}},splitLine:{{lineStyle:{{color:'rgba(255,255,255,0.04)'}}}}}},
+      series:[
+        {{name:'赛果命中率',type:'line',smooth:true,data:rhr,
+          itemStyle:{{color:'#34d399'}},lineStyle:{{width:2.5}},
+          areaStyle:{{color:{{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{{offset:0,color:'rgba(52,211,153,0.18)'}},{{offset:1,color:'rgba(52,211,153,0)'}}]}}}}}},
+        {{name:'比分命中率',type:'line',smooth:true,data:shr,
+          itemStyle:{{color:'#60a5fa'}},lineStyle:{{width:2.5}},
+          areaStyle:{{color:{{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{{offset:0,color:'rgba(96,165,250,0.15)'}},{{offset:1,color:'rgba(96,165,250,0)'}}]}}}}}},
+        {{name:'累计均值',type:'line',data:rhrAvg,
+          itemStyle:{{color:'#fbbf24'}},lineStyle:{{width:1.5,type:'dashed'}},symbol:'none'}}
+      ]
+    }});
+  }}
+
+  /* 2. Brier drift chart */
+  var brierDom=document.getElementById('obsBrierChart');
+  if(brierDom&&typeof echarts!=='undefined'&&trends.length){{
+    var bDates=[];var bVals=[];
+    for(var i=0;i<trends.length;i++){{
+      bDates.push(trends[i].stat_date);
+      var b=trends[i].brier_score_result;
+      bVals.push(b!==null&&b!==undefined?b:null);
+    }}
+    echarts.init(brierDom,null,{{renderer:'canvas'}}).setOption({{
+      backgroundColor:'transparent',
+      tooltip:{{trigger:'axis',backgroundColor:'#0c1220',textStyle:{{color:'#e8ecf4'}},borderColor:'rgba(167,139,250,0.3)'}},
+      legend:{{data:['Brier 分数','基准线 0.25'],top:0,textStyle:{{color:'#64748b'}}}},
+      grid:{{left:'3%',right:'4%',bottom:'3%',containLabel:true}},
+      xAxis:{{type:'category',data:bDates,axisLabel:{{color:'#64748b',fontSize:10,rotate:30}},axisLine:{{lineStyle:{{color:'rgba(255,255,255,0.06)'}}}}}},
+      yAxis:{{type:'value',min:0,max:1,axisLabel:{{color:'#64748b'}},splitLine:{{lineStyle:{{color:'rgba(255,255,255,0.04)'}}}}}},
+      visualMap:{{show:false,dimension:1,pieces:[{{gt:0,lte:0.25,color:'#34d399'}},{{gt:0.25,lte:0.5,color:'#fbbf24'}},{{gt:0.5,lte:1,color:'#f87171'}}]}},
+      series:[
+        {{name:'Brier 分数',type:'line',smooth:true,data:bVals,connectNulls:true,
+          lineStyle:{{width:2.5}},symbolSize:6,
+          areaStyle:{{color:{{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{{offset:0,color:'rgba(167,139,250,0.15)'}},{{offset:1,color:'rgba(167,139,250,0)'}}]}}}}}},
+        {{name:'基准线 0.25',type:'line',data:[],markLine:{{silent:true,
+          data:[{{yAxis:0.25,lineStyle:{{color:'#fbbf24',type:'dashed',width:1.5}},
+          label:{{formatter:'基准 0.25',color:'#fbbf24',fontSize:10}}}}]
+        }}}}
+      ]
+    }});
+  }}
+
+  /* 3. Confidence calibration chart */
+  var calDom=document.getElementById('obsCalibChart');
+  if(calDom&&typeof echarts!=='undefined'&&trends.length){{
+    /* Aggregate across all daily stats */
+    var hSum=0,hCnt=0,mSum=0,mCnt=0,lSum=0,lCnt=0;
+    for(var i=0;i<trends.length;i++){{
+      var t=trends[i];var n=t.matches_evaluated||1;
+      if(t.high_confidence_hit_rate!==null&&t.high_confidence_hit_rate!==undefined){{hSum+=t.high_confidence_hit_rate*n;hCnt+=n;}}
+      if(t.medium_confidence_hit_rate!==null&&t.medium_confidence_hit_rate!==undefined){{mSum+=t.medium_confidence_hit_rate*n;mCnt+=n;}}
+      if(t.low_confidence_hit_rate!==null&&t.low_confidence_hit_rate!==undefined){{lSum+=t.low_confidence_hit_rate*n;lCnt+=n;}}
+    }}
+    var hAvg=hCnt>0?(hSum/hCnt):0;
+    var mAvg=mCnt>0?(mSum/mCnt):0;
+    var lAvg=lCnt>0?(lSum/lCnt):0;
+    echarts.init(calDom,null,{{renderer:'canvas'}}).setOption({{
+      backgroundColor:'transparent',
+      tooltip:{{trigger:'axis',axisPointer:{{type:'shadow'}},backgroundColor:'#0c1220',textStyle:{{color:'#e8ecf4'}}}},
+      legend:{{data:['实际命中率','期望命中率'],top:0,textStyle:{{color:'#64748b'}}}},
+      grid:{{left:'3%',right:'4%',bottom:'3%',containLabel:true}},
+      xAxis:{{type:'category',data:['高置信','中置信','低置信'],axisLabel:{{color:'#64748b'}}}},
+      yAxis:{{type:'value',min:0,max:100,axisLabel:{{formatter:'{{value}}%',color:'#64748b'}},splitLine:{{lineStyle:{{color:'rgba(255,255,255,0.04)'}}}}}},
+      series:[
+        {{name:'实际命中率',type:'bar',barWidth:'25%',
+          data:[
+            {{value:parseFloat(hAvg.toFixed(1)),itemStyle:{{color:'#34d399'}}}},
+            {{value:parseFloat(mAvg.toFixed(1)),itemStyle:{{color:'#22d3ee'}}}},
+            {{value:parseFloat(lAvg.toFixed(1)),itemStyle:{{color:'#fbbf24'}}}}
+          ],
+          itemStyle:{{borderRadius:[4,4,0,0]}}}},
+        {{name:'期望命中率',type:'bar',barWidth:'25%',data:[75,60,45],
+          itemStyle:{{color:'rgba(255,255,255,0.06)',borderRadius:[4,4,0,0]}}}}
+      ]
+    }});
+  }}
+
+  /* 4. Error distribution pie chart */
+  var errDom=document.getElementById('obsErrorChart');
+  if(errDom&&typeof echarts!=='undefined'&&errDist.length){{
+    var pieData=[];
+    var pieColors=['#34d399','#f87171','#fbbf24','#a78bfa','#60a5fa','#fb923c','#22d3ee','#f472b6'];
+    for(var i=0;i<errDist.length;i++){{
+      pieData.push({{name:errDist[i].error_type,value:errDist[i].count,
+        itemStyle:{{color:pieColors[i%pieColors.length]}}}});
+    }}
+    echarts.init(errDom,null,{{renderer:'canvas'}}).setOption({{
+      backgroundColor:'transparent',
+      tooltip:{{trigger:'item',backgroundColor:'#0c1220',textStyle:{{color:'#e8ecf4'}},borderColor:'rgba(255,255,255,0.08)',
+        formatter:'{{b}}: {{c}} ({{d}}%)'}},
+      legend:{{type:'scroll',bottom:0,textStyle:{{color:'#64748b',fontSize:10}},
+        pageTextStyle:{{color:'#64748b'}}}},
+      series:[{{
+        type:'pie',radius:['35%','65%'],center:['50%','45%'],
+        label:{{color:'#e8ecf4',fontSize:11,formatter:'{{b}}\\n{{d}}%'}},
+        labelLine:{{lineStyle:{{color:'rgba(255,255,255,0.15)'}}}},
+        emphasis:{{itemStyle:{{shadowBlur:10,shadowOffsetX:0,shadowColor:'rgba(0,0,0,0.5)'}}}},
+        data:pieData
+      }}]
+    }});
+  }}
+
+  obsChartsOk=true;
 }}
 
 init();
