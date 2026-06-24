@@ -172,12 +172,10 @@ FIFA-WINNER-SKILL/
 
 ## 👥 社区交流
 
-想一起讨论世界杯娱乐预测、AI Skill、数据源和海报玩法，欢迎扫码加入群聊或添加开发者微信：
+想一起讨论世界杯娱乐预测、AI Skill、数据源和海报玩法，欢迎扫码添加开发者微信：
 
-| 🏆 世界杯预测 Skill 交流讨论群 | 👤 开发者个人微信 (若群码失效可添加好友) |
-| :---: | :---: |
-| ![WeChat Group Chat](https://github.com/Dxboy266/FIFA-WINNER-SKILL/raw/main/assets/contact/wechat-group-qr.jpg) | ![Developer WeChat](https://github.com/Dxboy266/FIFA-WINNER-SKILL/raw/main/assets/contact/wechat-qr.jpg) |
-| (二维码 7 天内有效，将定期更新) | (添加时请备注"世界杯预测") |
+👤 开发者个人微信 (添加时请备注"github名 + 世界杯预测") 
+![Developer WeChat](https://github.com/Dxboy266/FIFA-WINNER-SKILL/raw/main/assets/contact/wechat-qr.jpg) 
 
 ---
 
