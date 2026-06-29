@@ -10,6 +10,7 @@ import os
 import re
 import sqlite3
 import sys
+from urllib.parse import parse_qs, urlparse
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import http.server
@@ -45,6 +46,10 @@ def _dashboard_paths(root: Path, edition: str) -> tuple[Path, Path]:
     data_path = edition_data_root(root, edition) / "reports" / "dashboard" / "prediction-dashboard.json"
     html_path = wiki_edition_root(root, edition) / "dashboard" / "index.html"
     return data_path, html_path
+
+
+def _dashboard_static_data_path(root: Path, edition: str) -> Path:
+    return wiki_edition_root(root, edition) / "dashboard" / "prediction-dashboard.json"
 
 
 def _display_path(path: Path | str, root: Path) -> str:
@@ -91,11 +96,21 @@ def _prediction_files(root: Path, edition: str) -> list[Path]:
 
 def _prediction_sources(root: Path, edition: str, *, include_local: bool = True) -> list[tuple[Path, str, int]]:
     sources: list[tuple[Path, str, int]] = []
-    public_reports = public_edition_data_root(root, edition) / "daily-predictions"
+    public_reports_candidates = [
+        public_edition_data_root(root, edition) / "daily-predictions",
+        public_edition_data_root(root, edition) / "default-predictions" / "daily-predictions",
+    ]
     local_reports = edition_data_root(root, edition) / "reports" / "daily-predictions"
     person_reports = person_edition_root(root, edition) / "reports" / "daily-predictions"
-    if public_reports.exists():
-        sources.extend((path, "octopus_default", 10) for path in sorted(public_reports.glob("*.json")))
+    seen_paths: set[Path] = set()
+    for public_reports in public_reports_candidates:
+        if public_reports.exists():
+            for path in sorted(public_reports.glob("*.json")):
+                resolved = path.resolve()
+                if resolved in seen_paths:
+                    continue
+                seen_paths.add(resolved)
+                sources.append((path, "octopus_default", 10))
     if include_local and local_reports.exists():
         sources.extend((path, "user_local", 100) for path in sorted(local_reports.glob("*.json")))
     if include_local and person_reports.exists():
@@ -332,6 +347,93 @@ def _as_prediction_card(item: dict, *, evaluation: dict | None) -> dict:
         "away_suspensions": [],
         "late_news": [],
     }
+
+
+def _merge_prediction_item_into_card(card: dict, item: dict, *, root: Path) -> bool:
+    prediction = item.get("prediction", {}) or {}
+    score = prediction.get("score", {}) or {}
+    result = str(prediction.get("result") or prediction.get("predicted_outcome") or "")
+    if not result and (score.get("home") is None or score.get("away") is None):
+        return False
+
+    home = item.get("home_team", {}) or {}
+    away = item.get("away_team", {}) or {}
+    play_card = item.get("play_card", {}) or {}
+    has_market_odds, market_odds, market_odds_status = _normalize_market_odds_status(
+        item.get("market_odds"),
+        item.get("market_odds_status"),
+    )
+
+    card.update({
+        "prediction_origin": item.get("prediction_origin", "user_local"),
+        "prediction_source": item.get("prediction_source", item.get("prediction_origin", "user_local")),
+        "prediction_source_path": item.get("prediction_source_path", ""),
+        "data_origin": item.get("prediction_origin", "user_local"),
+        "prediction_status": "locked_pre_match_prediction",
+        "predicted_result": result,
+        "predicted_result_label": OUTCOME_LABELS.get(result, result),
+        "score_text": f"{score.get('home', '-')}-{score.get('away', '-')}",
+        "total_goals": prediction.get("total_goals", "-"),
+        "confidence": prediction.get("confidence", "unknown"),
+        "confidence_label": str(prediction.get("confidence", "unknown")).upper(),
+        "expected_goals_proxy": prediction.get("expected_goals_proxy"),
+        "clean_sheet_probability": prediction.get("clean_sheet_probability"),
+        "scoreline_distribution": prediction.get("scoreline_distribution"),
+        "result_confidence": prediction.get("result_confidence", prediction.get("confidence", "unknown")),
+        "score_confidence": prediction.get("score_confidence", "unknown"),
+        "total_goals_confidence": prediction.get("total_goals_confidence", "unknown"),
+        "confidence_note": prediction.get("confidence_note", ""),
+        "venue_adaptation_context": item.get("venue_adaptation_context") or prediction.get("venue_adaptation_context"),
+        "referee_analysis": item.get("referee_analysis"),
+        "play_card": play_card,
+        "divination_overlay": item.get("divination_overlay") or card.get("divination_overlay"),
+        "divination_hexagram": prediction.get("divination_hexagram") or prediction.get("hexagram") or card.get("divination_hexagram", ""),
+        "home_ranking": _prediction_team_field(home, "ranking", card.get("home_ranking")),
+        "away_ranking": _prediction_team_field(away, "ranking", card.get("away_ranking")),
+        "evidence_gaps": prediction.get("evidence_gaps", card.get("evidence_gaps", [])),
+        "play_title": play_card.get("share_title", card.get("play_title", "")),
+        "risk_flags": play_card.get("risk_flags", card.get("risk_flags", [])) or [],
+        "watch_points": play_card.get("watch_points", card.get("watch_points", [])) or [],
+        "has_odds": has_market_odds,
+        "market_odds": market_odds,
+        "market_odds_status": market_odds_status,
+        "market_odds_source": market_odds_status.get("source", "missing"),
+        "market_odds_is_mock": bool(market_odds_status.get("is_mock")),
+        "analysis_layers": item.get("analysis_layers", card.get("analysis_layers", [])) or [],
+    })
+
+    if not card.get("venue"):
+        card["venue"] = item.get("venue", "")
+    if not card.get("group"):
+        card["group"] = item.get("group", "")
+    if not card.get("phase"):
+        card["phase"] = item.get("phase", "")
+    if not card.get("kickoff_at"):
+        card["kickoff_at"] = item.get("kickoff_at", "")
+    return True
+
+
+def _merge_daily_prediction_sources_into_cards(payload: dict, root: Path, edition: str, *, include_local: bool = True) -> int:
+    prediction_items = _prediction_items_by_match(root, edition, include_local=include_local)
+    if not prediction_items:
+        return 0
+    cards = payload.get("cards", []) or []
+    by_match = {str(card.get("match_id", "")): card for card in cards if card.get("match_id")}
+    merged = 0
+    for match_id, item in prediction_items.items():
+        card = by_match.get(match_id)
+        if not card:
+            continue
+        if _prediction_exists(card):
+            continue
+        if _merge_prediction_item_into_card(card, item, root=root):
+            merged += 1
+    if merged:
+        payload.setdefault("summary", {})["prediction_source_backfill_count"] = merged
+        invariants = payload.setdefault("safety_invariants", [])
+        if "dashboard_backfills_missing_predictions_from_daily_prediction_reports" not in invariants:
+            invariants.append("dashboard_backfills_missing_predictions_from_daily_prediction_reports")
+    return merged
 
 
 def query_db_data(db_path: Path) -> dict | None:
@@ -1146,6 +1248,10 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
                 "hit_class": hit_class,
                 "result_hit": result_hit,
                 "score_hit": score_hit,
+                "actual_score_home": m.get("final_score_home"),
+                "actual_score_away": m.get("final_score_away"),
+                "actual_result": _actual_result_from_score(m.get("final_score_home"), m.get("final_score_away")),
+                "is_completed": m.get("final_score_home") is not None and m.get("final_score_away") is not None,
                 "home_colors": m.get("home_colors") or "",
                 "away_colors": m.get("away_colors") or "",
                 "home_ranking": home_ranking,
@@ -1576,8 +1682,19 @@ def _build_tournament_schedule(ledger: dict) -> dict:
         "round_of_16": [],
         "quarter_final": [],
         "semi_final": [],
-        "final": []
+        "final": [],
+        "standings": {}
     }
+
+    # Load group standings if available
+    standings_path = Path("wiki/public/2026/group-standings.json")
+    if standings_path.exists():
+        try:
+            standings_data = load_json(standings_path)
+            schedule["standings"] = standings_data.get("groups", {})
+        except Exception:
+            pass
+
     for m in _canonical_ledger_matches(ledger):
         phase = m.get("phase", "")
         home = m.get("home_team", {}) or {}
@@ -1671,38 +1788,45 @@ def _render_metric(label: str, value: str, detail: str = "") -> str:
 
 
 def _render_match_card(card: dict) -> str:
-    confidence = str(card.get("confidence", "unknown"))
-    hit_class = card.get("hit_class", "pending")
+    fixture = card.get("fixture") or {}
+    prediction = card.get("prediction") or {}
+    actual = card.get("actual") or {}
+    evaluation = card.get("evaluation") or {}
+    display_state = card.get("display_state") or _card_display_state(card)
+
+    confidence = str(prediction.get("confidence") or card.get("confidence", "unknown"))
+    hit_class = evaluation.get("hit_class") or card.get("hit_class", "pending")
     if hit_class == "hit":
         hit_class = "double-hit"
-    is_not_predicted = card.get("prediction_status") == "not_predicted"
+    has_prediction = bool(prediction.get("exists"))
+    has_actual = bool(actual.get("exists"))
+    is_not_predicted = not has_prediction
 
-    result = card.get("predicted_result", "")
     result_map = {
         "home_win": ("主胜", "outcome-home"),
         "away_win": ("客胜", "outcome-away"),
         "draw": ("平局", "outcome-draw"),
     }
-    result_text, result_cls = result_map.get(result, ("未预测" if is_not_predicted else "Unknown", "outcome-none" if is_not_predicted else ""))
-    score_text = card.get("score_text", "-:-")
+    actual_result = actual.get("result") or card.get("actual_result", "")
+    score_text = prediction.get("score_text") or card.get("score_text", "-:-")
 
-    h_rank = card.get("home_ranking")
-    a_rank = card.get("away_ranking")
+    h_rank = fixture.get("home_ranking", card.get("home_ranking"))
+    a_rank = fixture.get("away_ranking", card.get("away_ranking"))
     h_rank_html = f'<span class="rank-tag">#{h_rank}</span>' if h_rank else ""
     a_rank_html = f'<span class="rank-tag">#{a_rank}</span>' if a_rank else ""
 
     # Use Beijing time
-    date_str = card.get("beijing_date", "") or str(card.get("kickoff_at", ""))[:10]
-    time_str = card.get("beijing_time", "")
+    date_str = fixture.get("beijing_date") or card.get("beijing_date", "") or str(card.get("kickoff_at", ""))[:10]
+    time_str = fixture.get("beijing_time") or card.get("beijing_time", "")
 
-    match_id = card.get("match_id", "")
-    group = card.get("group", "")
-    phase = card.get("phase", "")
-    venue = card.get("venue", "")
+    match_id = fixture.get("match_id") or card.get("match_id", "")
+    group = fixture.get("group") or card.get("group", "")
+    phase = fixture.get("phase") or card.get("phase", "")
+    venue = fixture.get("venue") or card.get("venue", "")
 
-    xg = card.get("expected_goals_proxy")
+    xg = prediction.get("expected_goals_proxy", card.get("expected_goals_proxy"))
     xg_html = ""
-    if (not is_not_predicted) and xg and isinstance(xg, dict):
+    if has_prediction and xg and isinstance(xg, dict):
         h_xg = xg.get("home")
         a_xg = xg.get("away")
         if h_xg is not None and a_xg is not None:
@@ -1713,9 +1837,9 @@ def _render_match_card(card: dict) -> str:
                 f'</div>'
             )
 
-    cs = card.get("clean_sheet_probability")
+    cs = prediction.get("clean_sheet_probability", card.get("clean_sheet_probability"))
     cs_html = ""
-    if (not is_not_predicted) and cs and isinstance(cs, dict):
+    if has_prediction and cs and isinstance(cs, dict):
         h_cs = cs.get("home")
         a_cs = cs.get("away")
         if h_cs is not None and a_cs is not None:
@@ -1727,8 +1851,8 @@ def _render_match_card(card: dict) -> str:
             )
 
     dist_html = ""
-    score_dist = card.get("scoreline_distribution")
-    if (not is_not_predicted) and score_dist and isinstance(score_dist, list):
+    score_dist = prediction.get("scoreline_distribution", card.get("scoreline_distribution"))
+    if has_prediction and score_dist and isinstance(score_dist, list):
         sorted_dist = sorted(score_dist, key=lambda x: x.get("probability", 0.0), reverse=True)
         top_3 = sorted_dist[:3]
         if top_3:
@@ -1755,7 +1879,7 @@ def _render_match_card(card: dict) -> str:
 
     div_overlay = card.get("divination_overlay")
     div_html = ""
-    if (not is_not_predicted) and div_overlay and isinstance(div_overlay, dict):
+    if has_prediction and div_overlay and isinstance(div_overlay, dict):
         # Get hexagram name from overlay (preferred) or top-level field
         hex_label = (
             div_overlay.get("hexagram_name")
@@ -1811,9 +1935,9 @@ def _render_match_card(card: dict) -> str:
                     f'</div>'
                 )
 
-    watch_points = card.get("watch_points") or []
+    watch_points = prediction.get("watch_points") or card.get("watch_points") or []
     watch_html = ""
-    if (not is_not_predicted) and watch_points:
+    if has_prediction and watch_points:
         items = "".join(f"<li>{_safe(wp)}</li>" for wp in watch_points[:3])
         watch_html = (
             '<div class="watchpoints">'
@@ -1830,36 +1954,13 @@ def _render_match_card(card: dict) -> str:
     elif hit_class == "miss":
         eval_badge = '<span class="eval-badge eval-miss">偏差</span>'
 
-    # Predicted vs actual score comparison for completed matches
+    # Keep the original card layout: upcoming predicted matches use the large score slot,
+    # completed predicted matches use the two-row comparison block.
     compare_html = ""
-    if card.get("is_completed") and is_not_predicted:
-        ah = card.get("actual_score_home", "?")
-        aa = card.get("actual_score_away", "?")
-        compare_html = (
-            f'<div class="score-compare">'
-            f'<div class="compare-row">'
-            f'<span class="compare-label">状态</span>'
-            f'<span class="compare-score">未预测</span>'
-            f'</div>'
-            f'<div class="compare-row">'
-            f'<span class="compare-label">实际</span>'
-            f'<span class="compare-score compare-actual">{_safe(f"{ah}-{aa}")}</span>'
-            f'<span class="compare-icon compare-result">事实</span>'
-            f'</div>'
-            f'</div>'
-        )
-    elif card.get("is_completed"):
-        ah = card.get("actual_score_home", "?")
-        aa = card.get("actual_score_away", "?")
+    if has_actual and has_prediction:
+        ah = actual.get("score", {}).get("home", card.get("actual_score_home", "?"))
+        aa = actual.get("score", {}).get("away", card.get("actual_score_away", "?"))
         actual_text = f"{ah}-{aa}"
-        r_hit = card.get("result_hit")
-        s_hit = card.get("score_hit")
-        if s_hit is True:
-            compare_icon = '<span class="compare-icon compare-perfect">双中</span>'
-        elif r_hit is True:
-            compare_icon = '<span class="compare-icon compare-result">中赛果</span>'
-        else:
-            compare_icon = '<span class="compare-icon compare-miss">偏差</span>'
         compare_html = (
             f'<div class="score-compare">'
             f'<div class="compare-row">'
@@ -1869,13 +1970,21 @@ def _render_match_card(card: dict) -> str:
             f'<div class="compare-row">'
             f'<span class="compare-label">实际</span>'
             f'<span class="compare-score compare-actual">{_safe(actual_text)}</span>'
-            f'{compare_icon}'
             f'</div>'
             f'</div>'
         )
 
-    score_display = "未预测" if is_not_predicted else score_text
+    if display_state in {"fixture", "actual_only", "placeholder"}:
+        score_display = "待预测"
+    else:
+        score_display = score_text
     score_display_html = compare_html if compare_html else f'<div class="mc-score">{_safe(score_display)}</div>'
+
+    result_html = ""
+    if has_prediction and has_actual:
+        result_text, result_cls = result_map.get(actual_result, ("", "outcome-none"))
+        if result_text:
+            result_html = f'<div class="mc-result"><span class="outcome-badge {_safe(result_cls)}">真实结果 { _safe(result_text) }</span></div>'
 
     # Data source badge (placeholder vs real)
     data_source = card.get("data_source", "official")
@@ -1891,7 +2000,7 @@ def _render_match_card(card: dict) -> str:
             source_badge = f'<span class="source-badge source-official" title="官方赛程">{_safe(phase_val)}</span>'
 
     return (
-        f'<article class="match-card{" match-card-placeholder" if data_source == "placeholder" else ""}" data-hit="{_safe(hit_class)}" '
+        f'<article class="match-card{" match-card-placeholder" if data_source == "placeholder" else ""}" data-hit="{_safe(hit_class)}" data-match-id="{_safe(match_id)}" '
         f'data-date="{_safe(date_str)}" data-phase="{_safe(phase)}" data-source="{_safe(data_source)}">'
         f'<div class="mc-top">'
         f'<span class="mc-id">{_safe(match_id)}</span>'
@@ -1907,7 +2016,7 @@ def _render_match_card(card: dict) -> str:
         f'<span class="team-name">{_safe(card.get("away_name"))}{a_rank_html}</span>'
         f'</div>'
         f'{score_display_html}'
-        f'<div class="mc-result"><span class="outcome-badge {_safe(result_cls)}">{_safe(result_text)}</span></div>'
+        f'{result_html}'
         f'</div>'
         f'<div class="mc-bottom">'
         f'<div class="conf-row"><span class="conf-label">置信度</span>'
@@ -1923,6 +2032,10 @@ def _render_match_card(card: dict) -> str:
         f'</div>'
         f'</article>'
     )
+
+
+def _render_match_card_from_state(card: dict) -> str:
+    return _render_match_card(card)
 
 
 def _render_match_schedule_row(m: dict, predictions: dict) -> str:
@@ -1948,33 +2061,25 @@ def _render_match_schedule_row(m: dict, predictions: dict) -> str:
     if played and m.get("score_home") is not None:
         actual_score = f'{m["score_home"]}-{m["score_away"]}'
 
-    # Evaluation hit data
+    # Evaluation data
     ev = m.get("evaluation") or {}
-    r_hit = ev.get("result_hit")
-    s_hit = ev.get("score_hit")
 
     # Prediction cell
     if pred_result:
-        pred_val_html = f'<span class="sch-tag sch-tag-pred">预测: {result_label} {score_label}</span>'
+        pred_val_html = f'<span class="sch-tag sch-tag-pred">预测: {score_label or "-:-"}</span>'
     else:
-        pred_val_html = '<span class="sch-tag sch-tag-none">预测: -</span>'
+        pred_val_html = '<span class="sch-tag sch-tag-none">待预测</span>'
 
-    # Actual cell with hit indicators
+    # Actual cell
     actual_val_html = ""
-    hit_badge = ""
-    if played and actual_score:
+    actual_result_html = ""
+    if played and actual_score and pred_result:
         actual_result = ev.get("actual_result", "")
         actual_label = result_map.get(actual_result, "")
-        actual_val_html = f'<span class="sch-tag sch-tag-actual">实际: {actual_label} {actual_score}</span>'
-        if s_hit is True:
-            hit_badge = '<span class="sch-tag sch-tag-perfect">双中</span>'
-        elif r_hit is True:
-            hit_badge = '<span class="sch-tag sch-tag-result">中赛果</span>'
-        elif r_hit is False:
-            hit_badge = '<span class="sch-tag sch-tag-miss">偏差</span>'
-    elif played:
-        actual_val_html = '<span class="sch-tag sch-tag-none">实际: -</span>'
-    else:
+        actual_val_html = f'<span class="sch-tag sch-tag-actual">实际: {actual_score}</span>'
+        if actual_label:
+            actual_result_html = f'<span class="sch-tag sch-tag-truth">真实结果: {actual_label}</span>'
+    elif pred_result:
         actual_val_html = '<span class="sch-tag sch-tag-pending">未开赛</span>'
 
     kickoff_short = m.get("beijing_time_short", "")
@@ -1992,7 +2097,7 @@ def _render_match_schedule_row(m: dict, predictions: dict) -> str:
         f'<div class="sch-row-bottom">'
         f'{pred_val_html}'
         f'{actual_val_html}'
-        f'{hit_badge}'
+        f'{actual_result_html}'
         f'</div>'
         f'</div>'
     )
@@ -2011,6 +2116,9 @@ def _render_tournament_schedule(schedule_data: dict, predictions: dict) -> str:
 
     group_data = schedule_data.get("group", {})
 
+    # Load group standings if available
+    standings_by_group = schedule_data.get("standings", {})
+
     # 1. Group Stage HTML
     group_parts = ['<div class="schedule-grid">']
     for g_letter, matches in sorted(group_data.items()):
@@ -2024,13 +2132,28 @@ def _render_tournament_schedule(schedule_data: dict, predictions: dict) -> str:
         for m in matches:
             pred_rows += _render_match_schedule_row(m, predictions)
 
+        # Render teams with status badges
+        teams_html = ""
+        group_standings = standings_by_group.get(g_letter, [])
+        standings_map = {s["team"]: s for s in group_standings}
+
+        for team in teams_set[:4]:
+            team_info = standings_map.get(team, {})
+            status = team_info.get("status", "pending")
+            badge = ""
+            if status == "qualified":
+                badge = '<span class="team-status qualified">✅</span>'
+            elif status == "eliminated":
+                badge = '<span class="team-status eliminated">❌</span>'
+            teams_html += f'<span class="team-item">{_safe(team)}{badge}</span>'
+
         group_parts.append(
             f'<div class="group-block">'
             f'<div class="gb-header">'
             f'<span class="gb-letter">{_safe(g_letter)}</span>'
             f'<span class="gb-phase">小组赛</span>'
             f'</div>'
-            f'<div class="gb-teams">{_safe(", ".join(teams_set[:4]))}</div>'
+            f'<div class="gb-teams">{teams_html}</div>'
             f'<div class="gb-matches">{pred_rows}</div>'
             f'</div>'
         )
@@ -2047,9 +2170,9 @@ def _render_tournament_schedule(schedule_data: dict, predictions: dict) -> str:
     return (
         '<div class="schedule-subtabs">'
         '  <button class="subtab active" data-subtab="group">小组赛</button>'
-        '  <button class="subtab" data-subtab="r32">32寮鸿禌</button>'
-        '  <button class="subtab" data-subtab="r16">16寮鸿禌</button>'
-        '  <button class="subtab" data-subtab="qf">1/4 鍐宠禌</button>'
+        '  <button class="subtab" data-subtab="r32">32强淘汰赛</button>'
+        '  <button class="subtab" data-subtab="r16">16强淘汰赛</button>'
+        '  <button class="subtab" data-subtab="qf">1/4 决赛</button>'
         '  <button class="subtab" data-subtab="sf">半决赛</button>'
         '  <button class="subtab" data-subtab="fn">决赛/三四名</button>'
         '</div>'
@@ -2135,7 +2258,21 @@ def _card_chrono_key(card: dict) -> tuple[str, str, str, str]:
 def _default_matchday_date(payload: dict, dates: list[str]) -> str:
     if not dates:
         return "all"
+    cards = payload.get("cards", []) or []
+    completed_dates = sorted({
+        _card_display_date(card)
+        for card in cards
+        if card.get("data_source") != "placeholder"
+        and _card_display_date(card)
+        and (card.get("actual", {}) or {}).get("exists")
+    })
     generated_date = str(payload.get("generated_at", ""))[:10]
+    if generated_date and completed_dates:
+        past_completed = [date for date in completed_dates if date <= generated_date]
+        if past_completed:
+            return past_completed[-1]
+    if completed_dates:
+        return completed_dates[-1]
     if generated_date in dates:
         return generated_date
     if generated_date:
@@ -2145,56 +2282,59 @@ def _default_matchday_date(payload: dict, dates: list[str]) -> str:
     return dates[0]
 
 
+def _default_visible_dates(payload: dict, dates: list[str]) -> list[str]:
+    if not dates:
+        return []
+    active_date = _default_matchday_date(payload, dates)
+    if active_date == "all":
+        return ["all"]
+    if active_date in dates:
+        return [active_date]
+    return [dates[0]]
+
+
 def _date_filter_button(date: str, active_date: str) -> str:
     active_attr = ' class="active"' if date == active_date else ""
     return f'<button{active_attr} data-filter-date="{_safe(date)}">{_safe(date)}</button>'
 
 
-def render_html(payload: dict, *, root: Path, html_path: Path) -> str:
-    summary = payload["summary"]
-    generated = _safe(payload.get("generated_at", ""))
+def _decorate_dashboard_payload_for_frontend(payload: dict) -> dict:
+    summary = payload.get("summary", {}) or {}
 
-    # Build prediction index for schedule overlay
     pred_index: dict[str, dict] = {}
     for c in payload.get("cards", []):
         mid = c.get("match_id", "")
         if mid:
+            score_text = c.get("score_text", "") or ""
+            parts = score_text.split("-")
             pred_index[mid] = {
                 "predicted_result": c.get("predicted_result", ""),
                 "score": {
-                    "home": c.get("score_text", "").split("-")[0] if c.get("score_text") else None,
-                    "away": c.get("score_text", "").split("-")[-1] if c.get("score_text") else None,
+                    "home": parts[0] if len(parts) > 1 else None,
+                    "away": parts[-1] if len(parts) > 1 else None,
                 },
             }
 
-    # Tournament schedule data
     schedule_data = payload.get("schedule_data", {})
     schedule_html = _render_tournament_schedule(schedule_data, pred_index)
 
-    # Prediction cards sorted by display date/time ascending.
     sorted_cards = sorted(payload.get("cards", []), key=_card_chrono_key)
-    cards_html = "".join(
-        _render_match_card(c) for c in sorted_cards
-    ) or '<p class="empty-state">暂无预测数据报告。</p>'
+    cards_html = "".join(_render_match_card(c) for c in sorted_cards) or '<p class="empty-state">暂无预测数据报告。</p>'
 
-    # Date filter buttons sorted chronologically; only REAL (non-placeholder) matches get date buttons.
-    _all_cards = payload.get("cards", [])
-    _real_cards = [c for c in _all_cards if c.get("data_source") != "placeholder"]
-    dates = sorted(set(_card_display_date(c) for c in _real_cards if _card_display_date(c)))
+    all_cards = payload.get("cards", [])
+    real_cards = [c for c in all_cards if c.get("data_source") != "placeholder"]
+    dates = sorted(set(_card_display_date(c) for c in real_cards if _card_display_date(c)))
     default_date = _default_matchday_date(payload, dates)
+    default_visible_dates = _default_visible_dates(payload, dates)
     date_btns = '<button{} data-filter-date="all">全部</button>'.format(' class="active"' if default_date == "all" else "")
     date_btns += "".join(_date_filter_button(d, default_date) for d in dates)
 
-    # Summary metrics - only count REAL (non-placeholder) predictions
     evaluated = int(summary.get("evaluated_matches", 0))
-    result_hits = int(summary.get("result_hits", 0))
     brier = summary.get("avg_brier_score", 0.0)
     brier_text = f"{brier:.4f}" if brier > 0 else "N/A"
     predictions_count = summary.get("predictions", 0)
     placeholder_count = summary.get("placeholder_count", 0)
-    total_cards = summary.get("total_cards", predictions_count)
 
-    # Build metrics with clarity on real vs placeholder data
     metrics_html = (
         _render_metric("真实预测", str(predictions_count), "场")
         + _render_metric("完成复盘", str(evaluated), "场")
@@ -2202,17 +2342,15 @@ def render_html(payload: dict, *, root: Path, html_path: Path) -> str:
         + _render_metric("比分命中", _pct(float(summary.get("score_hit_rate", 0))), "精确比分")
         + _render_metric("Brier", brier_text, "校准度")
     )
-    # Add placeholder warning if exists
     if placeholder_count > 0:
         metrics_html += (
-            f'<div class="metric metric-placeholder">'
-            f'<span class="metric-label">淘汰赛占位</span>'
+            '<div class="metric metric-placeholder">'
+            '<span class="metric-label">淘汰赛占位</span>'
             f'<span class="metric-value" style="color:var(--amber)">{placeholder_count}</span>'
-            f'<span class="metric-detail">待确认队伍</span>'
-            f'</div>'
+            '<span class="metric-detail">待确认队伍</span>'
+            '</div>'
         )
 
-    # Comparison stats bar (predicted vs actual for completed matches)
     cmp = payload.get("comparison_stats", {})
     cmp_total = cmp.get("total_completed", 0)
     comparison_bar_html = ""
@@ -2241,26 +2379,416 @@ def render_html(payload: dict, *, root: Path, html_path: Path) -> str:
             '</div>'
         )
 
-    actions_html = "".join(
-        _render_action_item(a) for a in payload.get("corrective_actions", [])
-    ) or '<p class="empty-state">暂无待处理的模型治理行动项。</p>'
+    actions_html = "".join(_render_action_item(a) for a in payload.get("corrective_actions", [])) or '<p class="empty-state">暂无待处理的模型治理行动项。</p>'
+    issues_html = "".join(_render_issue_tag(t) for t in payload.get("model_issue_tags", [])) or '<p class="empty-state">暂无活跃的模型异常反馈。</p>'
+    stats_html = "".join(_render_daily_stat(s) for s in payload.get("daily_stats", [])) or '<p class="empty-state">暂无每日统计。</p>'
 
-    issues_html = "".join(
-        _render_issue_tag(t) for t in payload.get("model_issue_tags", [])
-    ) or '<p class="empty-state">暂无活跃的模型异常反馈。</p>'
+    payload["ui_defaults"] = {
+        "active_date": default_date,
+        "visible_dates": default_visible_dates,
+    }
+    payload["rendered"] = {
+        "metrics_html": metrics_html,
+        "comparison_bar_html": comparison_bar_html,
+        "cards_html": cards_html,
+        "schedule_html": schedule_html,
+        "actions_html": actions_html,
+        "issues_html": issues_html,
+        "stats_html": stats_html,
+        "date_buttons_html": date_btns,
+    }
+    return payload
 
-    stats_html = "".join(
-        _render_daily_stat(s) for s in payload.get("daily_stats", [])
-    ) or '<p class="empty-state">暂无每日统计。</p>'
 
-    payload_json = json.dumps(payload, ensure_ascii=False)
+_OVERVIEW_CARD_FIELDS = {
+    "match_id",
+    "prediction_origin",
+    "prediction_source",
+    "prediction_status",
+    "data_origin",
+    "date",
+    "kickoff_at",
+    "local_kickoff_at",
+    "calculation_timezone",
+    "venue",
+    "group",
+    "phase",
+    "home_name",
+    "away_name",
+    "home_name_zh",
+    "away_name_zh",
+    "predicted_result",
+    "predicted_result_label",
+    "score_text",
+    "total_goals",
+    "confidence",
+    "confidence_label",
+    "expected_goals_proxy",
+    "clean_sheet_probability",
+    "scoreline_distribution",
+    "result_confidence",
+    "score_confidence",
+    "total_goals_confidence",
+    "confidence_note",
+    "divination_overlay",
+    "divination_hexagram",
+    "evaluation_status",
+    "evaluation_label",
+    "hit_class",
+    "result_hit",
+    "score_hit",
+    "home_colors",
+    "away_colors",
+    "home_ranking",
+    "away_ranking",
+    "play_title",
+    "risk_flags",
+    "watch_points",
+    "primary_error",
+    "actual_score_home",
+    "actual_score_away",
+    "is_completed",
+    "beijing_date",
+    "beijing_time",
+    "data_source",
+    "data_source_label",
+    "display_state",
+    "predicted_result",
+    "actual_result",
+    "fixture",
+    "prediction",
+    "actual",
+    "evaluation",
+}
+
+
+def _card_overview(card: dict) -> dict:
+    return {key: card.get(key) for key in _OVERVIEW_CARD_FIELDS if key in card}
+
+
+def _dashboard_overview_payload(payload: dict) -> dict:
+    payload = _refresh_dashboard_summary(payload)
+    overview = {
+        key: payload.get(key)
+        for key in (
+            "version",
+            "edition",
+            "generated_at",
+            "mode",
+            "status",
+            "summary",
+            "corrective_actions",
+            "model_issue_tags",
+            "daily_stats",
+            "comparison_stats",
+            "schedule_data",
+            "observation",
+            "disclaimer",
+            "safety_invariants",
+            "hyperparameters",
+            "data_path",
+            "html_path",
+            "static_data_path",
+        )
+        if key in payload
+    }
+    overview["cards"] = [_card_overview(card) for card in payload.get("cards", [])]
+    overview["ui_defaults"] = payload.get("ui_defaults", {})
+    overview["api_capabilities"] = {
+        "overview": True,
+        "match_detail": True,
+    }
+    return _decorate_dashboard_payload_for_frontend(overview)
+
+
+def _find_dashboard_card(payload: dict, match_id: str) -> dict | None:
+    for card in payload.get("cards", []):
+        if str(card.get("match_id", "")) == str(match_id):
+            return card
+    return None
+
+
+def _parse_score_text(score_text: str | None) -> dict[str, int | None]:
+    text = str(score_text or "").strip()
+    if "-" not in text:
+        return {"home": None, "away": None}
+    home_text, away_text = text.split("-", 1)
+    home_val = int(home_text) if home_text.strip().isdigit() else None
+    away_val = int(away_text) if away_text.strip().isdigit() else None
+    return {"home": home_val, "away": away_val}
+
+
+def _score_text_from_pair(home_score, away_score, *, missing: str = "-:-") -> str:
+    if home_score is None or away_score is None:
+        return missing
+    return f"{home_score}-{away_score}"
+
+
+def _clean_legacy_prediction_text(value):
+    if isinstance(value, str):
+        if "Recovered from prior remaining-predictions artifact" in value:
+            return "从历史锁定预测恢复，保留赛前预测记录。"
+        if value.strip(" ?？!！.。:：;；,，") == "" and "?" in value:
+            return "历史预测文案缺失，保留比分和方向。"
+        if "???" in value:
+            return "历史预测文案缺失，保留比分和方向。"
+        return value
+    if isinstance(value, list):
+        cleaned = [_clean_legacy_prediction_text(item) for item in value]
+        return [item for item in cleaned if item not in ("", None)]
+    if isinstance(value, dict):
+        return {
+            key: cleaned
+            for key, item in value.items()
+            if (cleaned := _clean_legacy_prediction_text(item)) not in ("", None, [])
+        }
+    return value
+
+
+def _prediction_exists(card: dict) -> bool:
+    if card.get("prediction_status") == "not_predicted":
+        return False
+    if card.get("predicted_result"):
+        return True
+    score = _parse_score_text(card.get("score_text"))
+    return score["home"] is not None and score["away"] is not None
+
+
+def _actual_exists(card: dict) -> bool:
+    return card.get("actual_score_home") is not None and card.get("actual_score_away") is not None
+
+
+def _card_display_state(card: dict) -> str:
+    if card.get("data_source") == "placeholder":
+        return "placeholder"
+    has_prediction = _prediction_exists(card)
+    has_actual = _actual_exists(card)
+    if has_prediction and has_actual:
+        return "evaluated"
+    if has_prediction:
+        return "predicted"
+    if has_actual:
+        return "actual_only"
+    return "fixture"
+
+
+def _normalize_card_state(card: dict) -> dict:
+    for text_key in ("play_title", "confidence_note"):
+        card[text_key] = _clean_legacy_prediction_text(card.get(text_key, ""))
+    for list_key in ("risk_flags", "watch_points"):
+        card[list_key] = _clean_legacy_prediction_text(card.get(list_key, []) or [])
+    card["play_card"] = _clean_legacy_prediction_text(card.get("play_card", {}) or {})
+
+    pred_score = _parse_score_text(card.get("score_text"))
+    actual_home = card.get("actual_score_home")
+    actual_away = card.get("actual_score_away")
+    has_prediction = _prediction_exists(card)
+    has_actual = _actual_exists(card)
+
+    predicted_result = str(card.get("predicted_result") or "")
+    if not predicted_result and pred_score["home"] is not None and pred_score["away"] is not None:
+        predicted_result = _actual_result_from_score(pred_score["home"], pred_score["away"])
+
+    actual_result = _actual_result_from_score(actual_home, actual_away) if has_actual else str(card.get("actual_result") or "")
+    if actual_result:
+        card["actual_result"] = actual_result
+
+    result_hit = None if has_prediction and has_actual else card.get("result_hit")
+    score_hit = None if has_prediction and has_actual else card.get("score_hit")
+    if has_prediction and has_actual:
+        result_hit = predicted_result == actual_result if predicted_result and actual_result else None
+        card["result_hit"] = result_hit
+        score_hit = (
+            pred_score["home"] == actual_home
+            and pred_score["away"] == actual_away
+            and pred_score["home"] is not None
+            and pred_score["away"] is not None
+        )
+        card["score_hit"] = score_hit
+
+    display_state = _card_display_state(card)
+    evaluation_exists = has_prediction and has_actual
+
+    if display_state == "evaluated":
+        if score_hit is True:
+            hit_class = "double-hit"
+            evaluation_label = "完美双中"
+        elif result_hit is True:
+            hit_class = "result-hit"
+            evaluation_label = "仅中赛果"
+        else:
+            hit_class = "miss"
+            evaluation_label = "预测偏差"
+        evaluation_status = "evaluated"
+    elif display_state == "predicted":
+        hit_class = "pending"
+        evaluation_label = "待赛果"
+        evaluation_status = "predicted_only"
+    elif display_state == "actual_only":
+        hit_class = "not-predicted"
+        evaluation_label = "未预测"
+        evaluation_status = "actual_only"
+    elif display_state == "placeholder":
+        hit_class = "placeholder"
+        evaluation_label = "占位"
+        evaluation_status = "placeholder"
+    else:
+        hit_class = "fixture"
+        evaluation_label = "待预测"
+        evaluation_status = "fixture_only"
+
+    if not card.get("prediction_status"):
+        card["prediction_status"] = "locked_pre_match_prediction" if has_prediction else "not_predicted"
+    card["predicted_result"] = predicted_result
+    card["predicted_result_label"] = OUTCOME_LABELS.get(predicted_result, predicted_result or "未预测")
+    card["score_text"] = _score_text_from_pair(pred_score["home"], pred_score["away"])
+    card["is_completed"] = has_actual
+    card["hit_class"] = hit_class
+    card["evaluation_label"] = evaluation_label
+    card["evaluation_status"] = evaluation_status
+    card["display_state"] = display_state
+
+    fixture = {
+        "exists": True,
+        "status": "placeholder" if display_state == "placeholder" else "scheduled",
+        "match_id": card.get("match_id", ""),
+        "phase": card.get("phase", ""),
+        "group": card.get("group", ""),
+        "venue": card.get("venue", ""),
+        "kickoff_at": card.get("kickoff_at", ""),
+        "local_kickoff_at": card.get("local_kickoff_at") or card.get("kickoff_at", ""),
+        "beijing_date": card.get("beijing_date") or card.get("date", ""),
+        "beijing_time": card.get("beijing_time", ""),
+        "home_name": card.get("home_name", ""),
+        "away_name": card.get("away_name", ""),
+        "home_ranking": card.get("home_ranking"),
+        "away_ranking": card.get("away_ranking"),
+        "data_source": card.get("data_source", "official"),
+    }
+    prediction = {
+        "exists": has_prediction,
+        "status": card.get("prediction_status") or ("locked_pre_match_prediction" if has_prediction else "not_predicted"),
+        "origin": card.get("prediction_origin", "none"),
+        "source": card.get("prediction_source", "none"),
+        "source_path": card.get("prediction_source_path", ""),
+        "result": predicted_result,
+        "result_label": OUTCOME_LABELS.get(predicted_result, predicted_result or "未预测"),
+        "score": pred_score,
+        "score_text": _score_text_from_pair(pred_score["home"], pred_score["away"]),
+        "confidence": card.get("confidence", "none"),
+        "confidence_label": card.get("confidence_label", "NONE"),
+        "expected_goals_proxy": card.get("expected_goals_proxy"),
+        "clean_sheet_probability": card.get("clean_sheet_probability"),
+        "scoreline_distribution": card.get("scoreline_distribution"),
+        "watch_points": card.get("watch_points", []) or [],
+        "risk_flags": card.get("risk_flags", []) or [],
+        "play_title": card.get("play_title", ""),
+        "confidence_note": card.get("confidence_note", ""),
+    }
+    actual = {
+        "exists": has_actual,
+        "status": "final" if has_actual else "pending",
+        "score": {"home": actual_home, "away": actual_away},
+        "score_text": _score_text_from_pair(actual_home, actual_away),
+        "result": actual_result,
+        "result_label": OUTCOME_LABELS.get(actual_result, actual_result or ""),
+    }
+    evaluation = {
+        "exists": evaluation_exists,
+        "status": evaluation_status,
+        "result_hit": result_hit,
+        "score_hit": score_hit,
+        "hit_class": hit_class,
+        "label": evaluation_label,
+        "primary_error": card.get("primary_error", ""),
+    }
+
+    card["fixture"] = fixture
+    card["prediction"] = prediction
+    card["actual"] = actual
+    card["evaluation"] = evaluation
+    return card
+
+
+def _refresh_dashboard_summary(payload: dict) -> dict:
+    cards = payload.get("cards", []) or []
+    for idx, card in enumerate(cards):
+        cards[idx] = _normalize_card_state(card)
+
+    real_cards = [c for c in cards if c.get("data_source") != "placeholder"]
+    predicted_cards = [c for c in real_cards if c.get("prediction", {}).get("exists")]
+    actual_cards = [c for c in real_cards if c.get("actual", {}).get("exists")]
+    evaluated_cards = [c for c in real_cards if c.get("evaluation", {}).get("exists")]
+    actual_only_cards = [c for c in real_cards if c.get("display_state") == "actual_only"]
+    prediction_only_cards = [c for c in real_cards if c.get("display_state") == "predicted"]
+    fixture_only_cards = [c for c in real_cards if c.get("display_state") == "fixture"]
+
+    result_correct = sum(1 for c in evaluated_cards if c.get("evaluation", {}).get("result_hit") is True)
+    score_correct = sum(1 for c in evaluated_cards if c.get("evaluation", {}).get("score_hit") is True)
+    total_goals_correct = 0
+    for card in evaluated_cards:
+        pred_score = card.get("prediction", {}).get("score", {}) or {}
+        actual_score = card.get("actual", {}).get("score", {}) or {}
+        if pred_score.get("home") is None or pred_score.get("away") is None:
+            continue
+        if actual_score.get("home") is None or actual_score.get("away") is None:
+            continue
+        if (pred_score["home"] + pred_score["away"]) == (actual_score["home"] + actual_score["away"]):
+            total_goals_correct += 1
+
+    dates = sorted(
+        set(_card_display_date(c) for c in real_cards if _card_display_date(c))
+    )
+
+    summary = payload.setdefault("summary", {})
+    summary["predictions"] = len(predicted_cards)
+    summary["predicted_matches"] = len(predicted_cards)
+    summary["actual_matches"] = len(actual_cards)
+    summary["evaluated_matches"] = len(evaluated_cards)
+    summary["comparable_matches"] = len(evaluated_cards)
+    summary["actual_only_matches"] = len(actual_only_cards)
+    summary["prediction_only_matches"] = len(prediction_only_cards)
+    summary["fixture_only_matches"] = len(fixture_only_cards)
+    summary["fact_cards"] = sum(1 for c in real_cards if not c.get("prediction", {}).get("exists"))
+    summary["placeholder_count"] = len(cards) - len(real_cards)
+    summary["total_cards"] = len(cards)
+    summary["dates"] = dates
+    summary["result_hits"] = result_correct
+    summary["score_hits"] = score_correct
+    summary["result_hit_rate"] = _rate(result_correct, len(evaluated_cards))
+    summary["score_hit_rate"] = _rate(score_correct, len(evaluated_cards))
+    summary["total_goals_hit_rate"] = _rate(total_goals_correct, len(evaluated_cards))
+
+    payload["comparison_stats"] = {
+        "total_completed": len(evaluated_cards),
+        "result_correct": result_correct,
+        "score_correct": score_correct,
+        "result_rate": _rate(result_correct, len(evaluated_cards)),
+        "score_rate": _rate(score_correct, len(evaluated_cards)),
+    }
+    return payload
+
+
+def render_html(payload: dict, *, root: Path, html_path: Path) -> str:
+    _decorate_dashboard_payload_for_frontend(payload)
+    generated = _safe(payload.get("generated_at", ""))
+    edition = _safe(payload.get("edition", "2026"))
+    bootstrap = {
+        "edition": payload.get("edition", "2026"),
+        "api_url": f"/api/dashboard/overview?edition={payload.get('edition', '2026')}",
+        "legacy_api_url": f"/api/dashboard?edition={payload.get('edition', '2026')}",
+        "match_detail_url": f"/api/dashboard/match?edition={payload.get('edition', '2026')}&match_id=",
+        "static_data_url": "./prediction-dashboard.json",
+        "poll_interval_ms": 60000,
+    }
+    bootstrap_json = json.dumps(bootstrap, ensure_ascii=False)
 
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{_safe(payload.get("edition", "2026"))} 世界杯 AI 章鱼哥预测看板</title>
+<title>{edition} 世界杯 AI 章鱼哥预测看板</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet">
@@ -2345,6 +2873,14 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
   font-size:11px;font-weight:600;color:var(--muted);padding:5px 14px;border-radius:99px;cursor:pointer;transition:all .2s}}
 .toolbar button:hover,.filter-btn:hover{{border-color:var(--cyan);color:var(--cyan)}}
 .toolbar button.active,.filter-btn.active{{background:var(--cyan-dim);color:var(--cyan);border-color:rgba(34,211,238,0.3)}}
+.toolbar-status{{margin-left:auto;font-size:11px;color:var(--muted)}}
+.toolbar-actions{{display:flex;gap:8px;align-items:center;margin-bottom:18px;justify-content:space-between;flex-wrap:wrap}}
+.status-pill{{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;border:1px solid var(--border);font-size:11px;background:rgba(255,255,255,0.03);color:var(--muted)}}
+.status-pill.is-loading{{color:var(--cyan);border-color:rgba(34,211,238,0.25);background:rgba(34,211,238,0.08)}}
+.status-pill.is-live{{color:var(--green);border-color:rgba(52,211,153,0.25);background:rgba(52,211,153,0.08)}}
+.status-pill.is-fallback{{color:var(--amber);border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.08)}}
+.status-pill.is-error{{color:var(--red);border-color:rgba(248,113,113,0.25);background:rgba(248,113,113,0.08)}}
+.panel-placeholder{{background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius);padding:24px;color:var(--muted);text-align:center;box-shadow:var(--shadow);backdrop-filter:blur(12px)}}
 
 /* 鈹€鈹€ Match Cards Grid 鈹€鈹€ */
 .cards-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}}
@@ -2503,6 +3039,7 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
 .sch-tag{{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;white-space:nowrap}}
 .sch-tag-pred{{color:#c084fc;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2)}}
 .sch-tag-actual{{color:#38bdf8;background:rgba(34, 211, 238, 0.08);border:1px solid rgba(34, 211, 238, 0.2)}}
+.sch-tag-truth{{color:#e2e8f0;background:rgba(148,163,184,0.08);border:1px solid rgba(148,163,184,0.18)}}
 .sch-tag-none{{color:var(--muted);background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)}}
 .sch-tag-pending{{color:var(--muted);background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);font-style:italic}}
 .sch-tag-perfect{{color:#4ade80;background:rgba(74, 222, 128, 0.08);border:1px solid rgba(74, 222, 128, 0.2)}}
@@ -2755,18 +3292,25 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
 </style>
 </head>
 <body>
-<script type="application/json" id="dashData">{payload_json}</script>
+<script type="application/json" id="dashBootstrap">{bootstrap_json}</script>
 
 <div class="shell">
   <div class="hero">
     <span class="hero-eyebrow">2026 FIFA 世界杯</span>
     <h1>AI 章鱼哥预测看板</h1>
-    <p class="hero-sub">数据模型 + 天纪气运修正 | 生成于 {_safe(generated)}</p>
+    <p class="hero-sub">数据模型 + 天纪气运修正 | 生成于 <span id="generatedAt">{generated or '--'}</span></p>
   </div>
 
-  <div class="metrics">{metrics_html}</div>
+  <div class="toolbar-actions">
+    <div id="loadStatus" class="status-pill is-loading">正在加载数据...</div>
+    <button class="filter-btn" id="btn-refresh-data">刷新数据</button>
+  </div>
 
-  {comparison_bar_html}
+  <div class="metrics" id="metricsRoot">
+    <div class="panel-placeholder">正在加载指标数据...</div>
+  </div>
+
+  <div id="comparisonRoot"></div>
 
   <div class="tabs">
     <button class="tab active" data-tab="predictions">对局预测</button>
@@ -2778,15 +3322,17 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
   </div>
 
   <div id="p-predictions" class="tab-panel active">
-    <div class="toolbar date-toolbar">
+    <div class="toolbar date-toolbar" id="dateToolbar">
       <span class="toolbar-label">日期</span>
-      {date_btns}
+      <span class="toolbar-status" id="dateToolbarStatus">等待数据</span>
     </div>
-    <div class="cards-grid">{cards_html}</div>
+    <div class="cards-grid" id="cardsRoot">
+      <div class="panel-placeholder">正在加载预测卡片...</div>
+    </div>
   </div>
 
   <div id="p-schedule" class="tab-panel">
-    {schedule_html}
+    <div id="scheduleRoot" class="panel-placeholder">正在加载赛程...</div>
   </div>
 
   <div id="p-stats" class="tab-panel">
@@ -2810,16 +3356,22 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
     <div class="gov-layout">
       <div class="gov-col issues-col">
         <h2>模型诊断与感知</h2>
-        <div class="issue-list">{issues_html}</div>
+        <div class="issue-list" id="issuesRoot">
+          <p class="empty-state">正在加载治理反馈...</p>
+        </div>
       </div>
       <div class="gov-col actions-col">
         <h2>治理行动与优化计划</h2>
-        <div class="action-list">{actions_html}</div>
+        <div class="action-list" id="actionsRoot">
+          <p class="empty-state">正在加载行动项...</p>
+        </div>
       </div>
     </div>
     <div class="panel" style="margin-top:16px">
       <h2>每日统计日志</h2>
-      <div class="stats-grid">{stats_html}</div>
+      <div class="stats-grid" id="statsRoot">
+        <p class="empty-state">正在加载每日统计...</p>
+      </div>
     </div>
   </div>
 
@@ -2992,7 +3544,7 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
     </div>
   </div>
 
-  <p class="footer">仅供娱乐参考，不构成任何投注建议。<br>{_safe(payload.get("disclaimer", ""))}</p>
+  <p class="footer">仅供娱乐参考，不构成任何投注建议。<br><span id="footerDisclaimer">数据加载中...</span></p>
 </div>
 
 <div class="overlay" id="overlay"></div>
@@ -3006,12 +3558,274 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
 </div>
 
 <script>
-var D=JSON.parse(document.getElementById('dashData').textContent);
-var activeDateBtn=document.querySelector('.toolbar button[data-filter-date].active');
-var curDate=activeDateBtn ? (activeDateBtn.getAttribute('data-filter-date')||'all') : 'all';
+var BOOTSTRAP=JSON.parse(document.getElementById('dashBootstrap').textContent);
+var D={{}};
+var uiDefaults={{}};
+var curDate='all';
+var curDateSet=['all'];
 var chartsOk=false;
+var obsChartsOk=false;
+var refreshTimer=null;
+var dashboardInitialized=false;
+var tuningInitialized=false;
+
+function escapeHtml(text){{
+  var s=String(text===undefined||text===null?'':text);
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}}
+
+function metricHtml(label,value,detail,extraCls){{
+  return '<div class="metric'+(extraCls?' '+extraCls:'')+'">'
+    +'<span class="metric-label">'+escapeHtml(label)+'</span>'
+    +'<span class="metric-value">'+escapeHtml(value)+'</span>'
+    +'<span class="metric-detail">'+escapeHtml(detail||'')+'</span>'
+    +'</div>';
+}}
+
+function buildDateButton(date,activeDate){{
+  return '<button'+(date===activeDate?' class="active"':'')+' data-filter-date="'+escapeHtml(date)+'">'+escapeHtml(date)+'</button>';
+}}
+
+function cardStateLabel(card){{
+  var st=card.display_state||'fixture';
+  if(st==='evaluated')return card.evaluation&&card.evaluation.label?card.evaluation.label:'已评估';
+  if(st==='predicted')return '已预测';
+  if(st==='actual_only')return '待预测';
+  if(st==='placeholder')return '占位';
+  return '待预测';
+}}
+
+function cardResultHtml(card){{
+  var act=(card.actual||{{}});
+  var st=card.display_state||'fixture';
+  if(st!=='evaluated')return '';
+  var resultLabel=act.result_label||'';
+  if(!resultLabel)return '';
+  var result=act.result||'';
+  var resultCls='outcome-none';
+  if(result==='home_win')resultCls='outcome-home';
+  else if(result==='away_win')resultCls='outcome-away';
+  else if(result==='draw')resultCls='outcome-draw';
+  return '<div class="mc-result"><span class="outcome-badge '+resultCls+'">真实结果 '+escapeHtml(resultLabel)+'</span></div>';
+}}
+
+function cardScoreDisplay(card){{
+  var pred=(card.prediction||{{}});
+  var act=(card.actual||{{}});
+  var st=card.display_state||'fixture';
+  if(st==='fixture'||st==='actual_only'||st==='placeholder')return '<div class="mc-score">待预测</div>';
+  if(st==='evaluated'){{
+    return '<div class="score-compare"><div class="compare-row"><span class="compare-label">预测</span><span class="compare-score">'+escapeHtml(pred.score_text||card.score_text||'-:-')+'</span></div><div class="compare-row"><span class="compare-label">实际</span><span class="compare-score compare-actual">'+escapeHtml(act.score_text||'-:-')+'</span></div></div>';
+  }}
+  return '<div class="mc-score">'+escapeHtml(pred.score_text||card.score_text||'-:-')+'</div>';
+}}
+
+function renderCard(card){{
+  var fixture=card.fixture||{{}};
+  var pred=card.prediction||{{}};
+  var evaln=card.evaluation||{{}};
+  var hitClass=evaln.hit_class||card.hit_class||'pending';
+  if(hitClass==='hit')hitClass='double-hit';
+  var dataSource=fixture.data_source||card.data_source||'official';
+  var phase=fixture.phase||card.phase||'';
+  var group=fixture.group||card.group||'';
+  var dateStr=fixture.beijing_date||card.beijing_date||card.date||'';
+  var timeStr=fixture.beijing_time||card.beijing_time||'';
+  var hRank=fixture.home_ranking||card.home_ranking;
+  var aRank=fixture.away_ranking||card.away_ranking;
+  var hRankHtml=hRank?'<span class="rank-tag">#'+escapeHtml(hRank)+'</span>':'';
+  var aRankHtml=aRank?'<span class="rank-tag">#'+escapeHtml(aRank)+'</span>':'';
+  var evalBadge='';
+  if(hitClass==='double-hit')evalBadge='<span class="eval-badge eval-double">双中</span>';
+  else if(hitClass==='result-hit')evalBadge='<span class="eval-badge eval-result">中赛果</span>';
+  else if(hitClass==='miss')evalBadge='<span class="eval-badge eval-miss">偏差</span>';
+  var sourceBadge='';
+  if(dataSource==='placeholder')sourceBadge='<span class="source-badge source-placeholder" title="淘汰赛队伍待确认，数据为占位">占位</span>';
+  else if(phase&&phase.indexOf('group')===0)sourceBadge='<span class="source-badge source-official" title="官方赛程">小组赛</span>';
+  else if(phase)sourceBadge='<span class="source-badge source-official" title="官方赛程">'+escapeHtml(phase)+'</span>';
+
+  var xgHtml='';
+  if(pred.exists && pred.expected_goals_proxy && pred.expected_goals_proxy.home!==undefined && pred.expected_goals_proxy.away!==undefined){{
+    xgHtml='<div class="inline-metric metric-xg"><span>xG</span><strong>'+escapeHtml(Number(pred.expected_goals_proxy.home).toFixed(1))+' vs '+escapeHtml(Number(pred.expected_goals_proxy.away).toFixed(1))+'</strong></div>';
+  }}
+  var csHtml='';
+  if(pred.exists && pred.clean_sheet_probability && pred.clean_sheet_probability.home!==undefined && pred.clean_sheet_probability.away!==undefined){{
+    csHtml='<div class="inline-metric metric-clean"><span>零封</span><strong>'+escapeHtml(Math.round((pred.clean_sheet_probability.home||0)*100))+'% / '+escapeHtml(Math.round((pred.clean_sheet_probability.away||0)*100))+'%</strong></div>';
+  }}
+  var watchHtml='';
+  if(pred.exists && pred.watch_points && pred.watch_points.length){{
+    var items='';
+    for(var i=0;i<Math.min(pred.watch_points.length,3);i++)items+='<li>'+escapeHtml(pred.watch_points[i])+'</li>';
+    watchHtml='<div class="watchpoints"><span class="section-label">本场看点</span><ul>'+items+'</ul></div>';
+  }}
+  return '<article class="match-card'+(dataSource==='placeholder'?' match-card-placeholder':'')+'" data-hit="'+escapeHtml(hitClass)+'" data-match-id="'+escapeHtml(card.match_id||fixture.match_id||'')+'" data-date="'+escapeHtml(dateStr)+'" data-phase="'+escapeHtml(phase)+'" data-source="'+escapeHtml(dataSource)+'">'
+    +'<div class="mc-top"><span class="mc-id">'+escapeHtml(card.match_id||fixture.match_id||'')+'</span><span class="mc-group">'+escapeHtml(group)+'组</span><span class="mc-time">'+escapeHtml(dateStr)+' '+escapeHtml(timeStr)+'</span>'+evalBadge+sourceBadge+'</div>'
+    +'<div class="mc-body"><div class="mc-team"><span class="team-name">'+escapeHtml(fixture.home_name||card.home_name||'')+hRankHtml+'</span><span class="mc-vs">vs</span><span class="team-name">'+escapeHtml(fixture.away_name||card.away_name||'')+aRankHtml+'</span></div>'
+    +cardScoreDisplay(card)
+    +cardResultHtml(card)+'</div>'
+    +'<div class="mc-bottom"><div class="conf-row"><span class="conf-label">状态</span><div class="conf-track"><div class="conf-fill conf-'+escapeHtml(pred.confidence||card.confidence||'none')+'"></div></div><span class="conf-val">'+escapeHtml(cardStateLabel(card))+'</span></div>'
+    +'<div class="meta-row">'+xgHtml+csHtml+'<div class="inline-metric metric-venue"><span>场馆</span><strong>'+escapeHtml(fixture.venue||card.venue||'')+'</strong></div></div>'
+    +watchHtml
+    +'</div></article>';
+}}
+
+function renderMetrics(){{
+  var root=document.getElementById('metricsRoot');
+  root.innerHTML=(D.rendered&&D.rendered.metrics_html)||'<div class="panel-placeholder">暂无指标数据。</div>';
+}}
+
+function renderComparisonBar(){{
+  var root=document.getElementById('comparisonRoot');
+  root.innerHTML=(D.rendered&&D.rendered.comparison_bar_html)||'';
+}}
+
+function renderDateToolbar(){{
+  var toolbar=document.getElementById('dateToolbar');
+  var rendered=(D.rendered&&D.rendered.date_buttons_html)||'';
+  var dates=((D.summary||{{}}).dates||[]).length;
+  toolbar.innerHTML='<span class="toolbar-label">日期</span>'+rendered+'<span class="toolbar-status" id="dateToolbarStatus">'+escapeHtml(dates?('已载入 '+dates+' 个比赛日'):'暂无比赛日')+'</span>';
+}}
+
+function renderCards(){{
+  var root=document.getElementById('cardsRoot');
+  var cards=D.cards||[];
+  if(!cards.length){{
+    root.innerHTML='<p class="empty-state">暂无预测数据报告。</p>';
+    return;
+  }}
+  var html='';
+  for(var i=0;i<cards.length;i++)html+=renderCard(cards[i]);
+  root.innerHTML=html;
+}}
+
+function renderSchedule(){{
+  var root=document.getElementById('scheduleRoot');
+  var rendered=(D.rendered&&D.rendered.schedule_html)||'';
+  root.className=rendered ? '' : 'panel-placeholder';
+  root.innerHTML=rendered || '暂无赛程数据。';
+}}
+
+function renderGovernance(){{
+  var issuesRoot=document.getElementById('issuesRoot');
+  var actionsRoot=document.getElementById('actionsRoot');
+  var statsRoot=document.getElementById('statsRoot');
+  issuesRoot.innerHTML=(D.rendered&&D.rendered.issues_html)||'<p class="empty-state">暂无活跃的模型异常反馈。</p>';
+  actionsRoot.innerHTML=(D.rendered&&D.rendered.actions_html)||'<p class="empty-state">暂无待处理的模型治理行动项。</p>';
+  statsRoot.innerHTML=(D.rendered&&D.rendered.stats_html)||'<p class="empty-state">暂无每日统计。</p>';
+}}
+
+function applyPayloadMeta(){{
+  document.getElementById('generatedAt').textContent=D.generated_at||'--';
+  document.getElementById('footerDisclaimer').textContent=D.disclaimer||'仅供娱乐参考，不构成任何投注建议。';
+}}
+
+function renderDashboard(){{
+  uiDefaults=D.ui_defaults||{{}};
+  curDate=uiDefaults.active_date||curDate||'all';
+  curDateSet=curDate&&curDate!=='all'?[curDate]:['all'];
+  renderMetrics();
+  renderComparisonBar();
+  renderDateToolbar();
+  renderCards();
+  renderSchedule();
+  renderGovernance();
+  applyPayloadMeta();
+  bindDynamicHandlers();
+  chartsOk=false;
+  obsChartsOk=false;
+  if(document.querySelector('.tab.active[data-tab="stats"]'))initCharts();
+  if(document.querySelector('.tab.active[data-tab="observation"]'))initObsCharts();
+  applyFilters();
+  initTuning();
+}}
+
+function updateLoadStatus(mode,message){{
+  var el=document.getElementById('loadStatus');
+  el.className='status-pill';
+  if(mode==='loading')el.classList.add('is-loading');
+  if(mode==='live')el.classList.add('is-live');
+  if(mode==='fallback')el.classList.add('is-fallback');
+  if(mode==='error')el.classList.add('is-error');
+  el.textContent=message;
+}}
+
+function fetchJson(url){{
+  return fetch(url, {{cache:'no-store'}}).then(function(res){{
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    return res.json();
+  }});
+}}
+
+function isLiveApiMode(){{
+  return !!(D.api_capabilities && D.api_capabilities.match_detail);
+}}
+
+function setDrawerLoading(matchId,titleText){{
+  document.getElementById('dId').textContent=matchId||'';
+  document.getElementById('dTitle').textContent=titleText||'正在加载...';
+  document.getElementById('dBody').innerHTML='<div class="d-section"><h3>详情加载中</h3><div style="font-size:12px;color:var(--muted)">正在读取最新比赛详情...</div></div>';
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+}}
+
+function setDrawerError(matchId,titleText,message){{
+  document.getElementById('dId').textContent=matchId||'';
+  document.getElementById('dTitle').textContent=titleText||'详情加载失败';
+  document.getElementById('dBody').innerHTML='<div class="d-section"><h3>详情加载失败</h3><div style="font-size:12px;color:var(--red)">'+escapeHtml(message||'无法读取比赛详情。')+'</div></div>';
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+}}
+
+function findCardByMatchId(matchId){{
+  for(var j=0;j<(D.cards||[]).length;j++){{
+    if(D.cards[j].match_id===matchId)return D.cards[j];
+  }}
+  return null;
+}}
+
+function fetchMatchDetail(matchId){{
+  if(!matchId) return Promise.reject(new Error('missing match_id'));
+  return fetchJson(BOOTSTRAP.match_detail_url+encodeURIComponent(matchId));
+}}
+
+function loadDashboardData(sourceHint){{
+  updateLoadStatus('loading', sourceHint==='manual' ? '正在刷新数据...' : '正在加载数据...');
+  return fetchJson(BOOTSTRAP.api_url).then(function(data){{
+    D=data||{{}};
+    renderDashboard();
+    updateLoadStatus('live','实时接口已连接');
+    return 'api';
+  }}).catch(function(){{
+    return fetchJson(BOOTSTRAP.legacy_api_url).then(function(data){{
+      D=data||{{}};
+      renderDashboard();
+      updateLoadStatus('live','实时接口已连接');
+      return 'api-legacy';
+    }});
+  }}).catch(function(){{
+    return fetchJson(BOOTSTRAP.static_data_url).then(function(data){{
+      D=data||{{}};
+      renderDashboard();
+      updateLoadStatus('fallback','静态只读模式');
+      return 'static';
+    }});
+  }}).catch(function(err){{
+    updateLoadStatus('error','数据加载失败: '+err.message);
+    throw err;
+  }});
+}}
+
+function scheduleRefresh(){{
+  if(refreshTimer)clearInterval(refreshTimer);
+  refreshTimer=setInterval(function(){{
+    if(document.hidden)return;
+    loadDashboardData('poll').catch(function(){{}});
+  }}, BOOTSTRAP.poll_interval_ms||60000);
+}}
 
 function init(){{
+  if(dashboardInitialized)return;
+  dashboardInitialized=true;
   var tabs=document.querySelectorAll('.tab');
   for(var i=0;i<tabs.length;i++){{
     tabs[i].addEventListener('click',function(e){{
@@ -3028,6 +3842,19 @@ function init(){{
     }});
   }}
 
+  document.getElementById('btn-refresh-data').addEventListener('click',function(){{
+    loadDashboardData('manual').catch(function(){{}});
+  }});
+
+  document.addEventListener('visibilitychange',function(){{
+    if(!document.hidden)loadDashboardData('visibility').catch(function(){{}});
+  }});
+
+  bindStaticHandlers();
+  loadDashboardData('initial').then(function(){{scheduleRefresh();}}).catch(function(){{scheduleRefresh();}});
+}}
+
+function bindStaticHandlers(){{
   var subtabs=document.querySelectorAll('.subtab');
   for(var i=0;i<subtabs.length;i++){{
     subtabs[i].addEventListener('click',function(e){{
@@ -3042,40 +3869,74 @@ function init(){{
     }});
   }}
 
+  var ov=document.getElementById('overlay');
+  ov.addEventListener('click',closeDr);
+  document.getElementById('drawerClose').addEventListener('click',closeDr);
+}}
+
+function bindDynamicHandlers(){{
+  var subtabs=document.querySelectorAll('.subtab');
+  for(var i=0;i<subtabs.length;i++){{
+    subtabs[i].onclick=function(e){{
+      var t=e.currentTarget;
+      var allSubtabs=document.querySelectorAll('.subtab');
+      for(var j=0;j<allSubtabs.length;j++)allSubtabs[j].classList.remove('active');
+      var allSubpanels=document.querySelectorAll('.schedule-subpanel');
+      for(var k=0;k<allSubpanels.length;k++)allSubpanels[k].classList.remove('active');
+      t.classList.add('active');
+      var p=document.getElementById('sch-'+t.getAttribute('data-subtab'));
+      if(p)p.classList.add('active');
+    }};
+  }}
+
   var dateBtns=document.querySelectorAll('.toolbar button[data-filter-date]');
-  for(var i=0;i<dateBtns.length;i++){{
-    dateBtns[i].addEventListener('click',function(e){{
+  for(var d=0;d<dateBtns.length;d++){{
+    dateBtns[d].onclick=function(e){{
       var b=e.currentTarget;
       var allDb=document.querySelectorAll('.toolbar button[data-filter-date]');
       for(var j=0;j<allDb.length;j++)allDb[j].classList.remove('active');
       b.classList.add('active');
       curDate=b.getAttribute('data-filter-date')||'all';
+      curDateSet=curDate==='all' ? ['all'] : [curDate];
       applyFilters();
-    }});
+    }};
   }}
 
   var cards=document.querySelectorAll('.match-card');
-  for(var i=0;i<cards.length;i++){{
-    cards[i].addEventListener('click',function(e){{
-      var c=e.currentTarget;
-      var idEl=c.querySelector('.mc-id');
-      if(!idEl)return;
-      var card=null;
-      for(var j=0;j<D.cards.length;j++){{
-        if(D.cards[j].match_id===idEl.textContent.trim()){{card=D.cards[j];break;}}
+  for(var c=0;c<cards.length;c++){{
+    cards[c].onclick=function(e){{
+      var matchId=e.currentTarget.getAttribute('data-match-id')||'';
+      var card=findCardByMatchId(matchId);
+      if(!card)return;
+      if(isLiveApiMode()){{
+        setDrawerLoading(matchId,(card.home_name||'')+' vs '+(card.away_name||''));
+        fetchMatchDetail(matchId).then(function(detail){{
+          openDr(detail||card);
+        }}).catch(function(err){{
+          setDrawerError(matchId,(card.home_name||'')+' vs '+(card.away_name||''),err&&err.message?err.message:'无法读取比赛详情');
+        }});
+        return;
       }}
-      if(card)openDr(card);
-    }});
+      openDr(card);
+    }};
   }}
-
-  var ov=document.getElementById('overlay');
-  ov.addEventListener('click',closeDr);
-  document.getElementById('drawerClose').addEventListener('click',closeDr);
-  applyFilters();
-  initTuning();
 }}
 
 function initTuning(){{
+  if(tuningInitialized && D.hyperparameters){{
+    var existingCw = D.hyperparameters.component_weights || {{}};
+    document.getElementById('sl-data-weight').value = D.hyperparameters.data_weight || 0.60;
+    document.getElementById('sl-div-weight').value = D.hyperparameters.divination_weight || 0.40;
+    document.getElementById('sl-ranking').value = existingCw.ranking_strength || 0.30;
+    document.getElementById('sl-squad').value = existingCw.squad_depth || 0.20;
+    document.getElementById('sl-history').value = existingCw.historical_proxy || 0.20;
+    document.getElementById('sl-rest').value = existingCw.rest_travel || 0.15;
+    document.getElementById('sl-evidence').value = existingCw.evidence_completeness || 0.15;
+    document.getElementById('btn-copy-config').onclick = function(){{
+      var text = document.getElementById('json-preview').textContent;
+      navigator.clipboard.writeText(text).then(function(){{ alert('配置已复制到剪贴板'); }});
+    }};
+  }}
   var dataWeightSlider = document.getElementById('sl-data-weight');
   var divWeightSlider = document.getElementById('sl-div-weight');
 
@@ -3087,7 +3948,10 @@ function initTuning(){{
 
   var isLocalFile = location.protocol === 'file:';
   var statusEl = document.getElementById('sync-status');
-  var isStaticMode = isLocalFile;
+  var isStaticMode = isLocalFile || location.protocol !== 'http:' && location.protocol !== 'https:';
+  if(!isLocalFile && window.location.pathname && window.location.pathname.indexOf('/dashboard/')>=0 && document.getElementById('loadStatus').textContent.indexOf('静态只读模式')===0){{
+    isStaticMode = true;
+  }}
 
   function updateStatusStyle() {{
     if (isStaticMode) {{
@@ -3217,12 +4081,12 @@ function initTuning(){{
     slider.addEventListener('input', updateJSON);
   }});
 
-  document.getElementById('btn-copy-config').addEventListener('click', function(){{
+  document.getElementById('btn-copy-config').onclick = function(){{
     var text = document.getElementById('json-preview').textContent;
     navigator.clipboard.writeText(text).then(function(){{
       alert('配置已复制到剪贴板');
     }});
-  }});
+  }};
 
   // Prepopulate from D if exists
   if(D.hyperparameters){{
@@ -3237,17 +4101,36 @@ function initTuning(){{
   }}
 
   updateJSON();
+  tuningInitialized = true;
 }}
 
 function applyFilters(){{
   var cards=document.querySelectorAll('.match-card');
   for(var i=0;i<cards.length;i++){{
     var d=cards[i].getAttribute('data-date')||'';
-    var ok=curDate==='all'||d===curDate;
+    var ok=curDate==='all'||curDateSet.indexOf('all')>=0||curDateSet.indexOf(d)>=0;
     if(ok){{
       cards[i].classList.remove('hidden');
     }} else cards[i].classList.add('hidden');
   }}
+}}
+
+function buildPredictionIndex(){{
+  var predIndex={{}};
+  var cards=D.cards||[];
+  for(var i=0;i<cards.length;i++){{
+    var c=cards[i];
+    var scoreText=c.score_text||'';
+    var parts=scoreText.split('-');
+    predIndex[c.match_id]= {{
+      predicted_result: c.predicted_result||'',
+      score: {{
+        home: parts.length>1 ? parts[0] : null,
+        away: parts.length>1 ? parts[parts.length-1] : null
+      }}
+    }};
+  }}
+  return predIndex;
 }}
 
 function closeDr(){{
@@ -3746,8 +4629,9 @@ init();
 
 
 
-def write_visual_dashboard(*, root: Path, edition: str, now: str | None = None, include_local: bool = True) -> dict:
+def _assemble_dashboard_payload(*, root: Path, edition: str, now: str | None = None, include_local: bool = True) -> dict:
     data_path, html_path = _dashboard_paths(root, edition)
+    static_data_path = _dashboard_static_data_path(root, edition)
     payload = build_dashboard_payload(root=root, edition=edition, now=now, include_local=include_local)
 
     # Inject tournament schedule from match ledger
@@ -3796,8 +4680,10 @@ def write_visual_dashboard(*, root: Path, edition: str, now: str | None = None, 
             if mid in eval_index:
                 existing = eval_index[mid]
                 # Keep actual scores from ledger (source of truth)
-                ledger_eval["actual_home"] = ledger_eval.get("actual_home") or existing.get("actual_home")
-                ledger_eval["actual_away"] = ledger_eval.get("actual_away") or existing.get("actual_away")
+                if ledger_eval.get("actual_home") is None:
+                    ledger_eval["actual_home"] = existing.get("actual_home")
+                if ledger_eval.get("actual_away") is None:
+                    ledger_eval["actual_away"] = existing.get("actual_away")
                 # Merge evaluation: prefer DB result over ledger if DB has data
                 existing_ev = existing.get("evaluation", {})
                 ledger_ev_ev = ledger_eval.get("evaluation", {})
@@ -4032,6 +4918,11 @@ def write_visual_dashboard(*, root: Path, edition: str, now: str | None = None, 
                         )
                     payload.setdefault("cards", []).append(new_card)
                     existing_ids.add(mid)
+                    payload.setdefault("summary", {}).setdefault("dates", [])
+                    if new_card.get("date") and new_card.get("data_source") != "placeholder" and new_card["date"] not in payload["summary"]["dates"]:
+                        payload["summary"]["dates"].append(new_card["date"])
+
+    _merge_daily_prediction_sources_into_cards(payload, root, edition, include_local=include_local)
 
     # Post-process all cards: Chinese names, Beijing time, actual scores
     _BJT = timezone(timedelta(hours=8))
@@ -4102,42 +4993,6 @@ def write_visual_dashboard(*, root: Path, edition: str, now: str | None = None, 
             card["actual_score_away"] = None
             card["is_completed"] = False
 
-    # Build comparison stats for completed matches
-    completed = [c for c in payload.get("cards", []) if c.get("is_completed")]
-    total_completed = len(completed)
-    result_correct = sum(1 for c in completed if c.get("result_hit") is True)
-    score_correct = sum(1 for c in completed if c.get("score_hit") is True)
-    total_goals_correct = sum(
-        1 for c in completed
-        if c.get("actual_score_home") is not None
-        and c.get("score_text")
-        and (c["actual_score_home"] + c["actual_score_away"]) == sum(int(x) for x in c["score_text"].split("-") if x.isdigit())
-    )
-    payload["comparison_stats"] = {
-        "total_completed": total_completed,
-        "result_correct": result_correct,
-        "score_correct": score_correct,
-        "result_rate": result_correct / total_completed if total_completed else 0.0,
-        "score_rate": score_correct / total_completed if total_completed else 0.0,
-    }
-
-    # Update summary stats to align with completed matches
-    if "summary" in payload:
-        payload["summary"]["evaluated_matches"] = total_completed
-        payload["summary"]["result_hits"] = result_correct
-        payload["summary"]["result_hit_rate"] = result_correct / total_completed if total_completed else 0.0
-        payload["summary"]["score_hit_rate"] = score_correct / total_completed if total_completed else 0.0
-        payload["summary"]["total_goals_hit_rate"] = total_goals_correct / total_completed if total_completed else 0.0
-        payload["summary"]["predictions"] = sum(
-            1 for c in payload.get("cards", []) if c.get("prediction_status") != "not_predicted"
-        )
-        payload["summary"]["fact_cards"] = sum(
-            1 for c in payload.get("cards", []) if c.get("prediction_status") == "not_predicted"
-        )
-        payload["summary"]["dates"] = sorted(
-            set(_card_display_date(c) for c in payload.get("cards", []) if _card_display_date(c) and c.get("data_source") != "placeholder")
-        )
-
     # Load and attach model-hyperparameters.json payload
     hyper_path = edition_data_root(root, edition) / "model-hyperparameters.json"
     hyper_data = load_json(hyper_path, {
@@ -4158,9 +5013,6 @@ def write_visual_dashboard(*, root: Path, edition: str, now: str | None = None, 
     except Exception:
         pass
     payload["hyperparameters"] = hyper_data
-
-    data_path.parent.mkdir(parents=True, exist_ok=True)
-    html_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Final post-process: ensure all divination_overlay text is in Chinese
     # (ledger supplement may re-inject English names from prediction report JSONs)
@@ -4207,9 +5059,9 @@ def write_visual_dashboard(*, root: Path, edition: str, now: str | None = None, 
             except Exception:
                 pass
 
-        # 4) Recompute scoreline via Tianji Score Divination (天纪比分推演)
-        # The score is decided by divination, not Poisson math
-        _eg = _fc.get("expected_goals_proxy")
+        # 4) Keep Tianji score oracle available, but do not overwrite
+        # an existing locked prediction score that was already generated upstream.
+        _existing_score = _parse_score_text(_fc.get("score_text"))
         _result = _fc.get("predicted_result_label", "")
         _fd = _fc.get("divination_overlay") or _fc.get("divination_data") or {}
         if _result:
@@ -4231,18 +5083,58 @@ def write_visual_dashboard(*, root: Path, edition: str, now: str | None = None, 
                     away_final=float(_fc.get("away_final", 50)),
                     predicted_outcome=_outcome,
                 )
-                _fc["score_text"] = f"{_tianji['home']}-{_tianji['away']}"
-                _fc["total_goals"] = _tianji["home"] + _tianji["away"]
+                _fc["tianji_score_text"] = f"{_tianji['home']}-{_tianji['away']}"
+                _fc["tianji_total_goals"] = _tianji["home"] + _tianji["away"]
+                _fc["tianji_score_trace"] = _tianji.get("divination_trace")
+                if _existing_score["home"] is None or _existing_score["away"] is None:
+                    _fc["score_text"] = _fc["tianji_score_text"]
+                    _fc["total_goals"] = _fc["tianji_total_goals"]
             except Exception:
                 # Fallback: keep existing score if Tianji oracle fails
                 pass
 
+    payload = _refresh_dashboard_summary(payload)
+    payload = _decorate_dashboard_payload_for_frontend(payload)
+    return payload
+
+
+def write_visual_dashboard(*, root: Path, edition: str, now: str | None = None, include_local: bool = True) -> dict:
+    data_path, html_path = _dashboard_paths(root, edition)
+    static_data_path = _dashboard_static_data_path(root, edition)
+    payload = _assemble_dashboard_payload(root=root, edition=edition, now=now, include_local=include_local)
+
+    data_path.parent.mkdir(parents=True, exist_ok=True)
+    html_path.parent.mkdir(parents=True, exist_ok=True)
+    static_data_path.parent.mkdir(parents=True, exist_ok=True)
+
     write_json(data_path, payload)
+    write_json(static_data_path, payload)
     write_text(html_path, render_html(payload, root=root, html_path=html_path))
     payload["data_path"] = _display_path(data_path, root)
     payload["html_path"] = _display_path(html_path, root)
+    payload["static_data_path"] = _display_path(static_data_path, root)
     write_json(data_path, payload)
+    write_json(static_data_path, payload)
     return payload
+
+
+def _build_live_dashboard_payload(*, root: Path, edition: str, now: str | None = None, include_local: bool = True) -> dict:
+    payload = _assemble_dashboard_payload(root=root, edition=edition, now=now, include_local=include_local)
+    payload.pop("data_path", None)
+    payload.pop("html_path", None)
+    payload.pop("static_data_path", None)
+    return payload
+
+
+def _write_json_response(handler: http.server.BaseHTTPRequestHandler, status_code: int, payload: dict, *, no_store: bool = True) -> None:
+    response_payload = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    handler.send_response(status_code)
+    handler.send_header("Content-Type", "application/json; charset=utf-8")
+    if no_store:
+        handler.send_header("Cache-Control", "no-store")
+    handler.send_header("Content-Length", str(len(response_payload)))
+    handler.end_headers()
+    handler.wfile.write(response_payload)
 
 
 class DashboardHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
@@ -4253,7 +5145,39 @@ class DashboardHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                           format % args))
 
     def do_GET(self) -> None:
-        if self.path in ("/", "/index.html"):
+        parsed = urlparse(self.path)
+        if parsed.path in ("/api/dashboard", "/api/dashboard/overview"):
+            try:
+                root = self.server.dashboard_root
+                edition = (parse_qs(parsed.query).get("edition") or [self.server.dashboard_edition])[0]
+                payload = _build_live_dashboard_payload(root=root, edition=edition, now=self.server.dashboard_now, include_local=True)
+                if parsed.path == "/api/dashboard/overview":
+                    payload = _dashboard_overview_payload(payload)
+                _write_json_response(self, 200, payload)
+            except Exception as e:
+                _write_json_response(self, 500, {"status": "error", "message": str(e)})
+            return
+
+        if parsed.path == "/api/dashboard/match":
+            try:
+                root = self.server.dashboard_root
+                params = parse_qs(parsed.query)
+                edition = (params.get("edition") or [self.server.dashboard_edition])[0]
+                match_id = (params.get("match_id") or [""])[0]
+                if not match_id:
+                    _write_json_response(self, 400, {"status": "error", "message": "match_id is required"})
+                    return
+                payload = _build_live_dashboard_payload(root=root, edition=edition, now=self.server.dashboard_now, include_local=True)
+                card = _find_dashboard_card(payload, match_id)
+                if not card:
+                    _write_json_response(self, 404, {"status": "error", "message": f"match not found: {match_id}"})
+                    return
+                _write_json_response(self, 200, card)
+            except Exception as e:
+                _write_json_response(self, 500, {"status": "error", "message": str(e)})
+            return
+
+        if parsed.path in ("/", "/index.html"):
             root = self.server.dashboard_root
             edition = self.server.dashboard_edition
             _, html_path = _dashboard_paths(root, edition)
@@ -4301,9 +5225,6 @@ class DashboardHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 # Write to model-hyperparameters.json
                 hyper_path = edition_data_root(root, edition) / "model-hyperparameters.json"
                 write_json(hyper_path, config_data)
-
-                # Regenerate dashboard index.html
-                write_visual_dashboard(root=root, edition=edition, now=self.server.dashboard_now)
 
                 response_payload = json.dumps({"status": "success"}).encode("utf-8")
                 self.send_response(200)
