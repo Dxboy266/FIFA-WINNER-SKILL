@@ -2353,6 +2353,7 @@ def predict_match(
     global_summary: dict | None,
     daily_evidence: dict | None = None,
     history_index: dict[str, dict] | None = None,
+    lessons: list[dict] | None = None,
 ) -> dict:
     """Compute the full prediction record for a single match."""
     home_team = match.get("home_team", {})
@@ -2777,6 +2778,31 @@ def predict_match(
     if divination.get("has_physical_conflict"):
         play_card["risk_flags"].append("天纪警示：星盘羊陀照会，物理对抗升级，注意红黄牌及伤病风险。")
 
+    # --- Experience Loop: apply lessons from past evaluations ---
+    lessons_applied: list[dict] = []
+    if lessons:
+        conf_to_num = {"high": 0.75, "medium": 0.60, "low": 0.45}
+        num_to_conf = [(0.70, "high"), (0.50, "medium"), (0.0, "low")]
+        total_adj = 0.0
+        for lesson in lessons:
+            adj = float(lesson.get("confidence_adjustment", 0.0))
+            lessons_applied.append({
+                "lesson_id": lesson.get("lesson_id", ""),
+                "lesson_type": lesson.get("lesson_type", ""),
+                "summary": lesson.get("summary", ""),
+                "confidence_adjustment": adj,
+            })
+            total_adj += adj
+        if total_adj != 0.0:
+            base_num = conf_to_num.get(confidence, 0.60)
+            adjusted_num = max(0.0, min(1.0, base_num + total_adj))
+            for threshold, level in num_to_conf:
+                if adjusted_num >= threshold:
+                    confidence = level
+                    break
+            confidence_label_map = {"high": "高信心", "medium": "中等信心", "low": "低信心"}
+            confidence_label = confidence_label_map.get(confidence, "中等信心")
+
     return {
         "match_id": match.get("match_id", ""),
         "kickoff_at": match.get("kickoff_at", ""),
@@ -2878,6 +2904,7 @@ def predict_match(
         },
         "play_card": play_card,
         "disclaimer": DISCLAIMER,
+        "lessons_applied": lessons_applied if lessons_applied else None,
     }
 
 

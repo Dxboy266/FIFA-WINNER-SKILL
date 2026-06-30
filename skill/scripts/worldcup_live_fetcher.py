@@ -18,6 +18,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib import parse
 
+# Load .env from project root (for local development)
+try:
+    from dotenv import load_dotenv
+    _env_path = Path(__file__).resolve().parent.parent.parent / ".env"
+    if _env_path.exists():
+        load_dotenv(_env_path)
+except ImportError:
+    pass
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
 

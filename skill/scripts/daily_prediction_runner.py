@@ -79,6 +79,19 @@ def run_daily_predictions(
     evidence_path = ed_root / "daily-evidence" / f"{date}.json"
     daily_evidence = load_json(evidence_path, {})
 
+    # Experience loop: open DB connection for lesson queries
+    db_path = worldcup_db_path(root, edition)
+    from worldcup_db import (
+        get_db_connection,
+        init_database,
+        query_lessons,
+        save_match,
+        save_prediction,
+        save_prediction_analysis_layers,
+    )
+    init_database(db_path)
+    lessons_conn = get_db_connection(db_path)
+
     predictions: list[dict] = []
     skipped_started = 0
     skipped_missing_kickoff = 0
@@ -92,6 +105,17 @@ def run_daily_predictions(
             skipped_started += 1
             continue
 
+        # Experience loop: query lessons for both home and away teams
+        home_team = match.get("home_team", {})
+        away_team = match.get("away_team", {})
+        home_id = str(home_team.get("team_id", "")).lower()
+        away_id = str(away_team.get("team_id", "")).lower()
+        match_lessons: list[dict] = []
+        if home_id:
+            match_lessons.extend(query_lessons(lessons_conn, team_id=home_id))
+        if away_id:
+            match_lessons.extend(query_lessons(lessons_conn, team_id=away_id))
+
         prediction = predict_match(
             match=match,
             edition=edition,
@@ -102,10 +126,22 @@ def run_daily_predictions(
             evidence_index=evidence_index,
             global_summary=global_summary,
             daily_evidence=daily_evidence,
+            lessons=match_lessons if match_lessons else None,
         )
         predictions.append(prediction)
         match["prediction_report"] = str(report_path)
         match["prediction_status"] = "locked_pre_match_prediction"
+
+        # Experience loop: increment applied_count on used lessons
+        if match_lessons:
+            for lesson in match_lessons:
+                lessons_conn.execute(
+                    "UPDATE prediction_lessons SET applied_count = applied_count + 1 WHERE lesson_id = ?",
+                    (lesson["lesson_id"],),
+                )
+            lessons_conn.commit()
+
+    lessons_conn.close()
 
     report = {
         "version": 1,
@@ -137,15 +173,6 @@ def run_daily_predictions(
     }
     write_json(report_path, report)
 
-    db_path = worldcup_db_path(root, edition)
-    from worldcup_db import (
-        get_db_connection,
-        init_database,
-        save_match,
-        save_prediction,
-        save_prediction_analysis_layers,
-    )
-    init_database(db_path)
     conn = get_db_connection(db_path)
     try:
         with conn:

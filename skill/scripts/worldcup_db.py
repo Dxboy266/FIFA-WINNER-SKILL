@@ -229,6 +229,110 @@ def init_database(db_path: str | Path) -> None:
                 )
             """)
 
+            # Create Injuries table
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS injuries (
+                    injury_id        TEXT PRIMARY KEY,
+                    team_id          TEXT,
+                    player_name      TEXT,
+                    player_id        TEXT,
+                    injury_type      TEXT,
+                    reason           TEXT,
+                    severity         TEXT,
+                    status           TEXT,
+                    start_date       TEXT,
+                    expected_end_date TEXT,
+                    source           TEXT,
+                    source_url       TEXT,
+                    confidence       TEXT,
+                    recorded_at      TEXT,
+                    FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
+                )
+            """)
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_injuries_team_id ON injuries(team_id);")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_injuries_status ON injuries(status);")
+
+            # Create Team Form table
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS team_form (
+                    team_id       TEXT,
+                    match_id      TEXT,
+                    match_date    TEXT,
+                    opponent_id   TEXT,
+                    goals_for     INTEGER,
+                    goals_against INTEGER,
+                    result        TEXT,
+                    competition   TEXT DEFAULT 'world_cup_2026',
+                    is_home       INTEGER,
+                    PRIMARY KEY (team_id, match_id),
+                    FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE,
+                    FOREIGN KEY (match_id) REFERENCES matches(match_id) ON DELETE CASCADE
+                )
+            """)
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_team_form_date ON team_form(match_date);")
+
+            # Create News Sentiment table
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS news_sentiment (
+                    news_id      TEXT PRIMARY KEY,
+                    date         TEXT,
+                    team_id      TEXT,
+                    headline     TEXT,
+                    sentiment    TEXT,
+                    impact       TEXT,
+                    source       TEXT,
+                    source_url   TEXT,
+                    recorded_at  TEXT,
+                    FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE SET NULL
+                )
+            """)
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_news_sentiment_date ON news_sentiment(date);")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_news_sentiment_team ON news_sentiment(team_id);")
+
+            # Create Rankings Snapshot table
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS rankings_snapshot (
+                    team_id       TEXT PRIMARY KEY,
+                    rank          INTEGER,
+                    points        REAL,
+                    confederation TEXT,
+                    snapshot_date TEXT,
+                    FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
+                )
+            """)
+
+            # Create Team Profile Meta table
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS team_profile_meta (
+                    team_id         TEXT PRIMARY KEY,
+                    group_name      TEXT,
+                    head_coach      TEXT,
+                    formation       TEXT,
+                    wc_appearances  INTEGER,
+                    wc_best_result  TEXT,
+                    last_updated    TEXT,
+                    FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
+                )
+            """)
+
+            # Create Prediction Lessons table (long-term memory / experience loop)
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS prediction_lessons (
+                    lesson_id TEXT PRIMARY KEY,
+                    match_id TEXT,
+                    team_id TEXT,
+                    lesson_type TEXT,
+                    summary TEXT,
+                    detail TEXT,
+                    confidence_adjustment REAL DEFAULT 0.0,
+                    applicable_until TEXT,
+                    created_at TEXT DEFAULT (datetime('now')),
+                    applied_count INTEGER DEFAULT 0,
+                    FOREIGN KEY (match_id) REFERENCES matches(match_id) ON DELETE CASCADE
+                )
+            """)
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_prediction_lessons_team_id ON prediction_lessons(team_id);")
+
             conn.commit()
     finally:
         conn.close()
@@ -771,3 +875,215 @@ def save_match_action(conn: sqlite3.Connection, match_id: str, action_id: str) -
         INSERT OR IGNORE INTO match_actions (match_id, action_id)
         VALUES (?, ?)
     """, (match_id, action_id))
+
+
+def save_injury(conn: sqlite3.Connection, injury: dict) -> None:
+    """Upsert an injury/suspension record."""
+    conn.execute("""
+        INSERT INTO injuries (
+            injury_id, team_id, player_name, player_id, injury_type, reason,
+            severity, status, start_date, expected_end_date,
+            source, source_url, confidence, recorded_at
+        )
+        VALUES (
+            :injury_id, :team_id, :player_name, :player_id, :injury_type, :reason,
+            :severity, :status, :start_date, :expected_end_date,
+            :source, :source_url, :confidence, :recorded_at
+        )
+        ON CONFLICT(injury_id) DO UPDATE SET
+            player_name = COALESCE(excluded.player_name, injuries.player_name),
+            severity = COALESCE(excluded.severity, injuries.severity),
+            status = excluded.status,
+            expected_end_date = COALESCE(excluded.expected_end_date, injuries.expected_end_date),
+            source = excluded.source,
+            source_url = excluded.source_url,
+            confidence = excluded.confidence,
+            recorded_at = excluded.recorded_at
+    """, {
+        "injury_id": injury["injury_id"],
+        "team_id": injury.get("team_id"),
+        "player_name": injury.get("player_name"),
+        "player_id": injury.get("player_id"),
+        "injury_type": injury.get("injury_type", "injury"),
+        "reason": injury.get("reason"),
+        "severity": injury.get("severity"),
+        "status": injury.get("status", "active"),
+        "start_date": injury.get("start_date"),
+        "expected_end_date": injury.get("expected_end_date"),
+        "source": injury.get("source"),
+        "source_url": injury.get("source_url"),
+        "confidence": injury.get("confidence", "high"),
+        "recorded_at": injury.get("recorded_at"),
+    })
+
+
+def save_team_form(conn: sqlite3.Connection, form: dict) -> None:
+    """Upsert a team form record (one per team per match)."""
+    conn.execute("""
+        INSERT INTO team_form (
+            team_id, match_id, match_date, opponent_id,
+            goals_for, goals_against, result, competition, is_home
+        )
+        VALUES (
+            :team_id, :match_id, :match_date, :opponent_id,
+            :goals_for, :goals_against, :result, :competition, :is_home
+        )
+        ON CONFLICT(team_id, match_id) DO UPDATE SET
+            match_date = excluded.match_date,
+            opponent_id = excluded.opponent_id,
+            goals_for = excluded.goals_for,
+            goals_against = excluded.goals_against,
+            result = excluded.result,
+            competition = excluded.competition,
+            is_home = excluded.is_home
+    """, {
+        "team_id": form["team_id"],
+        "match_id": form["match_id"],
+        "match_date": form.get("match_date"),
+        "opponent_id": form.get("opponent_id"),
+        "goals_for": form.get("goals_for"),
+        "goals_against": form.get("goals_against"),
+        "result": form.get("result"),
+        "competition": form.get("competition", "world_cup_2026"),
+        "is_home": form.get("is_home", 1),
+    })
+
+
+def save_news_sentiment(conn: sqlite3.Connection, news: dict) -> None:
+    """Upsert a news sentiment record."""
+    conn.execute("""
+        INSERT INTO news_sentiment (
+            news_id, date, team_id, headline, sentiment, impact,
+            source, source_url, recorded_at
+        )
+        VALUES (
+            :news_id, :date, :team_id, :headline, :sentiment, :impact,
+            :source, :source_url, :recorded_at
+        )
+        ON CONFLICT(news_id) DO UPDATE SET
+            headline = excluded.headline,
+            sentiment = excluded.sentiment,
+            impact = excluded.impact,
+            source = excluded.source,
+            source_url = excluded.source_url,
+            recorded_at = excluded.recorded_at
+    """, {
+        "news_id": news["news_id"],
+        "date": news.get("date"),
+        "team_id": news.get("team_id"),
+        "headline": news.get("headline"),
+        "sentiment": news.get("sentiment", "neutral"),
+        "impact": news.get("impact"),
+        "source": news.get("source"),
+        "source_url": news.get("source_url"),
+        "recorded_at": news.get("recorded_at"),
+    })
+
+
+def save_rankings_snapshot(conn: sqlite3.Connection, ranking: dict) -> None:
+    """Upsert a FIFA rankings snapshot record."""
+    conn.execute("""
+        INSERT INTO rankings_snapshot (team_id, rank, points, confederation, snapshot_date)
+        VALUES (:team_id, :rank, :points, :confederation, :snapshot_date)
+        ON CONFLICT(team_id) DO UPDATE SET
+            rank = excluded.rank,
+            points = excluded.points,
+            confederation = excluded.confederation,
+            snapshot_date = excluded.snapshot_date
+    """, {
+        "team_id": ranking["team_id"],
+        "rank": ranking.get("rank"),
+        "points": ranking.get("points"),
+        "confederation": ranking.get("confederation"),
+        "snapshot_date": ranking.get("snapshot_date"),
+    })
+
+
+def save_team_profile_meta(conn: sqlite3.Connection, meta: dict) -> None:
+    """Upsert team profile metadata."""
+    conn.execute("""
+        INSERT INTO team_profile_meta (
+            team_id, group_name, head_coach, formation,
+            wc_appearances, wc_best_result, last_updated
+        )
+        VALUES (
+            :team_id, :group_name, :head_coach, :formation,
+            :wc_appearances, :wc_best_result, :last_updated
+        )
+        ON CONFLICT(team_id) DO UPDATE SET
+            group_name = COALESCE(excluded.group_name, team_profile_meta.group_name),
+            head_coach = COALESCE(excluded.head_coach, team_profile_meta.head_coach),
+            formation = COALESCE(excluded.formation, team_profile_meta.formation),
+            wc_appearances = COALESCE(excluded.wc_appearances, team_profile_meta.wc_appearances),
+            wc_best_result = COALESCE(excluded.wc_best_result, team_profile_meta.wc_best_result),
+            last_updated = excluded.last_updated
+    """, {
+        "team_id": meta["team_id"],
+        "group_name": meta.get("group_name"),
+        "head_coach": meta.get("head_coach"),
+        "formation": meta.get("formation"),
+        "wc_appearances": meta.get("wc_appearances"),
+        "wc_best_result": meta.get("wc_best_result"),
+        "last_updated": meta.get("last_updated"),
+    })
+
+
+def save_lesson(conn: sqlite3.Connection, lesson: dict) -> None:
+    """Upsert a prediction lesson."""
+    conn.execute("""
+        INSERT INTO prediction_lessons (
+            lesson_id, match_id, team_id, lesson_type, summary, detail,
+            confidence_adjustment, applicable_until, created_at, applied_count
+        )
+        VALUES (
+            :lesson_id, :match_id, :team_id, :lesson_type, :summary, :detail,
+            :confidence_adjustment, :applicable_until, :created_at, :applied_count
+        )
+        ON CONFLICT(lesson_id) DO UPDATE SET
+            match_id = excluded.match_id,
+            team_id = excluded.team_id,
+            lesson_type = excluded.lesson_type,
+            summary = excluded.summary,
+            detail = excluded.detail,
+            confidence_adjustment = excluded.confidence_adjustment,
+            applicable_until = excluded.applicable_until,
+            created_at = excluded.created_at,
+            applied_count = excluded.applied_count
+    """, {
+        "lesson_id": lesson["lesson_id"],
+        "match_id": lesson.get("match_id"),
+        "team_id": lesson.get("team_id"),
+        "lesson_type": lesson.get("lesson_type"),
+        "summary": lesson.get("summary"),
+        "detail": lesson.get("detail"),
+        "confidence_adjustment": lesson.get("confidence_adjustment", 0.0),
+        "applicable_until": lesson.get("applicable_until"),
+        "created_at": lesson.get("created_at"),
+        "applied_count": lesson.get("applied_count", 0),
+    })
+
+
+def query_lessons(conn: sqlite3.Connection, team_id: str = None, lesson_type: str = None, limit: int = 10) -> list[dict]:
+    """Query relevant lessons, excluding expired ones."""
+    conditions = ["(applicable_until IS NULL OR applicable_until > date('now'))"]
+    params: dict = {}
+
+    if team_id:
+        conditions.append("team_id = :team_id")
+        params["team_id"] = team_id
+    if lesson_type:
+        conditions.append("lesson_type = :lesson_type")
+        params["lesson_type"] = lesson_type
+
+    where_clause = " AND ".join(conditions)
+    sql = f"""
+        SELECT lesson_id, match_id, team_id, lesson_type, summary, detail,
+               confidence_adjustment, applicable_until, created_at, applied_count
+        FROM prediction_lessons
+        WHERE {where_clause}
+        ORDER BY created_at DESC
+        LIMIT :limit
+    """
+    params["limit"] = limit
+    cursor = conn.execute(sql, params)
+    return [dict(row) for row in cursor.fetchall()]

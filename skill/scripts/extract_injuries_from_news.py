@@ -61,7 +61,7 @@ class InjuryExtractor:
         Returns:
             dict: 提取的伤停信息
         """
-        evidence_file = self.root_path / "knowledge-base" / edition / "data" / "daily-evidence" / f"{date}.json"
+        evidence_file = self.root_path / "wiki" / "public" / edition / "daily-evidence" / f"{date}.json"
 
         if not evidence_file.exists():
             print(f"ERROR: Evidence file not found: {evidence_file}")
@@ -300,8 +300,8 @@ class InjuryExtractor:
         return team_names.get(team_code, team_code)
 
     def save_to_daily_evidence(self, edition, date, extracted_injuries):
-        """保存到每日证据文件"""
-        evidence_file = self.root_path / "knowledge-base" / edition / "data" / "daily-evidence" / f"{date}.json"
+        """保存到每日证据文件并写入 SQLite"""
+        evidence_file = self.root_path / "wiki" / "public" / edition / "daily-evidence" / f"{date}.json"
 
         # 读取现有文件
         with open(evidence_file, 'r', encoding='utf-8') as f:
@@ -310,9 +310,60 @@ class InjuryExtractor:
         # 添加提取的伤停数据
         evidence["injuries_extracted"] = extracted_injuries
 
-        # 保存
+        # 保存 JSON
         with open(evidence_file, 'w', encoding='utf-8') as f:
             json.dump(evidence, f, indent=2, ensure_ascii=False)
+
+        # 写入 SQLite
+        try:
+            sys.path.insert(0, str(Path(__file__).parent))
+            from worldcup_db import get_db_connection, init_database, save_injury
+            db_path = self.root_path / "wiki" / "cache" / edition / f"worldcup_{edition}.db"
+            init_database(db_path)
+            conn = get_db_connection(db_path)
+            try:
+                with conn:
+                    for team_code, team_data in extracted_injuries.get("teams", {}).items():
+                        for inj in team_data.get("injuries", []):
+                            injury_id = f"nlp-{team_code}-{inj.get('player_name', 'unknown')}-{date}".lower().replace(" ", "-")
+                            save_injury(conn, {
+                                "injury_id": injury_id,
+                                "team_id": team_code.lower(),
+                                "player_name": inj.get("player_name"),
+                                "player_id": None,
+                                "injury_type": inj.get("type", "injury"),
+                                "reason": inj.get("reason"),
+                                "severity": inj.get("severity"),
+                                "status": inj.get("status", "active"),
+                                "start_date": None,
+                                "expected_end_date": None,
+                                "source": inj.get("source", "nlp-extraction"),
+                                "source_url": inj.get("source_url"),
+                                "confidence": "low",
+                                "recorded_at": inj.get("extracted_at") or datetime.now(timezone.utc).isoformat(),
+                            })
+                        for sus in team_data.get("suspensions", []):
+                            injury_id = f"nlp-{team_code}-{sus.get('player_name', 'unknown')}-sus-{date}".lower().replace(" ", "-")
+                            save_injury(conn, {
+                                "injury_id": injury_id,
+                                "team_id": team_code.lower(),
+                                "player_name": sus.get("player_name"),
+                                "player_id": None,
+                                "injury_type": "suspension",
+                                "reason": sus.get("reason"),
+                                "severity": "moderate",
+                                "status": "active",
+                                "start_date": date,
+                                "expected_end_date": None,
+                                "source": sus.get("source", "nlp-extraction"),
+                                "source_url": sus.get("source_url"),
+                                "confidence": "low",
+                                "recorded_at": datetime.now(timezone.utc).isoformat(),
+                            })
+            finally:
+                conn.close()
+        except Exception as e:
+            print(f"Warning: SQLite NLP injury write failed: {e}", file=sys.stderr)
 
         print(f"\nOK: Saved extracted injuries to: {evidence_file}")
         print(f"  - Teams with injuries: {extracted_injuries['summary']['total_teams']}")

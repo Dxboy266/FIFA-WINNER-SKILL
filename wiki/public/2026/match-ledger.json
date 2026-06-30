@@ -1,7 +1,7 @@
 {
   "version": 1,
   "edition": "2026",
-  "generated_at": "2026-06-14T14:55:57.776119+08:00",
+  "generated_at": "2026-06-29T21:06:37.659430+08:00",
   "mode": "worldcup-public-match-ledger",
   "summary": {
     "match_count": 104,
@@ -138,7 +138,7 @@
       "match_number": 3,
       "kickoff_at": "2026-06-18T16:00:00Z",
       "venue": "Mercedes-Benz Stadium, Atlanta",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "cze",
         "name": "Czechia",
@@ -152,9 +152,37 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-18.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Czechia 1-1 South Africa"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GA-03",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 1,
+          "away": 1
+        },
+        "actual_total_goals": 2,
+        "result_hit": true,
+        "score_hit": true,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GA-04",
@@ -164,7 +192,7 @@
       "match_number": 4,
       "kickoff_at": "2026-06-19T03:00:00Z",
       "venue": "Estadio Akron, Zapopan, Mexico",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "mex",
         "name": "Mexico",
@@ -175,12 +203,40 @@
         "name": "South Korea",
         "slot": 4
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-19.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-19.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Mexico 1-0 South Korea"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GA-04",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 1,
+          "away": 0
+        },
+        "actual_total_goals": 1,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GA-05",
@@ -190,7 +246,7 @@
       "match_number": 5,
       "kickoff_at": "2026-06-25T01:00:00Z",
       "venue": "Estadio Azteca, Mexico City",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "cze",
         "name": "Czechia",
@@ -201,12 +257,41 @@
         "name": "Mexico",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-25.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 3,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Czechia 0-3 Mexico",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GA-05",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 0,
+          "away": 3
+        },
+        "actual_total_goals": 3,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GA-06",
@@ -216,7 +301,7 @@
       "match_number": 6,
       "kickoff_at": "2026-06-25T01:00:00Z",
       "venue": "Estadio BBVA, Guadalupe, Mexico",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "rsa",
         "name": "South Africa",
@@ -227,12 +312,41 @@
         "name": "South Korea",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-25.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "South Africa 1-0 South Korea",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GA-06",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 1,
+          "away": 0
+        },
+        "actual_total_goals": 1,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GB-01",
@@ -335,7 +449,7 @@
       "match_number": 9,
       "kickoff_at": "2026-06-18T19:00:00Z",
       "venue": "SoFi Stadium, Inglewood, Calif.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "sui",
         "name": "Switzerland",
@@ -349,9 +463,37 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-18.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 4,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Switzerland 4-1 Bosnia and Herzegovina"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GB-03",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 4,
+          "away": 1
+        },
+        "actual_total_goals": 5,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GB-04",
@@ -361,7 +503,7 @@
       "match_number": 10,
       "kickoff_at": "2026-06-18T22:00:00Z",
       "venue": "BC Place, Vancouver, Canada",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "can",
         "name": "Canada",
@@ -375,9 +517,37 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-18.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 6,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Canada 6-0 Qatar"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GB-04",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 6,
+          "away": 0
+        },
+        "actual_total_goals": 6,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GB-05",
@@ -387,7 +557,7 @@
       "match_number": 11,
       "kickoff_at": "2026-06-24T19:00:00Z",
       "venue": "BC Place, Vancouver, Canada",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "sui",
         "name": "Switzerland",
@@ -398,12 +568,41 @@
         "name": "Canada",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-24.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-25.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 2,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Switzerland 2-1 Canada",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GB-05",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 2,
+          "away": 1
+        },
+        "actual_total_goals": 3,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GB-06",
@@ -413,7 +612,7 @@
       "match_number": 12,
       "kickoff_at": "2026-06-24T19:00:00Z",
       "venue": "Lumen Field, Seattle",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "bih",
         "name": "Bosnia and Herzegovina",
@@ -424,12 +623,41 @@
         "name": "Qatar",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-24.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-25.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 3,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Bosnia and Herzegovina 3-1 Qatar",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GB-06",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 3,
+          "away": 1
+        },
+        "actual_total_goals": 4,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GC-01",
@@ -516,7 +744,7 @@
       "match_number": 15,
       "kickoff_at": "2026-06-19T22:00:00Z",
       "venue": "Gillette Stadium, Foxborough, Mass.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "sco",
         "name": "Scotland",
@@ -527,12 +755,40 @@
         "name": "Morocco",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-19.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-19.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Scotland 0-1 Morocco"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GC-03",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 0,
+          "away": 1
+        },
+        "actual_total_goals": 1,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GC-04",
@@ -542,7 +798,7 @@
       "match_number": 16,
       "kickoff_at": "2026-06-20T01:00:00Z",
       "venue": "Lincoln Financial Field, Philadelphia",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "bra",
         "name": "Brazil",
@@ -556,7 +812,20 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-20.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 3,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Brazil 3-0 Haiti"
+          }
+        ]
+      },
       "evaluation": null,
       "prediction_status": "locked_pre_match_prediction"
     },
@@ -568,7 +837,7 @@
       "match_number": 17,
       "kickoff_at": "2026-06-24T22:00:00Z",
       "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "sco",
         "name": "Scotland",
@@ -579,12 +848,41 @@
         "name": "Brazil",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-24.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-25.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 3,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Scotland 0-3 Brazil",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GC-05",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 0,
+          "away": 3
+        },
+        "actual_total_goals": 3,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GC-06",
@@ -594,7 +892,7 @@
       "match_number": 18,
       "kickoff_at": "2026-06-24T22:00:00Z",
       "venue": "Mercedes-Benz Stadium, Atlanta",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "mar",
         "name": "Morocco",
@@ -605,12 +903,41 @@
         "name": "Haiti",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-24.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-25.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 4,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Morocco 4-2 Haiti",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GC-06",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 4,
+          "away": 2
+        },
+        "actual_total_goals": 6,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GD-01",
@@ -696,7 +1023,7 @@
       "match_number": 21,
       "kickoff_at": "2026-06-19T19:00:00Z",
       "venue": "Lumen Field, Seattle",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "usa",
         "name": "United States",
@@ -707,12 +1034,40 @@
         "name": "Australia",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-19.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-19.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 2,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "United States 2-0 Australia"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GD-03",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 2,
+          "away": 0
+        },
+        "actual_total_goals": 2,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GD-04",
@@ -722,7 +1077,7 @@
       "match_number": 22,
       "kickoff_at": "2026-06-20T04:00:00Z",
       "venue": "Levi's Stadium, Santa Clara, Calif.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "tur",
         "name": "Türkiye",
@@ -736,7 +1091,20 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-20.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 0,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Türkiye 0-1 Paraguay"
+          }
+        ]
+      },
       "evaluation": null,
       "prediction_status": "locked_pre_match_prediction"
     },
@@ -748,7 +1116,7 @@
       "match_number": 23,
       "kickoff_at": "2026-06-26T02:00:00Z",
       "venue": "SoFi Stadium, Inglewood, Calif.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "tur",
         "name": "Türkiye",
@@ -759,12 +1127,41 @@
         "name": "United States",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-26.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-26.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 3,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Türkiye 3-2 United States",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GD-05",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 3,
+          "away": 2
+        },
+        "actual_total_goals": 5,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GD-06",
@@ -774,7 +1171,7 @@
       "match_number": 24,
       "kickoff_at": "2026-06-26T02:00:00Z",
       "venue": "Levi's Stadium, Santa Clara, Calif.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "par",
         "name": "Paraguay",
@@ -785,12 +1182,41 @@
         "name": "Australia",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-26.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-26.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Paraguay 0-0 Australia",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GD-06",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 0,
+          "away": 0
+        },
+        "actual_total_goals": 0,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GE-01",
@@ -800,7 +1226,7 @@
       "match_number": 25,
       "kickoff_at": "2026-06-14T17:00:00Z",
       "venue": "NRG Stadium, Houston",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "ger",
         "name": "Germany",
@@ -814,8 +1240,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-14.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 7,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-16T21:01:24.203750+08:00",
+        "source_refs": [
+          {
+            "source_id": "football-data.org",
+            "tier": "T2",
+            "fixture_id": 537351,
+            "observed_result": "Germany 7-1 Curaçao"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GE-01",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 7,
+          "away": 1
+        },
+        "actual_total_goals": 8,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -826,7 +1280,7 @@
       "match_number": 26,
       "kickoff_at": "2026-06-14T23:00:00Z",
       "venue": "Lincoln Financial Field, Philadelphia",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "civ",
         "name": "Ivory Coast",
@@ -840,8 +1294,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-14.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 1,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-16T21:01:24.204191+08:00",
+        "source_refs": [
+          {
+            "source_id": "football-data.org",
+            "tier": "T2",
+            "fixture_id": 537352,
+            "observed_result": "Ivory Coast 1-0 Ecuador"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GE-02",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 1,
+          "away": 0
+        },
+        "actual_total_goals": 1,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -852,7 +1334,7 @@
       "match_number": 27,
       "kickoff_at": "2026-06-20T20:00:00Z",
       "venue": "BMO Field, Toronto",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "ger",
         "name": "Germany",
@@ -866,7 +1348,20 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-20.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 2,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Germany 2-1 Ivory Coast"
+          }
+        ]
+      },
       "evaluation": null,
       "prediction_status": "locked_pre_match_prediction"
     },
@@ -878,7 +1373,7 @@
       "match_number": 28,
       "kickoff_at": "2026-06-21T00:00:00Z",
       "venue": "Arrowhead Stadium, Kansas City, Mo.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "ecu",
         "name": "Ecuador",
@@ -889,12 +1384,40 @@
         "name": "Curaçao",
         "slot": 4
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-21.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-21.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Ecuador 0-0 Curaçao"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GE-04",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 0,
+          "away": 0
+        },
+        "actual_total_goals": 0,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "kickoff_locked"
     },
     {
       "match_id": "2026-GE-05",
@@ -904,7 +1427,7 @@
       "match_number": 29,
       "kickoff_at": "2026-06-25T20:00:00Z",
       "venue": "MetLife Stadium, East Rutherford, N.J.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "ecu",
         "name": "Ecuador",
@@ -915,12 +1438,41 @@
         "name": "Germany",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-26.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 2,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Ecuador 2-1 Germany",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GE-05",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 2,
+          "away": 1
+        },
+        "actual_total_goals": 3,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GE-06",
@@ -930,7 +1482,7 @@
       "match_number": 30,
       "kickoff_at": "2026-06-25T20:00:00Z",
       "venue": "Lincoln Financial Field, Philadelphia",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "cuw",
         "name": "Curaçao",
@@ -941,12 +1493,41 @@
         "name": "Ivory Coast",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-26.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Curaçao 0-2 Ivory Coast",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GE-06",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "low",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 0,
+          "away": 2
+        },
+        "actual_total_goals": 2,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GF-01",
@@ -956,7 +1537,7 @@
       "match_number": 31,
       "kickoff_at": "2026-06-14T20:00:00Z",
       "venue": "AT&T Stadium, Arlington, Texas",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "ned",
         "name": "Netherlands",
@@ -970,8 +1551,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-14.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 2,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-06-16T21:01:24.204010+08:00",
+        "source_refs": [
+          {
+            "source_id": "football-data.org",
+            "tier": "T2",
+            "fixture_id": 537357,
+            "observed_result": "Netherlands 2-2 Japan"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GF-01",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 2,
+          "away": 2
+        },
+        "actual_total_goals": 4,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -982,7 +1591,7 @@
       "match_number": 32,
       "kickoff_at": "2026-06-15T02:00:00Z",
       "venue": "Estadio BBVA, Guadalupe, Mexico",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "swe",
         "name": "Sweden",
@@ -996,8 +1605,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-15.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 5,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-16T21:01:24.204390+08:00",
+        "source_refs": [
+          {
+            "source_id": "football-data.org",
+            "tier": "T2",
+            "fixture_id": 537358,
+            "observed_result": "Sweden 5-1 Tunisia"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GF-02",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 5,
+          "away": 1
+        },
+        "actual_total_goals": 6,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1008,7 +1645,7 @@
       "match_number": 33,
       "kickoff_at": "2026-06-20T17:00:00Z",
       "venue": "NRG Stadium, Houston",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "ned",
         "name": "Netherlands",
@@ -1022,7 +1659,20 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-20.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 5,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Netherlands 5-1 Sweden"
+          }
+        ]
+      },
       "evaluation": null,
       "prediction_status": "locked_pre_match_prediction"
     },
@@ -1034,7 +1684,7 @@
       "match_number": 34,
       "kickoff_at": "2026-06-21T04:00:00Z",
       "venue": "Estadio BBVA, Guadalupe, Mexico",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "tun",
         "name": "Tunisia",
@@ -1045,12 +1695,40 @@
         "name": "Japan",
         "slot": 4
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-21.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-21.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 4,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Tunisia 0-4 Japan"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GF-04",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "low",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 0,
+          "away": 4
+        },
+        "actual_total_goals": 4,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "kickoff_locked"
     },
     {
       "match_id": "2026-GF-05",
@@ -1060,7 +1738,7 @@
       "match_number": 35,
       "kickoff_at": "2026-06-25T23:00:00Z",
       "venue": "AT&T Stadium, Arlington, Texas",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "jpn",
         "name": "Japan",
@@ -1071,12 +1749,41 @@
         "name": "Sweden",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-26.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Japan 1-1 Sweden",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GF-05",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 1,
+          "away": 1
+        },
+        "actual_total_goals": 2,
+        "result_hit": true,
+        "score_hit": true,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GF-06",
@@ -1086,7 +1793,7 @@
       "match_number": 36,
       "kickoff_at": "2026-06-25T23:00:00Z",
       "venue": "Arrowhead Stadium, Kansas City, Mo.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "tun",
         "name": "Tunisia",
@@ -1097,12 +1804,41 @@
         "name": "Netherlands",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-25.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-26.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 3,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Tunisia 1-3 Netherlands",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GF-06",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 1,
+          "away": 3
+        },
+        "actual_total_goals": 4,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GG-01",
@@ -1112,7 +1848,7 @@
       "match_number": 37,
       "kickoff_at": "2026-06-15T22:00:00Z",
       "venue": "Lumen Field, Seattle",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "bel",
         "name": "Belgium",
@@ -1126,8 +1862,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-15.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 1,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-16T21:01:24.204903+08:00",
+        "source_refs": [
+          {
+            "source_id": "football-data.org",
+            "tier": "T2",
+            "fixture_id": 537363,
+            "observed_result": "Belgium 1-1 Egypt"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GG-01",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 1,
+          "away": 1
+        },
+        "actual_total_goals": 2,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1138,7 +1902,7 @@
       "match_number": 38,
       "kickoff_at": "2026-06-16T04:00:00Z",
       "venue": "SoFi Stadium, Inglewood, Calif.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "irn",
         "name": "Iran",
@@ -1152,8 +1916,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-16.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 2,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-06-16T21:01:24.205448+08:00",
+        "source_refs": [
+          {
+            "source_id": "football-data.org",
+            "tier": "T2",
+            "fixture_id": 537364,
+            "observed_result": "Iran 2-2 New Zealand"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GG-02",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 2,
+          "away": 2
+        },
+        "actual_total_goals": 4,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1164,7 +1956,7 @@
       "match_number": 39,
       "kickoff_at": "2026-06-21T19:00:00Z",
       "venue": "SoFi Stadium, Inglewood, Calif.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "bel",
         "name": "Belgium",
@@ -1175,12 +1967,40 @@
         "name": "Iran",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-21.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-21.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-22T22:41:51.454681+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Belgium 0-0 Iran"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GG-03",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 0,
+          "away": 0
+        },
+        "actual_total_goals": 0,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GG-04",
@@ -1190,7 +2010,7 @@
       "match_number": 40,
       "kickoff_at": "2026-06-22T01:00:00Z",
       "venue": "BC Place, Vancouver, Canada",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "nzl",
         "name": "New Zealand",
@@ -1204,8 +2024,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-22.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 1,
+        "away": 3,
+        "status": "final",
+        "recorded_at": "2026-06-22T22:41:51.454681+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "New Zealand 1-3 Egypt"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GG-04",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "low",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 1,
+          "away": 3
+        },
+        "actual_total_goals": 4,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1216,7 +2064,7 @@
       "match_number": 41,
       "kickoff_at": "2026-06-27T03:00:00Z",
       "venue": "Lumen Field, Seattle",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "egy",
         "name": "Egypt",
@@ -1227,12 +2075,41 @@
         "name": "Iran",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-27.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Egypt 1-1 Iran",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GG-05",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 1,
+          "away": 1
+        },
+        "actual_total_goals": 2,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GG-06",
@@ -1242,7 +2119,7 @@
       "match_number": 42,
       "kickoff_at": "2026-06-27T03:00:00Z",
       "venue": "BC Place, Vancouver, Canada",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "nzl",
         "name": "New Zealand",
@@ -1253,12 +2130,41 @@
         "name": "Belgium",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-27.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 5,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "New Zealand 1-5 Belgium",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GG-06",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 1,
+          "away": 5
+        },
+        "actual_total_goals": 6,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GH-01",
@@ -1268,7 +2174,7 @@
       "match_number": 43,
       "kickoff_at": "2026-06-15T17:00:00Z",
       "venue": "Mercedes-Benz Stadium, Atlanta",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "esp",
         "name": "Spain",
@@ -1282,8 +2188,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-15.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 0,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-16T21:01:24.204683+08:00",
+        "source_refs": [
+          {
+            "source_id": "football-data.org",
+            "tier": "T2",
+            "fixture_id": 537369,
+            "observed_result": "Spain 0-0 Cape Verde"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GH-01",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 0,
+          "away": 0
+        },
+        "actual_total_goals": 0,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1294,7 +2228,7 @@
       "match_number": 44,
       "kickoff_at": "2026-06-15T22:00:00Z",
       "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "ksa",
         "name": "Saudi Arabia",
@@ -1308,8 +2242,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-15.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 1,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-16T21:01:24.205206+08:00",
+        "source_refs": [
+          {
+            "source_id": "football-data.org",
+            "tier": "T2",
+            "fixture_id": 537370,
+            "observed_result": "Saudi Arabia 1-1 Uruguay"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GH-02",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "low",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 1,
+          "away": 1
+        },
+        "actual_total_goals": 2,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1320,7 +2282,7 @@
       "match_number": 45,
       "kickoff_at": "2026-06-21T16:00:00Z",
       "venue": "Mercedes-Benz Stadium, Atlanta",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "esp",
         "name": "Spain",
@@ -1331,12 +2293,40 @@
         "name": "Saudi Arabia",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-21.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-21.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 4,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-22T22:41:51.454681+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Spain 4-0 Saudi Arabia"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GH-03",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 4,
+          "away": 0
+        },
+        "actual_total_goals": 4,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GH-04",
@@ -1346,7 +2336,7 @@
       "match_number": 46,
       "kickoff_at": "2026-06-21T22:00:00Z",
       "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "uru",
         "name": "Uruguay",
@@ -1357,12 +2347,40 @@
         "name": "Cape Verde",
         "slot": 4
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-21.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-21.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 2,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-06-22T22:41:51.454681+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Uruguay 2-2 Cape Verde"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GH-04",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 2,
+          "away": 2
+        },
+        "actual_total_goals": 4,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GH-05",
@@ -1372,7 +2390,7 @@
       "match_number": 47,
       "kickoff_at": "2026-06-27T00:00:00Z",
       "venue": "NRG Stadium, Houston",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "cpv",
         "name": "Cape Verde",
@@ -1383,12 +2401,41 @@
         "name": "Saudi Arabia",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-27.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Cape Verde 0-0 Saudi Arabia",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GH-05",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "low",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 0,
+          "away": 0
+        },
+        "actual_total_goals": 0,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GH-06",
@@ -1398,7 +2445,7 @@
       "match_number": 48,
       "kickoff_at": "2026-06-27T00:00:00Z",
       "venue": "Estadio Akron, Zapopan, Mexico",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "uru",
         "name": "Uruguay",
@@ -1409,12 +2456,41 @@
         "name": "Spain",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-27.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Uruguay 0-1 Spain",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GH-06",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 0,
+          "away": 1
+        },
+        "actual_total_goals": 1,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GI-01",
@@ -1424,7 +2500,7 @@
       "match_number": 49,
       "kickoff_at": "2026-06-16T19:00:00Z",
       "venue": "MetLife Stadium, East Rutherford, N.J.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "fra",
         "name": "France",
@@ -1438,8 +2514,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-16.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 3,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "France 3-1 Senegal"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GI-01",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 3,
+          "away": 1
+        },
+        "actual_total_goals": 4,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1450,7 +2554,7 @@
       "match_number": 50,
       "kickoff_at": "2026-06-16T22:00:00Z",
       "venue": "Gillette Stadium, Foxborough, Mass.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "irq",
         "name": "Iraq",
@@ -1464,8 +2568,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-16.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 1,
+        "away": 4,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Iraq 1-4 Norway"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GI-02",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "low",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 1,
+          "away": 4
+        },
+        "actual_total_goals": 5,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1476,7 +2608,7 @@
       "match_number": 51,
       "kickoff_at": "2026-06-22T21:00:00Z",
       "venue": "Lincoln Financial Field, Philadelphia",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "fra",
         "name": "France",
@@ -1490,8 +2622,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-22.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 3,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-23T21:56:52.491611+08:00",
+        "source_refs": [
+          {
+            "source_id": "inline_manual",
+            "tier": "T2",
+            "fixture_id": null,
+            "observed_result": "France 3-0 Iraq"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GI-03",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 3,
+          "away": 0
+        },
+        "actual_total_goals": 3,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1502,7 +2662,7 @@
       "match_number": 52,
       "kickoff_at": "2026-06-23T00:00:00Z",
       "venue": "MetLife Stadium, East Rutherford, N.J.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "nor",
         "name": "Norway",
@@ -1513,12 +2673,41 @@
         "name": "Senegal",
         "slot": 4
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-23.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-23.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 3,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Norway 3-2 Senegal",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GI-04",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 3,
+          "away": 2
+        },
+        "actual_total_goals": 5,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GI-05",
@@ -1528,7 +2717,7 @@
       "match_number": 53,
       "kickoff_at": "2026-06-26T19:00:00Z",
       "venue": "Gillette Stadium, Foxborough, Mass.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "nor",
         "name": "Norway",
@@ -1539,12 +2728,41 @@
         "name": "France",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-26.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-27.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 4,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Norway 1-4 France",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GI-05",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 1,
+          "away": 4
+        },
+        "actual_total_goals": 5,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GI-06",
@@ -1554,7 +2772,7 @@
       "match_number": 54,
       "kickoff_at": "2026-06-26T19:00:00Z",
       "venue": "BMO Field, Toronto",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "sen",
         "name": "Senegal",
@@ -1565,12 +2783,41 @@
         "name": "Iraq",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-26.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-27.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 5,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Senegal 5-0 Iraq",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GI-06",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 5,
+          "away": 0
+        },
+        "actual_total_goals": 5,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GJ-01",
@@ -1580,7 +2827,7 @@
       "match_number": 55,
       "kickoff_at": "2026-06-17T01:00:00Z",
       "venue": "Arrowhead Stadium, Kansas City, Mo.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "arg",
         "name": "Argentina",
@@ -1594,8 +2841,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-17.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 3,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Argentina 3-0 Algeria"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GJ-01",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 3,
+          "away": 0
+        },
+        "actual_total_goals": 3,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1606,7 +2881,7 @@
       "match_number": 56,
       "kickoff_at": "2026-06-17T04:00:00Z",
       "venue": "Levi's Stadium, Santa Clara, Calif.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "aut",
         "name": "Austria",
@@ -1620,8 +2895,36 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-17.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 3,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Austria 3-1 Jordan"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GJ-02",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 3,
+          "away": 1
+        },
+        "actual_total_goals": 4,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1632,7 +2935,7 @@
       "match_number": 57,
       "kickoff_at": "2026-06-22T17:00:00Z",
       "venue": "AT&T Stadium, Arlington, Texas",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "arg",
         "name": "Argentina",
@@ -1646,8 +2949,37 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-22.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 2,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Argentina 2-0 Austria",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GJ-03",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 2,
+          "away": 0
+        },
+        "actual_total_goals": 2,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
       "prediction_status": "locked_pre_match_prediction"
     },
     {
@@ -1658,7 +2990,7 @@
       "match_number": 58,
       "kickoff_at": "2026-06-23T03:00:00Z",
       "venue": "Levi's Stadium, Santa Clara, Calif.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "jor",
         "name": "Jordan",
@@ -1669,12 +3001,40 @@
         "name": "Algeria",
         "slot": 4
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-23.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-23.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-06-23T21:56:52.540714+08:00",
+        "source_refs": [
+          {
+            "source_id": "inline_manual",
+            "tier": "T2",
+            "fixture_id": null,
+            "observed_result": "Jordan 1-2 Algeria"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GJ-04",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 1,
+          "away": 2
+        },
+        "actual_total_goals": 3,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GJ-05",
@@ -1684,7 +3044,7 @@
       "match_number": 59,
       "kickoff_at": "2026-06-28T02:00:00Z",
       "venue": "Arrowhead Stadium, Kansas City, Mo.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "alg",
         "name": "Algeria",
@@ -1695,12 +3055,41 @@
         "name": "Austria",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-28.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-28.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 3,
+        "away": 3,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Algeria 3-3 Austria",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GJ-05",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 3,
+          "away": 3
+        },
+        "actual_total_goals": 6,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GJ-06",
@@ -1710,7 +3099,7 @@
       "match_number": 60,
       "kickoff_at": "2026-06-28T02:00:00Z",
       "venue": "AT&T Stadium, Arlington, Texas",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "jor",
         "name": "Jordan",
@@ -1721,12 +3110,41 @@
         "name": "Argentina",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-28.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-28.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 3,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Jordan 1-3 Argentina",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GJ-06",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 1,
+          "away": 3
+        },
+        "actual_total_goals": 4,
+        "result_hit": true,
+        "score_hit": true,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GK-01",
@@ -1736,7 +3154,7 @@
       "match_number": 61,
       "kickoff_at": "2026-06-17T17:00:00Z",
       "venue": "NRG Stadium, Houston",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "por",
         "name": "Portugal",
@@ -1750,9 +3168,37 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-17.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Portugal 1-1 DR Congo"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GK-01",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 1,
+          "away": 1
+        },
+        "actual_total_goals": 2,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "kickoff_locked"
     },
     {
       "match_id": "2026-GK-02",
@@ -1762,7 +3208,7 @@
       "match_number": 62,
       "kickoff_at": "2026-06-18T02:00:00Z",
       "venue": "Estadio Azteca, Mexico City",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "uzb",
         "name": "Uzbekistan",
@@ -1776,9 +3222,37 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-18.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 3,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Uzbekistan 1-3 Colombia"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GK-02",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 1,
+          "away": 3
+        },
+        "actual_total_goals": 4,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "kickoff_locked"
     },
     {
       "match_id": "2026-GK-03",
@@ -1788,7 +3262,7 @@
       "match_number": 63,
       "kickoff_at": "2026-06-23T17:00:00Z",
       "venue": "NRG Stadium, Houston",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "por",
         "name": "Portugal",
@@ -1799,12 +3273,41 @@
         "name": "Uzbekistan",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-23.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-24.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 5,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Portugal 5-0 Uzbekistan",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GK-03",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 5,
+          "away": 0
+        },
+        "actual_total_goals": 5,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GK-04",
@@ -1814,7 +3317,7 @@
       "match_number": 64,
       "kickoff_at": "2026-06-24T02:00:00Z",
       "venue": "Estadio Akron, Zapopan, Mexico",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "col",
         "name": "Colombia",
@@ -1825,12 +3328,41 @@
         "name": "DR Congo",
         "slot": 4
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-24.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-24.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Colombia 1-0 DR Congo",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GK-04",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 1,
+          "away": 0
+        },
+        "actual_total_goals": 1,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GK-05",
@@ -1840,7 +3372,7 @@
       "match_number": 65,
       "kickoff_at": "2026-06-27T23:30:00Z",
       "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "col",
         "name": "Colombia",
@@ -1851,12 +3383,41 @@
         "name": "Portugal",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-28.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Colombia 0-0 Portugal",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GK-05",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 0,
+          "away": 0
+        },
+        "actual_total_goals": 0,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GK-06",
@@ -1866,7 +3427,7 @@
       "match_number": 66,
       "kickoff_at": "2026-06-27T23:30:00Z",
       "venue": "Mercedes-Benz Stadium, Atlanta",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "cod",
         "name": "DR Congo",
@@ -1877,12 +3438,41 @@
         "name": "Uzbekistan",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-28.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 3,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "DR Congo 3-1 Uzbekistan",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GK-06",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 3,
+          "away": 1
+        },
+        "actual_total_goals": 4,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GL-01",
@@ -1892,7 +3482,7 @@
       "match_number": 67,
       "kickoff_at": "2026-06-17T20:00:00Z",
       "venue": "AT&T Stadium, Arlington, Texas",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "eng",
         "name": "England",
@@ -1906,9 +3496,37 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-17.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 4,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "England 4-2 Croatia"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GL-01",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 4,
+          "away": 2
+        },
+        "actual_total_goals": 6,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "result_locked"
     },
     {
       "match_id": "2026-GL-02",
@@ -1918,7 +3536,7 @@
       "match_number": 68,
       "kickoff_at": "2026-06-17T23:00:00Z",
       "venue": "BMO Field, Toronto",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "gha",
         "name": "Ghana",
@@ -1932,9 +3550,37 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-17.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-22T21:12:08.890880+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa_match_centre",
+            "tier": "T0",
+            "fixture_id": null,
+            "observed_result": "Ghana 1-0 Panama"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GL-02",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "low",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 1,
+          "away": 0
+        },
+        "actual_total_goals": 1,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "kickoff_locked"
     },
     {
       "match_id": "2026-GL-03",
@@ -1944,7 +3590,7 @@
       "match_number": 69,
       "kickoff_at": "2026-06-23T20:00:00Z",
       "venue": "Gillette Stadium, Foxborough, Mass.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "eng",
         "name": "England",
@@ -1955,12 +3601,41 @@
         "name": "Ghana",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-23.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-24.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "England 0-0 Ghana",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GL-03",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "draw",
+        "actual_score": {
+          "home": 0,
+          "away": 0
+        },
+        "actual_total_goals": 0,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GL-04",
@@ -1970,7 +3645,7 @@
       "match_number": 70,
       "kickoff_at": "2026-06-23T23:00:00Z",
       "venue": "BMO Field, Toronto",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "pan",
         "name": "Panama",
@@ -1981,12 +3656,41 @@
         "name": "Croatia",
         "slot": 4
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-23.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-24.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.716823+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Panama 0-1 Croatia",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GL-04",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 0,
+          "away": 1
+        },
+        "actual_total_goals": 1,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GL-05",
@@ -1996,7 +3700,7 @@
       "match_number": 71,
       "kickoff_at": "2026-06-27T21:00:00Z",
       "venue": "MetLife Stadium, East Rutherford, N.J.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "pan",
         "name": "Panama",
@@ -2007,12 +3711,41 @@
         "name": "England",
         "slot": 1
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-28.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Panama 0-2 England",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GL-05",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 0,
+          "away": 2
+        },
+        "actual_total_goals": 2,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-GL-06",
@@ -2022,7 +3755,7 @@
       "match_number": 72,
       "kickoff_at": "2026-06-27T21:00:00Z",
       "venue": "Lincoln Financial Field, Philadelphia",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "cro",
         "name": "Croatia",
@@ -2033,12 +3766,41 @@
         "name": "Ghana",
         "slot": 3
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-27.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-28.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 2,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-28T23:40:24.717162+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "Croatia 2-1 Ghana",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-GL-06",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 2,
+          "away": 1
+        },
+        "actual_total_goals": 3,
+        "result_hit": true,
+        "score_hit": true,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R32-01",
@@ -2048,21 +3810,65 @@
       "match_number": 73,
       "kickoff_at": "2026-06-28T19:00:00Z",
       "venue": "SoFi Stadium, Inglewood, Calif.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "round_of_32-home-1",
-        "name": "Group A runners-up"
+        "team_id": "rsa",
+        "name": "South Africa",
+        "code": "RSA",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-1",
-        "name": "Group B runners-up"
+        "team_id": "can",
+        "name": "Canada",
+        "code": "CAN",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-28.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-29.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-06-29T21:06:37.659430+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn_world_cup_schedule_2026",
+            "tier": "T1",
+            "fixture_id": null,
+            "observed_result": "South Africa 0-1 Canada",
+            "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-R32-01",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 0,
+          "away": 1
+        },
+        "actual_total_goals": 1,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true
+      },
+      "prediction_status": "locked_pre_match",
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "South Africa vs Canada",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ]
     },
     {
       "match_id": "2026-R32-02",
@@ -2072,21 +3878,36 @@
       "match_number": 74,
       "kickoff_at": "2026-06-29T17:00:00Z",
       "venue": "NRG Stadium, Houston",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-2",
-        "name": "Group C winners"
+        "team_id": "bra",
+        "name": "Brazil",
+        "code": "BRA",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-2",
-        "name": "Group F runners-up"
+        "team_id": "jpn",
+        "name": "Japan",
+        "code": "JPN",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-29.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-30.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
       "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "prediction_status": "locked_pre_match",
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Brazil vs Japan",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ]
     },
     {
       "match_id": "2026-R32-03",
@@ -2096,21 +3917,36 @@
       "match_number": 75,
       "kickoff_at": "2026-06-29T20:30:00Z",
       "venue": "Gillette Stadium, Foxborough, Mass.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-3",
-        "name": "Group E winners"
+        "team_id": "ger",
+        "name": "Germany",
+        "code": "GER",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-3",
-        "name": "Group A/B/C/D/F third place"
+        "team_id": "par",
+        "name": "Paraguay",
+        "code": "PAR",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-29.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-30.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
       "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "prediction_status": "locked_pre_match",
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Germany vs Paraguay",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ]
     },
     {
       "match_id": "2026-R32-04",
@@ -2120,21 +3956,36 @@
       "match_number": 76,
       "kickoff_at": "2026-06-30T01:00:00Z",
       "venue": "Estadio BBVA, Guadalupe, Mexico",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-4",
-        "name": "Group F winners"
+        "team_id": "ned",
+        "name": "Netherlands",
+        "code": "NED",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-4",
-        "name": "Group C runners-up"
+        "team_id": "mar",
+        "name": "Morocco",
+        "code": "MAR",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-30.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-06-30.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
       "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "prediction_status": "locked_pre_match",
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Netherlands vs Morocco",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ]
     },
     {
       "match_id": "2026-R32-05",
@@ -2144,21 +3995,36 @@
       "match_number": 77,
       "kickoff_at": "2026-06-30T17:00:00Z",
       "venue": "AT&T Stadium, Arlington, Texas",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-5",
-        "name": "Group E runners-up"
+        "team_id": "civ",
+        "name": "Côte D'Ivoire",
+        "code": "CIV",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-5",
-        "name": "Group I runners-up"
+        "team_id": "nor",
+        "name": "Norway",
+        "code": "NOR",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-30.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-01.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
       "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "prediction_status": "locked_pre_match",
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Côte D'Ivoire vs Norway",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ]
     },
     {
       "match_id": "2026-R32-06",
@@ -2168,21 +4034,36 @@
       "match_number": 78,
       "kickoff_at": "2026-06-30T21:00:00Z",
       "venue": "MetLife Stadium, East Rutherford, N.J.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-6",
-        "name": "Group I winners"
+        "team_id": "fra",
+        "name": "France",
+        "code": "FRA",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-6",
-        "name": "Group C/D/F/G/H third place"
+        "team_id": "swe",
+        "name": "Sweden",
+        "code": "SWE",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-06-30.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-01.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
       "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "prediction_status": "locked_pre_match",
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "France vs Sweden",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ]
     },
     {
       "match_id": "2026-R32-07",
@@ -2192,20 +4073,36 @@
       "match_number": 79,
       "kickoff_at": "2026-07-01T01:00:00Z",
       "venue": "Estadio Azteca, Mexico City",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-7",
-        "name": "Group A winners"
+        "team_id": "mex",
+        "name": "Mexico",
+        "code": "MEX",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-7",
-        "name": "Group C/E/F/H/I third place"
+        "team_id": "ecu",
+        "name": "Ecuador",
+        "code": "ECU",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-01.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
-      "evaluation": null
+      "evaluation": null,
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Mexico vs Ecuador",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ],
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R32-08",
@@ -2215,20 +4112,36 @@
       "match_number": 80,
       "kickoff_at": "2026-07-01T16:00:00Z",
       "venue": "Mercedes-Benz Stadium, Atlanta",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-8",
-        "name": "Group L winners"
+        "team_id": "eng",
+        "name": "England",
+        "code": "ENG",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-8",
-        "name": "Group E/H/I/J/K third place"
+        "team_id": "cod",
+        "name": "Congo DR",
+        "code": "COD",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-02.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
-      "evaluation": null
+      "evaluation": null,
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "England vs Congo DR",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ],
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R32-09",
@@ -2238,20 +4151,36 @@
       "match_number": 81,
       "kickoff_at": "2026-07-01T20:00:00Z",
       "venue": "Lumen Field, Seattle",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-9",
-        "name": "Group G winners"
+        "team_id": "bel",
+        "name": "Belgium",
+        "code": "BEL",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-9",
-        "name": "Group A/E/H/I/J third place"
+        "team_id": "sen",
+        "name": "Senegal",
+        "code": "SEN",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-02.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
-      "evaluation": null
+      "evaluation": null,
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Belgium vs Senegal",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ],
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R32-10",
@@ -2261,20 +4190,36 @@
       "match_number": 82,
       "kickoff_at": "2026-07-02T00:00:00Z",
       "venue": "Levi's Stadium, Santa Clara, Calif.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-10",
-        "name": "Group D winners"
+        "team_id": "usa",
+        "name": "USA",
+        "code": "USA",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-10",
-        "name": "Group B/E/F/I/J third place"
+        "team_id": "bih",
+        "name": "Bosnia And Herzegovina",
+        "code": "BIH",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-02.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
-      "evaluation": null
+      "evaluation": null,
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "USA vs Bosnia And Herzegovina",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ],
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R32-11",
@@ -2284,20 +4229,36 @@
       "match_number": 83,
       "kickoff_at": "2026-07-02T19:00:00Z",
       "venue": "SoFi Stadium, Inglewood, Calif.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-11",
-        "name": "Group H winners"
+        "team_id": "esp",
+        "name": "Spain",
+        "code": "ESP",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-11",
-        "name": "Group J runners-up"
+        "team_id": "aut",
+        "name": "Austria",
+        "code": "AUT",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-03.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
-      "evaluation": null
+      "evaluation": null,
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Spain vs Austria",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ],
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R32-12",
@@ -2307,20 +4268,36 @@
       "match_number": 84,
       "kickoff_at": "2026-07-02T23:00:00Z",
       "venue": "BMO Field, Toronto",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-12",
-        "name": "Group K runners-up"
+        "team_id": "por",
+        "name": "Portugal",
+        "code": "POR",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-12",
-        "name": "Group L runners-up"
+        "team_id": "cro",
+        "name": "Croatia",
+        "code": "CRO",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-03.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
-      "evaluation": null
+      "evaluation": null,
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Portugal vs Croatia",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ],
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R32-13",
@@ -2330,20 +4307,36 @@
       "match_number": 85,
       "kickoff_at": "2026-07-03T03:00:00Z",
       "venue": "BC Place, Vancouver, Canada",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-13",
-        "name": "Group B winners"
+        "team_id": "sui",
+        "name": "Switzerland",
+        "code": "SUI",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-13",
-        "name": "Group E/F/G/I/J third place"
+        "team_id": "alg",
+        "name": "Algeria",
+        "code": "ALG",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-03.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
-      "evaluation": null
+      "evaluation": null,
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Switzerland vs Algeria",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ],
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R32-14",
@@ -2353,20 +4346,36 @@
       "match_number": 86,
       "kickoff_at": "2026-07-03T18:00:00Z",
       "venue": "AT&T Stadium, Arlington, Texas",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-14",
-        "name": "Group D runners-up"
+        "team_id": "aus",
+        "name": "Australia",
+        "code": "AUS",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-14",
-        "name": "Group G runners-up"
+        "team_id": "egy",
+        "name": "Egypt",
+        "code": "EGY",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-04.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
-      "evaluation": null
+      "evaluation": null,
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Australia vs Egypt",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ],
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R32-15",
@@ -2376,20 +4385,36 @@
       "match_number": 87,
       "kickoff_at": "2026-07-03T22:00:00Z",
       "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-15",
-        "name": "Group J winners"
+        "team_id": "arg",
+        "name": "Argentina",
+        "code": "ARG",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-15",
-        "name": "Group H runners-up"
+        "team_id": "cpv",
+        "name": "Cabo Verde",
+        "code": "CPV",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-04.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
-      "evaluation": null
+      "evaluation": null,
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Argentina vs Cabo Verde",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ],
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R32-16",
@@ -2399,20 +4424,36 @@
       "match_number": 88,
       "kickoff_at": "2026-07-04T01:30:00Z",
       "venue": "Arrowhead Stadium, Kansas City, Mo.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "round_of_32-home-16",
-        "name": "Group K winners"
+        "team_id": "col",
+        "name": "Colombia",
+        "code": "COL",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
       "away_team": {
-        "team_id": "round_of_32-away-16",
-        "name": "Group D/E/I/J/L third place"
+        "team_id": "gha",
+        "name": "Ghana",
+        "code": "GHA",
+        "source_integrity": "complete",
+        "status": "official_squad_pdf_parsed"
       },
-      "prediction_report": "",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-04.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
-      "evaluation": null
+      "evaluation": null,
+      "source_refs": [
+        {
+          "source_id": "espn_world_cup_schedule_2026",
+          "tier": "T1",
+          "fixture_id": null,
+          "observed_fixture": "Colombia vs Ghana",
+          "source_url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket"
+        }
+      ],
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-R16-01",
