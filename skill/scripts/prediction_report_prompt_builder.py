@@ -180,6 +180,10 @@ def build_report_prompt_manifest(
 ) -> dict:
     generated_at = iso_now(now)
     report_path = report_path or (edition_data_root(root, edition) / "reports" / f"{date}-prediction-report.json")
+    if not report_path.exists():
+        fallback_path = edition_data_root(root, edition) / "reports" / "backtests" / report_path.name
+        if fallback_path.exists():
+            report_path = fallback_path
     report = load_json(report_path, {})
     prompt_items = []
     for prediction in report.get("predictions", []):

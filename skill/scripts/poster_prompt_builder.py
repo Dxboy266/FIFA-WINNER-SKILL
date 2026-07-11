@@ -454,6 +454,10 @@ def build_poster_manifest(
     generated_at = iso_now(now)
     prompt_text_path = _prompt_text_path(root, edition, date, match_id)
     report_path = report_path or (edition_data_root(root, edition) / "reports" / "daily-predictions" / f"{date}.json")
+    if not report_path.exists():
+        fallback_path = edition_data_root(root, edition) / "reports" / "backtests" / report_path.name
+        if fallback_path.exists():
+            report_path = fallback_path
     report = load_json(report_path, {})
     rosters_by_team_id = _load_rosters_by_team_id(root, edition) if style == "showdown" else {}
     ledger = load_match_ledger(root, edition) if style == "showdown" else {"matches": []}

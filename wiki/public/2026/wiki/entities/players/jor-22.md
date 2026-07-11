@@ -2,23 +2,26 @@
 type: entity
 entity_type: player
 edition: 2026
-status: partial
-updated: 2026-06-09
+status: enriched
+updated: 2026-06-18
 ---
 
-# Unknown Player
+# ABDALLAH ALFAKHORI
 
 ## 基础信息
 
-- Player ID：`jor-22`
-- 国家队：Jordan
-- 位置：GK
-- 俱乐部：Al Wahdat SC (JOR)
-- 来源完整性：partial
+- **Player ID**: `jor-22`
+- **国家队**: Jordan
+- **位置**: GK
+- **号码**: #22
+- **俱乐部**: Al Wahdat SC (JOR)
+- **出生日期**: 2000-01-22
+- **身高**: 190cm
 
-## 待补深档
+## 当前状态
 
-- 国家队出场和进球
-- 世界杯/洲际赛经历
-- 近期状态、伤停和出场时间
-- 预测相关标签
+✅ 健康可用
+
+---
+
+*Generated at 2026-06-18T19:30:59.213432+08:00*

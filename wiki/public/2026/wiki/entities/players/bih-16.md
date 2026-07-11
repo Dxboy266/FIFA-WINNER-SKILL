@@ -2,23 +2,26 @@
 type: entity
 entity_type: player
 edition: 2026
-status: partial
-updated: 2026-06-09
+status: enriched
+updated: 2026-06-18
 ---
 
-# Unknown Player
+# HADZIAHMETOVIC Amir
 
 ## 基础信息
 
-- Player ID：`bih-16`
-- 国家队：Bosnia And Herzegovina
-- 位置：MF
-- 俱乐部：Hull City FC (ENG)
-- 来源完整性：partial
+- **Player ID**: `bih-16`
+- **国家队**: Bosnia And Herzegovina
+- **位置**: MF
+- **号码**: #16
+- **俱乐部**: Hull City FC (ENG)
+- **出生日期**: 1997-03-08
+- **身高**: 179cm
 
-## 待补深档
+## 当前状态
 
-- 国家队出场和进球
-- 世界杯/洲际赛经历
-- 近期状态、伤停和出场时间
-- 预测相关标签
+✅ 健康可用
+
+---
+
+*Generated at 2026-06-18T19:30:59.213432+08:00*

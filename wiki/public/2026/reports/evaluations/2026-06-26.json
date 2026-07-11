@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-26",
+  "generated_at": "2026-06-30T21:28:36.445256+08:00",
+  "mode": "worldcup-prediction-post-match-evaluation",
+  "summary": {
+    "evaluations": 6,
+    "evaluated_matches": 6,
+    "blocked_missing_final_score": 0,
+    "result_hits": 4,
+    "score_hits": 1,
+    "total_goals_hits": 2,
+    "confidence_calibration": {
+      "low": {
+        "evaluated_matches": 1,
+        "result_hits": 1,
+        "result_hit_rate": 1.0
+      },
+      "medium": {
+        "evaluated_matches": 5,
+        "result_hits": 3,
+        "result_hit_rate": 0.6
+      }
+    }
+  },
+  "evaluations": [
+    {
+      "match_id": "2026-GD-05",
+      "status": "evaluated",
+      "predicted_result": "draw",
+      "prediction_confidence": "medium",
+      "actual_result": "home_win",
+      "actual_score": {
+        "home": 3,
+        "away": 2
+      },
+      "actual_total_goals": 5,
+      "result_hit": false,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true
+    },
+    {
+      "match_id": "2026-GD-06",
+      "status": "evaluated",
+      "predicted_result": "draw",
+      "prediction_confidence": "medium",
+      "actual_result": "draw",
+      "actual_score": {
+        "home": 0,
+        "away": 0
+      },
+      "actual_total_goals": 0,
+      "result_hit": true,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true
+    },
+    {
+      "match_id": "2026-GE-05",
+      "status": "evaluated",
+      "predicted_result": "away_win",
+      "prediction_confidence": "medium",
+      "actual_result": "home_win",
+      "actual_score": {
+        "home": 2,
+        "away": 1
+      },
+      "actual_total_goals": 3,
+      "result_hit": false,
+      "score_hit": false,
+      "total_goals_hit": true,
+      "prediction_kept_locked": true
+    },
+    {
+      "match_id": "2026-GE-06",
+      "status": "evaluated",
+      "predicted_result": "away_win",
+      "prediction_confidence": "low",
+      "actual_result": "away_win",
+      "actual_score": {
+        "home": 0,
+        "away": 2
+      },
+      "actual_total_goals": 2,
+      "result_hit": true,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true
+    },
+    {
+      "match_id": "2026-GF-05",
+      "status": "evaluated",
+      "predicted_result": "draw",
+      "prediction_confidence": "medium",
+      "actual_result": "draw",
+      "actual_score": {
+        "home": 1,
+        "away": 1
+      },
+      "actual_total_goals": 2,
+      "result_hit": true,
+      "score_hit": true,
+      "total_goals_hit": true,
+      "prediction_kept_locked": true
+    },
+    {
+      "match_id": "2026-GF-06",
+      "status": "evaluated",
+      "predicted_result": "away_win",
+      "prediction_confidence": "medium",
+      "actual_result": "away_win",
+      "actual_score": {
+        "home": 1,
+        "away": 3
+      },
+      "actual_total_goals": 4,
+      "result_hit": true,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true
+    }
+  ],
+  "safety_invariants": [
+    "post_match_evaluation_does_not_rewrite_locked_pre_match_predictions"
+  ]
+}

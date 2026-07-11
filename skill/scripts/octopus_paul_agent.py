@@ -37,6 +37,7 @@ from worldcup_core import (  # noqa: E402
 )
 
 from prediction_scoring_model import (  # noqa: E402
+    _build_scoreline_calibration,
     _build_ranking_index,
     _build_squad_index,
     _build_evidence_index,
@@ -148,6 +149,7 @@ def run_custom_predictions(
     squad_index = _build_squad_index(squad_data)
     evidence_index = _build_evidence_index(evidence_plan)
     global_summary = squad_data.get("global_summary")
+    scoreline_calibration = _build_scoreline_calibration(ledger.get("matches", []))
 
     # 2. Filter Matches
     target_matches = []
@@ -213,6 +215,7 @@ def run_custom_predictions(
             evidence_index=evidence_index,
             global_summary=global_summary,
             daily_evidence=daily_evidence,
+            scoreline_calibration=scoreline_calibration,
         )
         predictions.append(pred)
 

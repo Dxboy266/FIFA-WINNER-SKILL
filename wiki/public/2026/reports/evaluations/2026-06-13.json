@@ -2,31 +2,18 @@
   "version": 1,
   "edition": "2026",
   "date": "2026-06-13",
-  "generated_at": "2026-06-14T14:19:41.424844+08:00",
+  "generated_at": "2026-06-30T21:28:34.256595+08:00",
   "mode": "worldcup-prediction-post-match-evaluation",
   "summary": {
-    "evaluations": 2,
+    "evaluations": 0,
     "evaluated_matches": 0,
-    "blocked_missing_final_score": 2,
+    "blocked_missing_final_score": 0,
     "result_hits": 0,
     "score_hits": 0,
     "total_goals_hits": 0,
     "confidence_calibration": {}
   },
-  "evaluations": [
-    {
-      "match_id": "2026-GB-02",
-      "status": "blocked_missing_final_score",
-      "prediction_confidence": "low",
-      "prediction_kept_locked": true
-    },
-    {
-      "match_id": "2026-GC-01",
-      "status": "blocked_missing_final_score",
-      "prediction_confidence": "low",
-      "prediction_kept_locked": true
-    }
-  ],
+  "evaluations": [],
   "safety_invariants": [
     "post_match_evaluation_does_not_rewrite_locked_pre_match_predictions"
   ]

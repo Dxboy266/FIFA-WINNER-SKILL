@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-23",
+  "generated_at": "2026-06-30T21:28:35.927457+08:00",
+  "mode": "worldcup-prediction-post-match-evaluation",
+  "summary": {
+    "evaluations": 4,
+    "evaluated_matches": 4,
+    "blocked_missing_final_score": 0,
+    "result_hits": 3,
+    "score_hits": 0,
+    "total_goals_hits": 0,
+    "confidence_calibration": {
+      "medium": {
+        "evaluated_matches": 4,
+        "result_hits": 3,
+        "result_hit_rate": 0.75
+      }
+    }
+  },
+  "evaluations": [
+    {
+      "match_id": "2026-GI-03",
+      "status": "evaluated",
+      "predicted_result": "home_win",
+      "prediction_confidence": "medium",
+      "actual_result": "home_win",
+      "actual_score": {
+        "home": 3,
+        "away": 0
+      },
+      "actual_total_goals": 3,
+      "result_hit": true,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true
+    },
+    {
+      "match_id": "2026-GI-04",
+      "status": "evaluated",
+      "predicted_result": "draw",
+      "prediction_confidence": "medium",
+      "actual_result": "home_win",
+      "actual_score": {
+        "home": 3,
+        "away": 2
+      },
+      "actual_total_goals": 5,
+      "result_hit": false,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true
+    },
+    {
+      "match_id": "2026-GJ-03",
+      "status": "evaluated",
+      "predicted_result": "home_win",
+      "prediction_confidence": "medium",
+      "actual_result": "home_win",
+      "actual_score": {
+        "home": 2,
+        "away": 0
+      },
+      "actual_total_goals": 2,
+      "result_hit": true,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true
+    },
+    {
+      "match_id": "2026-GJ-04",
+      "status": "evaluated",
+      "predicted_result": "away_win",
+      "prediction_confidence": "medium",
+      "actual_result": "away_win",
+      "actual_score": {
+        "home": 1,
+        "away": 2
+      },
+      "actual_total_goals": 3,
+      "result_hit": true,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true
+    }
+  ],
+  "safety_invariants": [
+    "post_match_evaluation_does_not_rewrite_locked_pre_match_predictions"
+  ]
+}

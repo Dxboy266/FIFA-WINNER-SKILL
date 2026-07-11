@@ -21,10 +21,42 @@ sys.path.insert(0, str(SCRIPT_DIR))
 
 from tianji_oracle import compute_tianji_overlay  # noqa: E402
 from prediction_scoring_model import compute_divination_overlay, _generate_match_hexagram_interpretation  # noqa: E402
-from worldcup_core import raw_edition_root, DISCLAIMER, canonical_matches, edition_data_root, is_canonical_match, iso_now, load_edition_data_json, load_json, load_match_ledger, person_edition_root, public_edition_data_root, wiki_edition_root, worldcup_db_path, write_json, write_text  # noqa: E402
+from worldcup_core import apply_prediction_items_to_matches, raw_edition_root, DISCLAIMER, canonical_matches, edition_data_root, is_canonical_match, iso_now, load_edition_data_json, load_json, load_match_ledger, materialize_actual_knockout_fixtures, person_edition_root, public_edition_data_root, wiki_edition_root, worldcup_db_path, write_json, write_text  # noqa: E402
 
 
 OUTCOME_LABELS = {"home_win": "主胜", "away_win": "客胜", "draw": "平局"}
+
+KNOCKOUT_PHASES = {
+    "round_of_32",
+    "round_of_16",
+    "quarter_final",
+    "semi_final",
+    "third_place",
+    "final",
+}
+
+PHASE_LABELS = {
+    "all": "总数据",
+    "group": "小组赛",
+    "round_of_32": "1/16决赛",
+    "round_of_16": "1/8决赛",
+    "quarter_final": "1/4决赛",
+    "semi_final": "半决赛",
+    "third_place": "三四名",
+    "final": "决赛",
+}
+
+STAT_PHASE_LABELS = {
+    **PHASE_LABELS,
+    "group": "小组赛汇总",
+}
+
+FACT_PHASE_ORDER = (
+    "group",
+    "round_of_32",
+    "round_of_16",
+    "quarter_final",
+)
 
 TEAM_ZH = {
     "mex": "墨西哥", "rsa": "南非", "kor": "韩国", "cze": "捷克",
@@ -40,6 +72,27 @@ TEAM_ZH = {
     "por": "葡萄牙", "cod": "刚果（金）", "uzb": "乌兹别克斯坦", "col": "哥伦比亚",
     "eng": "英格兰", "cro": "克罗地亚", "gha": "加纳", "pan": "巴拿马",
 }
+
+
+def _zh_name_from_label(name: str, team_id: str = "") -> str:
+    team_key = str(team_id or "").lower()
+    if team_key and team_key in TEAM_ZH:
+        return TEAM_ZH[team_key]
+    value = str(name or "")
+    if not value:
+        return value
+    for zh in TEAM_ZH.values():
+        if value == zh:
+            return value
+    for code, zh in TEAM_ZH.items():
+        if value.lower() == code:
+            return zh
+    return value
+
+
+def _is_placeholder_team_name(name: str) -> bool:
+    value = str(name or "").strip().upper()
+    return bool(re.match(r"^[WL]\d{2,3}$", value))
 
 
 def _dashboard_paths(root: Path, edition: str) -> tuple[Path, Path]:
@@ -248,6 +301,11 @@ def _as_prediction_card(item: dict, *, evaluation: dict | None) -> dict:
     local_date = str(divination.get("local_kickoff_at", ""))[:10] or str(item.get("kickoff_at", ""))[:10]
 
     result = str(prediction.get("result") or prediction.get("predicted_outcome") or "")
+    knockout_prediction = _normalize_knockout_payload(
+        prediction.get("knockout"),
+        home_name=home_name,
+        away_name=away_name,
+    )
     evaluated = evaluation or {}
     eval_status = str(evaluated.get("status") or "pending_final_score")
     result_hit = evaluated.get("result_hit")
@@ -298,6 +356,7 @@ def _as_prediction_card(item: dict, *, evaluation: dict | None) -> dict:
         "total_goals": prediction.get("total_goals", "-"),
         "confidence": prediction.get("confidence", "unknown"),
         "confidence_label": prediction.get("confidence", "unknown").upper(),
+        "knockout_prediction": knockout_prediction,
 
         # Enriched model fields
         "expected_goals_proxy": prediction.get("expected_goals_proxy"),
@@ -363,6 +422,11 @@ def _merge_prediction_item_into_card(card: dict, item: dict, *, root: Path) -> b
         item.get("market_odds"),
         item.get("market_odds_status"),
     )
+    knockout_prediction = _normalize_knockout_payload(
+        prediction.get("knockout"),
+        home_name=str((home or {}).get("name") or card.get("home_name") or ""),
+        away_name=str((away or {}).get("name") or card.get("away_name") or ""),
+    )
 
     card.update({
         "prediction_origin": item.get("prediction_origin", "user_local"),
@@ -373,6 +437,7 @@ def _merge_prediction_item_into_card(card: dict, item: dict, *, root: Path) -> b
         "predicted_result": result,
         "predicted_result_label": OUTCOME_LABELS.get(result, result),
         "score_text": f"{score.get('home', '-')}-{score.get('away', '-')}",
+        "knockout_prediction": knockout_prediction,
         "total_goals": prediction.get("total_goals", "-"),
         "confidence": prediction.get("confidence", "unknown"),
         "confidence_label": str(prediction.get("confidence", "unknown")).upper(),
@@ -424,7 +489,15 @@ def _merge_daily_prediction_sources_into_cards(payload: dict, root: Path, editio
         card = by_match.get(match_id)
         if not card:
             continue
-        if _prediction_exists(card):
+        needs_knockout_backfill = (
+            _is_knockout_phase(str(card.get("phase") or item.get("phase") or ""))
+            and (
+                not card.get("knockout_prediction")
+                or str(card.get("home_name") or "").upper().startswith("W")
+                or str(card.get("away_name") or "").upper().startswith("W")
+            )
+        )
+        if _prediction_exists(card) and not needs_knockout_backfill:
             continue
         if _merge_prediction_item_into_card(card, item, root=root):
             merged += 1
@@ -715,6 +788,14 @@ def _ledger_team_ids(ledger: dict, match_id: str) -> tuple[str, str]:
     return "", ""
 
 
+def _ledger_matches_by_id(ledger: dict) -> dict[str, dict]:
+    return {
+        str(match.get("match_id") or ""): match
+        for match in _canonical_ledger_matches(ledger)
+        if match.get("match_id")
+    }
+
+
 def _daily_evidence_details(ed_root: Path, date: str, home_id: str, away_id: str) -> dict:
     daily_ev_path = ed_root / "daily-evidence" / f"{date}.json"
     details = {
@@ -843,6 +924,7 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
     data_path, html_path = _dashboard_paths(root, edition)
     db_path = worldcup_db_path(root, edition)
     ledger = _load_match_ledger(root, edition)
+    ledger_by_id = _ledger_matches_by_id(ledger)
 
     db_data = query_db_data(db_path) if include_local and db_path.exists() else None
 
@@ -919,12 +1001,13 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
 
         for m in db_data["matches"]:
             if not m["predicted_result"]:
-                ledger_match = next((item for item in _canonical_ledger_matches(ledger) if item.get("match_id") == m.get("match_id")), None)
+                ledger_match = ledger_by_id.get(str(m.get("match_id") or ""))
                 if not ledger_match:
                     continue
                 fact_card = _fact_card_from_match(ledger_match)
-                fact_card["home_name"] = m.get("home_name_zh") or m.get("home_name_en") or fact_card["home_name"]
-                fact_card["away_name"] = m.get("away_name_zh") or m.get("away_name_en") or fact_card["away_name"]
+                if fact_card.get("data_source") != "placeholder":
+                    fact_card["home_name"] = m.get("home_name_zh") or m.get("home_name_en") or fact_card["home_name"]
+                    fact_card["away_name"] = m.get("away_name_zh") or m.get("away_name_en") or fact_card["away_name"]
                 fact_card["home_colors"] = m.get("home_colors") or ""
                 fact_card["away_colors"] = m.get("away_colors") or ""
                 fact_card["home_players"] = players_by_team.get((m.get("home_team_id") or "").lower(), [])
@@ -941,7 +1024,47 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
 
             result = m["predicted_result"]
             confidence = m["confidence"] or "unknown"
-            local_date = m["prediction_date"] or (m["kickoff_at"][:10] if m["kickoff_at"] else "unknown")
+            local_date = m["prediction_date"] or ""
+            if not local_date and m.get("kickoff_at"):
+                try:
+                    _bjt = timezone(timedelta(hours=8))
+                    local_date = datetime.fromisoformat(str(m["kickoff_at"]).replace("Z", "+00:00")).astimezone(_bjt).strftime("%Y-%m-%d")
+                except Exception:
+                    local_date = str(m.get("kickoff_at") or "")[:10]
+            local_date = local_date or "unknown"
+            ledger_match = ledger_by_id.get(str(m.get("match_id") or ""))
+            db_home_name = m["home_name_zh"] or m["home_name_en"] or ""
+            db_away_name = m["away_name_zh"] or m["away_name_en"] or ""
+            ledger_home_name = _match_team_name(ledger_match, "home") if ledger_match else ""
+            ledger_away_name = _match_team_name(ledger_match, "away") if ledger_match else ""
+            display_home_name = db_home_name or ledger_home_name or "Home"
+            display_away_name = db_away_name or ledger_away_name or "Away"
+            unresolved_placeholder = bool(
+                ledger_match
+                and str(ledger_match.get("status") or "") == "knockout_placeholder_until_teams_known"
+                and (
+                    _is_placeholder_team_name(ledger_home_name or display_home_name)
+                    or _is_placeholder_team_name(ledger_away_name or display_away_name)
+                )
+            )
+            resolved_knockout_match = bool(
+                not unresolved_placeholder
+                and not _is_placeholder_team_name(ledger_home_name or display_home_name)
+                and not _is_placeholder_team_name(ledger_away_name or display_away_name)
+                and (
+                    (ledger_home_name and ledger_away_name)
+                    or (db_home_name and db_away_name)
+                    or (m.get("final_score_home") is not None and m.get("final_score_away") is not None)
+                )
+            )
+            data_source = m.get("_data_source", "official")
+            data_source_label = m.get("_data_source_label", "")
+            if unresolved_placeholder:
+                data_source = "placeholder"
+                data_source_label = "占位"
+            elif data_source == "placeholder" and resolved_knockout_match:
+                data_source = "official"
+                data_source_label = ""
 
             expected_goals_proxy = None
             clean_sheet_probability = None
@@ -1147,6 +1270,9 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
 
             home_id = m.get("home_team_id") or ""
             away_id = m.get("away_team_id") or ""
+            if ledger_match:
+                home_id = str((ledger_match.get("home_team") or {}).get("team_id") or home_id or "")
+                away_id = str((ledger_match.get("away_team") or {}).get("team_id") or away_id or "")
 
             home_ranking_info = ranking_index.get(home_id.lower())
             away_ranking_info = ranking_index.get(away_id.lower())
@@ -1188,8 +1314,8 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
                 venue=m["venue"]
             )
             # Also compute I Ching hexagram overlay (with match context)
-            _home_zh = m["home_name_zh"] or m["home_name_en"] or ""
-            _away_zh = m["away_name_zh"] or m["away_name_en"] or ""
+            _home_zh = display_home_name
+            _away_zh = display_away_name
             _hex_overlay = compute_divination_overlay(local_date, m["match_id"],
                                                       home_name=_home_zh, away_name=_away_zh)
             divination_overlay["hexagram_number"] = _hex_overlay["hexagram_number"]
@@ -1210,9 +1336,9 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
                 "prediction_source": "user_local",
                 "prediction_source_path": m.get("report_json_path") or "",
                 "data_origin": "user_local",
-                # Data source: official (real match) or placeholder (fake knockout data)
-                "data_source": m.get("_data_source", "official"),
-                "data_source_label": m.get("_data_source_label", ""),
+                # Data source: official once real teams/results are known locally.
+                "data_source": data_source,
+                "data_source_label": data_source_label,
                 "divination_overlay": divination_overlay,
                 "date": local_date,
                 "kickoff_at": m["kickoff_at"],
@@ -1221,26 +1347,27 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
                 "venue": m["venue"] or "",
                 "group": m["group_name"] or "",
                 "phase": m["phase"] or "",
-                "home_name": m["home_name_zh"] or m["home_name_en"] or "Home",
-                "away_name": m["away_name_zh"] or m["away_name_en"] or "Away",
-                "predicted_result": result,
-                "predicted_result_label": OUTCOME_LABELS.get(result, result or "Unknown"),
-                "score_text": f"{m['predicted_score_home']}-{m['predicted_score_away']}" if m['predicted_score_home'] is not None else "-:-",
-                "total_goals": (m['predicted_score_home'] or 0) + (m['predicted_score_away'] or 0) if m['predicted_score_home'] is not None else "-",
-                "confidence": confidence,
-                "confidence_label": confidence.upper(),
+                "home_name": display_home_name,
+                "away_name": display_away_name,
+                "predicted_result": "" if unresolved_placeholder else result,
+                "predicted_result_label": "未预测" if unresolved_placeholder else OUTCOME_LABELS.get(result, result or "Unknown"),
+                "score_text": "-:-" if unresolved_placeholder else (f"{m['predicted_score_home']}-{m['predicted_score_away']}" if m['predicted_score_home'] is not None else "-:-"),
+                "knockout_prediction": None,
+                "total_goals": "-" if unresolved_placeholder else ((m['predicted_score_home'] or 0) + (m['predicted_score_away'] or 0) if m['predicted_score_home'] is not None else "-"),
+                "confidence": "none" if unresolved_placeholder else confidence,
+                "confidence_label": "NONE" if unresolved_placeholder else confidence.upper(),
 
                 # Deep prediction fields
-                "expected_goals_proxy": expected_goals_proxy,
-                "clean_sheet_probability": clean_sheet_probability,
-                "scoreline_distribution": scoreline_distribution,
-                "result_confidence": result_confidence,
-                "score_confidence": score_confidence,
-                "total_goals_confidence": total_goals_confidence,
+                "expected_goals_proxy": None if unresolved_placeholder else expected_goals_proxy,
+                "clean_sheet_probability": None if unresolved_placeholder else clean_sheet_probability,
+                "scoreline_distribution": None if unresolved_placeholder else scoreline_distribution,
+                "result_confidence": "none" if unresolved_placeholder else result_confidence,
+                "score_confidence": "none" if unresolved_placeholder else score_confidence,
+                "total_goals_confidence": "none" if unresolved_placeholder else total_goals_confidence,
                 "confidence_note": confidence_note,
                 "venue_adaptation_context": venue_adaptation_context,
                 "referee_analysis": referee_analysis,
-                "play_card": play_card,
+                "play_card": {} if unresolved_placeholder else play_card,
 
                 "divination_hexagram": m["divination_hexagram"] or "",
                 "evaluation_status": "evaluated" if m["is_result_correct"] is not None else "pending_final_score",
@@ -1251,15 +1378,16 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
                 "actual_score_home": m.get("final_score_home"),
                 "actual_score_away": m.get("final_score_away"),
                 "actual_result": _actual_result_from_score(m.get("final_score_home"), m.get("final_score_away")),
+                "knockout_actual": None,
                 "is_completed": m.get("final_score_home") is not None and m.get("final_score_away") is not None,
                 "home_colors": m.get("home_colors") or "",
                 "away_colors": m.get("away_colors") or "",
                 "home_ranking": home_ranking,
                 "away_ranking": away_ranking,
                 "evidence_gaps": [],
-                "play_title": play_card.get("share_title", ""),
-                "risk_flags": play_card.get("risk_flags", []) or [],
-                "watch_points": play_card.get("watch_points", []) or [],
+                "play_title": "" if unresolved_placeholder else play_card.get("share_title", ""),
+                "risk_flags": [] if unresolved_placeholder else (play_card.get("risk_flags", []) or []),
+                "watch_points": [] if unresolved_placeholder else (play_card.get("watch_points", []) or []),
                 "primary_error": m["primary_error"] or "",
                 "has_odds": market_has_odds,
                 "market_odds": market_odds,
@@ -1280,7 +1408,8 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
                 "away_injuries": evidence_details["away_injuries"],
                 "home_suspensions": evidence_details["home_suspensions"],
                 "away_suspensions": evidence_details["away_suspensions"],
-                "late_news": evidence_details["late_news"]
+                "late_news": evidence_details["late_news"],
+                "prediction_status": "not_predicted" if unresolved_placeholder else "locked_pre_match_prediction"
             }
 
             if not card["has_odds"]:
@@ -1546,7 +1675,14 @@ def build_dashboard_payload(*, root: Path, edition: str, now: str | None = None,
 
 
 def _load_match_ledger(root: Path, edition: str) -> dict:
-    return load_match_ledger(root, edition)
+    ledger = load_match_ledger(root, edition)
+    matches = canonical_matches(ledger.get("matches", []) or [])
+    matches = apply_prediction_items_to_matches(
+        matches,
+        _prediction_items_by_match(root, edition, include_local=True),
+    )
+    ledger["matches"] = materialize_actual_knockout_fixtures(matches, edition=edition)
+    return ledger
 
 
 def _canonical_ledger_matches(ledger: dict) -> list[dict]:
@@ -1576,6 +1712,158 @@ def _actual_result_from_score(home_score, away_score) -> str:
     if home_score < away_score:
         return "away_win"
     return "draw"
+
+
+def _is_knockout_phase(phase: str) -> bool:
+    return str(phase or "").strip().lower() in KNOCKOUT_PHASES
+
+
+def _knockout_side_label(side: str, home_name: str, away_name: str) -> str:
+    if side == "home":
+        return home_name or "主队"
+    if side == "away":
+        return away_name or "客队"
+    return ""
+
+
+def _normalize_knockout_payload(data: dict | None, *, home_name: str = "", away_name: str = "") -> dict | None:
+    data = data or {}
+    if not data:
+        return None
+
+    regular = data.get("regular_time") or {}
+    extra = data.get("extra_time") or {}
+    penalties = data.get("penalties") or {}
+    advance = data.get("advance") or {}
+
+    def _section_scores(section: dict) -> tuple[object, object]:
+        score = section.get("score") if isinstance(section.get("score"), dict) else {}
+        home_score = score.get("home", section.get("home"))
+        away_score = score.get("away", section.get("away"))
+        return home_score, away_score
+
+    winner_side = str(advance.get("winner") or penalties.get("winner") or "").strip()
+    winner_name = str(advance.get("winner_name") or _knockout_side_label(winner_side, home_name, away_name))
+    penalties_winner_side = str(penalties.get("winner") or "").strip()
+    penalties_winner_name = str(penalties.get("winner_name") or _knockout_side_label(penalties_winner_side, home_name, away_name))
+    regular_home, regular_away = _section_scores(regular)
+    extra_home, extra_away = _section_scores(extra)
+    penalties_home, penalties_away = _section_scores(penalties)
+
+    return {
+        "regular_time": {
+            "score": _parse_score_pair({"home": regular_home, "away": regular_away}),
+            "score_text": _score_text_from_pair(regular_home, regular_away),
+            "result": regular.get("result") or _actual_result_from_score(regular_home, regular_away),
+            "result_label": OUTCOME_LABELS.get(
+                regular.get("result") or _actual_result_from_score(regular_home, regular_away),
+                "",
+            ),
+        },
+        "extra_time": {
+            "played": bool(extra.get("played")),
+            "score": _parse_score_pair({"home": extra_home, "away": extra_away}),
+            "score_text": _score_text_from_pair(extra_home, extra_away),
+            "result": extra.get("result") or _actual_result_from_score(extra_home, extra_away),
+            "result_label": OUTCOME_LABELS.get(
+                extra.get("result") or _actual_result_from_score(extra_home, extra_away),
+                "",
+            ),
+        },
+        "penalties": {
+            "played": bool(penalties.get("played")),
+            "score": _parse_score_pair({"home": penalties_home, "away": penalties_away}),
+            "score_text": _score_text_from_pair(penalties_home, penalties_away),
+            "winner": penalties_winner_side,
+            "winner_name": _zh_name_from_label(penalties_winner_name),
+        },
+        "advance": {
+            "winner": winner_side,
+            "winner_name": _zh_name_from_label(winner_name),
+            "winner_result": advance.get("winner_result") or ("home_advance" if winner_side == "home" else "away_advance" if winner_side == "away" else ""),
+        },
+    }
+
+
+def _fallback_knockout_prediction(
+    *,
+    phase: str,
+    predicted_result: str,
+    predicted_score: dict[str, int | None],
+    home_name: str,
+    away_name: str,
+) -> dict | None:
+    if not _is_knockout_phase(phase):
+        return None
+    if predicted_score.get("home") is None or predicted_score.get("away") is None:
+        return None
+    advance_side = "home" if predicted_result == "home_win" else "away" if predicted_result == "away_win" else ""
+    return _normalize_knockout_payload(
+        {
+            "regular_time": {
+                "score": predicted_score,
+                "result": predicted_result or _actual_result_from_score(predicted_score.get("home"), predicted_score.get("away")),
+            },
+            "extra_time": {
+                "played": False,
+                "score": {"home": None, "away": None},
+                "result": "",
+            },
+            "penalties": {
+                "played": False,
+                "score": {"home": None, "away": None},
+                "winner": "",
+            },
+            "advance": {
+                "winner": advance_side,
+                "winner_name": _knockout_side_label(advance_side, home_name, away_name),
+            },
+        },
+        home_name=home_name,
+        away_name=away_name,
+    )
+
+
+def _fallback_knockout_actual(
+    *,
+    phase: str,
+    actual_score: dict[str, int | None],
+    home_name: str,
+    away_name: str,
+) -> dict | None:
+    if not _is_knockout_phase(phase):
+        return None
+    if actual_score.get("home") is None or actual_score.get("away") is None:
+        return None
+    result = _actual_result_from_score(actual_score.get("home"), actual_score.get("away"))
+    advance_side = "home" if result == "home_win" else "away" if result == "away_win" else ""
+    return _normalize_knockout_payload(
+        {
+            "regular_time": {
+                "home": actual_score.get("home"),
+                "away": actual_score.get("away"),
+                "result": result,
+            },
+            "extra_time": {
+                "played": False,
+                "home": None,
+                "away": None,
+                "result": "",
+            },
+            "penalties": {
+                "played": False,
+                "home": None,
+                "away": None,
+                "winner": "",
+            },
+            "advance": {
+                "winner": advance_side,
+                "winner_name": _knockout_side_label(advance_side, home_name, away_name),
+            },
+        },
+        home_name=home_name,
+        away_name=away_name,
+    )
 
 
 def _fact_card_from_match(match: dict) -> dict:
@@ -1671,6 +1959,11 @@ def _fact_card_from_match(match: dict) -> dict:
         "actual_score_home": actual_home,
         "actual_score_away": actual_away,
         "actual_result": actual_result,
+        "knockout_actual": _normalize_knockout_payload(
+            match.get("knockout_result"),
+            home_name=_match_team_name(match, "home"),
+            away_name=_match_team_name(match, "away"),
+        ),
         "is_completed": is_completed,
     }
 
@@ -1733,6 +2026,7 @@ def _build_tournament_schedule(ledger: dict) -> dict:
         match_data = {
             "match_id": m.get("match_id", ""),
             "match_number": m.get("match_number", 0),
+            "phase": phase,
             "kickoff_at": kickoff_utc,
             "beijing_time_short": beijing_time_short,
             "venue": m.get("venue", ""),
@@ -1743,6 +2037,11 @@ def _build_tournament_schedule(ledger: dict) -> dict:
             "status": status,
             "score_home": final_score.get("home") if status == "final" else None,
             "score_away": final_score.get("away") if status == "final" else None,
+            "knockout_result": _normalize_knockout_payload(
+                m.get("knockout_result"),
+                home_name=h_name,
+                away_name=a_name,
+            ),
             "evaluation": m.get("evaluation") or {},
         }
 
@@ -1823,6 +2122,9 @@ def _render_match_card(card: dict) -> str:
     group = fixture.get("group") or card.get("group", "")
     phase = fixture.get("phase") or card.get("phase", "")
     venue = fixture.get("venue") or card.get("venue", "")
+    is_knockout = _is_knockout_phase(phase)
+    knockout_prediction = prediction.get("knockout") or {}
+    knockout_actual = actual.get("knockout") or {}
 
     xg = prediction.get("expected_goals_proxy", card.get("expected_goals_proxy"))
     xg_html = ""
@@ -1957,28 +2259,94 @@ def _render_match_card(card: dict) -> str:
     # Keep the original card layout: upcoming predicted matches use the large score slot,
     # completed predicted matches use the two-row comparison block.
     compare_html = ""
-    if has_actual and has_prediction:
+    if has_actual and has_prediction and is_knockout and knockout_prediction:
+        rows = []
+        pred_regular = (knockout_prediction.get("regular_time") or {}).get("score_text") or score_text
+        act_regular = (knockout_actual.get("regular_time") or {}).get("score_text") or actual.get("score_text") or "-:-"
+        rows.append(
+            f'<div class="compare-row"><span class="compare-label">90分钟</span><span class="compare-score">{_safe(pred_regular)}</span><span class="compare-score compare-actual">{_safe(act_regular)}</span></div>'
+        )
+
+        pred_extra = knockout_prediction.get("extra_time") or {}
+        act_extra = knockout_actual.get("extra_time") or {}
+        pred_extra_text = pred_extra.get("score_text") if pred_extra.get("played") else "否"
+        act_extra_text = act_extra.get("score_text") if act_extra.get("played") else "否"
+        rows.append(
+            f'<div class="compare-row"><span class="compare-label">加时</span><span class="compare-score">{_safe(pred_extra_text or "否")}</span><span class="compare-score compare-actual">{_safe(act_extra_text or "否")}</span></div>'
+        )
+
+        pred_pen = knockout_prediction.get("penalties") or {}
+        act_pen = knockout_actual.get("penalties") or {}
+        pred_pen_text = pred_pen.get("score_text") if pred_pen.get("played") else "否"
+        act_pen_text = act_pen.get("score_text") if act_pen.get("played") else "否"
+        rows.append(
+            f'<div class="compare-row"><span class="compare-label">点球</span><span class="compare-score">{_safe(pred_pen_text or "否")}</span><span class="compare-score compare-actual">{_safe(act_pen_text or "否")}</span></div>'
+        )
+
+        pred_adv = (knockout_prediction.get("advance") or {}).get("winner_name") or "待定"
+        act_adv = (knockout_actual.get("advance") or {}).get("winner_name") or "待定"
+        rows.append(
+            f'<div class="compare-row"><span class="compare-label">晋级</span><span class="compare-score">{_safe(pred_adv)}</span><span class="compare-score compare-actual">{_safe(act_adv)}</span></div>'
+        )
+        compare_html = (
+            f'<div class="score-compare score-compare-knockout">'
+            f'<div class="compare-head"><span>项目</span><span>预测</span><span>实际</span></div>'
+            f'{"".join(rows)}'
+            f'</div>'
+        )
+    elif has_actual and has_prediction:
         ah = actual.get("score", {}).get("home", card.get("actual_score_home", "?"))
         aa = actual.get("score", {}).get("away", card.get("actual_score_away", "?"))
         actual_text = f"{ah}-{aa}"
         compare_html = (
             f'<div class="score-compare">'
+            f'<div class="compare-head"><span>项目</span><span>预测</span><span>实际</span></div>'
             f'<div class="compare-row">'
-            f'<span class="compare-label">预测</span>'
+            f'<span class="compare-label">90分钟</span>'
             f'<span class="compare-score">{_safe(score_text)}</span>'
-            f'</div>'
-            f'<div class="compare-row">'
-            f'<span class="compare-label">实际</span>'
             f'<span class="compare-score compare-actual">{_safe(actual_text)}</span>'
             f'</div>'
             f'</div>'
         )
 
-    if display_state in {"fixture", "actual_only", "placeholder"}:
+    if display_state == "actual_only":
+        if is_knockout and has_actual and knockout_actual:
+            act_adv = (knockout_actual.get("advance") or {}).get("winner_name") or "待定"
+            act_regular = (knockout_actual.get("regular_time") or {}).get("score_text") or actual.get("score_text") or "-:-"
+            act_extra = knockout_actual.get("extra_time") or {}
+            act_pen = knockout_actual.get("penalties") or {}
+            score_display_html = (
+                f'<div class="ko-summary">'
+                f'<div class="ko-summary-pill"><b>实际90分</b><span>{_safe(act_regular)}</span></div>'
+                f'<div class="ko-summary-pill"><b>实际加时</b><span>{_safe(act_extra.get("score_text") or ("否" if not act_extra.get("played") else "-:-"))}</span></div>'
+                f'<div class="ko-summary-pill"><b>实际点球</b><span>{_safe(act_pen.get("score_text") or ("否" if not act_pen.get("played") else "-:-"))}</span></div>'
+                f'<div class="ko-summary-pill"><b>实际晋级</b><span>{_safe(act_adv)}</span></div>'
+                f'</div>'
+            )
+        else:
+            actual_text = actual.get("score_text") or _score_text_from_pair(actual_home, actual_away) or "-:-"
+            score_display_html = f'<div class="mc-score">实际 { _safe(actual_text) }</div>'
+        score_display = ""
+    elif display_state in {"fixture", "placeholder"} and not (is_knockout and has_prediction and knockout_prediction):
         score_display = "待预测"
+    elif is_knockout and has_prediction and knockout_prediction:
+        pred_adv = (knockout_prediction.get("advance") or {}).get("winner_name") or "待定"
+        pred_regular = (knockout_prediction.get("regular_time") or {}).get("score_text") or score_text
+        pred_extra = knockout_prediction.get("extra_time") or {}
+        pred_pen = knockout_prediction.get("penalties") or {}
+        score_display_html = (
+            f'<div class="ko-summary">'
+            f'<div class="ko-summary-pill"><b>90分钟</b><span>{_safe(pred_regular)}</span></div>'
+            f'<div class="ko-summary-pill"><b>加时</b><span>{"是" if pred_extra.get("played") else "否"}</span></div>'
+            f'<div class="ko-summary-pill"><b>点球</b><span>{"是" if pred_pen.get("played") else "否"}</span></div>'
+            f'<div class="ko-summary-pill"><b>晋级</b><span>{_safe(pred_adv)}</span></div>'
+            f'</div>'
+        )
+        score_display = ""
     else:
         score_display = score_text
-    score_display_html = compare_html if compare_html else f'<div class="mc-score">{_safe(score_display)}</div>'
+    if not (is_knockout and has_prediction and knockout_prediction and not has_actual):
+        score_display_html = compare_html if compare_html else f'<div class="mc-score">{_safe(score_display)}</div>'
 
     result_html = ""
     if has_prediction and has_actual:
@@ -1997,17 +2365,17 @@ def _render_match_card(card: dict) -> str:
         if phase_val.startswith("group"):
             source_badge = '<span class="source-badge source-official" title="官方赛程">小组赛</span>'
         elif phase_val and phase_val != "unknown":
-            source_badge = f'<span class="source-badge source-official" title="官方赛程">{_safe(phase_val)}</span>'
+            source_badge = f'<span class="source-badge source-official" title="官方赛程">{_safe(PHASE_LABELS.get(phase_val, phase_val))}</span>'
+
+    group_badge = f'<span class="mc-group">{_safe(group)}组</span>' if group else ""
+    time_html = f'<div class="mc-time">{_safe(date_str)} {_safe(time_str)}</div>' if (date_str or time_str) else ""
 
     return (
         f'<article class="match-card{" match-card-placeholder" if data_source == "placeholder" else ""}" data-hit="{_safe(hit_class)}" data-match-id="{_safe(match_id)}" '
         f'data-date="{_safe(date_str)}" data-phase="{_safe(phase)}" data-source="{_safe(data_source)}">'
         f'<div class="mc-top">'
-        f'<span class="mc-id">{_safe(match_id)}</span>'
-        f'<span class="mc-group">{_safe(group)}组</span>'
-        f'<span class="mc-time">{_safe(date_str)} {_safe(time_str)}</span>'
-        f'{eval_badge}'
-        f'{source_badge}'
+        f'<div class="mc-meta"><div class="mc-meta-row"><span class="mc-id">{_safe(match_id)}</span>{group_badge}</div>{time_html}</div>'
+        f'<div class="mc-badges">{eval_badge}{source_badge}</div>'
         f'</div>'
         f'<div class="mc-body">'
         f'<div class="mc-team">'
@@ -2043,6 +2411,13 @@ def _render_match_schedule_row(m: dict, predictions: dict) -> str:
     pred = predictions.get(mid, {})
     pred_result = pred.get("predicted_result", "")
     pred_score = pred.get("score", {}) or {}
+    pred_knockout = pred.get("knockout") or {}
+    home_name = str(m.get("home_name") or "")
+    away_name = str(m.get("away_name") or "")
+    unresolved_knockout_slot = bool(
+        re.match(r"^[WL]\d{2,3}$", home_name.upper())
+        or re.match(r"^[WL]\d{2,3}$", away_name.upper())
+    )
     result_map = {
         "home_win": "主胜",
         "away_win": "客胜",
@@ -2055,17 +2430,28 @@ def _render_match_schedule_row(m: dict, predictions: dict) -> str:
 
     played = m["status"] == "final"
     row_cls = "match-played" if played else ""
+    is_knockout = _is_knockout_phase(m.get("phase", ""))
 
     # Actual score
     actual_score = ""
     if played and m.get("score_home") is not None:
         actual_score = f'{m["score_home"]}-{m["score_away"]}'
+    actual_knockout = m.get("knockout_result") or {}
 
     # Evaluation data
     ev = m.get("evaluation") or {}
 
     # Prediction cell
-    if pred_result:
+    if unresolved_knockout_slot:
+        pred_val_html = '<span class="sch-tag sch-tag-none">待预测</span>'
+    elif pred_result and is_knockout and pred_knockout:
+        pred_regular = (pred_knockout.get("regular_time") or {}).get("score_text") or score_label or "-:-"
+        pred_adv = (pred_knockout.get("advance") or {}).get("winner_name") or "待定"
+        pred_val_html = (
+            f'<span class="sch-tag sch-tag-pred">预测90分: {pred_regular}</span>'
+            f'<span class="sch-tag sch-tag-pred">预测晋级: {pred_adv}</span>'
+        )
+    elif pred_result:
         pred_val_html = f'<span class="sch-tag sch-tag-pred">预测: {score_label or "-:-"}</span>'
     else:
         pred_val_html = '<span class="sch-tag sch-tag-none">待预测</span>'
@@ -2073,13 +2459,29 @@ def _render_match_schedule_row(m: dict, predictions: dict) -> str:
     # Actual cell
     actual_val_html = ""
     actual_result_html = ""
-    if played and actual_score and pred_result:
+    if played and is_knockout and actual_knockout:
+        actual_regular = (actual_knockout.get("regular_time") or {}).get("score_text") or actual_score
+        actual_advance = (actual_knockout.get("advance") or {}).get("winner_name") or "待定"
+        actual_extra = actual_knockout.get("extra_time") or {}
+        actual_pen = actual_knockout.get("penalties") or {}
+        parts = [f'<span class="sch-tag sch-tag-actual">实际90分: {actual_regular}</span>']
+        if actual_extra.get("played"):
+            parts.append(
+                f'<span class="sch-tag sch-tag-actual">实际加时: {actual_extra.get("score_text") or "-:-"}</span>'
+            )
+        if actual_pen.get("played"):
+            parts.append(
+                f'<span class="sch-tag sch-tag-actual">实际点球: {actual_pen.get("score_text") or "-:-"}</span>'
+            )
+        parts.append(f'<span class="sch-tag sch-tag-truth">实际晋级: {actual_advance}</span>')
+        actual_val_html = "".join(parts)
+    elif played and actual_score and pred_result:
         actual_result = ev.get("actual_result", "")
         actual_label = result_map.get(actual_result, "")
         actual_val_html = f'<span class="sch-tag sch-tag-actual">实际: {actual_score}</span>'
         if actual_label:
             actual_result_html = f'<span class="sch-tag sch-tag-truth">真实结果: {actual_label}</span>'
-    elif pred_result:
+    elif pred_result and not unresolved_knockout_slot:
         actual_val_html = '<span class="sch-tag sch-tag-pending">未开赛</span>'
 
     kickoff_short = m.get("beijing_time_short", "")
@@ -2160,28 +2562,31 @@ def _render_tournament_schedule(schedule_data: dict, predictions: dict) -> str:
     group_parts.append('</div>')
     group_html = "".join(group_parts)
 
-    # 2. Knockout stages HTML
-    r32_html = _render_knockout_stage(schedule_data.get("round_of_32", []), predictions, "32强赛")
-    r16_html = _render_knockout_stage(schedule_data.get("round_of_16", []), predictions, "16强赛")
-    qf_html = _render_knockout_stage(schedule_data.get("quarter_final", []), predictions, "1/4 决赛")
-    sf_html = _render_knockout_stage(schedule_data.get("semi_final", []), predictions, "半决赛")
-    fn_html = _render_knockout_stage(schedule_data.get("final", []), predictions, "决赛/三四名")
+    knockout_tabs = [
+        ("r32", "round_of_32", PHASE_LABELS["round_of_32"]),
+        ("r16", "round_of_16", PHASE_LABELS["round_of_16"]),
+        ("qf", "quarter_final", PHASE_LABELS["quarter_final"]),
+    ]
+    subtab_buttons = [
+        '<button class="subtab active" data-subtab="group">小组赛</button>'
+    ]
+    subtab_panels = [
+        f'<div id="sch-group" class="schedule-subpanel active">{group_html}</div>'
+    ]
+    for tab_id, phase_key, phase_label in knockout_tabs:
+        phase_html = _render_knockout_stage(schedule_data.get(phase_key, []), predictions, phase_label)
+        subtab_buttons.append(
+            f'<button class="subtab" data-subtab="{tab_id}">{_safe(phase_label)}</button>'
+        )
+        subtab_panels.append(
+            f'<div id="sch-{tab_id}" class="schedule-subpanel">{phase_html}</div>'
+        )
 
     return (
         '<div class="schedule-subtabs">'
-        '  <button class="subtab active" data-subtab="group">小组赛</button>'
-        '  <button class="subtab" data-subtab="r32">32强淘汰赛</button>'
-        '  <button class="subtab" data-subtab="r16">16强淘汰赛</button>'
-        '  <button class="subtab" data-subtab="qf">1/4 决赛</button>'
-        '  <button class="subtab" data-subtab="sf">半决赛</button>'
-        '  <button class="subtab" data-subtab="fn">决赛/三四名</button>'
-        '</div>'
-        f'<div id="sch-group" class="schedule-subpanel active">{group_html}</div>'
-        f'<div id="sch-r32" class="schedule-subpanel">{r32_html}</div>'
-        f'<div id="sch-r16" class="schedule-subpanel">{r16_html}</div>'
-        f'<div id="sch-qf" class="schedule-subpanel">{qf_html}</div>'
-        f'<div id="sch-sf" class="schedule-subpanel">{sf_html}</div>'
-        f'<div id="sch-fn" class="schedule-subpanel">{fn_html}</div>'
+        + "".join(subtab_buttons)
+        + '</div>'
+        + "".join(subtab_panels)
     )
 
 
@@ -2233,6 +2638,35 @@ def _render_daily_stat(stat: dict) -> str:
         f'{error_html}'
         f'</div>'
     )
+
+
+def _render_phase_stat_card(stat: dict) -> str:
+    label = _safe(stat.get("label", ""))
+    total = int(stat.get("total_matches", 0))
+    predicted = int(stat.get("predicted_matches", 0))
+    actual = int(stat.get("actual_matches", 0))
+    evaluated = int(stat.get("evaluated_matches", 0))
+    result_hits = int(stat.get("result_hits", 0))
+    score_hits = int(stat.get("score_hits", 0))
+    result_rate = _pct(float(stat.get("result_hit_rate", 0)))
+    score_rate = _pct(float(stat.get("score_hit_rate", 0)))
+    return (
+        '<div class="phase-stat-card">'
+        f'<div class="phase-stat-head"><h3>{label}</h3><span>{total} 场</span></div>'
+        '<div class="phase-stat-grid">'
+        f'<span>已预测 {predicted}</span>'
+        f'<span>已完赛 {actual}</span>'
+        f'<span>已评估 {evaluated}</span>'
+        f'<span>赛果 {result_hits} ({result_rate})</span>'
+        f'<span>比分 {score_hits} ({score_rate})</span>'
+        '</div>'
+        '</div>'
+    )
+
+
+def _render_stats_card_grid(stats: list[dict]) -> str:
+    cards = "".join(_render_phase_stat_card(stat) for stat in stats)
+    return cards or '<p class="empty-state">暂无统计数据。</p>'
 
 
 # 鈹€鈹€ Main HTML Renderer 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
@@ -2289,7 +2723,8 @@ def _default_visible_dates(payload: dict, dates: list[str]) -> list[str]:
     if active_date == "all":
         return ["all"]
     if active_date in dates:
-        return [active_date]
+        active_idx = dates.index(active_date)
+        return dates[max(0, active_idx - 1):active_idx + 1]
     return [dates[0]]
 
 
@@ -2313,6 +2748,7 @@ def _decorate_dashboard_payload_for_frontend(payload: dict) -> dict:
                     "home": parts[0] if len(parts) > 1 else None,
                     "away": parts[-1] if len(parts) > 1 else None,
                 },
+                "knockout": ((c.get("prediction") or {}).get("knockout") or c.get("knockout_prediction")),
             }
 
     schedule_data = payload.get("schedule_data", {})
@@ -2381,7 +2817,30 @@ def _decorate_dashboard_payload_for_frontend(payload: dict) -> dict:
 
     actions_html = "".join(_render_action_item(a) for a in payload.get("corrective_actions", [])) or '<p class="empty-state">暂无待处理的模型治理行动项。</p>'
     issues_html = "".join(_render_issue_tag(t) for t in payload.get("model_issue_tags", [])) or '<p class="empty-state">暂无活跃的模型异常反馈。</p>'
-    stats_html = "".join(_render_daily_stat(s) for s in payload.get("daily_stats", [])) or '<p class="empty-state">暂无每日统计。</p>'
+    phase_stats = payload.get("phase_stats", [])
+    overall_stats = phase_stats[:1]
+    stage_stats = phase_stats[1:]
+    group_stats = payload.get("group_stats", [])
+    daily_stats_cards = "".join(_render_daily_stat(s) for s in payload.get("daily_stats", []))
+    daily_stats_html = daily_stats_cards or '<p class="empty-state">暂无每日统计。</p>'
+    stats_html = (
+        '<div class="phase-stats-section">'
+        '<div class="phase-stats-title">总数据</div>'
+        f'<div class="phase-stats-grid">{_render_stats_card_grid(overall_stats)}</div>'
+        '</div>'
+        '<div class="phase-stats-section">'
+        '<div class="phase-stats-title">阶段汇总</div>'
+        f'<div class="phase-stats-grid">{_render_stats_card_grid(stage_stats)}</div>'
+        '</div>'
+        '<div class="phase-stats-section">'
+        '<div class="phase-stats-title">小组赛 / 分组汇总</div>'
+        f'<div class="phase-stats-grid">{_render_stats_card_grid(group_stats)}</div>'
+        '</div>'
+        '<div class="daily-stats-section">'
+        '<div class="phase-stats-title">逐日统计日志</div>'
+        f'<div class="stats-grid">{daily_stats_html}</div>'
+        '</div>'
+    )
 
     payload["ui_defaults"] = {
         "active_date": default_date,
@@ -2482,6 +2941,8 @@ def _dashboard_overview_payload(payload: dict) -> dict:
             "daily_stats",
             "comparison_stats",
             "schedule_data",
+            "phase_stats",
+            "group_stats",
             "observation",
             "disclaimer",
             "safety_invariants",
@@ -2515,6 +2976,21 @@ def _parse_score_text(score_text: str | None) -> dict[str, int | None]:
     home_text, away_text = text.split("-", 1)
     home_val = int(home_text) if home_text.strip().isdigit() else None
     away_val = int(away_text) if away_text.strip().isdigit() else None
+    return {"home": home_val, "away": away_val}
+
+
+def _parse_score_pair(value: dict | None) -> dict[str, int | None]:
+    value = value or {}
+    home_val = value.get("home")
+    away_val = value.get("away")
+    try:
+        home_val = int(home_val) if home_val is not None else None
+    except (TypeError, ValueError):
+        home_val = None
+    try:
+        away_val = int(away_val) if away_val is not None else None
+    except (TypeError, ValueError):
+        away_val = None
     return {"home": home_val, "away": away_val}
 
 
@@ -2559,6 +3035,8 @@ def _actual_exists(card: dict) -> bool:
 
 
 def _card_display_state(card: dict) -> str:
+    home_name = str(card.get("home_name") or "")
+    away_name = str(card.get("away_name") or "")
     if card.get("data_source") == "placeholder":
         return "placeholder"
     has_prediction = _prediction_exists(card)
@@ -2584,14 +3062,42 @@ def _normalize_card_state(card: dict) -> dict:
     actual_away = card.get("actual_score_away")
     has_prediction = _prediction_exists(card)
     has_actual = _actual_exists(card)
+    home_name = str(card.get("home_name") or "")
+    away_name = str(card.get("away_name") or "")
+    knockout_prediction = _normalize_knockout_payload(
+        card.get("knockout_prediction"),
+        home_name=home_name,
+        away_name=away_name,
+    )
+    knockout_actual = _normalize_knockout_payload(
+        card.get("knockout_actual"),
+        home_name=home_name,
+        away_name=away_name,
+    )
+    is_knockout = _is_knockout_phase(card.get("phase", ""))
 
     predicted_result = str(card.get("predicted_result") or "")
     if not predicted_result and pred_score["home"] is not None and pred_score["away"] is not None:
         predicted_result = _actual_result_from_score(pred_score["home"], pred_score["away"])
+    if not knockout_prediction:
+        knockout_prediction = _fallback_knockout_prediction(
+            phase=card.get("phase", ""),
+            predicted_result=predicted_result,
+            predicted_score=pred_score,
+            home_name=home_name,
+            away_name=away_name,
+        )
 
     actual_result = _actual_result_from_score(actual_home, actual_away) if has_actual else str(card.get("actual_result") or "")
     if actual_result:
         card["actual_result"] = actual_result
+    if not knockout_actual and has_actual:
+        knockout_actual = _fallback_knockout_actual(
+            phase=card.get("phase", ""),
+            actual_score={"home": actual_home, "away": actual_away},
+            home_name=home_name,
+            away_name=away_name,
+        )
 
     result_hit = None if has_prediction and has_actual else card.get("result_hit")
     score_hit = None if has_prediction and has_actual else card.get("score_hit")
@@ -2605,6 +3111,51 @@ def _normalize_card_state(card: dict) -> dict:
             and pred_score["away"] is not None
         )
         card["score_hit"] = score_hit
+    if is_knockout and knockout_prediction and knockout_actual:
+        prediction_regular = knockout_prediction.get("regular_time", {})
+        actual_regular = knockout_actual.get("regular_time", {})
+        prediction_extra = knockout_prediction.get("extra_time", {})
+        actual_extra = knockout_actual.get("extra_time", {})
+        prediction_penalties = knockout_prediction.get("penalties", {})
+        actual_penalties = knockout_actual.get("penalties", {})
+        prediction_advance = knockout_prediction.get("advance", {})
+        actual_advance = knockout_actual.get("advance", {})
+        card["result_hit"] = (
+            prediction_regular.get("result") == actual_regular.get("result")
+            if prediction_regular.get("result") and actual_regular.get("result")
+            else card.get("result_hit")
+        )
+        card["score_hit"] = (
+            prediction_regular.get("score", {}).get("home") == actual_regular.get("score", {}).get("home")
+            and prediction_regular.get("score", {}).get("away") == actual_regular.get("score", {}).get("away")
+            and prediction_regular.get("score", {}).get("home") is not None
+            and actual_regular.get("score", {}).get("home") is not None
+        )
+        card["knockout_evaluation"] = {
+            "regular_time_result_hit": card.get("result_hit"),
+            "regular_time_score_hit": card.get("score_hit"),
+            "extra_time_hit": (
+                prediction_extra.get("played") == actual_extra.get("played")
+                and (
+                    not actual_extra.get("played")
+                    or prediction_extra.get("score") == actual_extra.get("score")
+                    or prediction_extra.get("result") == actual_extra.get("result")
+                )
+            ),
+            "penalties_hit": (
+                prediction_penalties.get("played") == actual_penalties.get("played")
+                and (
+                    not actual_penalties.get("played")
+                    or prediction_penalties.get("score") == actual_penalties.get("score")
+                    or prediction_penalties.get("winner") == actual_penalties.get("winner")
+                )
+            ),
+            "advance_hit": (
+                prediction_advance.get("winner") == actual_advance.get("winner")
+                if prediction_advance.get("winner") and actual_advance.get("winner")
+                else None
+            ),
+        }
 
     display_state = _card_display_state(card)
     evaluation_exists = has_prediction and has_actual
@@ -2675,6 +3226,7 @@ def _normalize_card_state(card: dict) -> dict:
         "result_label": OUTCOME_LABELS.get(predicted_result, predicted_result or "未预测"),
         "score": pred_score,
         "score_text": _score_text_from_pair(pred_score["home"], pred_score["away"]),
+        "knockout": knockout_prediction,
         "confidence": card.get("confidence", "none"),
         "confidence_label": card.get("confidence_label", "NONE"),
         "expected_goals_proxy": card.get("expected_goals_proxy"),
@@ -2692,12 +3244,14 @@ def _normalize_card_state(card: dict) -> dict:
         "score_text": _score_text_from_pair(actual_home, actual_away),
         "result": actual_result,
         "result_label": OUTCOME_LABELS.get(actual_result, actual_result or ""),
+        "knockout": knockout_actual,
     }
     evaluation = {
         "exists": evaluation_exists,
         "status": evaluation_status,
         "result_hit": result_hit,
         "score_hit": score_hit,
+        "knockout": card.get("knockout_evaluation"),
         "hit_class": hit_class,
         "label": evaluation_label,
         "primary_error": card.get("primary_error", ""),
@@ -2766,6 +3320,56 @@ def _refresh_dashboard_summary(payload: dict) -> dict:
         "result_rate": _rate(result_correct, len(evaluated_cards)),
         "score_rate": _rate(score_correct, len(evaluated_cards)),
     }
+
+    def card_phase_key(card: dict) -> str:
+        return str((card.get("fixture") or {}).get("phase") or card.get("phase") or "")
+
+    def card_group_key(card: dict) -> str:
+        return str((card.get("fixture") or {}).get("group") or card.get("group") or "").strip().upper()
+
+    def build_stat_bucket(bucket_key: str, label: str, bucket_cards: list[dict], *, phase: str = "", group: str = "") -> dict:
+        bucket_predicted = [c for c in bucket_cards if c.get("prediction", {}).get("exists")]
+        bucket_actual = [c for c in bucket_cards if c.get("actual", {}).get("exists")]
+        bucket_evaluated = [c for c in bucket_cards if c.get("evaluation", {}).get("exists")]
+        bucket_result_hits = sum(1 for c in bucket_evaluated if c.get("evaluation", {}).get("result_hit") is True)
+        bucket_score_hits = sum(1 for c in bucket_evaluated if c.get("evaluation", {}).get("score_hit") is True)
+        return {
+            "bucket_key": bucket_key,
+            "phase": phase,
+            "group": group,
+            "label": label,
+            "total_matches": len(bucket_cards),
+            "predicted_matches": len(bucket_predicted),
+            "actual_matches": len(bucket_actual),
+            "evaluated_matches": len(bucket_evaluated),
+            "result_hits": bucket_result_hits,
+            "score_hits": bucket_score_hits,
+            "result_hit_rate": _rate(bucket_result_hits, len(bucket_evaluated)),
+            "score_hit_rate": _rate(bucket_score_hits, len(bucket_evaluated)),
+        }
+
+    supported_real_cards = [c for c in real_cards if card_phase_key(c) in FACT_PHASE_ORDER]
+    phase_buckets: list[tuple[str, str, list[dict]]] = [("all", STAT_PHASE_LABELS["all"], supported_real_cards)]
+    for phase_key in FACT_PHASE_ORDER:
+        phase_cards = [c for c in real_cards if card_phase_key(c) == phase_key]
+        phase_buckets.append((phase_key, STAT_PHASE_LABELS.get(phase_key, phase_key), phase_cards))
+
+    payload["phase_stats"] = [
+        build_stat_bucket(phase_key, label, phase_cards, phase=phase_key if phase_key != "all" else "")
+        for phase_key, label, phase_cards in phase_buckets
+    ]
+
+    group_phase_cards = [c for c in real_cards if card_phase_key(c) == "group"]
+    group_keys = sorted({card_group_key(c) for c in group_phase_cards if card_group_key(c)})
+    group_stats = [
+        build_stat_bucket("group-summary", "小组赛汇总", group_phase_cards, phase="group")
+    ]
+    for group_key in group_keys:
+        group_cards = [c for c in group_phase_cards if card_group_key(c) == group_key]
+        group_stats.append(
+            build_stat_bucket(f"group-{group_key}", f"{group_key}组", group_cards, phase="group", group=group_key)
+        )
+    payload["group_stats"] = group_stats
     return payload
 
 
@@ -2791,25 +3395,26 @@ def render_html(payload: dict, *, root: Path, html_path: Path) -> str:
 <title>{edition} 世界杯 AI 章鱼哥预测看板</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Chakra+Petch:wght@600;700&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <style>
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
 :root{{
-  --bg:#06090f;--surface:rgba(12,18,32,0.75);--surface-solid:#0c1220;
-  --text:#e8ecf4;--muted:#64748b;--border:rgba(255,255,255,0.06);
+  --bg:#06090f;--surface:rgba(12,18,32,0.75);--surface-solid:#0c1220;--surface-soft:rgba(17,26,41,0.9);
+  --text:#e8ecf4;--muted:#64748b;--muted-strong:#8fa3ba;--border:rgba(255,255,255,0.06);
   --cyan:#22d3ee;--cyan-dim:rgba(34,211,238,0.15);--cyan-glow:rgba(34,211,238,0.25);
   --purple:#a78bfa;--purple-dim:rgba(167,139,250,0.15);--purple-glow:rgba(167,139,250,0.25);
   --green:#34d399;--green-dim:rgba(52,211,153,0.15);
   --amber:#fbbf24;--amber-dim:rgba(251,191,36,0.15);
   --red:#f87171;--red-dim:rgba(248,113,113,0.15);
   --blue:#60a5fa;--blue-dim:rgba(96,165,250,0.15);
-  --shadow:0 8px 32px rgba(0,0,0,0.4);
+  --shadow:0 8px 32px rgba(0,0,0,0.4);--shadow-soft:0 18px 42px rgba(0,0,0,0.24);
   --glow-cyan:0 0 20px rgba(34,211,238,0.12),0 0 40px rgba(34,211,238,0.06);
   --glow-purple:0 0 20px rgba(167,139,250,0.12),0 0 40px rgba(167,139,250,0.06);
-  --radius:12px;--radius-sm:6px;
-  --font:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
-  --font-display:'Chakra Petch','Space Grotesk',sans-serif;
+  --radius:16px;--radius-sm:10px;
+  --font:'Noto Sans SC','Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --font-display:'Noto Sans SC','Space Grotesk',sans-serif;
+  --font-number:'Chakra Petch','Space Grotesk','Noto Sans SC',sans-serif;
 }}
 body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;
   background-image:
@@ -2821,59 +3426,66 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
 .shell{{max-width:1240px;margin:0 auto;padding:0 20px 60px}}
 
 /* 鈹€鈹€ Hero 鈹€鈹€ */
-.hero{{padding:52px 0 40px;text-align:center}}
+.hero{{padding:56px 0 42px;text-align:center;max-width:780px;margin:0 auto}}
 .hero-eyebrow{{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--cyan);background:var(--cyan-dim);
-  padding:5px 16px;border-radius:99px;margin-bottom:16px;border:1px solid rgba(34,211,238,0.2)}}
-.hero h1{{font-family:var(--font-display);font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:8px;
+  text-transform:uppercase;color:var(--cyan);background:linear-gradient(135deg,rgba(34,211,238,0.14),rgba(34,211,238,0.06));
+  padding:7px 18px;border-radius:999px;margin-bottom:18px;border:1px solid rgba(34,211,238,0.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 10px 22px rgba(0,0,0,0.16)}}
+.hero h1{{font-family:var(--font-display);font-size:clamp(34px,5vw,48px);font-weight:800;letter-spacing:-.04em;line-height:1.08;margin-bottom:12px;
   background:linear-gradient(135deg,#fff 30%,var(--cyan) 70%,var(--purple));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
-.hero-sub{{color:var(--muted);font-size:13px;letter-spacing:.02em}}
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-wrap:balance}}
+.hero-sub{{color:var(--muted-strong);font-size:13px;letter-spacing:.02em;line-height:1.75;max-width:680px;margin:0 auto}}
 
 /* 鈹€鈹€ Metrics 鈹€鈹€ */
-.metrics{{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:32px}}
-.metric{{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  padding:20px 14px;text-align:center;box-shadow:var(--shadow);transition:all .25s;
+.metrics{{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:34px}}
+.metric{{background:linear-gradient(180deg,rgba(15,22,37,0.94),rgba(9,14,25,0.98));border:1px solid rgba(120,156,204,0.12);border-radius:20px;
+  padding:18px 18px 16px;text-align:left;box-shadow:var(--shadow-soft);transition:all .25s;
   backdrop-filter:blur(12px);position:relative;overflow:hidden}}
-.metric::before{{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.5}}
-.metric:hover{{border-color:rgba(34,211,238,0.15);box-shadow:var(--glow-cyan)}}
-.metric-label{{display:block;font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}}
-.metric-value{{display:block;font-size:28px;font-weight:700;letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}}
-.metric-detail{{display:block;font-size:10px;color:var(--muted);margin-top:4px}}
+.metric::before{{content:'';position:absolute;top:0;left:18px;right:18px;height:1px;
+  background:linear-gradient(90deg,rgba(34,211,238,0),rgba(34,211,238,0.7),rgba(34,211,238,0));opacity:.6}}
+.metric::after{{content:'';position:absolute;left:-20px;bottom:-36px;width:120px;height:120px;
+  background:radial-gradient(circle,rgba(34,211,238,0.12),transparent 70%);pointer-events:none;opacity:.7}}
+.metric:hover{{transform:translateY(-2px);border-color:rgba(34,211,238,0.16);box-shadow:0 22px 40px rgba(0,0,0,0.28),0 0 24px rgba(34,211,238,0.06)}}
+.metric-label{{display:block;font-size:11px;color:var(--muted);margin-bottom:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}}
+.metric-value{{display:block;font-size:34px;font-weight:700;letter-spacing:-.03em;color:#fff;font-variant-numeric:tabular-nums;font-family:var(--font-number);line-height:1.02}}
+.metric-detail{{display:block;font-size:11px;color:var(--muted-strong);margin-top:10px;line-height:1.55;max-width:18em}}
 
 /* 鈹€鈹€ Comparison Stats Bar 鈹€鈹€ */
-.cmp-bar{{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  padding:20px 24px;margin-bottom:24px;backdrop-filter:blur(12px);box-shadow:var(--shadow);
+.cmp-bar{{background:linear-gradient(180deg,rgba(14,21,35,0.95),rgba(9,14,25,0.98));border:1px solid rgba(133,154,205,0.12);border-radius:20px;
+  padding:22px 24px 18px;margin-bottom:26px;backdrop-filter:blur(12px);box-shadow:var(--shadow-soft);
   position:relative;overflow:hidden}}
 .cmp-bar::before{{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,transparent,var(--purple),transparent);opacity:.6}}
-.cmp-title{{font-size:13px;font-weight:700;color:var(--purple);letter-spacing:.04em;margin-bottom:14px}}
-.cmp-row{{display:flex;align-items:center;gap:12px;margin-bottom:8px}}
-.cmp-label{{font-size:11px;color:var(--muted);min-width:72px;font-weight:600;letter-spacing:.04em}}
-.cmp-track{{flex:1;height:8px;background:rgba(255,255,255,0.04);border-radius:99px;overflow:hidden}}
+.cmp-title{{font-size:14px;font-weight:700;color:#d8c6ff;letter-spacing:.03em;margin-bottom:16px}}
+.cmp-row{{display:flex;align-items:center;gap:14px;margin-bottom:10px}}
+.cmp-label{{font-size:11px;color:var(--muted-strong);min-width:72px;font-weight:700;letter-spacing:.04em}}
+.cmp-track{{flex:1;height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}}
 .cmp-fill{{height:100%;border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1)}}
 .cmp-fill-res{{background:linear-gradient(90deg,var(--cyan),var(--green))}}
 .cmp-fill-score{{background:linear-gradient(90deg,var(--purple),var(--amber))}}
-.cmp-val{{font-size:13px;font-weight:700;color:var(--text);min-width:100px;text-align:right;font-variant-numeric:tabular-nums}}
+.cmp-val{{font-size:13px;font-weight:700;color:var(--text);min-width:110px;text-align:right;font-variant-numeric:tabular-nums;font-family:var(--font-number)}}
 
 /* 鈹€鈹€ Tabs 鈹€鈹€ */
-.tabs{{display:flex;gap:2px;background:rgba(255,255,255,0.03);border:1px solid var(--border);
-  border-radius:var(--radius);padding:3px;margin-bottom:28px;width:fit-content;backdrop-filter:blur(8px)}}
+.tabs{{display:grid;grid-auto-flow:column;grid-auto-columns:max-content;gap:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(148,163,184,0.1);
+  border-radius:20px;padding:6px;margin-bottom:28px;width:100%;backdrop-filter:blur(8px);overflow-x:auto;overscroll-behavior-x:contain;
+  box-shadow:var(--shadow-soft);scrollbar-width:none}}
+.tabs::-webkit-scrollbar{{display:none}}
 .tab{{border:0;background:transparent;font-family:var(--font);font-size:13px;font-weight:600;
-  color:var(--muted);padding:9px 22px;border-radius:8px;cursor:pointer;transition:all .2s;white-space:nowrap}}
+  color:var(--muted);padding:10px 18px;border-radius:14px;cursor:pointer;transition:all .2s;white-space:nowrap}}
 .tab:hover{{color:var(--text)}}
-.tab.active{{background:rgba(34,211,238,0.1);color:var(--cyan);box-shadow:inset 0 0 12px rgba(34,211,238,0.06)}}
+.tab.active{{background:linear-gradient(135deg,rgba(34,211,238,0.2),rgba(34,211,238,0.08));color:#dffcff;
+  box-shadow:0 12px 24px rgba(34,211,238,0.08),inset 0 1px 0 rgba(255,255,255,0.05)}}
 .tab-panel{{display:none}}.tab-panel.active{{display:block}}
 
 /* 鈹€鈹€ Toolbar 鈹€鈹€ */
-.toolbar{{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:18px}}
+.toolbar{{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:18px}}
 .toolbar-label{{font-size:12px;font-weight:600;color:var(--muted);margin-right:6px;letter-spacing:.05em;text-transform:uppercase}}
 .toolbar button,.filter-btn{{border:1px solid var(--border);background:rgba(255,255,255,0.03);font-family:var(--font);
-  font-size:11px;font-weight:600;color:var(--muted);padding:5px 14px;border-radius:99px;cursor:pointer;transition:all .2s}}
-.toolbar button:hover,.filter-btn:hover{{border-color:var(--cyan);color:var(--cyan)}}
-.toolbar button.active,.filter-btn.active{{background:var(--cyan-dim);color:var(--cyan);border-color:rgba(34,211,238,0.3)}}
-.toolbar-status{{margin-left:auto;font-size:11px;color:var(--muted)}}
+  font-size:11px;font-weight:700;color:var(--muted);padding:7px 14px;border-radius:999px;cursor:pointer;transition:all .2s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}}
+.toolbar button:hover,.filter-btn:hover{{border-color:rgba(34,211,238,0.22);color:#dffcff;background:rgba(34,211,238,0.06);transform:translateY(-1px)}}
+.toolbar button.active,.filter-btn.active{{background:linear-gradient(135deg,rgba(34,211,238,0.18),rgba(34,211,238,0.08));color:#dffcff;border-color:rgba(34,211,238,0.3)}}
+.toolbar-status{{margin-left:auto;font-size:11px;color:var(--muted-strong)}}
 .toolbar-actions{{display:flex;gap:8px;align-items:center;margin-bottom:18px;justify-content:space-between;flex-wrap:wrap}}
 .status-pill{{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;border:1px solid var(--border);font-size:11px;background:rgba(255,255,255,0.03);color:var(--muted)}}
 .status-pill.is-loading{{color:var(--cyan);border-color:rgba(34,211,238,0.25);background:rgba(34,211,238,0.08)}}
@@ -2883,32 +3495,46 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
 .panel-placeholder{{background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius);padding:24px;color:var(--muted);text-align:center;box-shadow:var(--shadow);backdrop-filter:blur(12px)}}
 
 /* 鈹€鈹€ Match Cards Grid 鈹€鈹€ */
-.cards-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}}
-.date-toolbar{{align-items:center}}
+.cards-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:24px;
+  max-width:980px;margin:0 auto;justify-content:center;align-items:start}}
+.cards-grid > .empty-state{{grid-column:1/-1}}
+.date-toolbar{{align-items:center;padding:14px 16px 4px;border-radius:20px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.012));border:1px solid rgba(148,163,184,0.08);
+  box-shadow:var(--shadow-soft)}}
 
 /* 鈹€鈹€ Match Card 鈹€鈹€ */
-.match-card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  box-shadow:var(--shadow);overflow:hidden;transition:all .3s cubic-bezier(.4,0,.2,1);
-  cursor:pointer;backdrop-filter:blur(12px);position:relative}}
-.match-card::before{{content:'';position:absolute;inset:0;border-radius:var(--radius);
-  background:linear-gradient(135deg,rgba(34,211,238,0.03),transparent 60%);pointer-events:none}}
-.match-card:hover{{transform:translateY(-3px);border-color:rgba(34,211,238,0.2);box-shadow:var(--glow-cyan)}}
-.match-card[data-hit="double-hit"]{{border-color:rgba(52,211,153,0.25);box-shadow:0 0 20px rgba(52,211,153,0.1)}}
-.match-card[data-hit="double-hit"]:hover{{border-color:rgba(52,211,153,0.4);box-shadow:0 0 30px rgba(52,211,153,0.15)}}
-.match-card[data-hit="result-hit"]{{border-color:rgba(251,191,36,0.2);box-shadow:0 0 15px rgba(251,191,36,0.08)}}
-.match-card[data-hit="result-hit"]:hover{{border-color:rgba(251,191,36,0.35);box-shadow:0 0 25px rgba(251,191,36,0.12)}}
-.match-card[data-hit="miss"]{{border-color:rgba(248,113,113,0.2);box-shadow:0 0 15px rgba(248,113,113,0.08)}}
-.match-card[data-hit="miss"]:hover{{border-color:rgba(248,113,113,0.35);box-shadow:0 0 25px rgba(248,113,113,0.12)}}
-.mc-top{{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);font-size:11px;color:var(--muted);position:relative;z-index:1}}
-.mc-id{{font-weight:700;color:var(--cyan);font-size:10px;letter-spacing:.04em}}
-.mc-group{{font-weight:600;background:rgba(255,255,255,0.04);padding:1px 8px;border-radius:4px;font-size:10px}}
-.mc-time{{margin-left:auto;font-variant-numeric:tabular-nums}}
-.eval-badge{{font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.04em}}
+.match-card{{background:linear-gradient(180deg,rgba(14,22,35,0.97),rgba(7,12,22,0.99));border:1px solid rgba(120,156,204,0.14);border-radius:24px;
+  box-shadow:0 18px 45px rgba(0,0,0,0.28),inset 0 1px 0 rgba(255,255,255,0.03);overflow:hidden;transition:all .3s cubic-bezier(.4,0,.2,1);
+  cursor:pointer;backdrop-filter:blur(14px);position:relative}}
+.match-card::before{{content:'';position:absolute;inset:0;border-radius:24px;
+  background:
+    radial-gradient(circle at top left,rgba(34,211,238,0.08),transparent 38%),
+    radial-gradient(circle at 84% 100%,rgba(251,191,36,0.06),transparent 28%),
+    linear-gradient(135deg,rgba(255,255,255,0.016),transparent 55%);
+  pointer-events:none}}
+.match-card::after{{content:'';position:absolute;inset:0;border-radius:24px;pointer-events:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.04), inset 0 0 0 1px rgba(255,255,255,0.01)}}
+.match-card:hover{{transform:translateY(-5px);border-color:rgba(34,211,238,0.2);box-shadow:0 30px 64px rgba(0,0,0,0.34),0 0 24px rgba(34,211,238,0.08)}}
+.match-card[data-hit="double-hit"]{{box-shadow:0 18px 45px rgba(0,0,0,0.28),0 0 0 1px rgba(52,211,153,0.08),inset 0 1px 0 rgba(255,255,255,0.03)}}
+.match-card[data-hit="double-hit"]:hover{{box-shadow:0 26px 60px rgba(0,0,0,0.34),0 0 0 1px rgba(52,211,153,0.16),0 0 24px rgba(52,211,153,0.08)}}
+.match-card[data-hit="result-hit"]{{box-shadow:0 18px 45px rgba(0,0,0,0.28),0 0 0 1px rgba(251,191,36,0.08),inset 0 1px 0 rgba(255,255,255,0.03)}}
+.match-card[data-hit="result-hit"]:hover{{box-shadow:0 26px 60px rgba(0,0,0,0.34),0 0 0 1px rgba(251,191,36,0.16),0 0 24px rgba(251,191,36,0.08)}}
+.match-card[data-hit="miss"]{{box-shadow:0 18px 45px rgba(0,0,0,0.28),0 0 0 1px rgba(248,113,113,0.08),inset 0 1px 0 rgba(255,255,255,0.03)}}
+.match-card[data-hit="miss"]:hover{{box-shadow:0 26px 60px rgba(0,0,0,0.34),0 0 0 1px rgba(248,113,113,0.16),0 0 24px rgba(248,113,113,0.08)}}
+.mc-top{{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;padding:18px 22px 16px;border-bottom:1px solid rgba(148,163,184,0.08);font-size:11px;color:var(--muted);position:relative;z-index:1;align-items:start;
+  background:linear-gradient(180deg,rgba(19,30,48,0.55),rgba(19,30,48,0.12) 70%,transparent)}}
+.mc-meta{{display:flex;flex-direction:column;gap:8px;min-width:0}}
+.mc-meta-row{{display:flex;align-items:center;gap:8px;flex-wrap:wrap}}
+.mc-id{{display:inline-flex;align-items:center;font-weight:700;color:#6fe4f2;font-size:15px;letter-spacing:.03em;font-family:var(--font-number);font-variant-numeric:tabular-nums;line-height:1.1}}
+.mc-group{{display:inline-flex;align-items:center;font-weight:700;background:rgba(148,163,184,0.07);padding:5px 11px;border-radius:999px;font-size:10px;border:1px solid rgba(148,163,184,0.12);color:#cbd5e1;white-space:nowrap}}
+.mc-time{{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:#8da0b8;font-variant-numeric:tabular-nums;line-height:1.4;text-wrap:balance}}
+.mc-badges{{display:flex;align-items:flex-start;justify-content:flex-end;gap:8px;flex-wrap:wrap;max-width:220px}}
+.eval-badge{{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;padding:7px 11px;border-radius:12px;letter-spacing:.02em;white-space:nowrap}}
 .eval-double{{background:var(--green-dim);color:var(--green);border:1px solid rgba(52,211,153,0.25)}}
 .eval-result{{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(251,191,36,0.25)}}
 .eval-miss{{background:var(--red-dim);color:var(--red);border:1px solid rgba(248,113,113,0.25)}}
 /* Data source badge */
-.source-badge{{font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.04em}}
+.source-badge{{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;padding:7px 10px;border-radius:12px;letter-spacing:.02em;white-space:nowrap}}
 .source-official{{background:rgba(52,211,153,0.1);color:var(--green);border:1px solid rgba(52,211,153,0.2)}}
 .source-placeholder{{background:rgba(251,191,36,0.12);color:var(--amber);border:1px solid rgba(251,191,36,0.25);animation:pulse-subtle 2s ease-in-out infinite}}
 /* Placeholder card styling */
@@ -2917,54 +3543,72 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
 @keyframes pulse-subtle{{0%,100%{{opacity:1}}50%{{opacity:0.7}}}}
 /* Placeholder metric in stats */
 .metric-placeholder .metric-value{{color:var(--amber)!important;font-size:22px!important}}
-.mc-body{{padding:20px 16px;text-align:center;position:relative;z-index:1}}
-.mc-team{{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px}}
-.team-name{{font-size:17px;font-weight:700;color:#fff}}
-.rank-tag{{font-size:9px;font-weight:700;color:var(--cyan);background:var(--cyan-dim);padding:2px 6px;border-radius:4px;margin-left:3px;border:1px solid rgba(34,211,238,0.15)}}
-.mc-vs{{font-size:11px;color:var(--muted);font-weight:500}}
-.mc-score{{font-size:44px;font-weight:700;letter-spacing:.06em;margin:8px 0;font-variant-numeric:tabular-nums;
-  font-family:var(--font-display);color:#fff;text-shadow:0 0 30px rgba(34,211,238,0.15)}}
-.score-compare{{display:flex;flex-direction:column;gap:4px;margin:10px 0;padding:10px;
-  background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm)}}
-.compare-row{{display:flex;align-items:center;gap:10px;justify-content:center}}
-.compare-label{{font-size:11px;color:var(--muted);font-weight:600;width:32px;text-align:right}}
-.compare-score{{font-size:28px;font-weight:700;font-family:var(--font-display);color:var(--text);
-  font-variant-numeric:tabular-nums;letter-spacing:.04em}}
-.compare-actual{{color:var(--cyan)}}
+.mc-body{{padding:28px 22px 20px;text-align:center;position:relative;z-index:1}}
+.mc-team{{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:14px;margin-bottom:22px}}
+.team-name{{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;min-width:0;font-size:24px;font-weight:800;color:#fff;line-height:1.08;letter-spacing:-.02em;text-wrap:balance}}
+.rank-tag{{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--cyan);background:rgba(34,211,238,0.12);padding:4px 9px;border-radius:999px;border:1px solid rgba(34,211,238,0.15);font-variant-numeric:tabular-nums;font-family:var(--font-number)}}
+.mc-vs{{display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:#a3b4c9;font-weight:700;letter-spacing:.08em;background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025));border:1px solid rgba(148,163,184,0.1);border-radius:999px;padding:7px 12px;text-transform:uppercase}}
+.mc-score{{font-size:50px;font-weight:700;letter-spacing:-.04em;margin:10px 0 6px;font-variant-numeric:tabular-nums;
+  font-family:var(--font-number);color:#fff;text-shadow:0 0 30px rgba(34,211,238,0.15)}}
+.score-compare{{display:flex;flex-direction:column;gap:10px;margin:22px 0 14px;padding:16px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid rgba(148,163,184,0.12);border-radius:20px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}}
+.compare-head,.compare-row{{display:grid;grid-template-columns:76px minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:center}}
+.compare-head{{padding-bottom:9px;border-bottom:1px dashed rgba(148,163,184,0.14)}}
+.compare-head span{{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:center}}
+.compare-head span:first-child{{color:transparent;text-align:left}}
+.compare-row{{padding:2px 0}}
+.compare-label{{font-size:13px;color:#8ea1bb;font-weight:700;width:auto;text-align:left;white-space:nowrap}}
+.compare-score{{display:flex;align-items:center;justify-content:center;min-height:58px;padding:8px 10px;border-radius:18px;
+  border:1px solid rgba(148,163,184,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.02));font-size:34px;font-weight:700;font-family:var(--font-number);color:var(--text);
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03),inset 0 0 0 1px rgba(255,255,255,0.01)}}
+.score-compare-knockout .compare-score{{font-size:24px;min-height:60px;padding:10px 12px}}
+.score-compare-knockout .compare-row:last-child .compare-score{{font-size:18px;font-family:var(--font);line-height:1.25;text-wrap:balance;word-break:break-word}}
+.compare-actual{{color:#88eff9;background:linear-gradient(180deg,rgba(34,211,238,0.12),rgba(34,211,238,0.055));border-color:rgba(34,211,238,0.18)}}
+.ko-summary{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0 8px}}
+.ko-summary-pill{{display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding:12px 13px;border-radius:16px;
+  border:1px solid rgba(148,163,184,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.018));text-align:left;min-height:74px}}
+.ko-summary-pill b{{font-size:11px;letter-spacing:.04em;text-transform:none;color:var(--muted)}}
+.ko-summary-pill span{{font-size:18px;font-weight:700;color:#fff;line-height:1.3;text-wrap:balance}}
 .compare-icon{{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px}}
 .compare-perfect{{background:var(--green-dim);color:var(--green);border:1px solid rgba(52,211,153,0.25)}}
 .compare-result{{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(251,191,36,0.25)}}
 .compare-miss{{background:var(--red-dim);color:var(--red);border:1px solid rgba(248,113,113,0.25)}}
-.mc-result{{margin-top:8px}}
-.outcome-badge{{display:inline-block;font-size:12px;font-weight:700;padding:5px 18px;border-radius:99px;letter-spacing:.03em}}
+.mc-result{{margin-top:14px;display:flex;justify-content:center}}
+.outcome-badge{{display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;padding:8px 16px;border-radius:999px;letter-spacing:.02em;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}}
 .outcome-home{{background:var(--green-dim);color:var(--green);border:1px solid rgba(52,211,153,0.25)}}
 .outcome-away{{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(96,165,250,0.25)}}
 .outcome-draw{{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(251,191,36,0.25)}}
 .outcome-none{{background:rgba(148,163,184,.08);color:var(--muted);border:1px solid rgba(148,163,184,.18)}}
-.mc-bottom{{padding:12px 16px;border-top:1px solid var(--border);position:relative;z-index:1}}
-.conf-row{{display:flex;align-items:center;gap:8px;margin-bottom:8px}}
-.conf-label{{font-size:10px;color:var(--muted);font-weight:600;width:42px;letter-spacing:.04em;text-transform:uppercase}}
-.conf-track{{flex:1;height:4px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden}}
+.mc-bottom{{padding:18px 22px 24px;border-top:1px solid rgba(148,163,184,0.09);position:relative;z-index:1;background:linear-gradient(180deg,rgba(255,255,255,0.012),rgba(6,10,18,0.16))}}
+.conf-row{{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;margin-bottom:14px}}
+.conf-label{{font-size:12px;color:var(--muted-strong);font-weight:700;width:auto;letter-spacing:.04em}}
+.conf-track{{flex:1;height:8px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}}
 .conf-fill{{height:100%;border-radius:2px;transition:width .4s}}
 .conf-high{{width:80%;background:linear-gradient(90deg,var(--green),rgba(52,211,153,0.6));box-shadow:0 0 8px rgba(52,211,153,0.3)}}
 .conf-medium{{width:55%;background:linear-gradient(90deg,var(--cyan),rgba(34,211,238,0.6));box-shadow:0 0 8px rgba(34,211,238,0.3)}}
 .conf-low{{width:30%;background:linear-gradient(90deg,var(--amber),rgba(251,191,36,0.6));box-shadow:0 0 8px rgba(251,191,36,0.3)}}
 .conf-unknown{{width:15%;background:var(--muted)}}
-.conf-val{{font-size:10px;font-weight:700;color:var(--muted);width:56px;text-align:right;letter-spacing:.04em}}
-.meta-row{{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}}
-.inline-metric{{font-size:10px;display:flex;gap:4px;align-items:center;background:rgba(255,255,255,0.03);
-  padding:4px 8px;border-radius:var(--radius-sm);border:1px solid var(--border);min-width:0;min-height:28px}}
-.inline-metric span{{color:var(--muted)}}
-.inline-metric strong{{font-weight:700;font-size:11px;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.conf-val{{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#cbd5e1;min-width:84px;padding:5px 12px;text-align:center;letter-spacing:.04em;
+  border:1px solid rgba(148,163,184,0.12);border-radius:12px;background:rgba(255,255,255,0.025)}}
+.meta-row{{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}}
+.inline-metric{{font-size:10px;display:flex;gap:8px;align-items:flex-start;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));
+  padding:12px 13px;border-radius:16px;border:1px solid rgba(148,163,184,0.08);min-width:0;min-height:56px}}
+.inline-metric span{{color:var(--muted);flex-shrink:0;letter-spacing:.03em;font-size:11px}}
+.inline-metric strong{{font-weight:700;font-size:13px;color:var(--text);min-width:0;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-height:1.45;white-space:normal}}
 .metric-venue{{grid-column:1/-1}}
-.section-label{{display:block;font-size:10px;font-weight:700;color:var(--cyan);text-transform:uppercase;
-  letter-spacing:.08em;margin-bottom:6px;margin-top:10px}}
+.metric-venue strong{{-webkit-line-clamp:2}}
+.section-label{{display:block;font-size:11px;font-weight:700;color:#7ee9f3;text-transform:uppercase;
+  letter-spacing:.06em;margin-bottom:10px;margin-top:0}}
 .dist-row{{display:flex;align-items:center;gap:6px;margin-bottom:3px;font-size:11px}}
 .dist-score{{font-weight:700;width:28px;color:var(--muted);font-variant-numeric:tabular-nums}}
 .dist-track{{flex:1;height:3px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden}}
 .dist-fill{{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:2px}}
 .dist-pct{{width:30px;text-align:right;font-weight:700;color:var(--cyan);font-variant-numeric:tabular-nums}}
-.watchpoints ul{{margin:0;padding-left:16px;font-size:11px;color:var(--muted);line-height:1.7}}
+.watchpoints{{margin-top:10px;padding:14px 16px 4px;border:1px solid rgba(148,163,184,0.08);border-radius:18px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.012))}}
+.watchpoints ul{{margin:0;padding-left:16px;font-size:13px;color:#b2c4d9;line-height:1.78}}
+.watchpoints li+li{{margin-top:6px}}
 .watchpoints li::marker{{color:var(--cyan)}}
 
 .divination-summary-row{{
@@ -3086,6 +3730,18 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
 .stat-body{{display:flex;gap:14px;font-size:11px;color:var(--muted)}}
 .stat-error{{margin-top:8px;font-size:10px;color:var(--red);background:var(--red-dim);
   padding:6px 10px;border-radius:var(--radius-sm);border:1px solid rgba(248,113,113,0.15)}}
+.phase-stats-section{{margin-bottom:18px}}
+.daily-stats-section{{margin-top:18px}}
+.phase-stats-title{{font-size:12px;font-weight:700;color:var(--cyan);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}}
+.phase-stats-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}}
+.phase-stat-card{{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;box-shadow:var(--shadow);backdrop-filter:blur(12px)}}
+.phase-stat-head{{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}}
+.phase-stat-head h3{{font-size:13px;font-weight:700;color:#fff}}
+.phase-stat-head span{{font-size:11px;color:var(--muted)}}
+.phase-stat-grid{{display:grid;grid-template-columns:1fr;gap:6px;font-size:11px;color:var(--muted)}}
+.phase-stat-grid span{{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.04);border-radius:6px;padding:6px 8px}}
 
 /* 鈹€鈹€ Drawer 鈹€鈹€ */
 .overlay{{position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);
@@ -3247,18 +3903,36 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
 .badge-low {{ background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.25); }}
 
 @media(max-width:900px){{
-  .metrics{{grid-template-columns:repeat(3,1fr)}}
-  .cards-grid{{grid-template-columns:1fr 1fr}}
+  .metrics{{grid-template-columns:repeat(2,1fr)}}
   .schedule-grid{{grid-template-columns:1fr 1fr}}
   .charts-row{{grid-template-columns:1fr}}
-  .tabs{{flex-wrap:wrap;width:100%}}
+  .tabs{{width:100%}}
   .source-stack{{justify-content:flex-start}}
+  .mc-top{{grid-template-columns:1fr}}
+  .mc-badges{{justify-content:flex-start;max-width:none}}
 }}
 @media(max-width:600px){{
   .metrics{{grid-template-columns:repeat(2,1fr)}}
   .schedule-grid{{grid-template-columns:1fr}}
-  .hero h1{{font-size:24px}}
+  .hero{{padding:44px 0 34px}}
+  .hero h1{{font-size:30px}}
+  .hero-sub{{font-size:12px}}
+  .tabs{{padding:5px}}
+  .tab{{padding:10px 15px;font-size:12px}}
+  .cmp-bar{{padding:18px 18px 16px}}
   .mc-score{{font-size:34px}}
+  .mc-team{{grid-template-columns:1fr;gap:10px}}
+  .team-name{{font-size:20px}}
+  .mc-vs{{justify-self:center}}
+  .mc-body{{padding:24px 16px 18px}}
+  .mc-bottom{{padding:16px 16px 20px}}
+  .date-toolbar{{padding:12px 12px 2px}}
+  .compare-head,.compare-row{{grid-template-columns:64px minmax(0,1fr) minmax(0,1fr);gap:8px}}
+  .compare-score{{font-size:24px;min-height:48px}}
+  .score-compare-knockout .compare-score{{font-size:18px;min-height:52px}}
+  .score-compare-knockout .compare-row:last-child .compare-score{{font-size:15px}}
+  .meta-row{{grid-template-columns:1fr}}
+  .ko-summary{{grid-template-columns:1fr 1fr}}
   .date-toolbar button{{min-width:104px}}
   .div-head{{grid-template-columns:1fr}}
 }}
@@ -3333,6 +4007,12 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
 
   <div id="p-schedule" class="tab-panel">
     <div id="scheduleRoot" class="panel-placeholder">正在加载赛程...</div>
+    <div class="panel schedule-stats-panel">
+      <h2>当前赛程统计</h2>
+      <div id="scheduleStatsRoot">
+        <p class="empty-state">正在加载赛程统计...</p>
+      </div>
+    </div>
   </div>
 
   <div id="p-stats" class="tab-panel">
@@ -3368,8 +4048,8 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
       </div>
     </div>
     <div class="panel" style="margin-top:16px">
-      <h2>每日统计日志</h2>
-      <div class="stats-grid" id="statsRoot">
+      <h2>统计总览</h2>
+      <div id="statsRoot">
         <p class="empty-state">正在加载每日统计...</p>
       </div>
     </div>
@@ -3414,15 +4094,14 @@ body{{font-family:var(--font);background:var(--bg);color:var(--text);line-height
           <h4 style="font-size:12px; color:var(--cyan); margin:0 0 8px 0;">📊 阶段自适应权重策略</h4>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; font-size:11px; color:var(--gold);">
             <div>🏟 小组赛 (G): <span style="color:#e040fb;">天纪 65%</span> / 数据 35%</div>
-            <div>🏟 32强赛 (R32): <span style="color:#e040fb;">天纪 55%</span> / 数据 45%</div>
-            <div>🏟 16强赛 (R16): 数据 55% / <span style="color:#e040fb;">天纪 45%</span></div>
-            <div>🏆 八强赛 (QF): 数据 70% / <span style="color:#e040fb;">天纪 30%</span></div>
-            <div>🏆 半决赛 (SF): 数据 75% / <span style="color:#e040fb;">天纪 25%</span></div>
-            <div>👑 决赛/季军: 数据 80% / <span style="color:#e040fb;">天纪 20%</span></div>
+            <div>🏟 小组赛: <span style="color:#e040fb;">天纪 65%</span> / 数据 35%</div>
+            <div>🏟 1/16决赛: <span style="color:#e040fb;">天纪 55%</span> / 数据 45%</div>
+            <div>🏆 1/8决赛: 数据 55% / <span style="color:#e040fb;">天纪 45%</span></div>
+            <div>🏆 1/4决赛: 数据 70% / <span style="color:#e040fb;">天纪 30%</span></div>
           </div>
           <p style="font-size:10px; color:var(--text-secondary); margin:8px 0 0 0;">
-            小组赛冷门频发，天纪卦象主导判断；淘汰赛阵容明朗后，物理数据权重逐步提升。
-            以上滑块仅配置<b>组件权重</b>（排名/阵容/历史等），数据/天纪混合比例由<b>比赛阶段</b>自动决定。
+            当前看板仅按已公开轮次展示阶段分类。小组赛冷门频发，天纪卦象主导判断；进入淘汰赛后，物理数据权重逐步提升。
+            以上滑块仅配置<b>组件权重</b>（排名/阵容/历史等），数据/天纪混合比例仍由<b>比赛阶段</b>自动决定。
           </p>
         </div>
 
@@ -3563,6 +4242,7 @@ var D={{}};
 var uiDefaults={{}};
 var curDate='all';
 var curDateSet=['all'];
+var curScheduleTab='group';
 var chartsOk=false;
 var obsChartsOk=false;
 var refreshTimer=null;
@@ -3586,11 +4266,286 @@ function buildDateButton(date,activeDate){{
   return '<button'+(date===activeDate?' class="active"':'')+' data-filter-date="'+escapeHtml(date)+'">'+escapeHtml(date)+'</button>';
 }}
 
+var PHASE_LABELS_MAP={{
+  all:'总数据',
+  group:'小组赛',
+  round_of_32:'1/16决赛',
+  round_of_16:'1/8决赛',
+  quarter_final:'1/4决赛',
+  semi_final:'半决赛',
+  third_place:'三四名',
+  final:'决赛'
+}};
+
+var SUBTAB_PHASE_MAP={{
+  group:'group',
+  r32:'round_of_32',
+  r16:'round_of_16',
+  qf:'quarter_final'
+}};
+
+function pct(value){{
+  return (Number(value||0)*100).toFixed(1)+'%';
+}}
+
+function phaseDisplayLabel(phase){{
+  var key=String(phase||'').trim();
+  if(!key)return '';
+  return PHASE_LABELS_MAP[key]||key;
+}}
+
+function cardDisplayDate(card){{
+  return ((card.fixture||{{}}).beijing_date)||card.date||String(card.kickoff_at||'').slice(0,10)||'';
+}}
+
+function cardPhaseKey(card){{
+  return String(((card.fixture||{{}}).phase)||card.phase||'');
+}}
+
+function cardGroupKey(card){{
+  return String(((card.fixture||{{}}).group)||card.group||'').trim().toUpperCase();
+}}
+
+function isRealCard(card){{
+  var source=((card.fixture||{{}}).data_source)||card.data_source||'official';
+  return source!=='placeholder';
+}}
+
+function filterCardsByDate(cards,date){{
+  if(!date||date==='all')return cards.slice();
+  var filtered=[];
+  for(var i=0;i<cards.length;i++){{
+    if(cardDisplayDate(cards[i])===date)filtered.push(cards[i]);
+  }}
+  return filtered;
+}}
+
+function filterCardsByPhase(cards,phaseKey){{
+  if(!phaseKey||phaseKey==='all')return cards.slice();
+  var filtered=[];
+  for(var i=0;i<cards.length;i++){{
+    if(cardPhaseKey(cards[i])===phaseKey)filtered.push(cards[i]);
+  }}
+  return filtered;
+}}
+
+function buildStatBucket(bucketKey,label,bucketCards,phaseKey,groupKey){{
+  var predicted=0, actual=0, evaluated=0, resultHits=0, scoreHits=0;
+  for(var i=0;i<bucketCards.length;i++){{
+    var card=bucketCards[i]||{{}};
+    var pred=card.prediction||{{}};
+    var act=card.actual||{{}};
+    var ev=card.evaluation||{{}};
+    if(pred.exists)predicted++;
+    if(act.exists)actual++;
+    if(ev.exists)evaluated++;
+    if(ev.result_hit===true)resultHits++;
+    if(ev.score_hit===true)scoreHits++;
+  }}
+  return {{
+    bucket_key:bucketKey||'',
+    phase:phaseKey||'',
+    group:groupKey||'',
+    label:label||'未命名',
+    total_matches:bucketCards.length,
+    predicted_matches:predicted,
+    actual_matches:actual,
+    evaluated_matches:evaluated,
+    result_hits:resultHits,
+    score_hits:scoreHits,
+    result_hit_rate:evaluated?resultHits/evaluated:0,
+    score_hit_rate:evaluated?scoreHits/evaluated:0
+  }};
+}}
+
+function currentStatsContext(){{
+  var allCards=(D.cards||[]).filter(isRealCard);
+  var phaseKey=SUBTAB_PHASE_MAP[curScheduleTab]||'group';
+  var phaseLabel=PHASE_LABELS_MAP[phaseKey]||phaseKey||'当前阶段';
+  var dateCards=filterCardsByDate(allCards,curDate);
+  var phaseCards=filterCardsByPhase(allCards,phaseKey);
+  var filteredCards=filterCardsByPhase(dateCards,phaseKey);
+  var activeCards=filteredCards.length ? filteredCards : phaseCards;
+  var labelParts=[];
+  if(curDate&&curDate!=='all')labelParts.push(curDate);
+  labelParts.push(phaseLabel);
+  return {{
+    allCards:allCards,
+    phaseKey:phaseKey,
+    phaseLabel:phaseLabel,
+    dateCards:dateCards,
+    phaseCards:phaseCards,
+    filteredCards:filteredCards,
+    activeCards:activeCards,
+    activeLabel:labelParts.join(' / '),
+    isEmptyFilter:filteredCards.length===0 && curDate && curDate!=='all'
+  }};
+}}
+
+function renderDynamicMetrics(){{
+  var root=document.getElementById('metricsRoot');
+  if(!root)return;
+  var ctx=currentStatsContext();
+  if(!ctx.allCards.length){{
+    root.innerHTML='<div class="panel-placeholder">暂无指标数据。</div>';
+    return;
+  }}
+  var stat=buildStatBucket('active-metrics',ctx.activeLabel,ctx.activeCards,ctx.phaseKey,'');
+  var total=buildStatBucket('all-metrics','总数据',ctx.allCards,'','');
+  var scopeDetail=ctx.activeLabel;
+  if(ctx.isEmptyFilter)scopeDetail='当前日期无本阶段比赛，显示 '+ctx.phaseLabel+' 累计';
+  var brier='N/A';
+  var latest=(D.daily_stats||[])[0]||null;
+  if(latest && latest.brier_score_result!==null && latest.brier_score_result!==undefined){{
+    brier=Number(latest.brier_score_result).toFixed(4);
+  }} else if((D.summary||{{}}).avg_brier_score){{
+    brier=Number((D.summary||{{}}).avg_brier_score).toFixed(4);
+  }}
+  root.innerHTML=
+    metricHtml('当前视图', String(stat.total_matches||0), scopeDetail)
+    +metricHtml('已预测', String(stat.predicted_matches||0), '总数据 '+String(total.predicted_matches||0)+' 场')
+    +metricHtml('完成复盘', String(stat.evaluated_matches||0), '已完赛 '+String(stat.actual_matches||0)+' 场')
+    +metricHtml('赛果命中', pct(stat.result_hit_rate||0), String(stat.result_hits||0)+' / '+String(stat.evaluated_matches||0))
+    +metricHtml('比分命中', pct(stat.score_hit_rate||0), String(stat.score_hits||0)+' / '+String(stat.evaluated_matches||0))
+    +metricHtml('Brier', brier, '最近逐日校准');
+}}
+
+function renderPhaseStatCardJs(stat){{
+  if(!stat)return '';
+  return '<div class="phase-stat-card">'
+    +'<div class="phase-stat-head"><h3>'+escapeHtml(stat.label||'')+'</h3><span>'+escapeHtml(String(stat.total_matches||0)+' 场')+'</span></div>'
+    +'<div class="phase-stat-grid">'
+    +'<span>已预测 '+escapeHtml(stat.predicted_matches||0)+'</span>'
+    +'<span>已完赛 '+escapeHtml(stat.actual_matches||0)+'</span>'
+    +'<span>已评估 '+escapeHtml(stat.evaluated_matches||0)+'</span>'
+    +'<span>赛果 '+escapeHtml(stat.result_hits||0)+' ('+escapeHtml(pct(stat.result_hit_rate||0))+')</span>'
+    +'<span>比分 '+escapeHtml(stat.score_hits||0)+' ('+escapeHtml(pct(stat.score_hit_rate||0))+')</span>'
+    +'</div>'
+    +'</div>';
+}}
+
+function renderStatsCardGridJs(stats){{
+  if(!stats||!stats.length)return '<p class="empty-state">暂无统计数据。</p>';
+  var html='';
+  for(var i=0;i<stats.length;i++)html+=renderPhaseStatCardJs(stats[i]);
+  return html || '<p class="empty-state">暂无统计数据。</p>';
+}}
+
+function renderStatsSectionJs(title,stats){{
+  return '<div class="phase-stats-section">'
+    +'<div class="phase-stats-title">'+escapeHtml(title)+'</div>'
+    +'<div class="phase-stats-grid">'+renderStatsCardGridJs(stats)+'</div>'
+    +'</div>';
+}}
+
+function renderDailyStatJs(stat){{
+  if(!stat)return '';
+  var date=stat.stat_date||'--';
+  var evaluated=Number(stat.matches_evaluated||0);
+  var hits=Number(stat.result_hits||0);
+  var scoreHits=Number(stat.score_hits||0);
+  var brier=(stat.brier_score_result!==null&&stat.brier_score_result!==undefined)?Number(stat.brier_score_result).toFixed(4):'N/A';
+  var topError=stat.top_error?'<div class="stat-error">'+escapeHtml(stat.top_error)+'</div>':'';
+  return '<div class="stat-card">'
+    +'<div class="stat-head"><h3>'+escapeHtml(date)+'</h3><span>Brier: '+escapeHtml(brier)+'</span></div>'
+    +'<div class="stat-body">'
+    +'<span>评估 '+escapeHtml(evaluated)+' 场</span>'
+    +'<span>赛果 '+escapeHtml(hits)+' ('+escapeHtml(pct(evaluated?hits/evaluated:0))+')</span>'
+    +'<span>比分 '+escapeHtml(scoreHits)+' ('+escapeHtml(pct(evaluated?scoreHits/evaluated:0))+')</span>'
+    +'</div>'
+    +topError
+    +'</div>';
+}}
+
+function applyScheduleTabSelection(){{
+  var activeTab=curScheduleTab||'group';
+  var allSubtabs=document.querySelectorAll('.subtab');
+  for(var i=0;i<allSubtabs.length;i++){{
+    var isActive=allSubtabs[i].getAttribute('data-subtab')===activeTab;
+    allSubtabs[i].classList.toggle('active',isActive);
+  }}
+  var allSubpanels=document.querySelectorAll('.schedule-subpanel');
+  for(var j=0;j<allSubpanels.length;j++)allSubpanels[j].classList.remove('active');
+  var panel=document.getElementById('sch-'+activeTab);
+  if(panel)panel.classList.add('active');
+}}
+
+function renderDynamicStats(){{
+  var roots=[
+    document.getElementById('statsRoot'),
+    document.getElementById('scheduleStatsRoot')
+  ].filter(Boolean);
+  if(!roots.length)return;
+  renderDynamicMetrics();
+  var allCards=(D.cards||[]).filter(isRealCard);
+  if(!allCards.length){{
+    for(var emptyIdx=0;emptyIdx<roots.length;emptyIdx++){{
+      roots[emptyIdx].innerHTML='<p class="empty-state">暂无统计数据。</p>';
+    }}
+    return;
+  }}
+  var phaseKey=SUBTAB_PHASE_MAP[curScheduleTab]||'group';
+  var phaseLabel=PHASE_LABELS_MAP[phaseKey]||phaseKey||'当前阶段';
+  var dateCards=filterCardsByDate(allCards,curDate);
+  var phaseCards=filterCardsByPhase(allCards,phaseKey);
+  var phaseDateCards=filterCardsByPhase(dateCards,phaseKey);
+  var html='';
+
+  html+=renderStatsSectionJs('总数据', [
+    buildStatBucket('all','总数据',allCards,'','')
+  ]);
+
+  if(curDate && curDate!=='all'){{
+    html+=renderStatsSectionJs('当前比赛日', [
+      buildStatBucket('date-'+curDate, curDate, dateCards, '', '')
+    ]);
+  }}
+
+  html+=renderStatsSectionJs('当前阶段累计', [
+    buildStatBucket('phase-'+phaseKey, phaseLabel, phaseCards, phaseKey, '')
+  ]);
+
+  if(curDate && curDate!=='all'){{
+    html+=renderStatsSectionJs('当前筛选视图', [
+      buildStatBucket('filtered-'+curDate+'-'+phaseKey, curDate+' / '+phaseLabel, phaseDateCards, phaseKey, '')
+    ]);
+  }}
+
+  if(phaseKey==='group'){{
+    var groupStats=[buildStatBucket('group-summary','小组赛汇总',phaseCards,'group','')];
+    var groupMap={{}};
+    for(var i=0;i<phaseCards.length;i++){{
+      var gk=cardGroupKey(phaseCards[i]);
+      if(!gk)continue;
+      if(!groupMap[gk])groupMap[gk]=[];
+      groupMap[gk].push(phaseCards[i]);
+    }}
+    var groupKeys=Object.keys(groupMap).sort();
+    for(var k=0;k<groupKeys.length;k++){{
+      var key=groupKeys[k];
+      groupStats.push(buildStatBucket('group-'+key, key+'组', groupMap[key], 'group', key));
+    }}
+    html+=renderStatsSectionJs('小组赛 / 分组汇总', groupStats);
+  }}
+
+  var dailyHtml='';
+  var dailyStats=D.daily_stats||[];
+  for(var d=0;d<dailyStats.length;d++)dailyHtml+=renderDailyStatJs(dailyStats[d]);
+  html+='<div class="daily-stats-section">'
+    +'<div class="phase-stats-title">逐日统计日志</div>'
+    +'<div class="stats-grid">'+(dailyHtml||'<p class="empty-state">暂无每日统计。</p>')+'</div>'
+    +'</div>';
+
+  for(var rootIdx=0;rootIdx<roots.length;rootIdx++){{
+    roots[rootIdx].innerHTML=html;
+  }}
+}}
+
 function cardStateLabel(card){{
   var st=card.display_state||'fixture';
   if(st==='evaluated')return card.evaluation&&card.evaluation.label?card.evaluation.label:'已评估';
   if(st==='predicted')return '已预测';
-  if(st==='actual_only')return '待预测';
+  if(st==='actual_only')return '已完赛';
   if(st==='placeholder')return '占位';
   return '待预测';
 }}
@@ -3609,13 +4564,68 @@ function cardResultHtml(card){{
   return '<div class="mc-result"><span class="outcome-badge '+resultCls+'">真实结果 '+escapeHtml(resultLabel)+'</span></div>';
 }}
 
+function compareHeadHtml(){{
+  return '<div class="compare-head"><span>项目</span><span>预测</span><span>实际</span></div>';
+}}
+
 function cardScoreDisplay(card){{
   var pred=(card.prediction||{{}});
   var act=(card.actual||{{}});
   var st=card.display_state||'fixture';
-  if(st==='fixture'||st==='actual_only'||st==='placeholder')return '<div class="mc-score">待预测</div>';
+  var phase=(card.phase||(card.fixture||{{}}).phase||'');
+  var isKo=['round_of_32','round_of_16','quarter_final','semi_final','third_place','final'].indexOf(String(phase||''))>=0;
+  var koPred=pred.knockout||card.knockout_prediction||null;
+  var koAct=act.knockout||card.knockout_actual||null;
+  if(st==='actual_only'){{
+    if(isKo&&koAct){{
+      var aReg=((koAct.regular_time||{{}}).score_text)||act.score_text||'-:-';
+      var aEt=(koAct.extra_time&&koAct.extra_time.played)?(koAct.extra_time.score_text||'-:-'):'否';
+      var aPen=(koAct.penalties&&koAct.penalties.played)?(koAct.penalties.score_text||'-:-'):'否';
+      var aAdv=((koAct.advance||{{}}).winner_name)||'待定';
+      return '<div class="ko-summary">'
+        +'<div class="ko-summary-pill"><b>实际90分</b><span>'+escapeHtml(aReg)+'</span></div>'
+        +'<div class="ko-summary-pill"><b>实际加时</b><span>'+escapeHtml(aEt)+'</span></div>'
+        +'<div class="ko-summary-pill"><b>实际点球</b><span>'+escapeHtml(aPen)+'</span></div>'
+        +'<div class="ko-summary-pill"><b>实际晋级</b><span>'+escapeHtml(aAdv)+'</span></div>'
+        +'</div>';
+    }}
+    return '<div class="mc-score">实际 '+escapeHtml(act.score_text||'-:-')+'</div>';
+  }}
+  if((st==='fixture'||st==='placeholder') && !(isKo&&koPred&&pred.exists))return '<div class="mc-score">待预测</div>';
+  if(st==='evaluated' && isKo && koPred){{
+    var pReg=((koPred.regular_time||{{}}).score_text)||pred.score_text||card.score_text||'-:-';
+    var aReg=((koAct&&koAct.regular_time?koAct.regular_time:{{}}).score_text)||act.score_text||'-:-';
+    var pEt=(koPred.extra_time&&koPred.extra_time.played)?(koPred.extra_time.score_text||'-:-'):'否';
+    var aEt=(koAct&&koAct.extra_time&&koAct.extra_time.played)?(koAct.extra_time.score_text||'-:-'):'否';
+    var pPen=(koPred.penalties&&koPred.penalties.played)?(koPred.penalties.score_text||'-:-'):'否';
+    var aPen=(koAct&&koAct.penalties&&koAct.penalties.played)?(koAct.penalties.score_text||'-:-'):'否';
+    var pAdv=((koPred.advance||{{}}).winner_name)||'待定';
+    var aAdv=((koAct&&koAct.advance?koAct.advance:{{}}).winner_name)||'待定';
+    return '<div class="score-compare score-compare-knockout">'
+      +compareHeadHtml()
+      +'<div class="compare-row"><span class="compare-label">90分钟</span><span class="compare-score">'+escapeHtml(pReg)+'</span><span class="compare-score compare-actual">'+escapeHtml(aReg)+'</span></div>'
+      +'<div class="compare-row"><span class="compare-label">加时</span><span class="compare-score">'+escapeHtml(pEt)+'</span><span class="compare-score compare-actual">'+escapeHtml(aEt)+'</span></div>'
+      +'<div class="compare-row"><span class="compare-label">点球</span><span class="compare-score">'+escapeHtml(pPen)+'</span><span class="compare-score compare-actual">'+escapeHtml(aPen)+'</span></div>'
+      +'<div class="compare-row"><span class="compare-label">晋级</span><span class="compare-score">'+escapeHtml(pAdv)+'</span><span class="compare-score compare-actual">'+escapeHtml(aAdv)+'</span></div>'
+      +'</div>';
+  }}
   if(st==='evaluated'){{
-    return '<div class="score-compare"><div class="compare-row"><span class="compare-label">预测</span><span class="compare-score">'+escapeHtml(pred.score_text||card.score_text||'-:-')+'</span></div><div class="compare-row"><span class="compare-label">实际</span><span class="compare-score compare-actual">'+escapeHtml(act.score_text||'-:-')+'</span></div></div>';
+    return '<div class="score-compare">'
+      +compareHeadHtml()
+      +'<div class="compare-row"><span class="compare-label">90分钟</span><span class="compare-score">'+escapeHtml(pred.score_text||card.score_text||'-:-')+'</span><span class="compare-score compare-actual">'+escapeHtml(act.score_text||'-:-')+'</span></div>'
+      +'</div>';
+  }}
+  if(isKo && koPred && pred.exists){{
+    var koReg=((koPred.regular_time||{{}}).score_text)||pred.score_text||card.score_text||'-:-';
+    var koEt=(koPred.extra_time&&koPred.extra_time.played)?'是':'否';
+    var koPen=(koPred.penalties&&koPred.penalties.played)?'是':'否';
+    var koAdv=((koPred.advance||{{}}).winner_name)||'待定';
+    return '<div class="ko-summary">'
+      +'<div class="ko-summary-pill"><b>90分钟</b><span>'+escapeHtml(koReg)+'</span></div>'
+      +'<div class="ko-summary-pill"><b>加时</b><span>'+escapeHtml(koEt)+'</span></div>'
+      +'<div class="ko-summary-pill"><b>点球</b><span>'+escapeHtml(koPen)+'</span></div>'
+      +'<div class="ko-summary-pill"><b>晋级</b><span>'+escapeHtml(koAdv)+'</span></div>'
+      +'</div>';
   }}
   return '<div class="mc-score">'+escapeHtml(pred.score_text||card.score_text||'-:-')+'</div>';
 }}
@@ -3628,6 +4638,7 @@ function renderCard(card){{
   if(hitClass==='hit')hitClass='double-hit';
   var dataSource=fixture.data_source||card.data_source||'official';
   var phase=fixture.phase||card.phase||'';
+  var phaseLabel=phaseDisplayLabel(phase);
   var group=fixture.group||card.group||'';
   var dateStr=fixture.beijing_date||card.beijing_date||card.date||'';
   var timeStr=fixture.beijing_time||card.beijing_time||'';
@@ -3642,7 +4653,9 @@ function renderCard(card){{
   var sourceBadge='';
   if(dataSource==='placeholder')sourceBadge='<span class="source-badge source-placeholder" title="淘汰赛队伍待确认，数据为占位">占位</span>';
   else if(phase&&phase.indexOf('group')===0)sourceBadge='<span class="source-badge source-official" title="官方赛程">小组赛</span>';
-  else if(phase)sourceBadge='<span class="source-badge source-official" title="官方赛程">'+escapeHtml(phase)+'</span>';
+  else if(phaseLabel)sourceBadge='<span class="source-badge source-official" title="官方赛程">'+escapeHtml(phaseLabel)+'</span>';
+  var groupBadge=group?'<span class="mc-group">'+escapeHtml(group)+'组</span>':'';
+  var timeHtml=(dateStr||timeStr)?'<div class="mc-time">'+escapeHtml(dateStr)+(timeStr?' '+escapeHtml(timeStr):'')+'</div>':'';
 
   var xgHtml='';
   if(pred.exists && pred.expected_goals_proxy && pred.expected_goals_proxy.home!==undefined && pred.expected_goals_proxy.away!==undefined){{
@@ -3659,7 +4672,7 @@ function renderCard(card){{
     watchHtml='<div class="watchpoints"><span class="section-label">本场看点</span><ul>'+items+'</ul></div>';
   }}
   return '<article class="match-card'+(dataSource==='placeholder'?' match-card-placeholder':'')+'" data-hit="'+escapeHtml(hitClass)+'" data-match-id="'+escapeHtml(card.match_id||fixture.match_id||'')+'" data-date="'+escapeHtml(dateStr)+'" data-phase="'+escapeHtml(phase)+'" data-source="'+escapeHtml(dataSource)+'">'
-    +'<div class="mc-top"><span class="mc-id">'+escapeHtml(card.match_id||fixture.match_id||'')+'</span><span class="mc-group">'+escapeHtml(group)+'组</span><span class="mc-time">'+escapeHtml(dateStr)+' '+escapeHtml(timeStr)+'</span>'+evalBadge+sourceBadge+'</div>'
+    +'<div class="mc-top"><div class="mc-meta"><div class="mc-meta-row"><span class="mc-id">'+escapeHtml(card.match_id||fixture.match_id||'')+'</span>'+groupBadge+'</div>'+timeHtml+'</div><div class="mc-badges">'+evalBadge+sourceBadge+'</div></div>'
     +'<div class="mc-body"><div class="mc-team"><span class="team-name">'+escapeHtml(fixture.home_name||card.home_name||'')+hRankHtml+'</span><span class="mc-vs">vs</span><span class="team-name">'+escapeHtml(fixture.away_name||card.away_name||'')+aRankHtml+'</span></div>'
     +cardScoreDisplay(card)
     +cardResultHtml(card)+'</div>'
@@ -3703,15 +4716,15 @@ function renderSchedule(){{
   var rendered=(D.rendered&&D.rendered.schedule_html)||'';
   root.className=rendered ? '' : 'panel-placeholder';
   root.innerHTML=rendered || '暂无赛程数据。';
+  applyScheduleTabSelection();
 }}
 
 function renderGovernance(){{
   var issuesRoot=document.getElementById('issuesRoot');
   var actionsRoot=document.getElementById('actionsRoot');
-  var statsRoot=document.getElementById('statsRoot');
   issuesRoot.innerHTML=(D.rendered&&D.rendered.issues_html)||'<p class="empty-state">暂无活跃的模型异常反馈。</p>';
   actionsRoot.innerHTML=(D.rendered&&D.rendered.actions_html)||'<p class="empty-state">暂无待处理的模型治理行动项。</p>';
-  statsRoot.innerHTML=(D.rendered&&D.rendered.stats_html)||'<p class="empty-state">暂无每日统计。</p>';
+  renderDynamicStats();
 }}
 
 function applyPayloadMeta(){{
@@ -3859,13 +4872,9 @@ function bindStaticHandlers(){{
   for(var i=0;i<subtabs.length;i++){{
     subtabs[i].addEventListener('click',function(e){{
       var t=e.currentTarget;
-      var allSubtabs=document.querySelectorAll('.subtab');
-      for(var j=0;j<allSubtabs.length;j++)allSubtabs[j].classList.remove('active');
-      var allSubpanels=document.querySelectorAll('.schedule-subpanel');
-      for(var j=0;j<allSubpanels.length;j++)allSubpanels[j].classList.remove('active');
-      t.classList.add('active');
-      var p=document.getElementById('sch-'+t.getAttribute('data-subtab'));
-      if(p)p.classList.add('active');
+      curScheduleTab=t.getAttribute('data-subtab')||'group';
+      applyScheduleTabSelection();
+      renderDynamicStats();
     }});
   }}
 
@@ -3879,13 +4888,9 @@ function bindDynamicHandlers(){{
   for(var i=0;i<subtabs.length;i++){{
     subtabs[i].onclick=function(e){{
       var t=e.currentTarget;
-      var allSubtabs=document.querySelectorAll('.subtab');
-      for(var j=0;j<allSubtabs.length;j++)allSubtabs[j].classList.remove('active');
-      var allSubpanels=document.querySelectorAll('.schedule-subpanel');
-      for(var k=0;k<allSubpanels.length;k++)allSubpanels[k].classList.remove('active');
-      t.classList.add('active');
-      var p=document.getElementById('sch-'+t.getAttribute('data-subtab'));
-      if(p)p.classList.add('active');
+      curScheduleTab=t.getAttribute('data-subtab')||'group';
+      applyScheduleTabSelection();
+      renderDynamicStats();
     }};
   }}
 
@@ -4113,6 +5118,7 @@ function applyFilters(){{
       cards[i].classList.remove('hidden');
     }} else cards[i].classList.add('hidden');
   }}
+  renderDynamicStats();
 }}
 
 function buildPredictionIndex(){{
@@ -4673,6 +5679,11 @@ def _assemble_dashboard_payload(*, root: Path, edition: str, now: str | None = N
             ledger_eval = {
                 "actual_home": final.get("home"),
                 "actual_away": final.get("away"),
+                "knockout_actual": _normalize_knockout_payload(
+                    m.get("knockout_result"),
+                    home_name=_match_team_name(m, "home"),
+                    away_name=_match_team_name(m, "away"),
+                ),
                 "evaluation": m.get("evaluation") or {},
             }
             # Merge: if DB already has evaluation result (result_hit/score_hit),
@@ -4816,6 +5827,11 @@ def _assemble_dashboard_payload(*, root: Path, edition: str, now: str | None = N
                     away = pred.get("away_team", {}) or {}
                     score = prediction.get("score", {}) or {}
                     result = prediction.get("result", "")
+                    knockout_prediction = _normalize_knockout_payload(
+                        prediction.get("knockout"),
+                        home_name=home.get("name", ""),
+                        away_name=away.get("name", ""),
+                    )
                     has_market_odds, market_odds, market_odds_status = _normalize_market_odds_status(
                         pred.get("market_odds"),
                         pred.get("market_odds_status"),
@@ -4856,6 +5872,7 @@ def _assemble_dashboard_payload(*, root: Path, edition: str, now: str | None = N
                         "predicted_result": result,
                         "predicted_result_label": OUTCOME_LABELS.get(result, result),
                         "score_text": f"{score.get('home', '-')}-{score.get('away', '-')}",
+                        "knockout_prediction": knockout_prediction,
                         "total_goals": prediction.get("total_goals", "-"),
                         "confidence": prediction.get("confidence", "unknown"),
                         "confidence_label": (prediction.get("confidence", "unknown")).upper(),
@@ -4972,10 +5989,26 @@ def _assemble_dashboard_payload(*, root: Path, edition: str, now: str | None = N
             ev = eval_index[mid]
             card["actual_score_home"] = ev["actual_home"]
             card["actual_score_away"] = ev["actual_away"]
+            if ev.get("knockout_actual"):
+                card["knockout_actual"] = ev.get("knockout_actual")
             card["is_completed"] = True
             ev_data = ev.get("evaluation", {})
             card["result_hit"] = ev_data.get("result_hit")
             card["score_hit"] = ev_data.get("score_hit")
+            if ev_data.get("knockout_prediction") and not card.get("knockout_prediction"):
+                card["knockout_prediction"] = _normalize_knockout_payload(
+                    ev_data.get("knockout_prediction"),
+                    home_name=str(card.get("home_name") or ""),
+                    away_name=str(card.get("away_name") or ""),
+                )
+            if any(key in ev_data for key in ("regular_time_result_hit", "regular_time_score_hit", "extra_time_hit", "penalties_hit", "advance_hit")):
+                card["knockout_evaluation"] = {
+                    "regular_time_result_hit": ev_data.get("regular_time_result_hit"),
+                    "regular_time_score_hit": ev_data.get("regular_time_score_hit"),
+                    "extra_time_hit": ev_data.get("extra_time_hit"),
+                    "penalties_hit": ev_data.get("penalties_hit"),
+                    "advance_hit": ev_data.get("advance_hit"),
+                }
             if card.get("result_hit") is True and card.get("score_hit") is True:
                 card["hit_class"] = "double-hit"
                 card["evaluation_label"] = "完美双中"

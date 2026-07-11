@@ -39,6 +39,137 @@ from prediction_scoring_model import (
     _tianji_score,
 )
 
+_SCORELINE_TUNING_DEFAULTS = {
+    "paired_score_bias": 0.84,
+    "mode_collapse_penalty": 0.88,
+    "clean_sheet_bias": 1.24,
+    "draw_nil_bias": 1.10,
+    "loser_xg_suppression": {
+        "coinflip": 0.96,
+        "slight": 0.86,
+        "clear": 0.74,
+        "strong": 0.58,
+    },
+}
+
+
+def _clamp(value: float, minimum: float, maximum: float) -> float:
+    return max(minimum, min(maximum, value))
+
+
+def _default_scoreline_tuning() -> dict:
+    return {
+        "paired_score_bias": float(_SCORELINE_TUNING_DEFAULTS["paired_score_bias"]),
+        "mode_collapse_penalty": float(_SCORELINE_TUNING_DEFAULTS["mode_collapse_penalty"]),
+        "clean_sheet_bias": float(_SCORELINE_TUNING_DEFAULTS["clean_sheet_bias"]),
+        "draw_nil_bias": float(_SCORELINE_TUNING_DEFAULTS["draw_nil_bias"]),
+        "loser_xg_suppression": dict(_SCORELINE_TUNING_DEFAULTS["loser_xg_suppression"]),
+    }
+
+
+def _normalize_scoreline_tuning(raw: dict | None) -> dict:
+    tuning = _default_scoreline_tuning()
+    if not isinstance(raw, dict):
+        return tuning
+    for key in ("paired_score_bias", "mode_collapse_penalty", "clean_sheet_bias", "draw_nil_bias"):
+        if key in raw:
+            tuning[key] = float(raw[key])
+    loser_xg = raw.get("loser_xg_suppression", {})
+    if isinstance(loser_xg, dict):
+        for tier in tuning["loser_xg_suppression"]:
+            if tier in loser_xg:
+                tuning["loser_xg_suppression"][tier] = float(loser_xg[tier])
+    return tuning
+
+
+def _tune_scoreline_parameters(
+    tuning: dict,
+    *,
+    predicted_score_home: int,
+    predicted_score_away: int,
+    actual_score_home: int,
+    actual_score_away: int,
+    actual_result: str,
+    is_result_correct: bool,
+    is_score_correct: bool,
+    lr: float,
+) -> bool:
+    if is_score_correct:
+        return False
+
+    changed = False
+    predicted_tuple = (predicted_score_home, predicted_score_away)
+    actual_tuple = (actual_score_home, actual_score_away)
+    predicted_clean_sheet = predicted_score_home == 0 or predicted_score_away == 0
+    actual_clean_sheet = actual_score_home == 0 or actual_score_away == 0
+    score_gap = abs(actual_score_home - predicted_score_home) + abs(actual_score_away - predicted_score_away)
+
+    if predicted_tuple in {(2, 1), (1, 2), (1, 1)} and actual_tuple != predicted_tuple:
+        tuning["paired_score_bias"] = _clamp(
+            tuning["paired_score_bias"] - lr * 0.60,
+            0.60,
+            1.08,
+        )
+        tuning["mode_collapse_penalty"] = _clamp(
+            tuning["mode_collapse_penalty"] - lr * 0.45,
+            0.68,
+            1.00,
+        )
+        changed = True
+
+    if actual_clean_sheet and not predicted_clean_sheet:
+        tuning["clean_sheet_bias"] = _clamp(
+            tuning["clean_sheet_bias"] + lr * (1.6 if is_result_correct else 1.2),
+            0.90,
+            2.20,
+        )
+        for tier, boost in {"coinflip": 0.18, "slight": 0.34, "clear": 0.40, "strong": 0.46}.items():
+            tuning["loser_xg_suppression"][tier] = _clamp(
+                tuning["loser_xg_suppression"][tier] - lr * boost,
+                0.35,
+                0.98,
+            )
+        changed = True
+    elif predicted_clean_sheet and not actual_clean_sheet:
+        tuning["clean_sheet_bias"] = _clamp(
+            tuning["clean_sheet_bias"] - lr * 0.90,
+            0.90,
+            2.20,
+        )
+        for tier, boost in {"coinflip": 0.14, "slight": 0.24, "clear": 0.28, "strong": 0.32}.items():
+            tuning["loser_xg_suppression"][tier] = _clamp(
+                tuning["loser_xg_suppression"][tier] + lr * boost,
+                0.35,
+                0.98,
+            )
+        changed = True
+
+    if actual_result == "draw":
+        if actual_tuple == (0, 0) and predicted_tuple != (0, 0):
+            tuning["draw_nil_bias"] = _clamp(
+                tuning["draw_nil_bias"] + lr * 1.00,
+                0.90,
+                1.80,
+            )
+            changed = True
+        elif predicted_tuple == (0, 0) and actual_tuple != (0, 0):
+            tuning["draw_nil_bias"] = _clamp(
+                tuning["draw_nil_bias"] - lr * 0.70,
+                0.90,
+                1.80,
+            )
+            changed = True
+
+    if is_result_correct and score_gap >= 2:
+        tuning["mode_collapse_penalty"] = _clamp(
+            tuning["mode_collapse_penalty"] - lr * 0.25,
+            0.68,
+            1.00,
+        )
+        changed = True
+
+    return changed
+
 
 def normalize_and_bound_weights(
     weights: dict[str, float], min_val: float = 0.05, max_val: float = 0.50
@@ -395,10 +526,12 @@ def run_tuning_loop(
     comp_weights.setdefault("evidence_completeness", 0.15)
 
     comp_weights = {k: float(v) for k, v in comp_weights.items()}
+    scoreline_tuning = _normalize_scoreline_tuning(hyper.get("scoreline_tuning"))
 
     # 4. Process Self-Reflection Journal and Auto-Tuning
     journal_entries = []
     tuned_any_weights = False
+    tuned_any_scoreline = False
 
     for row in eval_rows:
         match_id = row["match_id"]
@@ -465,6 +598,19 @@ def run_tuning_loop(
                 match_id, home_name, away_name, pred_dict, eval_dict, features
             )
             journal_entries.append(entry)
+
+        if _tune_scoreline_parameters(
+            scoreline_tuning,
+            predicted_score_home=int(row["predicted_score_home"]),
+            predicted_score_away=int(row["predicted_score_away"]),
+            actual_score_home=int(actual_home),
+            actual_score_away=int(actual_away),
+            actual_result=actual_result,
+            is_result_correct=is_result_correct,
+            is_score_correct=is_score_correct,
+            lr=lr,
+        ):
+            tuned_any_scoreline = True
 
         # Perform Win/Loss weight tuning for incorrect predictions
         if not is_result_correct:
@@ -573,7 +719,7 @@ def run_tuning_loop(
         print(f"Logged {len(new_journal_entries)} new reflection journal entries.")
 
     # 6. Normalize, Bound and Save Hyperparameters
-    if tuned_any_weights:
+    if tuned_any_weights or tuned_any_scoreline:
         comp_weights = normalize_and_bound_weights(
             comp_weights, min_val=0.05, max_val=0.50
         )
@@ -587,6 +733,16 @@ def run_tuning_loop(
             "data_weight": round(data_weight, 3),
             "divination_weight": round(divination_weight, 3),
             "component_weights": {k: round(v, 4) for k, v in comp_weights.items()},
+            "scoreline_tuning": {
+                "paired_score_bias": round(float(scoreline_tuning["paired_score_bias"]), 4),
+                "mode_collapse_penalty": round(float(scoreline_tuning["mode_collapse_penalty"]), 4),
+                "clean_sheet_bias": round(float(scoreline_tuning["clean_sheet_bias"]), 4),
+                "draw_nil_bias": round(float(scoreline_tuning["draw_nil_bias"]), 4),
+                "loser_xg_suppression": {
+                    tier: round(float(value), 4)
+                    for tier, value in scoreline_tuning["loser_xg_suppression"].items()
+                },
+            },
         }
         write_json(hyper_path, updated_hyper)
         print(f"Saved tuned hyperparameters to {hyper_path}")
@@ -597,6 +753,16 @@ def run_tuning_loop(
                 "data_weight": round(data_weight, 3),
                 "divination_weight": round(divination_weight, 3),
                 "component_weights": {k: round(v, 4) for k, v in comp_weights.items()},
+                "scoreline_tuning": {
+                    "paired_score_bias": round(float(scoreline_tuning["paired_score_bias"]), 4),
+                    "mode_collapse_penalty": round(float(scoreline_tuning["mode_collapse_penalty"]), 4),
+                    "clean_sheet_bias": round(float(scoreline_tuning["clean_sheet_bias"]), 4),
+                    "draw_nil_bias": round(float(scoreline_tuning["draw_nil_bias"]), 4),
+                    "loser_xg_suppression": {
+                        tier: round(float(value), 4)
+                        for tier, value in scoreline_tuning["loser_xg_suppression"].items()
+                    },
+                },
             }
             write_json(hyper_path, updated_hyper)
             print(f"Initialized default hyperparameters at {hyper_path}")
@@ -605,10 +771,12 @@ def run_tuning_loop(
         "status": "success",
         "journal_entries_written": len(new_journal_entries),
         "tuned_any_weights": tuned_any_weights,
+        "tuned_any_scoreline": tuned_any_scoreline,
         "weights": {
             "data_weight": data_weight,
             "divination_weight": divination_weight,
             "component_weights": comp_weights,
+            "scoreline_tuning": scoreline_tuning,
         },
     }
 

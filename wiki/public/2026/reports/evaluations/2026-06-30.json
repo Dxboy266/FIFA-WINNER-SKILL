@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-30",
+  "generated_at": "2026-07-01T21:30:37.962066+08:00",
+  "mode": "worldcup-prediction-post-match-evaluation",
+  "summary": {
+    "evaluations": 3,
+    "evaluated_matches": 3,
+    "blocked_missing_final_score": 0,
+    "result_hits": 2,
+    "score_hits": 2,
+    "total_goals_hits": 1,
+    "confidence_calibration": {
+      "medium": {
+        "evaluated_matches": 3,
+        "result_hits": 2,
+        "result_hit_rate": 0.6666666666666666
+      }
+    }
+  },
+  "evaluations": [
+    {
+      "match_id": "2026-R32-02",
+      "status": "evaluated",
+      "predicted_result": "home_win",
+      "prediction_confidence": "medium",
+      "actual_result": "home_win",
+      "actual_score": {
+        "home": 2,
+        "away": 1
+      },
+      "actual_total_goals": 3,
+      "result_hit": true,
+      "score_hit": true,
+      "total_goals_hit": true,
+      "prediction_kept_locked": true,
+      "actual_regular_time_score": {
+        "home": 2,
+        "away": 1
+      },
+      "actual_regular_time_result": "home_win",
+      "regular_time_result_hit": true,
+      "regular_time_score_hit": true,
+      "actual_knockout_result": {
+        "regular_time": {
+          "home": 2,
+          "away": 1,
+          "result": "home_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "home"
+        },
+        "full_time": {
+          "home": 2,
+          "away": 1,
+          "result": "home_win"
+        }
+      },
+      "knockout_prediction": {},
+      "extra_time_hit": true,
+      "penalties_hit": true,
+      "advance_hit": null
+    },
+    {
+      "match_id": "2026-R32-03",
+      "status": "evaluated",
+      "predicted_result": "home_win",
+      "prediction_confidence": "medium",
+      "actual_result": "away_win",
+      "actual_score": {
+        "home": 4,
+        "away": 5
+      },
+      "actual_total_goals": 9,
+      "result_hit": false,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true,
+      "actual_regular_time_score": {
+        "home": 1,
+        "away": 1
+      },
+      "actual_regular_time_result": "draw",
+      "regular_time_result_hit": false,
+      "regular_time_score_hit": false,
+      "actual_knockout_result": {
+        "regular_time": {
+          "home": 1,
+          "away": 1,
+          "result": "draw"
+        },
+        "extra_time": {
+          "played": true,
+          "home": 0,
+          "away": 0,
+          "result": "draw"
+        },
+        "penalties": {
+          "played": true,
+          "home": 3,
+          "away": 4,
+          "winner": "away"
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 4,
+          "away": 5,
+          "result": "away_win"
+        }
+      },
+      "knockout_prediction": {},
+      "extra_time_hit": false,
+      "penalties_hit": false,
+      "advance_hit": null
+    },
+    {
+      "match_id": "2026-R32-04",
+      "status": "evaluated",
+      "predicted_result": "draw",
+      "prediction_confidence": "medium",
+      "actual_result": "away_win",
+      "actual_score": {
+        "home": 3,
+        "away": 4
+      },
+      "actual_total_goals": 7,
+      "result_hit": true,
+      "score_hit": true,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true,
+      "actual_regular_time_score": {
+        "home": 1,
+        "away": 1
+      },
+      "actual_regular_time_result": "draw",
+      "regular_time_result_hit": true,
+      "regular_time_score_hit": true,
+      "actual_knockout_result": {
+        "regular_time": {
+          "home": 1,
+          "away": 1,
+          "result": "draw"
+        },
+        "extra_time": {
+          "played": true,
+          "home": 0,
+          "away": 0,
+          "result": "draw"
+        },
+        "penalties": {
+          "played": true,
+          "home": 2,
+          "away": 3,
+          "winner": "away"
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 3,
+          "away": 4,
+          "result": "away_win"
+        }
+      },
+      "knockout_prediction": {},
+      "extra_time_hit": false,
+      "penalties_hit": false,
+      "advance_hit": null
+    }
+  ],
+  "safety_invariants": [
+    "post_match_evaluation_does_not_rewrite_locked_pre_match_predictions"
+  ]
+}

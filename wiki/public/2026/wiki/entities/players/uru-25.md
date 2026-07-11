@@ -2,23 +2,26 @@
 type: entity
 entity_type: player
 edition: 2026
-status: partial
-updated: 2026-06-09
+status: enriched
+updated: 2026-06-18
 ---
 
-# Unknown Player
+# SANABRIA Juan Manuel
 
 ## 基础信息
 
-- Player ID：`uru-25`
-- 国家队：Uruguay
-- 位置：MF
-- 俱乐部：Real Salt Lake (USA)
-- 来源完整性：partial
+- **Player ID**: `uru-25`
+- **国家队**: Uruguay
+- **位置**: MF
+- **号码**: #25
+- **俱乐部**: Real Salt Lake (USA)
+- **出生日期**: 2000-03-29
+- **身高**: 170cm
 
-## 待补深档
+## 当前状态
 
-- 国家队出场和进球
-- 世界杯/洲际赛经历
-- 近期状态、伤停和出场时间
-- 预测相关标签
+✅ 健康可用
+
+---
+
+*Generated at 2026-06-18T19:30:59.213432+08:00*

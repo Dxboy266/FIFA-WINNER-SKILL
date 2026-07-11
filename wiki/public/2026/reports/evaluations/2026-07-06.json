@@ -1,0 +1,207 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-07-06",
+  "generated_at": "2026-07-11T16:44:00+08:00",
+  "mode": "worldcup-prediction-post-match-evaluation",
+  "summary": {
+    "evaluations": 2,
+    "evaluated_matches": 2,
+    "blocked_missing_final_score": 0,
+    "result_hits": 0,
+    "score_hits": 0,
+    "total_goals_hits": 0,
+    "confidence_calibration": {
+      "medium": {
+        "evaluated_matches": 2,
+        "result_hits": 0,
+        "result_hit_rate": 0.0
+      }
+    }
+  },
+  "evaluations": [
+    {
+      "match_id": "2026-R16-03",
+      "status": "evaluated",
+      "predicted_result": "home_win",
+      "prediction_confidence": "medium",
+      "actual_result": "away_win",
+      "actual_score": {
+        "home": 1,
+        "away": 2
+      },
+      "actual_total_goals": 3,
+      "result_hit": false,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true,
+      "actual_regular_time_score": {
+        "home": 1,
+        "away": 2
+      },
+      "actual_regular_time_result": "away_win",
+      "regular_time_result_hit": false,
+      "regular_time_score_hit": false,
+      "actual_knockout_result": {
+        "regular_time": {
+          "home": 1,
+          "away": 2,
+          "result": "away_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 1,
+          "away": 2,
+          "result": "away_win"
+        }
+      },
+      "knockout_prediction": {
+        "is_knockout": true,
+        "phase": "round_of_16",
+        "regular_time": {
+          "result": "home_win",
+          "score": {
+            "home": 2,
+            "away": 0
+          }
+        },
+        "extra_time": {
+          "played": false,
+          "result": "",
+          "score": {
+            "home": null,
+            "away": null
+          },
+          "period_score": {
+            "home": null,
+            "away": null
+          }
+        },
+        "penalties": {
+          "played": false,
+          "winner": "",
+          "winner_name": "",
+          "score": {
+            "home": null,
+            "away": null
+          }
+        },
+        "advance": {
+          "winner": "home",
+          "winner_result": "home_advance",
+          "winner_name": "Brazil"
+        }
+      },
+      "extra_time_hit": true,
+      "penalties_hit": true,
+      "advance_hit": false
+    },
+    {
+      "match_id": "2026-R16-04",
+      "status": "evaluated",
+      "predicted_result": "draw",
+      "prediction_confidence": "medium",
+      "actual_result": "away_win",
+      "actual_score": {
+        "home": 2,
+        "away": 3
+      },
+      "actual_total_goals": 5,
+      "result_hit": false,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true,
+      "actual_regular_time_score": {
+        "home": 2,
+        "away": 3
+      },
+      "actual_regular_time_result": "away_win",
+      "regular_time_result_hit": false,
+      "regular_time_score_hit": false,
+      "actual_knockout_result": {
+        "regular_time": {
+          "home": 2,
+          "away": 3,
+          "result": "away_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 2,
+          "away": 3,
+          "result": "away_win"
+        }
+      },
+      "knockout_prediction": {
+        "is_knockout": true,
+        "phase": "round_of_16",
+        "regular_time": {
+          "result": "draw",
+          "score": {
+            "home": 1,
+            "away": 1
+          }
+        },
+        "extra_time": {
+          "played": true,
+          "result": "away_win",
+          "score": {
+            "home": 1,
+            "away": 2
+          },
+          "period_score": {
+            "home": 0,
+            "away": 1
+          }
+        },
+        "penalties": {
+          "played": false,
+          "winner": "",
+          "winner_name": "",
+          "score": {
+            "home": null,
+            "away": null
+          }
+        },
+        "advance": {
+          "winner": "away",
+          "winner_result": "away_advance",
+          "winner_name": "England"
+        }
+      },
+      "extra_time_hit": false,
+      "penalties_hit": true,
+      "advance_hit": true
+    }
+  ],
+  "safety_invariants": [
+    "post_match_evaluation_does_not_rewrite_locked_pre_match_predictions"
+  ]
+}

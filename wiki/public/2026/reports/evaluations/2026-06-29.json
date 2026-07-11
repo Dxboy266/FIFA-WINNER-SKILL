@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-29",
+  "generated_at": "2026-06-30T21:28:36.960632+08:00",
+  "mode": "worldcup-prediction-post-match-evaluation",
+  "summary": {
+    "evaluations": 1,
+    "evaluated_matches": 1,
+    "blocked_missing_final_score": 0,
+    "result_hits": 1,
+    "score_hits": 0,
+    "total_goals_hits": 0,
+    "confidence_calibration": {
+      "medium": {
+        "evaluated_matches": 1,
+        "result_hits": 1,
+        "result_hit_rate": 1.0
+      }
+    }
+  },
+  "evaluations": [
+    {
+      "match_id": "2026-R32-01",
+      "status": "evaluated",
+      "predicted_result": "away_win",
+      "prediction_confidence": "medium",
+      "actual_result": "away_win",
+      "actual_score": {
+        "home": 0,
+        "away": 1
+      },
+      "actual_total_goals": 1,
+      "result_hit": true,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true
+    }
+  ],
+  "safety_invariants": [
+    "post_match_evaluation_does_not_rewrite_locked_pre_match_predictions"
+  ]
+}

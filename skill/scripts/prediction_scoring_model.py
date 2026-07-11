@@ -50,13 +50,49 @@ W_HISTORICAL_PROXY = 0.20
 W_REST_TRAVEL = 0.15
 W_EVIDENCE_COMPLETENESS = 0.15
 
+# Scoreline tuning defaults. These are intentionally conservative and can be
+# nudged by the post-match tuning loop through model-hyperparameters.json.
+SCORELINE_PAIRED_SCORE_BIAS = 0.84
+SCORELINE_MODE_COLLAPSE_PENALTY = 0.88
+SCORELINE_CLEAN_SHEET_BIAS = 1.24
+SCORELINE_DRAW_NIL_BIAS = 1.10
+SCORELINE_LOSER_XG_SUPPRESSION = {
+    "coinflip": 0.96,
+    "slight": 0.86,
+    "clear": 0.74,
+    "strong": 0.58,
+}
+
+
+def _reset_scoreline_tuning_defaults() -> None:
+    """Reset scoreline tuning globals before loading edition overrides."""
+    global SCORELINE_PAIRED_SCORE_BIAS, SCORELINE_MODE_COLLAPSE_PENALTY
+    global SCORELINE_CLEAN_SHEET_BIAS, SCORELINE_DRAW_NIL_BIAS
+    global SCORELINE_LOSER_XG_SUPPRESSION
+
+    SCORELINE_PAIRED_SCORE_BIAS = 0.84
+    SCORELINE_MODE_COLLAPSE_PENALTY = 0.88
+    SCORELINE_CLEAN_SHEET_BIAS = 1.24
+    SCORELINE_DRAW_NIL_BIAS = 1.10
+    SCORELINE_LOSER_XG_SUPPRESSION = {
+        "coinflip": 0.96,
+        "slight": 0.86,
+        "clear": 0.74,
+        "strong": 0.58,
+    }
+
 
 def load_hyperparameters(root: Path, edition: str) -> None:
     """Load hyperparameters from JSON and update global weight values."""
     global W_RANKING_STRENGTH, W_SQUAD_DEPTH, W_HISTORICAL_PROXY, W_REST_TRAVEL, W_EVIDENCE_COMPLETENESS
     global DATA_WEIGHT, DIVINATION_WEIGHT
+    global SCORELINE_PAIRED_SCORE_BIAS, SCORELINE_MODE_COLLAPSE_PENALTY
+    global SCORELINE_CLEAN_SHEET_BIAS, SCORELINE_DRAW_NIL_BIAS
+    global SCORELINE_LOSER_XG_SUPPRESSION
     from worldcup_core import edition_data_root, load_json
     import worldcup_core
+
+    _reset_scoreline_tuning_defaults()
 
     # First trigger worldcup_core reload
     worldcup_core.load_hyperparameters(root, edition)
@@ -78,6 +114,20 @@ def load_hyperparameters(root: Path, edition: str) -> None:
                 W_REST_TRAVEL = float(comp["rest_travel"])
             if "evidence_completeness" in comp:
                 W_EVIDENCE_COMPLETENESS = float(comp["evidence_completeness"])
+            scoreline = data.get("scoreline_tuning", {})
+            if "paired_score_bias" in scoreline:
+                SCORELINE_PAIRED_SCORE_BIAS = float(scoreline["paired_score_bias"])
+            if "mode_collapse_penalty" in scoreline:
+                SCORELINE_MODE_COLLAPSE_PENALTY = float(scoreline["mode_collapse_penalty"])
+            if "clean_sheet_bias" in scoreline:
+                SCORELINE_CLEAN_SHEET_BIAS = float(scoreline["clean_sheet_bias"])
+            if "draw_nil_bias" in scoreline:
+                SCORELINE_DRAW_NIL_BIAS = float(scoreline["draw_nil_bias"])
+            loser_xg = scoreline.get("loser_xg_suppression", {})
+            if isinstance(loser_xg, dict):
+                for tier in ("coinflip", "slight", "clear", "strong"):
+                    if tier in loser_xg:
+                        SCORELINE_LOSER_XG_SUPPRESSION[tier] = float(loser_xg[tier])
         except Exception as e:
             print(f"Warning: Failed to load hyperparameters from {path}: {e}", file=sys.stderr)
 
@@ -113,6 +163,148 @@ def _stage_weights(match_id: str) -> tuple[float, float]:
         if f"-{prefix}" in match_id:
             return weights
     return (0.60, 0.40)  # Default fallback
+
+
+_KNOCKOUT_PHASES = {
+    "round_of_32",
+    "round_of_16",
+    "quarter_final",
+    "semi_final",
+    "third_place",
+    "final",
+}
+
+
+def _is_knockout_phase(phase: str) -> bool:
+    return str(phase or "").strip().lower() in _KNOCKOUT_PHASES
+
+
+def _score_copy(score: dict | None) -> dict[str, int | None]:
+    score = score or {}
+    return {
+        "home": score.get("home"),
+        "away": score.get("away"),
+    }
+
+
+def _aggregate_score(base_score: dict | None, delta_score: dict | None) -> dict[str, int | None]:
+    base = _score_copy(base_score)
+    delta = _score_copy(delta_score)
+    if base["home"] is None or base["away"] is None:
+        return {"home": None, "away": None}
+    return {
+        "home": int(base["home"]) + int(delta["home"] or 0),
+        "away": int(base["away"]) + int(delta["away"] or 0),
+    }
+
+
+def _winner_side_from_result(result: str) -> str:
+    if result == "home_win":
+        return "home"
+    if result == "away_win":
+        return "away"
+    return ""
+
+
+def _winner_name_from_side(side: str, home_name: str, away_name: str) -> str:
+    if side == "home":
+        return home_name
+    if side == "away":
+        return away_name
+    return ""
+
+
+def _advance_result_from_side(side: str) -> str:
+    if side == "home":
+        return "home_advance"
+    if side == "away":
+        return "away_advance"
+    return ""
+
+
+def _build_knockout_prediction(
+    *,
+    phase: str,
+    predicted_outcome: str,
+    predicted_score: dict,
+    home_name: str,
+    away_name: str,
+    home_final: float,
+    away_final: float,
+    edge_tier: str,
+    game_script: str,
+    confidence: str,
+) -> dict | None:
+    if not _is_knockout_phase(phase):
+        return None
+
+    regular_time_score = _score_copy(predicted_score)
+    regular_time_result = predicted_outcome
+    favorite_side = "home" if home_final >= away_final else "away"
+
+    extra_time_played = regular_time_result == "draw"
+    extra_time_period_score = {"home": None, "away": None}
+    extra_time_score = {"home": None, "away": None}
+    extra_time_result = ""
+
+    penalties_played = False
+    penalties_score = {"home": None, "away": None}
+    penalties_winner = ""
+
+    advance_side = _winner_side_from_result(regular_time_result)
+
+    if extra_time_played:
+        use_penalties = (
+            edge_tier in {"coinflip", "slight"}
+            and abs(home_final - away_final) < 7.0
+            and game_script != "open-game"
+        )
+        advance_side = favorite_side
+        if use_penalties:
+            penalties_played = True
+            extra_time_period_score = {"home": 0, "away": 0}
+            extra_time_score = _score_copy(regular_time_score)
+            extra_time_result = "draw"
+            if advance_side == "home":
+                penalties_score = {"home": 5, "away": 4 if confidence != "high" else 3}
+            else:
+                penalties_score = {"home": 4 if confidence != "high" else 3, "away": 5}
+            penalties_winner = advance_side
+        else:
+            if advance_side == "home":
+                extra_time_period_score = {"home": 1, "away": 0}
+                extra_time_result = "home_win"
+            else:
+                extra_time_period_score = {"home": 0, "away": 1}
+                extra_time_result = "away_win"
+            extra_time_score = _aggregate_score(regular_time_score, extra_time_period_score)
+
+    advance_name = _winner_name_from_side(advance_side, home_name, away_name)
+    return {
+        "is_knockout": True,
+        "phase": phase,
+        "regular_time": {
+            "result": regular_time_result,
+            "score": regular_time_score,
+        },
+        "extra_time": {
+            "played": extra_time_played,
+            "result": extra_time_result,
+            "score": extra_time_score,
+            "period_score": extra_time_period_score,
+        },
+        "penalties": {
+            "played": penalties_played,
+            "winner": penalties_winner,
+            "winner_name": _winner_name_from_side(penalties_winner, home_name, away_name),
+            "score": penalties_score,
+        },
+        "advance": {
+            "winner": advance_side,
+            "winner_result": _advance_result_from_side(advance_side),
+            "winner_name": advance_name,
+        },
+    }
 
 
 def _is_past_date(date_str: str) -> bool:
@@ -431,6 +623,20 @@ def _tianji_score_oracle(
     home_star_bonus = _compute_star_goal_influence(home_stars)
     away_star_bonus = _compute_star_goal_influence(away_stars)
 
+    # Step 3.5: 预警星防守折扣 (Warning Star Defensive Discount)
+    # When 化忌 (Huaji) or 陀罗 (Tuoluo) appears on the favored side,
+    # apply a defensive discount simulating errors, own goals, or bad luck.
+    warning_star_active = False
+    _fav_is_home = combined_home_mod > combined_away_mod
+    if _fav_is_home:
+        if any("化忌" in s or "陀罗" in s for s in home_stars):
+            home_star_bonus -= 0.35
+            warning_star_active = True
+    else:
+        if any("化忌" in s or "陀罗" in s for s in away_stars):
+            away_star_bonus -= 0.35
+            warning_star_active = True
+
     # Step 4: 宫位定气场 — palace branches contribute energy
     home_branch_energy = _BRANCH_GOAL_ENERGY.get(host_palace_branch, 0.0)
     away_branch_energy = _BRANCH_GOAL_ENERGY.get(guest_palace_branch, 0.0)
@@ -507,12 +713,20 @@ def _tianji_score_oracle(
 
     # 天命收敛 (Destiny Convergence) — soft cap for extreme raw values
     # In real football, scoring 5+ goals is very rare. We dampen raw values
-    # above 4.0 to keep scores realistic while still allowing occasional
+    # above the cap to keep scores realistic while still allowing occasional
     # high-scoring anomalies (天命异象).
-    if home_goals_raw > 4.0:
-        home_goals_raw = 4.0 + (home_goals_raw - 4.0) * 0.35
-    if away_goals_raw > 4.0:
-        away_goals_raw = 4.0 + (away_goals_raw - 4.0) * 0.35
+    # Three-tier cap: wider openings for large mismatches to allow blowouts.
+    _oracle_data_gap = abs(home_final - away_final)
+    if _oracle_data_gap > 25:
+        _oracle_cap, _oracle_overflow = 7.0, 0.55
+    elif _oracle_data_gap > 20:
+        _oracle_cap, _oracle_overflow = 5.0, 0.45
+    else:
+        _oracle_cap, _oracle_overflow = 4.0, 0.35
+    if home_goals_raw > _oracle_cap:
+        home_goals_raw = _oracle_cap + (home_goals_raw - _oracle_cap) * _oracle_overflow
+    if away_goals_raw > _oracle_cap:
+        away_goals_raw = _oracle_cap + (away_goals_raw - _oracle_cap) * _oracle_overflow
 
     # Step 7: 数据做校验 — reality boundary from data model
     data_gap = home_final - away_final
@@ -571,6 +785,7 @@ def _tianji_score_oracle(
             "var_shift": round(var_shift, 3),
             "home_goals_raw": round(home_goals_raw, 2),
             "away_goals_raw": round(away_goals_raw, 2),
+            "warning_star_active": warning_star_active,
         },
     }
 
@@ -613,6 +828,10 @@ def _tianji_scoreline_reason(candidate: dict, base_score: dict, branch_name: str
         return f"逆运分支：若客队运势反转，比赛走向变异，{score_text} 成为可能。"
     if branch_name == "pattern_shift":
         return f"格局变轨：若卦象暗藏变数，比赛节奏切换，{score_text} 浮现。"
+    if branch_name == "blowout":
+        return f"大比分分支：实力碾压，运势大开门，强队进攻火力全开，{score_text} 屠杀剧本。"
+    if branch_name == "upset_stalemate":
+        return f"爆冷闷平分支：弱队铁桶阵死守，强队久攻不下，{score_text} 冷门伏击。"
     if h + a > bh + ba:
         return f"高进球分支：星曜助推，比赛开放度提升，{score_text} 有迹可循。"
     return f"低进球分支：若双方趋于保守，进球收敛，{score_text} 为防守剧本。"
@@ -634,6 +853,7 @@ def _tianji_scoreline_distribution(
     predicted_outcome: str,
     home_final: float,
     away_final: float,
+    is_opener: bool = False,
 ) -> tuple[list[dict], dict, float, float]:
     """天纪比分分布 — Divination-based scoreline distribution.
 
@@ -651,12 +871,29 @@ def _tianji_scoreline_distribution(
     rhythm = _PATTERN_RHYTHM.get(pattern, 0.85)
     home_star_bonus = _compute_star_goal_influence(home_stars)
     away_star_bonus = _compute_star_goal_influence(away_stars)
+
+    # 预警星检测 (Warning Star Detection) — boost upset probability
+    warning_star_active = False
+    _fav_is_home_sd = combined_home_mod > combined_away_mod
+    if _fav_is_home_sd:
+        if any("化忌" in s or "陀罗" in s for s in home_stars):
+            warning_star_active = True
+    else:
+        if any("化忌" in s or "陀罗" in s for s in away_stars):
+            warning_star_active = True
+
     home_branch_energy = _BRANCH_GOAL_ENERGY.get(host_palace_branch, 0.0)
     away_branch_energy = _BRANCH_GOAL_ENERGY.get(guest_palace_branch, 0.0)
 
     # Expected goals from divination (goal qi values)
     home_expected_goals = round(_FORTUNE_GOAL_QI.get(home_fortune, 1.0) * rhythm + home_star_bonus, 2)
     away_expected_goals = round(_FORTUNE_GOAL_QI.get(away_fortune, 1.0) * rhythm + away_star_bonus, 2)
+
+    # Opener dampening: reduce expected goals by 15% for tournament openers
+    # (first match for both teams), reflecting more cautious play
+    if is_opener:
+        home_expected_goals = round(home_expected_goals * 0.85, 2)
+        away_expected_goals = round(away_expected_goals * 0.85, 2)
 
     # Clean sheet from divination
     clean_sheet = _tianji_clean_sheet(home_fortune, away_fortune, pattern)
@@ -718,11 +955,18 @@ def _tianji_scoreline_distribution(
         h_raw += vshift
         a_raw -= vshift * 0.6
 
-        # 天命收敛 — soft cap for extreme raw values
-        if h_raw > 4.0:
-            h_raw = 4.0 + (h_raw - 4.0) * 0.35
-        if a_raw > 4.0:
-            a_raw = 4.0 + (a_raw - 4.0) * 0.35
+        # 天命收敛 — soft cap for extreme raw values (dynamic for mismatches)
+        _sf_data_gap = abs(home_final - away_final)
+        if _sf_data_gap > 25:
+            _sf_cap, _sf_overflow = 7.0, 0.55
+        elif _sf_data_gap > 20:
+            _sf_cap, _sf_overflow = 5.0, 0.45
+        else:
+            _sf_cap, _sf_overflow = 4.0, 0.35
+        if h_raw > _sf_cap:
+            h_raw = _sf_cap + (h_raw - _sf_cap) * _sf_overflow
+        if a_raw > _sf_cap:
+            a_raw = _sf_cap + (a_raw - _sf_cap) * _sf_overflow
 
         h = max(0, round(h_raw))
         a = max(0, round(a_raw))
@@ -826,11 +1070,18 @@ def _tianji_scoreline_distribution(
     alt_h_raw += vshift
     alt_a_raw -= vshift * 0.6
 
-    # 天命收敛 — soft cap for extreme raw values
-    if alt_h_raw > 4.0:
-        alt_h_raw = 4.0 + (alt_h_raw - 4.0) * 0.35
-    if alt_a_raw > 4.0:
-        alt_a_raw = 4.0 + (alt_a_raw - 4.0) * 0.35
+    # 天命收敛 — soft cap for extreme raw values (dynamic for mismatches)
+    _ps_data_gap = abs(home_final - away_final)
+    if _ps_data_gap > 25:
+        _ps_cap, _ps_overflow = 7.0, 0.55
+    elif _ps_data_gap > 20:
+        _ps_cap, _ps_overflow = 5.0, 0.45
+    else:
+        _ps_cap, _ps_overflow = 4.0, 0.35
+    if alt_h_raw > _ps_cap:
+        alt_h_raw = _ps_cap + (alt_h_raw - _ps_cap) * _ps_overflow
+    if alt_a_raw > _ps_cap:
+        alt_a_raw = _ps_cap + (alt_a_raw - _ps_cap) * _ps_overflow
 
     alt_h = max(0, round(alt_h_raw))
     alt_a = max(0, round(alt_a_raw))
@@ -844,6 +1095,37 @@ def _tianji_scoreline_distribution(
     alt_score = {"home": alt_h, "away": alt_a}
     if alt_score != base_score:
         branches.append((alt_score, "pattern_shift", 0.08))
+
+    # ── 大差距双峰分布 (Large-Gap Bimodal Scoring) ──
+    # When the data_score gap is extreme (|delta| > 20), history shows two outcomes:
+    # either a blowout (Germany 7-1 Curaçao) or an upset/stalemate (Spain 0-0 Cape Verde).
+    _delta = abs(home_final - away_final)
+    if _delta > 20:
+        _fav_is_home = home_final > away_final
+        _fav_fortune = home_fortune if _fav_is_home else away_fortune
+        _dog_fortune = away_fortune if _fav_is_home else home_fortune
+
+        # Blowout branch (大比分分支): when the favorite dominates
+        _blowout_w = min(0.15, (_delta - 20) * 0.005)
+        if _fav_fortune in ("大吉", "吉", "小吉") and _blowout_w > 0.02:
+            for bh, ba in [(4, 0), (5, 1), (4, 1)]:
+                if _fav_is_home:
+                    _bs = {"home": bh, "away": ba}
+                else:
+                    _bs = {"home": ba, "away": bh}
+                _bw = _blowout_w / 3.0
+                branches.append((_bs, "blowout", _bw))
+
+        # Upset/stalemate branch (爆冷/闷平分支): underdog parks the bus
+        # Boost weight by 50% when warning stars (化忌/陀罗) are on the favored side
+        _upset_w = min(0.12, (_delta - 20) * 0.004)
+        if warning_star_active:
+            _upset_w *= 1.5
+        if _upset_w > 0.02:
+            for uh, ua in [(0, 0), (1, 1)]:
+                _us = {"home": uh, "away": ua}
+                _uw = _upset_w / 2.0
+                branches.append((_us, "upset_stalemate", _uw))
 
     # Deduplicate and build distribution
     seen: set[tuple[int, int]] = set()
@@ -1038,6 +1320,23 @@ def _get_last_match_date(team_id: str, matches: list[dict], current_kickoff: dat
             if latest is None or kickoff > latest:
                 latest = kickoff
     return latest
+
+
+def _count_prior_matches(team_id: str, matches: list[dict], current_kickoff: datetime) -> int:
+    """Count the number of prior matches for *team_id* before *current_kickoff*."""
+    team_upper = team_id.upper()
+    count = 0
+    for match in matches:
+        kickoff = parse_datetime(str(match.get("kickoff_at", "")))
+        if not kickoff:
+            continue
+        if kickoff >= current_kickoff:
+            continue
+        home = str(match.get("home_team", {}).get("team_id", "")).upper()
+        away = str(match.get("away_team", {}).get("team_id", "")).upper()
+        if home == team_upper or away == team_upper:
+            count += 1
+    return count
 
 
 def _match_venue_context(venue: str) -> dict | None:
@@ -1270,7 +1569,9 @@ def score_historical_proxy(
     score blends actual World Cup pedigree (titles, appearances, win-rate,
     best result) with a FIFA-ranking baseline.  The ranking floor ensures
     teams with sparse World Cup history but strong current form are not
-    over-penalised.  Falls back to pure ranking when no history exists.
+    over-penalised.  When no history exists, the fallback is deliberately
+    shrunk toward neutral so ranking strength is not double-counted as both
+    current quality and historical pedigree.
     """
     # --- Ranking baseline (always computed) ---
     ranking_baseline = 30.0
@@ -1311,8 +1612,9 @@ def score_historical_proxy(
         blended = history_raw * 0.4 + ranking_baseline * 0.6
         return round(min(100.0, max(0.0, blended)), 2)
 
-    # --- Fallback: FIFA ranking proxy ---
-    return round(ranking_baseline, 2)
+    # --- Fallback: neutral-shrunk FIFA ranking proxy ---
+    neutralized = 50.0 + (ranking_baseline - 50.0) * 0.75
+    return round(min(100.0, max(0.0, neutralized)), 2)
 
 
 def score_rest_travel(
@@ -1609,9 +1911,23 @@ def _determine_confidence(data_score: float, evidence_gaps: list[str]) -> tuple[
     return level, labels[level]
 
 
+def _realistic_stage_weights(match_id: str) -> tuple[float, float]:
+    for prefix, weights in {
+        "G": (0.75, 0.25),
+        "R32": (0.78, 0.22),
+        "R16": (0.80, 0.20),
+        "QF": (0.82, 0.18),
+        "SF": (0.82, 0.18),
+        "F": (0.82, 0.18),
+        "TP": (0.82, 0.18),
+    }.items():
+        if f"-{prefix}" in match_id:
+            return weights
+    return (0.80, 0.20)
+
+
 def _poisson_pmf(lam: float, k: int) -> float:
-    """Poisson PMF: P(X=k) = λ^k * e^(-λ) / k!"""
-    import math
+    """Poisson PMF: P(X=k) = lambda^k * e^(-lambda) / k!"""
     if k < 0 or lam < 0:
         return 0.0
     if lam == 0:
@@ -1619,91 +1935,496 @@ def _poisson_pmf(lam: float, k: int) -> float:
     return (lam ** k) * math.exp(-lam) / math.factorial(k)
 
 
-def _estimate_scoreline(home_final: float, away_final: float, predicted_outcome: str) -> dict:
-    """Poisson-based scoreline estimation using xG proxy from model scores.
-    
-    Converts 0-100 model scores to expected goals, then finds the single
-    most probable scoreline via Poisson PMF filtered by the predicted outcome.
-    Produces realistic, varied scorelines (1-0, 2-0, 3-1, 0-0, etc.) instead
-    of a rigid gap→score mapping.
-    """
-    home_xg = _goal_expectation(home_final, away_final)
-    away_xg = _goal_expectation(away_final, home_final)
+def _classify_market_odds(odds: dict | None) -> dict:
+    if not odds:
+        return {
+            "status": "none",
+            "reason": "odds_missing",
+            "is_mock": False,
+            "implied_probabilities": None,
+            "market_outcome": None,
+        }
+    source = str(odds.get("source") or "missing")
+    if odds.get("is_mock") or source in {"mock_bookmaker", "odds_unavailable"}:
+        return {
+            "status": "mock_invalid",
+            "reason": source or "mock_odds",
+            "is_mock": True,
+            "implied_probabilities": None,
+            "market_outcome": None,
+        }
+    try:
+        home = float(odds.get("home_win"))
+        draw = float(odds.get("draw"))
+        away = float(odds.get("away_win"))
+    except (TypeError, ValueError):
+        return {
+            "status": "none",
+            "reason": "odds_not_parseable",
+            "is_mock": False,
+            "implied_probabilities": None,
+            "market_outcome": None,
+        }
+    if min(home, draw, away) <= 1.01:
+        return {
+            "status": "suspect_market",
+            "reason": "non_positive_market_shape",
+            "is_mock": False,
+            "implied_probabilities": None,
+            "market_outcome": None,
+        }
+    raw_home = 1.0 / home
+    raw_draw = 1.0 / draw
+    raw_away = 1.0 / away
+    total = raw_home + raw_draw + raw_away
+    implied = {
+        "home": round(raw_home / total, 3),
+        "draw": round(raw_draw / total, 3),
+        "away": round(raw_away / total, 3),
+    }
+    market_outcome = max(implied, key=implied.get)
+    market_outcome = {"home": "home_win", "draw": "draw", "away": "away_win"}[market_outcome]
+    suspect = (
+        total < 1.01
+        or total > 1.22
+        or implied["draw"] > 0.48
+        or implied["draw"] < 0.16
+        or min(implied.values()) < 0.08
+    )
+    return {
+        "status": "suspect_market" if suspect else "trusted_market",
+        "reason": "shape_outlier" if suspect else "market_consensus_available",
+        "is_mock": False,
+        "implied_probabilities": implied,
+        "market_outcome": market_outcome,
+    }
 
-    best_score = None
-    best_prob = -1.0
 
-    # Scan 0–5 goals per side (covers >99.9% of matches)
-    for h in range(0, 6):
-        for a in range(0, 6):
-            prob = _poisson_pmf(home_xg, h) * _poisson_pmf(away_xg, a)
-
-            # Filter by the predicted outcome direction
-            if predicted_outcome == "home_win" and h <= a:
-                continue
-            if predicted_outcome == "away_win" and h >= a:
-                continue
-            if predicted_outcome == "draw" and h != a:
-                continue
-
-            if prob > best_prob:
-                best_prob = prob
-                best_score = {"home": h, "away": a}
-
-    return best_score or {"home": 1, "away": 0}
+def _overall_evidence_quality(*, market_status: str, local_gaps: list[str], evidence_gaps: list[str]) -> str:
+    if market_status == "mock_invalid":
+        return "unusable"
+    if market_status == "suspect_market":
+        return "suspect"
+    if market_status == "trusted_market" and not local_gaps and not evidence_gaps:
+        return "trusted"
+    if market_status == "none" and (local_gaps or evidence_gaps):
+        return "thin"
+    if market_status == "trusted_market":
+        return "thin"
+    return "thin"
 
 
-def _goal_expectation(score: float, opponent_score: float) -> float:
+def _edge_tier(abs_edge: float) -> str:
+    if abs_edge < 4.0:
+        return "coinflip"
+    if abs_edge < 8.0:
+        return "slight"
+    if abs_edge < 15.0:
+        return "clear"
+    return "strong"
+
+
+def _pick_game_script(
+    *,
+    predicted_outcome: str,
+    edge_tier: str,
+    evidence_quality: str,
+    phase: str,
+    is_opener: bool,
+    implied_probs: dict | None,
+    home_final: float,
+    away_final: float,
+    news_swing: float,
+) -> str:
+    if predicted_outcome == "draw":
+        return "low-event" if edge_tier in {"coinflip", "slight"} else "medium-event"
+    if is_opener:
+        return "low-event"
+    # Evidence quality no longer forces low-event — data gaps reflect our knowledge,
+    # not the actual game style. Game script should reflect the matchup itself.
+    if edge_tier == "strong" and abs(home_final - away_final) >= 16:
+        if phase != "group" and abs(news_swing) >= 1.5:
+            return "open-game"
+        if implied_probs and max(implied_probs.values()) >= 0.62:
+            return "open-game"
+        return "medium-event"
+    if edge_tier in {"clear", "strong"}:
+        return "medium-event"
+    return "low-event"
+
+
+def _goal_expectation(score: float, opponent_score: float, *, game_script: str = "medium-event", evidence_quality: str = "trusted") -> float:
     edge = score - opponent_score
-    value = 0.85 + score / 80.0 + edge / 55.0
-    return round(max(0.25, min(3.2, value)), 2)
+    # Raised base (1.20 vs old 0.60), steeper coefficients (score/80, edge/50)
+    # to match real World Cup scoring (~3.0-3.5 total goals per match).
+    base = 1.20 + score / 80.0 + edge / 50.0
+    # Gentler script multipliers — evidence gaps should not crush goal estimates
+    script_multiplier = {
+        "low-event": 0.92,
+        "medium-event": 1.0,
+        "open-game": 1.15,
+    }.get(game_script, 1.0)
+    # Thin evidence only mildly reduces xG (0.95 vs old 0.88)
+    quality_multiplier = 0.95 if evidence_quality in {"thin", "suspect", "unusable"} else 1.0
+    value = base * script_multiplier * quality_multiplier
+    # Dynamic hard cap: allow higher xG for large mismatches
+    _xg_cap = 5.5 if abs(edge) > 20 else 4.0
+    return round(max(0.25, min(_xg_cap, value)), 2)
 
 
-def _clean_sheet_probability(team_final: float, opponent_final: float, opponent_expected_goals: float) -> float:
+def _clean_sheet_probability(team_final: float, opponent_final: float, opponent_expected_goals: float, *, game_script: str = "medium-event") -> float:
     edge = team_final - opponent_final
-    probability = 0.34 - opponent_expected_goals * 0.09 + edge * 0.004
+    script_bonus = {"low-event": 0.05, "medium-event": 0.0, "open-game": -0.04}.get(game_script, 0.0)
+    probability = 0.32 - opponent_expected_goals * 0.09 + edge * 0.004 + script_bonus
     return round(max(0.08, min(0.62, probability)), 2)
 
 
-def _score_probability(candidate: dict, home_xg: float, away_xg: float, predicted_outcome: str) -> float:
-    """Poisson-based probability for a scoreline candidate.
+def _three_track_vote_summary(*, gap: float, market_outcome: str | None, market_status: str, home_news_sentiment: float, away_news_sentiment: float, rs_home: float, rs_away: float, sd_home: float, sd_away: float, hex_home_mod: float, hex_away_mod: float) -> dict:
+    fundamentals = "home_win" if (gap > 0) else "away_win" if (gap < 0) else "draw"
+    squad_side = "home_win" if (rs_home + sd_home) > (rs_away + sd_away) else "away_win" if (rs_away + sd_away) > (rs_home + sd_home) else "draw"
+    if squad_side != fundamentals and abs(gap) < 6:
+        fundamentals = squad_side
+    info_side = "home_win" if home_news_sentiment > away_news_sentiment + 0.8 else "away_win" if away_news_sentiment > home_news_sentiment + 0.8 else "draw"
+    mystic_side = "home_win" if hex_home_mod > hex_away_mod + 0.8 else "away_win" if hex_away_mod > hex_home_mod + 0.8 else "draw"
+    votes = {"fundamentals": fundamentals, "market": market_outcome if market_status == "trusted_market" else None, "information": info_side, "mystic": mystic_side}
+    lean = [v for v in votes.values() if v]
+    counts = {k: lean.count(k) for k in {"home_win", "away_win", "draw"}}
+    if not lean:
+        consensus = "draw"
+        leaders = ["draw"]
+    else:
+        max_count = max(counts.values())
+        leaders = [outcome for outcome in ["draw", "home_win", "away_win"] if counts.get(outcome, 0) == max_count and max_count > 0]
+        consensus = leaders[0] if len(leaders) == 1 else "draw"
+    return {"votes": votes, "counts": counts, "consensus": consensus, "leaders": leaders, "tie_on_top": len(leaders) > 1}
 
-    Replaces the old linear-distance heuristic with the actual joint Poisson
-    probability P(home_goals | home_xG) × P(away_goals | away_xG).
-    Falls back to the heuristic if xG values are unreasonable.
-    """
+
+def _determine_outcome_from_context(
+    *,
+    home_final: float,
+    away_final: float,
+    phase: str,
+    market_status: str,
+    market_outcome: str | None,
+    home_news_sentiment: float,
+    away_news_sentiment: float,
+    rs_home: float,
+    rs_away: float,
+    sd_home: float,
+    sd_away: float,
+    evidence_quality: str,
+    three_track_votes: dict | None = None,
+) -> tuple[str, str, list[str]]:
+    gap = home_final - away_final
+    abs_gap = abs(gap)
+    tier = _edge_tier(abs_gap)
+    preferred = "home_win" if gap > 0 else "away_win" if gap < 0 else "draw"
+    alignment_flags: list[str] = []
+    squad_side = "home_win" if (rs_home + sd_home) > (rs_away + sd_away) else "away_win" if (rs_away + sd_away) > (rs_home + sd_home) else "draw"
+    news_side = "home_win" if home_news_sentiment > away_news_sentiment + 0.8 else "away_win" if away_news_sentiment > home_news_sentiment + 0.8 else "draw"
+    if market_outcome and market_status == "trusted_market" and market_outcome == preferred:
+        alignment_flags.append("market")
+    if squad_side == preferred:
+        alignment_flags.append("squad")
+    if news_side == preferred:
+        alignment_flags.append("news")
+    three_track_consensus = (three_track_votes or {}).get("consensus")
+    three_track_counts = (three_track_votes or {}).get("counts") or {}
+    matchup_gap = sd_home - sd_away
+    draw_trigger = 4.0 if phase == "group" else 3.2
+    if tier == "coinflip":
+        if three_track_consensus == "draw" and preferred == "home_win" and abs_gap >= 1.5 and len(alignment_flags) >= 1:
+            return preferred, tier, alignment_flags
+        if len(alignment_flags) >= 2:
+            return preferred, tier, alignment_flags
+        if three_track_consensus and three_track_consensus != "draw" and three_track_counts.get(three_track_consensus, 0) >= 2:
+            return three_track_consensus, tier, alignment_flags
+        return "draw", tier, alignment_flags
+    if abs_gap < draw_trigger:
+        if len(alignment_flags) >= 2 or (three_track_consensus and three_track_consensus != "draw" and three_track_counts.get(three_track_consensus, 0) >= 2):
+            return preferred, tier, alignment_flags
+        return "draw", tier, alignment_flags
+    if tier == "slight" and len(alignment_flags) < 2:
+        return "draw", tier, alignment_flags
+    if phase == "group" and evidence_quality in {"thin", "suspect", "unusable"}:
+        if market_status == "suspect_market" and abs(matchup_gap) >= 10 and three_track_consensus == "draw":
+            return "draw", tier, alignment_flags
+        if market_status == "trusted_market" and three_track_consensus == "draw" and abs(matchup_gap) <= 5:
+            return "draw", tier, alignment_flags
+        if market_status in {"none", "mock_invalid"} and tier == "clear":
+            if abs_gap >= 10 and three_track_consensus == "draw":
+                return preferred, tier, alignment_flags
+            if 8.0 <= abs_gap < 10.0 and three_track_consensus == preferred and three_track_counts.get(preferred, 0) >= 2:
+                return preferred, tier, alignment_flags
+            if abs_gap >= 10 and three_track_consensus == preferred and three_track_counts.get(preferred, 0) >= 2:
+                return "draw", tier, alignment_flags
+            if abs(matchup_gap) <= 7 and abs(rs_home - rs_away) <= 16:
+                return "draw", tier, alignment_flags
+        if market_status == "mock_invalid" and abs(matchup_gap) <= 3 and three_track_counts.get(preferred, 0) <= 1:
+            return "draw", tier, alignment_flags
+    return preferred, tier, alignment_flags
+
+
+def _score_pool_for_script(game_script: str, predicted_outcome: str, edge_tier: str, *, abs_delta: float = 0.0) -> list[dict]:
+    pools = {
+        "low-event": [(1, 0), (0, 1), (1, 1), (2, 0), (0, 2), (2, 1), (1, 2), (0, 0)],
+        "medium-event": [(2, 1), (1, 2), (2, 0), (0, 2), (3, 1), (1, 3), (1, 0), (0, 1), (1, 1), (0, 0), (2, 2), (3, 0), (0, 3)],
+        "open-game": [(2, 1), (1, 2), (2, 2), (3, 1), (1, 3), (3, 2), (2, 3), (3, 3), (3, 0), (0, 3)],
+    }
+    candidates = []
+    for home, away in pools.get(game_script, pools["medium-event"]):
+        outcome = "draw" if home == away else "home_win" if home > away else "away_win"
+        if outcome == predicted_outcome:
+            candidates.append({"home": home, "away": away})
+    if predicted_outcome != "draw" and edge_tier == "strong":
+        extra = [{"home": 3, "away": 0}, {"home": 0, "away": 3}, {"home": 2, "away": 0}, {"home": 0, "away": 2}]
+        for candidate in extra:
+            outcome = "home_win" if candidate["home"] > candidate["away"] else "away_win"
+            if outcome == predicted_outcome and candidate not in candidates:
+                candidates.append(candidate)
+    # Blowout candidates for large mismatches (|delta| > 20)
+    if abs_delta > 20 and predicted_outcome != "draw":
+        blowout_pool = [(4, 0), (0, 4), (4, 1), (1, 4), (5, 1), (1, 5)]
+        if abs_delta > 30:
+            blowout_pool.extend([(5, 0), (0, 5), (4, 2), (2, 4)])
+        for home, away in blowout_pool:
+            outcome = "home_win" if home > away else "away_win"
+            if outcome == predicted_outcome and {"home": home, "away": away} not in candidates:
+                candidates.append({"home": home, "away": away})
+    if predicted_outcome == "draw" and edge_tier in {"coinflip", "slight"} and not candidates:
+        candidates.extend([{"home": 0, "away": 0}, {"home": 1, "away": 1}])
+    return candidates
+
+
+def _phase_bucket_key(phase: str) -> str:
+    return "knockout" if _is_knockout_phase(phase) else "group"
+
+
+def _scoreline_key(score: dict | None) -> str:
+    score = score or {}
+    home = score.get("home")
+    away = score.get("away")
+    if home is None or away is None:
+        return ""
+    return f"{int(home)}-{int(away)}"
+
+
+def _prediction_body_from_match(match: dict) -> dict:
+    body = match.get("prediction")
+    if isinstance(body, dict) and ("score" in body or "result" in body or "predicted_outcome" in body):
+        return body
+    for key in ("prediction_item", "prediction_report_item"):
+        item = match.get(key) or {}
+        nested = item.get("prediction") if isinstance(item, dict) else {}
+        if isinstance(nested, dict) and nested:
+            return nested
+    return {}
+
+
+def _empty_scoreline_segment() -> dict:
+    return {
+        "sample_size": 0,
+        "actual_score_counts": {},
+        "predicted_score_counts": {},
+        "actual_total_goals_sum": 0.0,
+        "predicted_total_goals_sum": 0.0,
+        "actual_clean_sheet_matches": 0,
+        "predicted_clean_sheet_matches": 0,
+    }
+
+
+def _finalize_scoreline_segment(segment: dict) -> dict:
+    sample_size = int(segment.get("sample_size", 0) or 0)
+    if sample_size <= 0:
+        segment["actual_score_rates"] = {}
+        segment["predicted_score_rates"] = {}
+        segment["avg_actual_total_goals"] = 0.0
+        segment["avg_predicted_total_goals"] = 0.0
+        segment["actual_clean_sheet_rate"] = 0.0
+        segment["predicted_clean_sheet_rate"] = 0.0
+        return segment
+    segment["actual_score_rates"] = {
+        key: round(value / sample_size, 4)
+        for key, value in (segment.get("actual_score_counts") or {}).items()
+    }
+    segment["predicted_score_rates"] = {
+        key: round(value / sample_size, 4)
+        for key, value in (segment.get("predicted_score_counts") or {}).items()
+    }
+    segment["avg_actual_total_goals"] = round(float(segment.get("actual_total_goals_sum", 0.0)) / sample_size, 3)
+    segment["avg_predicted_total_goals"] = round(float(segment.get("predicted_total_goals_sum", 0.0)) / sample_size, 3)
+    segment["actual_clean_sheet_rate"] = round(int(segment.get("actual_clean_sheet_matches", 0) or 0) / sample_size, 4)
+    segment["predicted_clean_sheet_rate"] = round(int(segment.get("predicted_clean_sheet_matches", 0) or 0) / sample_size, 4)
+    return segment
+
+
+def _register_scoreline_observation(segment: dict, *, predicted_score: dict, actual_score: dict) -> None:
+    pred_key = _scoreline_key(predicted_score)
+    actual_key = _scoreline_key(actual_score)
+    if not pred_key or not actual_key:
+        return
+    segment["sample_size"] += 1
+    segment["predicted_score_counts"][pred_key] = int(segment["predicted_score_counts"].get(pred_key, 0) or 0) + 1
+    segment["actual_score_counts"][actual_key] = int(segment["actual_score_counts"].get(actual_key, 0) or 0) + 1
+    segment["predicted_total_goals_sum"] += int(predicted_score["home"]) + int(predicted_score["away"])
+    segment["actual_total_goals_sum"] += int(actual_score["home"]) + int(actual_score["away"])
+    if predicted_score["home"] == 0 or predicted_score["away"] == 0:
+        segment["predicted_clean_sheet_matches"] += 1
+    if actual_score["home"] == 0 or actual_score["away"] == 0:
+        segment["actual_clean_sheet_matches"] += 1
+
+
+def _build_scoreline_calibration(all_matches: list[dict]) -> dict:
+    calibration = {
+        "global": _empty_scoreline_segment(),
+        "by_phase": {},
+        "by_phase_outcome": {},
+    }
+    for match in all_matches:
+        evaluation = match.get("evaluation") or {}
+        if evaluation.get("status") != "evaluated":
+            continue
+        prediction = _prediction_body_from_match(match)
+        predicted_score = (prediction.get("knockout") or {}).get("regular_time", {}).get("score") or prediction.get("score") or {}
+        actual_score = evaluation.get("actual_regular_time_score") or evaluation.get("actual_score") or {}
+        actual_result = evaluation.get("actual_regular_time_result")
+        if not actual_result:
+            if actual_score.get("home") is None or actual_score.get("away") is None:
+                continue
+            actual_result = "home_win" if actual_score["home"] > actual_score["away"] else "away_win" if actual_score["away"] > actual_score["home"] else "draw"
+        phase_key = _phase_bucket_key(str(match.get("phase") or "group"))
+        phase_segment = calibration["by_phase"].setdefault(phase_key, _empty_scoreline_segment())
+        phase_outcome_key = f"{phase_key}:{actual_result}"
+        outcome_segment = calibration["by_phase_outcome"].setdefault(phase_outcome_key, _empty_scoreline_segment())
+        for segment in (calibration["global"], phase_segment, outcome_segment):
+            _register_scoreline_observation(segment, predicted_score=predicted_score, actual_score=actual_score)
+    calibration["global"] = _finalize_scoreline_segment(calibration["global"])
+    calibration["by_phase"] = {key: _finalize_scoreline_segment(segment) for key, segment in calibration["by_phase"].items()}
+    calibration["by_phase_outcome"] = {
+        key: _finalize_scoreline_segment(segment)
+        for key, segment in calibration["by_phase_outcome"].items()
+    }
+    return calibration
+
+
+def _select_scoreline_segment(calibration: dict | None, *, phase: str, predicted_outcome: str) -> dict:
+    if not calibration:
+        return {}
+    phase_key = _phase_bucket_key(phase)
+    phase_outcome_key = f"{phase_key}:{predicted_outcome}"
+    segment = (calibration.get("by_phase_outcome") or {}).get(phase_outcome_key)
+    if segment and int(segment.get("sample_size", 0) or 0) >= 6:
+        return segment
+    phase_segment = (calibration.get("by_phase") or {}).get(phase_key)
+    if phase_segment and int(phase_segment.get("sample_size", 0) or 0) >= 8:
+        return phase_segment
+    return calibration.get("global") or {}
+
+
+def _scoreline_history_multiplier(candidate: dict, *, phase: str, predicted_outcome: str, calibration: dict | None) -> float:
+    segment = _select_scoreline_segment(calibration, phase=phase, predicted_outcome=predicted_outcome)
+    sample_size = int(segment.get("sample_size", 0) or 0)
+    if sample_size < 6:
+        return 1.0
+    factor = 1.0
+    score_key = _scoreline_key(candidate)
+    actual_rate = float((segment.get("actual_score_rates") or {}).get(score_key, 0.0) or 0.0)
+    predicted_rate = float((segment.get("predicted_score_rates") or {}).get(score_key, 0.0) or 0.0)
+    actual_clean_sheet_rate = float(segment.get("actual_clean_sheet_rate", 0.0) or 0.0)
+    predicted_clean_sheet_rate = float(segment.get("predicted_clean_sheet_rate", 0.0) or 0.0)
+    is_clean_sheet = candidate.get("home") == 0 or candidate.get("away") == 0
+    total_goals = int(candidate.get("home", 0) or 0) + int(candidate.get("away", 0) or 0)
+    avg_actual_total_goals = float(segment.get("avg_actual_total_goals", 0.0) or 0.0)
+
+    if predicted_rate >= 0.18 and actual_rate <= max(0.05, predicted_rate * 0.60):
+        factor *= SCORELINE_MODE_COLLAPSE_PENALTY
+    elif actual_rate >= predicted_rate + 0.06:
+        factor *= 1.08
+
+    clean_sheet_gap = actual_clean_sheet_rate - predicted_clean_sheet_rate
+    if is_clean_sheet and clean_sheet_gap > 0.10:
+        factor *= min(1.18, 1.0 + clean_sheet_gap * 0.60)
+    elif not is_clean_sheet and clean_sheet_gap > 0.18:
+        factor *= 0.90
+
+    if avg_actual_total_goals:
+        total_gap = abs(total_goals - avg_actual_total_goals)
+        if total_gap <= 0.50:
+            factor *= 1.03
+        elif total_gap >= 1.50:
+            factor *= 0.92
+
+    if predicted_outcome == "draw" and score_key == "0-0" and actual_rate >= 0.08:
+        factor *= SCORELINE_DRAW_NIL_BIAS
+
+    return max(0.55, min(1.35, factor))
+
+
+def _scoreline_structural_multiplier(candidate: dict, *, predicted_outcome: str, clean_sheet: dict, game_script: str) -> float:
+    factor = 1.0
+    if predicted_outcome == "home_win":
+        shutout_prob = float(clean_sheet.get("home", 0.0) or 0.0)
+        if candidate.get("away") == 0:
+            factor *= 1.0 + max(0.0, shutout_prob - 0.16) * SCORELINE_CLEAN_SHEET_BIAS
+        elif shutout_prob >= 0.30:
+            factor *= max(0.78, 1.0 - (shutout_prob - 0.26) * 0.70)
+    elif predicted_outcome == "away_win":
+        shutout_prob = float(clean_sheet.get("away", 0.0) or 0.0)
+        if candidate.get("home") == 0:
+            factor *= 1.0 + max(0.0, shutout_prob - 0.16) * SCORELINE_CLEAN_SHEET_BIAS
+        elif shutout_prob >= 0.30:
+            factor *= max(0.78, 1.0 - (shutout_prob - 0.26) * 0.70)
+    elif candidate.get("home") == 0 and candidate.get("away") == 0 and game_script in {"low-event", "medium-event"}:
+        factor *= SCORELINE_DRAW_NIL_BIAS
+    return max(0.55, min(1.40, factor))
+
+
+def _score_probability(candidate: dict, home_xg: float, away_xg: float, predicted_outcome: str, *, game_script: str, evidence_quality: str, abs_delta: float = 0.0) -> float:
     home_goals = int(candidate["home"])
     away_goals = int(candidate["away"])
-
-    if 0.1 < home_xg < 6.0 and 0.1 < away_xg < 6.0:
-        prob = _poisson_pmf(home_xg, home_goals) * _poisson_pmf(away_xg, away_goals)
-        # Scale up: joint Poisson probabilities for individual scores are small
-        # because the full outcome space has 36+ bins. Make them comparable to
-        # the old heuristic range (~0.05–0.46).
-        prob = prob * 12.0
-    else:
-        # Fallback: linear-distance heuristic for edge cases
-        distance = abs(home_goals - home_xg) + abs(away_goals - away_xg)
-        prob = max(0.05, 0.38 - distance * 0.075)
-
-    outcome = "draw" if home_goals == away_goals else "home_win" if home_goals > away_goals else "away_win"
-    if outcome == predicted_outcome:
-        prob += 0.08
+    prob = _poisson_pmf(home_xg, home_goals) * _poisson_pmf(away_xg, away_goals)
+    total = home_goals + away_goals
+    score_tuple = (home_goals, away_goals)
+    if predicted_outcome == "draw":
+        if score_tuple == (0, 0):
+            prob *= 1.18 * SCORELINE_DRAW_NIL_BIAS
+        elif score_tuple == (1, 1):
+            prob *= 1.12 * max(0.92, SCORELINE_PAIRED_SCORE_BIAS + 0.08)
+    elif score_tuple in {(2, 1), (1, 2), (1, 1)}:
+        prob *= SCORELINE_PAIRED_SCORE_BIAS
+    # Skip total-based penalties for large mismatches — high-scoring lines are
+    # realistic when one team massively outclasses the other.
+    if abs_delta <= 20:
+        if game_script == "low-event" and total >= 3:
+            prob *= 0.72
+        elif game_script == "medium-event" and total >= 5:
+            prob *= 0.82
+    if game_script == "open-game" and total <= 1:
+        prob *= 0.72
+    if evidence_quality in {"thin", "suspect", "unusable"} and score_tuple in {(2, 1), (1, 2), (1, 1), (3, 2), (2, 3)}:
+        prob *= SCORELINE_MODE_COLLAPSE_PENALTY
+    if game_script != "open-game" and score_tuple in {(2, 1), (1, 2)}:
+        prob *= max(0.90, SCORELINE_MODE_COLLAPSE_PENALTY)
+    if predicted_outcome != "draw" and score_tuple in {(2, 0), (0, 2), (3, 1), (1, 3)}:
+        prob *= 1.06
     return prob
 
 
-def _scoreline_reason(candidate: dict, base_score: dict, clean_sheet: dict, predicted_outcome: str) -> str:
+def _scoreline_reason(candidate: dict, base_score: dict, clean_sheet: dict, predicted_outcome: str, *, game_script: str) -> str:
     score_text = f"{candidate['home']}-{candidate['away']}"
-    base_text = f"{base_score['home']}-{base_score['away']}"
     if candidate == base_score:
-        return f"Primary point estimate from the current model edge ({base_text})."
+        return f"Primary football script branch settles on {score_text}."
+    if max(candidate["home"], candidate["away"]) >= 4:
+        return f"Dominance script: overwhelming quality gap produces a commanding {score_text} result."
     if candidate["away"] == 0 and predicted_outcome == "home_win":
-        return f"Clean-sheet branch; home clean-sheet chance {clean_sheet['home']:.0%} keeps {score_text} live."
+        return f"Clean-sheet branch keeps {score_text} alive with home shutout chance {clean_sheet['home']:.0%}."
     if candidate["home"] == 0 and predicted_outcome == "away_win":
-        return f"Clean-sheet branch; away clean-sheet chance {clean_sheet['away']:.0%} keeps {score_text} live."
-    if candidate["home"] + candidate["away"] > base_score["home"] + base_score["away"]:
-        return "Higher-event branch if set pieces, substitutions, cards, or chase-game state lift the total."
-    return "Lower-event branch if tempo stays controlled and the trailing side lacks final-third quality."
+        return f"Clean-sheet branch keeps {score_text} alive with away shutout chance {clean_sheet['away']:.0%}."
+    if game_script == "low-event":
+        return "Low-event branch: control, patience, and few clear chances keep the score compact."
+    if game_script == "open-game":
+        return "Open-game branch: transitions, game-state pressure, and defensive gaps lift the total."
+    return "Medium-event branch: one side edges it without turning into a track meet."
 
 
 def _build_scoreline_distribution(
@@ -1712,56 +2433,113 @@ def _build_scoreline_distribution(
     away_final: float,
     predicted_outcome: str,
     base_score: dict,
+    game_script: str,
+    evidence_quality: str,
+    edge_tier: str,
+    phase: str = "group",
+    scoreline_calibration: dict | None = None,
 ) -> tuple[list[dict], dict, float, float]:
-    home_xg = _goal_expectation(home_final, away_final)
-    away_xg = _goal_expectation(away_final, home_final)
+    home_xg = _goal_expectation(home_final, away_final, game_script=game_script, evidence_quality=evidence_quality)
+    away_xg = _goal_expectation(away_final, home_final, game_script=game_script, evidence_quality=evidence_quality)
+    if predicted_outcome == "draw" and edge_tier in {"coinflip", "slight"}:
+        avg_xg = round(((home_xg + away_xg) / 2.0) * (0.88 if game_script == "low-event" else 0.95), 2)
+        home_xg = away_xg = avg_xg
+    elif evidence_quality in {"thin", "suspect", "unusable"}:
+        avg_xg = round((home_xg + away_xg) / 2.0, 2)
+        home_xg = round(home_xg * 0.65 + avg_xg * 0.35, 2)
+        away_xg = round(away_xg * 0.65 + avg_xg * 0.35, 2)
+    # ── xG direction alignment ──
+    # Ensure xG favors the predicted winner. Without this, the formula can produce
+    # away_xg > home_xg when the model predicts home_win (8 out of 11 matches).
+    if predicted_outcome == "home_win" and away_xg >= home_xg:
+        home_xg = round(away_xg * 1.25, 2)
+    elif predicted_outcome == "away_win" and home_xg >= away_xg:
+        away_xg = round(home_xg * 1.25, 2)
+    loser_xg_suppression = float(SCORELINE_LOSER_XG_SUPPRESSION.get(edge_tier, SCORELINE_LOSER_XG_SUPPRESSION["slight"]))
+    if predicted_outcome == "home_win":
+        away_xg = round(max(0.12, away_xg * loser_xg_suppression), 2)
+    elif predicted_outcome == "away_win":
+        home_xg = round(max(0.12, home_xg * loser_xg_suppression), 2)
+    elif game_script != "open-game":
+        home_xg = round(home_xg * 0.96, 2)
+        away_xg = round(away_xg * 0.96, 2)
     clean_sheet = {
-        "home": _clean_sheet_probability(home_final, away_final, away_xg),
-        "away": _clean_sheet_probability(away_final, home_final, home_xg),
+        "home": _clean_sheet_probability(home_final, away_final, away_xg, game_script=game_script),
+        "away": _clean_sheet_probability(away_final, home_final, home_xg, game_script=game_script),
     }
-
-    # Generate candidates from the full 0-5 Poisson space (filtered by outcome)
+    abs_delta = abs(home_final - away_final)
+    candidates = _score_pool_for_script(game_script, predicted_outcome, edge_tier, abs_delta=abs_delta)
+    if base_score not in candidates:
+        candidates.insert(0, base_score)
     scored: list[dict] = []
-    for h in range(0, 6):
-        for a in range(0, 6):
-            actual_outcome = "draw" if h == a else "home_win" if h > a else "away_win"
-            if actual_outcome != predicted_outcome:
-                continue
-            candidate = {"home": h, "away": a}
-            scored.append({
-                "score": candidate,
-                "raw_probability": _score_probability(candidate, home_xg, away_xg, predicted_outcome),
-            })
-
-    scored.sort(key=lambda item: item["raw_probability"], reverse=True)
-
-    # Always include the base (most-likely) score first, then top N unique scores
-    base_key = (int(base_score["home"]), int(base_score["away"]))
-    seen = set()
-    top: list[dict] = []
-    for item in scored:
-        key = (item["score"]["home"], item["score"]["away"])
+    seen: set[tuple[int, int]] = set()
+    for candidate in candidates:
+        key = (candidate["home"], candidate["away"])
         if key in seen:
             continue
         seen.add(key)
-        top.append(item)
-        if len(top) >= 8:
-            break
-
-    # Take top 4 for the distribution output
-    top4 = top[:4]
-    total = sum(item["raw_probability"] for item in top4) or 1.0
-    distribution = []
-    for item in top4:
-        candidate = item["score"]
-        distribution.append(
-            {
-                "score": candidate,
-                "probability": round(item["raw_probability"] / total, 3),
-                "reason": _scoreline_reason(candidate, base_score, clean_sheet, predicted_outcome),
-            }
+        base_probability = _score_probability(candidate, home_xg, away_xg, predicted_outcome, game_script=game_script, evidence_quality=evidence_quality, abs_delta=abs_delta)
+        history_multiplier = _scoreline_history_multiplier(
+            candidate,
+            phase=phase,
+            predicted_outcome=predicted_outcome,
+            calibration=scoreline_calibration,
         )
+        structural_multiplier = _scoreline_structural_multiplier(
+            candidate,
+            predicted_outcome=predicted_outcome,
+            clean_sheet=clean_sheet,
+            game_script=game_script,
+        )
+        scored.append({
+            "score": candidate,
+            "raw_probability": base_probability * history_multiplier * structural_multiplier,
+        })
+    scored.sort(key=lambda item: item["raw_probability"], reverse=True)
+    # Allow more scoreline slots for large mismatches (blowout candidates need room)
+    top_n = 5 if abs_delta > 20 else 4
+    top = scored[:top_n]
+    total = sum(item["raw_probability"] for item in top) or 1.0
+    distribution = []
+    for item in top:
+        candidate = item["score"]
+        distribution.append({
+            "score": candidate,
+            "probability": round(item["raw_probability"] / total, 3),
+            "reason": _scoreline_reason(candidate, base_score, clean_sheet, predicted_outcome, game_script=game_script),
+        })
     return distribution, clean_sheet, home_xg, away_xg
+
+
+def _estimate_scoreline(home_final: float, away_final: float, predicted_outcome: str, *, game_script: str = "medium-event", evidence_quality: str = "trusted", edge_tier: str = "slight", phase: str = "group", scoreline_calibration: dict | None = None) -> dict:
+    if predicted_outcome == "home_win":
+        if game_script == "low-event":
+            base_score = {"home": 1, "away": 0}
+        elif edge_tier in {"clear", "strong"}:
+            base_score = {"home": 2, "away": 0}
+        else:
+            base_score = {"home": 2, "away": 1}
+    elif predicted_outcome == "away_win":
+        if game_script == "low-event":
+            base_score = {"home": 0, "away": 1}
+        elif edge_tier in {"clear", "strong"}:
+            base_score = {"home": 0, "away": 2}
+        else:
+            base_score = {"home": 1, "away": 2}
+    else:
+        base_score = {"home": 1, "away": 1} if game_script == "low-event" else {"home": 2, "away": 2}
+    distribution, _, _, _ = _build_scoreline_distribution(
+        home_final=home_final,
+        away_final=away_final,
+        predicted_outcome=predicted_outcome,
+        base_score=base_score,
+        game_script=game_script,
+        evidence_quality=evidence_quality,
+        edge_tier=edge_tier,
+        phase=phase,
+        scoreline_calibration=scoreline_calibration,
+    )
+    return dict(distribution[0]["score"]) if distribution else {"home": 1, "away": 1}
 
 
 def _split_confidence_fields(
@@ -1773,8 +2551,8 @@ def _split_confidence_fields(
 ) -> dict:
     top_probability = float(scoreline_distribution[0]["probability"]) if scoreline_distribution else 0.0
     clean_gap = abs(float(clean_sheet_probability.get("home", 0)) - float(clean_sheet_probability.get("away", 0)))
-    score_confidence = "medium" if top_probability >= 0.35 and not evidence_gaps else "low"
-    if result_confidence == "high" and clean_gap >= 0.12 and not evidence_gaps:
+    score_confidence = "medium" if top_probability >= 0.42 and not evidence_gaps else "low"
+    if result_confidence == "high" and clean_gap >= 0.16 and not evidence_gaps:
         total_goals_confidence = "medium"
     elif result_confidence == "low" or evidence_gaps:
         total_goals_confidence = "low"
@@ -2354,6 +3132,7 @@ def predict_match(
     daily_evidence: dict | None = None,
     history_index: dict[str, dict] | None = None,
     lessons: list[dict] | None = None,
+    scoreline_calibration: dict | None = None,
 ) -> dict:
     """Compute the full prediction record for a single match."""
     home_team = match.get("home_team", {})
@@ -2400,6 +3179,14 @@ def predict_match(
     )
     venue_adaptation_context = _build_venue_adaptation_context(match, home_id, away_id)
 
+    # --- Opener detection (小组赛首轮) ---
+    # Check if both teams have no prior completed matches in this tournament
+    is_opener = False
+    _home_prior = _count_prior_matches(home_id, all_matches, kickoff_dt)
+    _away_prior = _count_prior_matches(away_id, all_matches, kickoff_dt)
+    if _home_prior == 0 and _away_prior == 0:
+        is_opener = True
+
     ec_modifier = score_evidence_completeness(evidence_index)
 
     # --- Daily Evidence Parsing (Referee, News, Odds) ---
@@ -2414,12 +3201,8 @@ def predict_match(
                 referee = m.get("referee")
                 odds = m.get("odds")
                 break
-    odds_is_usable = bool(
-        odds
-        and not odds.get("is_mock")
-        and odds.get("source") not in {"mock_bookmaker", "odds_unavailable"}
-        and all(odds.get(key) for key in ("home_win", "draw", "away_win"))
-    )
+    market_snapshot = _classify_market_odds(odds)
+    odds_is_usable = market_snapshot["status"] == "trusted_market"
 
     # 1. Referee Rigor Modifier
     referee_home_mod = 0.0
@@ -2431,7 +3214,6 @@ def predict_match(
     if referee:
         strictness = referee.get("strictness", "medium")
         if strictness == "high":
-            # Protects technical/stronger teams, penalizes physical defensive teams
             if rs_home > rs_away:
                 referee_home_mod += 2.0
                 referee_away_mod -= 1.0
@@ -2442,17 +3224,14 @@ def predict_match(
                 referee_home_mod += 1.0
             elif sd_away > sd_home:
                 referee_away_mod += 1.0
-
             yellow_cards_pred = referee.get("yellow_cards_per_match") or 5.5
             red_cards_pred = referee.get("red_cards_per_match") or 0.25
             penalties_pred = referee.get("penalties_per_match") or 0.35
         elif strictness == "low":
-            # Favors physical underdog defense
             if rs_home < rs_away:
                 referee_home_mod += 2.0
             elif rs_away < rs_home:
                 referee_away_mod += 2.0
-
             yellow_cards_pred = referee.get("yellow_cards_per_match") or 2.0
             red_cards_pred = referee.get("red_cards_per_match") or 0.05
             penalties_pred = referee.get("penalties_per_match") or 0.10
@@ -2470,7 +3249,6 @@ def predict_match(
             sentiment = news.get("sentiment", "neutral")
             impact = news.get("impact", "medium")
             factor = 2.0 if impact == "high" else 1.0 if impact == "medium" else 0.5
-
             if sentiment == "positive":
                 if news_team == home_id:
                     home_news_sentiment += factor
@@ -2482,11 +3260,9 @@ def predict_match(
                 elif news_team == away_id:
                     away_news_sentiment -= factor
 
-    # Cap news sentiment modifiers to [-3.0, 3.0]
     home_news_sentiment = max(-3.0, min(3.0, home_news_sentiment))
     away_news_sentiment = max(-3.0, min(3.0, away_news_sentiment))
 
-    # --- Weighted data_score (per team, 0-100 before cap) ---
     raw_home = (
         rs_home * W_RANKING_STRENGTH
         + sd_home * W_SQUAD_DEPTH
@@ -2509,13 +3285,11 @@ def predict_match(
     data_home = round(min(_DATA_SCORE_CAP, max(0.0, raw_home)), 1)
     data_away = round(min(_DATA_SCORE_CAP, max(0.0, raw_away)), 1)
 
-    # --- Divination overlay (Tianji Purple Star Astrology + I Ching Hexagram) ---
     divination = compute_tianji_overlay(
         match.get("kickoff_at", ""),
         match.get("match_id", ""),
         venue=str(match.get("venue", "")),
     )
-    # Also compute the I Ching (Zhouyi) hexagram overlay
     hexagram_overlay = compute_divination_overlay(date, match.get("match_id", ""))
     divination["hexagram_number"] = hexagram_overlay["hexagram_number"]
     divination["hexagram_name"] = hexagram_overlay["hexagram_name"]
@@ -2524,159 +3298,140 @@ def predict_match(
     divination["hexagram_home_modifier"] = hexagram_overlay["home_modifier"]
     divination["hexagram_away_modifier"] = hexagram_overlay["away_modifier"]
 
-    # --- Stage-dependent weights (阶段自适应权重) ---
-    # 小组赛天纪 65%，淘汰赛 45%，八强 30%
     match_id = match.get("match_id", "")
-    stage_data_weight, stage_div_weight = _stage_weights(match_id)
+    stage_data_weight, stage_div_weight = _realistic_stage_weights(match_id)
     divination["weight"] = stage_div_weight
     divination["data_weight"] = stage_data_weight
 
-    # --- Final scores: stage-dependent blend ---
     tianji_home_score = _tianji_score(data_home, float(divination["home_modifier"]))
     tianji_away_score = _tianji_score(data_away, float(divination["away_modifier"]))
     home_final = round((data_home * stage_data_weight) + (tianji_home_score * stage_div_weight), 1)
     away_final = round((data_away * stage_data_weight) + (tianji_away_score * stage_div_weight), 1)
 
-    # --- Predicted outcome ---
-    # Group stage (divination>50%): 天纪主导 → 数据参考天纪结果 → wider draw threshold
-    # Knockout (data>50%): 数据主导 → 天纪辅助参考 → standard draw threshold
-    gap = home_final - away_final
-    if stage_div_weight > stage_data_weight:
-        # 天纪主导: 比分混合后，物理数据"参考"天纪结果
-        # 小组赛冷门多，平局/微弱胜场更常见 → 扩大平局区间
-        draw_threshold = 5.0
-        if abs(gap) <= draw_threshold:
-            predicted_outcome = "draw"
-        elif gap > 0:
-            predicted_outcome = "home_win"
-        else:
-            predicted_outcome = "away_win"
-    else:
-        # 数据主导: 淘汰赛阶段数据可靠性提升 → 缩小平局区间
-        if abs(gap) <= 3.0:
-            predicted_outcome = "draw"
-        elif gap > 0:
-            predicted_outcome = "home_win"
-        else:
-            predicted_outcome = "away_win"
-    predicted_score = _estimate_scoreline(home_final, away_final, predicted_outcome)
-    total_goals = int(predicted_score["home"]) + int(predicted_score["away"])
-    goals_line_2_5 = "over" if total_goals >= 3 else "under"
-
-    # --- 天纪比分推演 (Tianji Score Divination) ---
-    # The score is decided by the hexagram pattern, star positions, and fortune
-    # levels — NOT by mathematical probability.  The data model score acts only
-    # as a reality boundary, never as the primary driver.
-    _tianji_result = _tianji_score_oracle(
-        hex_num=divination.get("hexagram_number", 1),
-        tianji_home_modifier=float(divination.get("home_modifier", 0)),
-        tianji_away_modifier=float(divination.get("away_modifier", 0)),
-        hexagram_home_modifier=float(divination.get("hexagram_home_modifier", 0)),
-        hexagram_away_modifier=float(divination.get("hexagram_away_modifier", 0)),
-        home_stars=divination.get("home_stars", []),
-        away_stars=divination.get("away_stars", []),
-        host_palace_branch=divination.get("host_palace_branch", "子"),
-        guest_palace_branch=divination.get("guest_palace_branch", "午"),
-        has_physical_conflict=bool(divination.get("has_physical_conflict")),
-        home_final=home_final,
-        away_final=away_final,
-        predicted_outcome=predicted_outcome,
-    )
-    predicted_score = {"home": _tianji_result["home"], "away": _tianji_result["away"]}
-    divination["score_divination_trace"] = _tianji_result.get("divination_trace", {})
-    divination["combined_home_fortune"] = _tianji_result["divination_trace"].get("home_fortune", "平")
-    divination["combined_away_fortune"] = _tianji_result["divination_trace"].get("away_fortune", "平")
-    divination["hex_pattern"] = _tianji_result["divination_trace"].get("pattern", "harmonic")
-    total_goals = int(predicted_score["home"]) + int(predicted_score["away"])
-    goals_line_2_5 = "over" if total_goals >= 3 else "under"
-
-    scoreline_distribution, clean_sheet_probability, home_expected_goals, away_expected_goals = _tianji_scoreline_distribution(
-        hex_num=divination.get("hexagram_number", 1),
-        tianji_home_modifier=float(divination.get("home_modifier", 0)),
-        tianji_away_modifier=float(divination.get("away_modifier", 0)),
-        hexagram_home_modifier=float(divination.get("hexagram_home_modifier", 0)),
-        hexagram_away_modifier=float(divination.get("hexagram_away_modifier", 0)),
-        home_stars=divination.get("home_stars", []),
-        away_stars=divination.get("away_stars", []),
-        host_palace_branch=divination.get("host_palace_branch", "子"),
-        guest_palace_branch=divination.get("guest_palace_branch", "午"),
-        has_physical_conflict=bool(divination.get("has_physical_conflict")),
-        base_score=predicted_score,
-        predicted_outcome=predicted_outcome,
-        home_final=home_final,
-        away_final=away_final,
-    )
-    if scoreline_distribution:
-        predicted_score = dict(scoreline_distribution[0]["score"])
-        total_goals = int(predicted_score["home"]) + int(predicted_score["away"])
-        goals_line_2_5 = "over" if total_goals >= 3 else "under"
-
-    # --- Odds & Market Track & Divergence Analysis ---
-    implied_probs = None
-    market_outcome = None
-    dual_track_alignment = "untracked"
-    divergence_analysis = ""
-
-    if odds_is_usable:
-        o_home = float(odds.get("home_win", 1.0))
-        o_draw = float(odds.get("draw", 1.0))
-        o_away = float(odds.get("away_win", 1.0))
-
-        raw_p_home = 1.0 / o_home
-        raw_p_draw = 1.0 / o_draw
-        raw_p_away = 1.0 / o_away
-        sum_p = raw_p_home + raw_p_draw + raw_p_away
-
-        implied_probs = {
-            "home": round(raw_p_home / sum_p, 3),
-            "draw": round(raw_p_draw / sum_p, 3),
-            "away": round(raw_p_away / sum_p, 3)
-        }
-
-        max_p = max(implied_probs["home"], implied_probs["draw"], implied_probs["away"])
-        if max_p == implied_probs["home"]:
-            market_outcome = "home_win"
-        elif max_p == implied_probs["away"]:
-            market_outcome = "away_win"
-        else:
-            market_outcome = "draw"
-
-        if predicted_outcome == market_outcome:
-            dual_track_alignment = "aligned"
-            winner_lbl = home_name if predicted_outcome == "home_win" else away_name if predicted_outcome == "away_win" else "双方平局"
-            divergence_analysis = f"【双轨共振】数据基本面与市场赔率一致倾向【{winner_lbl}】。章鱼哥触手坚定，玄学气运与盘口期望形成合力。"
-        else:
-            dual_track_alignment = "divergent"
-            fund_winner_lbl = home_name if predicted_outcome == "home_win" else away_name if predicted_outcome == "away_win" else "平局拉扯"
-            mkt_winner_lbl = home_name if market_outcome == "home_win" else away_name if market_outcome == "away_win" else "平局拉扯"
-            divergence_analysis = f"【双轨背离】硬实力基本面支持【{fund_winner_lbl}】，但市场赔率反向看好【{mkt_winner_lbl}】。章鱼哥在箱子前摇摆游离，谨防诱盘或爆冷！"
-
-    # --- Confidence Override ---
     local_gaps = []
     if not home_squad or not away_squad:
         local_gaps.append("rosters_missing")
     if not referee:
         local_gaps.append("referee_missing")
-    if not odds_is_usable:
+    if market_snapshot["status"] != "trusted_market":
         local_gaps.append("odds_missing")
 
+    evidence_gaps = _collect_evidence_gaps(evidence_index)
+    evidence_quality = _overall_evidence_quality(
+        market_status=market_snapshot["status"],
+        local_gaps=local_gaps,
+        evidence_gaps=evidence_gaps,
+    )
+    three_track_votes = _three_track_vote_summary(
+        gap=home_final - away_final,
+        market_outcome=market_snapshot["market_outcome"],
+        market_status=market_snapshot["status"],
+        home_news_sentiment=home_news_sentiment,
+        away_news_sentiment=away_news_sentiment,
+        rs_home=rs_home,
+        rs_away=rs_away,
+        sd_home=sd_home,
+        sd_away=sd_away,
+        hex_home_mod=float(divination.get("hexagram_home_modifier", 0)),
+        hex_away_mod=float(divination.get("hexagram_away_modifier", 0)),
+    )
+    predicted_outcome, edge_tier, alignment_flags = _determine_outcome_from_context(
+        home_final=home_final,
+        away_final=away_final,
+        phase=match.get("phase", "group"),
+        market_status=market_snapshot["status"],
+        market_outcome=market_snapshot["market_outcome"],
+        home_news_sentiment=home_news_sentiment,
+        away_news_sentiment=away_news_sentiment,
+        rs_home=rs_home,
+        rs_away=rs_away,
+        sd_home=sd_home,
+        sd_away=sd_away,
+        evidence_quality=evidence_quality,
+        three_track_votes=three_track_votes,
+    )
+    game_script = _pick_game_script(
+        predicted_outcome=predicted_outcome,
+        edge_tier=edge_tier,
+        evidence_quality=evidence_quality,
+        phase=match.get("phase", "group"),
+        is_opener=is_opener,
+        implied_probs=market_snapshot["implied_probabilities"],
+        home_final=home_final,
+        away_final=away_final,
+        news_swing=home_news_sentiment - away_news_sentiment,
+    )
+    predicted_score = _estimate_scoreline(
+        home_final,
+        away_final,
+        predicted_outcome,
+        game_script=game_script,
+        evidence_quality=evidence_quality,
+        edge_tier=edge_tier,
+        phase=match.get("phase", "group"),
+        scoreline_calibration=scoreline_calibration,
+    )
+    scoreline_distribution, clean_sheet_probability, home_expected_goals, away_expected_goals = _build_scoreline_distribution(
+        home_final=home_final,
+        away_final=away_final,
+        predicted_outcome=predicted_outcome,
+        base_score=predicted_score,
+        game_script=game_script,
+        evidence_quality=evidence_quality,
+        edge_tier=edge_tier,
+        phase=match.get("phase", "group"),
+        scoreline_calibration=scoreline_calibration,
+    )
+    if scoreline_distribution:
+        predicted_score = dict(scoreline_distribution[0]["score"])
+    total_goals = int(predicted_score["home"]) + int(predicted_score["away"])
+    goals_line_2_5 = "over" if total_goals >= 3 else "under"
     avg_data = (data_home + data_away) / 2.0
-    if daily_evidence and not local_gaps:
-        # All local evidence is complete! Bypassing global gaps caps
-        if avg_data > 65.0:
-            confidence = "high"
-            confidence_label = "高信心"
-        elif avg_data >= 50.0:
-            confidence = "medium"
-            confidence_label = "中等信心"
-        else:
-            confidence = "low"
-            confidence_label = "低信心"
-        evidence_gaps = [g + "_resolved" for g in local_gaps]
+    if evidence_quality == "trusted" and avg_data > 65.0 and edge_tier in {"clear", "strong"}:
+        confidence = "high"
+        confidence_label = "楂樹俊蹇?"
+    elif avg_data >= 50.0 and evidence_quality not in {"unusable"}:
+        confidence = "medium"
+        confidence_label = "涓瓑淇″績"
     else:
-        # Fallback to the original global gaps logic
-        evidence_gaps = _collect_evidence_gaps(evidence_index)
-        confidence, confidence_label = _determine_confidence(avg_data, evidence_gaps)
+        confidence = "low"
+        confidence_label = "浣庝俊蹇?"
+    knockout_prediction = _build_knockout_prediction(
+        phase=match.get("phase", "group"),
+        predicted_outcome=predicted_outcome,
+        predicted_score=predicted_score,
+        home_name=home_name,
+        away_name=away_name,
+        home_final=home_final,
+        away_final=away_final,
+        edge_tier=edge_tier,
+        game_script=game_script,
+        confidence=confidence,
+    )
+
+    divination["combined_home_fortune"] = hexagram_overlay.get("home_fortune", "?")
+    divination["combined_away_fortune"] = hexagram_overlay.get("away_fortune", "?")
+    divination["hex_pattern"] = game_script
+
+    implied_probs = market_snapshot["implied_probabilities"]
+    market_outcome = market_snapshot["market_outcome"]
+    dual_track_alignment = "aligned" if market_outcome and market_outcome == predicted_outcome else "divergent" if market_outcome else "untracked"
+    divergence_analysis = ""
+    if market_outcome and dual_track_alignment == "aligned":
+        divergence_analysis = "【双轨共振】基本面与可信市场方向一致。"
+    elif market_outcome:
+        divergence_analysis = "【双轨背离】基本面与市场方向不一致，本场应降档处理。"
+
+    avg_data = (data_home + data_away) / 2.0
+    if evidence_quality == "trusted" and avg_data > 65.0 and edge_tier in {"clear", "strong"}:
+        confidence = "high"
+        confidence_label = "高信心"
+    elif avg_data >= 50.0 and evidence_quality not in {"unusable"}:
+        confidence = "medium"
+        confidence_label = "中等信心"
+    else:
+        confidence = "low"
+        confidence_label = "低信心"
     confidence_split = _split_confidence_fields(
         result_confidence=confidence,
         scoreline_distribution=scoreline_distribution,
@@ -2702,6 +3457,7 @@ def predict_match(
         "away_final": away_final,
         "predicted_outcome": predicted_outcome,
         "predicted_score": predicted_score,
+        "is_opener": is_opener,
         "scoreline_distribution": scoreline_distribution,
         "clean_sheet_probability": clean_sheet_probability,
         "home_expected_goals": home_expected_goals,
@@ -2718,13 +3474,18 @@ def predict_match(
         "yellow_cards_pred": yellow_cards_pred,
         "home_news_sentiment": home_news_sentiment,
         "away_news_sentiment": away_news_sentiment,
-        "odds": odds if odds_is_usable else None,
+        "odds": odds if market_snapshot["status"] == "trusted_market" else None,
         "raw_odds": odds,
-        "odds_source_status": "usable" if odds_is_usable else (odds or {}).get("source", "missing"),
+        "odds_source_status": market_snapshot["status"],
         "implied_probs": implied_probs,
         "market_outcome": market_outcome,
         "dual_track_alignment": dual_track_alignment,
         "divergence_analysis": divergence_analysis,
+        "evidence_quality": evidence_quality,
+        "edge_tier": edge_tier,
+        "alignment_flags": alignment_flags,
+        "game_script": game_script,
+        "three_track_votes": three_track_votes,
     }
     scenario_analysis = _build_scenario_analysis(analysis_context)
     analysis_context["scenario_analysis"] = scenario_analysis
@@ -2849,11 +3610,8 @@ def predict_match(
             "away_final": away_final,
             "result": predicted_outcome,
             "predicted_outcome": predicted_outcome,
-            "home_final": home_final,
-            "away_final": away_final,
-            "result": predicted_outcome,
-            "predicted_outcome": predicted_outcome,
             "score": predicted_score,
+            "is_opener": is_opener,
             "total_goals": total_goals,
             "goals_line_2_5": goals_line_2_5,
             "confidence": confidence,
@@ -2862,6 +3620,10 @@ def predict_match(
             "score_confidence": confidence_split["score_confidence"],
             "total_goals_confidence": confidence_split["total_goals_confidence"],
             "confidence_note": confidence_split["confidence_note"],
+            "evidence_quality": evidence_quality,
+            "edge_tier": edge_tier,
+            "game_script": game_script,
+            "three_track_votes": three_track_votes,
             "scoreline_distribution": scoreline_distribution,
             "clean_sheet_probability": clean_sheet_probability,
             "expected_goals_proxy": {
@@ -2870,6 +3632,7 @@ def predict_match(
             },
             "venue_adaptation_context": venue_adaptation_context,
             "evidence_gaps": evidence_gaps,
+            "knockout": knockout_prediction,
         },
         "referee_analysis": {
             "name": referee["name"] if referee else "Unknown",
@@ -2882,17 +3645,17 @@ def predict_match(
             "odds": odds,
             "implied_probabilities": implied_probs,
             "market_outcome": market_outcome
-        } if odds_is_usable else None,
+        } if market_snapshot["status"] == "trusted_market" else None,
         "market_odds_status": {
-            "status": "usable" if odds_is_usable else "missing_or_unusable",
+            "status": market_snapshot["status"],
             "source": (odds or {}).get("source", "missing"),
-            "is_mock": bool((odds or {}).get("is_mock") or (odds or {}).get("source") == "mock_bookmaker"),
-            "reason": (odds or {}).get("reason", ""),
+            "is_mock": market_snapshot["is_mock"],
+            "reason": market_snapshot["reason"],
         },
         "dual_track": {
             "alignment": dual_track_alignment,
             "divergence_analysis": divergence_analysis
-        } if odds_is_usable else None,
+        } if market_outcome else None,
         "analysis_layers": analysis_layers,
         "scenario_analysis": scenario_analysis,
         "decision_audit": decision_audit,
@@ -2900,6 +3663,10 @@ def predict_match(
             "layer_count": len(analysis_layers),
             "risk_level": decision_audit.get("risk_level"),
             "primary_edge": _edge_verdict(home_final - away_final),
+            "edge_tier": edge_tier,
+            "game_script": game_script,
+            "evidence_quality": evidence_quality,
+            "three_track_consensus": three_track_votes.get("consensus"),
             "storage_note": "JSON report remains the audit artifact; SQLite is an optional query/index layer.",
         },
         "play_card": play_card,
@@ -2960,6 +3727,7 @@ def run_scoring_model(
     history_index = _build_history_index(root, edition)
     global_summary = squad_data.get("global_summary")
     all_matches = canonical_matches(ledger.get("matches", []) or [])
+    scoreline_calibration = _build_scoreline_calibration(all_matches)
 
     # --- Find matches for this date that haven't kicked off ---
     predictions: list[dict] = []
@@ -2998,6 +3766,7 @@ def run_scoring_model(
             global_summary=global_summary,
             daily_evidence=daily_evidence,
             history_index=history_index,
+            scoreline_calibration=scoreline_calibration,
         )
         predictions.append(prediction)
 
@@ -3014,6 +3783,7 @@ def run_scoring_model(
         "date": report_date,
         "generated_at": generated_at,
         "mode": "worldcup-prediction-scoring-model",
+        "run_type": "experiment",
         "filters": {
             "match_id": match_id or "",
             "teams": teams or [],
@@ -3052,7 +3822,7 @@ def run_scoring_model(
         suffix = f"-{match_id}" if match_id else ""
         if teams and not match_id:
             suffix = "-" + "-vs-".join(_normalise_team_query(team) for team in teams)
-        out_path = ed_root / "reports" / f"{report_date}{suffix}-prediction-report.json"
+        out_path = ed_root / "reports" / "backtests" / f"{report_date}{suffix}-prediction-report.json"
         write_json(out_path, report)
 
         # --- Sync predictions into SQLite DB ---
@@ -3075,11 +3845,13 @@ def run_scoring_model(
                         p["report_json_path"] = str(out_path)
                         p["generated_at"] = generated_at
                         p["prediction_date"] = report_date
+                        p["run_type"] = "experiment"
+                        p["run_id"] = f"scoring-model::{report_date}::{generated_at}"
+                        p["experiment_id"] = f"{p.get('match_id', '')}::{generated_at}"
                         matched = [m for m in all_matches if m.get("match_id") == p.get("match_id")]
                         if matched:
                             save_match(conn, matched[0])
                         save_prediction(conn, p)
-                        save_prediction_analysis_layers(conn, p)
             finally:
                 conn.close()
         except Exception:

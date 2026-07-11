@@ -52,6 +52,18 @@ python skill/scripts/prediction_visual_dashboard.py write --edition 2026 --root 
    - `octopus_default`：打包的 AI 章鱼哥默认预测（用户尚未生成该比赛）
    - `none`：仅公共事实卡，不声称存在预测
 
+## 正式预测冻结规则
+
+正式预测是 `canonical`，用于日报、看板、复盘和赛后评估。
+
+- 一场比赛只保留一份正式预测
+- 已存在正式预测时，后续日常运行优先复用，不重新生成
+- 一旦开球，状态进入 `kickoff_locked`
+- 一旦录入最终赛果，状态进入 `result_locked`
+- 历史回放、模型对比、调参实验只能写入 `experiment/backtest`，不能回写正式历史
+
+这条规则高于一切：**已经出的正式预测结果不要动**。
+
 ## 海报流程
 
 仅在用户明确要求时：

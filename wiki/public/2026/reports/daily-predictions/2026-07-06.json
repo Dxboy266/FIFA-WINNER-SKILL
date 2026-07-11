@@ -1,0 +1,1220 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-07-06",
+  "generated_at": "2026-07-01T00:47:52.839366+08:00",
+  "mode": "worldcup-daily-pre-match-entertainment-predictions",
+  "status": "created",
+  "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-06.json",
+  "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\wiki\\reports\\daily-predictions\\2026-07-06.md",
+  "poster_requested": false,
+  "summary": {
+    "predictions_created": 2,
+    "matches_skipped_started": 0,
+    "matches_skipped_completed": 0,
+    "matches_skipped_missing_kickoff": 0,
+    "locked_existing_predictions": 0,
+    "preserved_predictions": 0,
+    "reused_db_predictions": 0,
+    "reused_report_predictions": 0
+  },
+  "predictions": [
+    {
+      "match_id": "2026-R16-03",
+      "kickoff_at": "2026-07-05T20:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "group": "",
+      "phase": "round_of_16",
+      "home_team": {
+        "team_id": "nor",
+        "name": "Norway",
+        "ranking": 31,
+        "points": 1550.94
+      },
+      "away_team": {
+        "team_id": "fra",
+        "name": "France",
+        "ranking": 1,
+        "points": 1877.32
+      },
+      "data_score": {
+        "home": 55.5,
+        "away": 76.7,
+        "components": {
+          "ranking_strength": {
+            "home": 50.13,
+            "away": 96.76,
+            "weight": 0.3
+          },
+          "squad_depth": {
+            "home": 83.25,
+            "away": 92.05,
+            "weight": 0.2
+          },
+          "historical_proxy": {
+            "home": 50.1,
+            "away": 85.07,
+            "weight": 0.2
+          },
+          "rest_travel": {
+            "home": 90.0,
+            "away": 80.0,
+            "weight": 0.15
+          },
+          "evidence_completeness": {
+            "home": 1.98,
+            "away": 1.98,
+            "weight": 0.15
+          }
+        }
+      },
+      "venue_adaptation_context": {
+        "status": "partial_static_context",
+        "source": "static_venue_team_baseline_v1",
+        "venue": "MetLife Stadium, East Rutherford, N.J.",
+        "venue_context": {
+          "city": "East Rutherford",
+          "country": "United States",
+          "lat": 40.8339,
+          "lon": -74.0971,
+          "june_temp_c": 22.0,
+          "altitude_m": 20,
+          "climate_profile": "warm_temperate",
+          "matched_key": "east rutherford"
+        },
+        "home": {
+          "team_id": "nor",
+          "status": "missing_context",
+          "baseline_city": null,
+          "baseline_climate_profile": null,
+          "missing_context": [
+            "team_home_context_missing"
+          ],
+          "travel_km": null,
+          "temperature_delta_c": null,
+          "altitude_delta_m": null,
+          "adaptation_risk": "unknown",
+          "adaptation_risk_score": 0,
+          "adaptation_notes": [
+            "Static baseline context is incomplete for this side."
+          ]
+        },
+        "away": {
+          "team_id": "fra",
+          "status": "estimated_static_context",
+          "baseline_city": "Paris",
+          "baseline_climate_profile": "temperate",
+          "missing_context": [],
+          "travel_km": 5835.5,
+          "temperature_delta_c": 3.0,
+          "altitude_delta_m": -15,
+          "adaptation_risk": "low",
+          "adaptation_risk_score": 1,
+          "adaptation_notes": [
+            "intercontinental travel load",
+            "temperature baseline is broadly familiar"
+          ]
+        },
+        "missing_context": [
+          "home_team_home_context_missing"
+        ],
+        "limitations": [
+          "Static baseline only; not live kickoff weather.",
+          "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+          "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data."
+        ]
+      },
+      "divination_overlay": {
+        "lunar_date": "农历：丙午马年 5月21日 申时 (15:00-16:59)",
+        "shichen": "申时 (15:00-16:59)",
+        "host_palace_branch": "申",
+        "guest_palace_branch": "寅",
+        "home_stars": [
+          "紫微 (Ziwei)",
+          "左辅 (Zuofu)"
+        ],
+        "away_stars": [],
+        "home_modifier": 1.5,
+        "away_modifier": 0.0,
+        "interpretation": "主队命宫得帝星/府星高照，占据天时地利，发挥较稳健。",
+        "has_physical_conflict": false,
+        "calculation_timezone": "America/New_York",
+        "local_kickoff_at": "2026-07-05T16:00:00-04:00",
+        "hexagram_number": 61,
+        "hexagram_name": "中孚",
+        "hexagram": "中孚",
+        "hexagram_interpretation": "泽上有风，中孚",
+        "hexagram_home_modifier": -1.1,
+        "hexagram_away_modifier": 2.8,
+        "weight": 0.2,
+        "data_weight": 0.8,
+        "combined_home_fortune": "凶",
+        "combined_away_fortune": "大吉",
+        "hex_pattern": "medium-event"
+      },
+      "prediction": {
+        "home_final": 57.9,
+        "away_final": 76.7,
+        "result": "away_win",
+        "predicted_outcome": "away_win",
+        "score": {
+          "home": 1,
+          "away": 3
+        },
+        "is_opener": false,
+        "total_goals": 4,
+        "goals_line_2_5": "over",
+        "confidence": "medium",
+        "confidence_label": "中等信心",
+        "result_confidence": "medium",
+        "score_confidence": "low",
+        "total_goals_confidence": "low",
+        "confidence_note": "Result direction confidence is not exact-score confidence.",
+        "evidence_quality": "thin",
+        "edge_tier": "strong",
+        "game_script": "medium-event",
+        "three_track_votes": {
+          "votes": {
+            "fundamentals": "away_win",
+            "market": null,
+            "information": "draw",
+            "mystic": "away_win"
+          },
+          "counts": {
+            "home_win": 0,
+            "away_win": 2,
+            "draw": 1
+          },
+          "consensus": "away_win",
+          "leaders": [
+            "away_win"
+          ],
+          "tie_on_top": false
+        },
+        "scoreline_distribution": [
+          {
+            "score": {
+              "home": 1,
+              "away": 3
+            },
+            "probability": 0.286,
+            "reason": "Primary football script branch settles on 1-3."
+          },
+          {
+            "score": {
+              "home": 1,
+              "away": 2
+            },
+            "probability": 0.284,
+            "reason": "Medium-event branch: one side edges it without turning into a track meet."
+          },
+          {
+            "score": {
+              "home": 0,
+              "away": 2
+            },
+            "probability": 0.234,
+            "reason": "Clean-sheet branch keeps 0-2 alive with away shutout chance 25%."
+          },
+          {
+            "score": {
+              "home": 0,
+              "away": 1
+            },
+            "probability": 0.196,
+            "reason": "Clean-sheet branch keeps 0-1 alive with away shutout chance 25%."
+          }
+        ],
+        "clean_sheet_probability": {
+          "home": 0.08,
+          "away": 0.25
+        },
+        "expected_goals_proxy": {
+          "home": 1.63,
+          "away": 2.25
+        },
+        "venue_adaptation_context": {
+          "status": "partial_static_context",
+          "source": "static_venue_team_baseline_v1",
+          "venue": "MetLife Stadium, East Rutherford, N.J.",
+          "venue_context": {
+            "city": "East Rutherford",
+            "country": "United States",
+            "lat": 40.8339,
+            "lon": -74.0971,
+            "june_temp_c": 22.0,
+            "altitude_m": 20,
+            "climate_profile": "warm_temperate",
+            "matched_key": "east rutherford"
+          },
+          "home": {
+            "team_id": "nor",
+            "status": "missing_context",
+            "baseline_city": null,
+            "baseline_climate_profile": null,
+            "missing_context": [
+              "team_home_context_missing"
+            ],
+            "travel_km": null,
+            "temperature_delta_c": null,
+            "altitude_delta_m": null,
+            "adaptation_risk": "unknown",
+            "adaptation_risk_score": 0,
+            "adaptation_notes": [
+              "Static baseline context is incomplete for this side."
+            ]
+          },
+          "away": {
+            "team_id": "fra",
+            "status": "estimated_static_context",
+            "baseline_city": "Paris",
+            "baseline_climate_profile": "temperate",
+            "missing_context": [],
+            "travel_km": 5835.5,
+            "temperature_delta_c": 3.0,
+            "altitude_delta_m": -15,
+            "adaptation_risk": "low",
+            "adaptation_risk_score": 1,
+            "adaptation_notes": [
+              "intercontinental travel load",
+              "temperature baseline is broadly familiar"
+            ]
+          },
+          "missing_context": [
+            "home_team_home_context_missing"
+          ],
+          "limitations": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+            "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data."
+          ]
+        },
+        "evidence_gaps": [
+          "official_fixtures_partial",
+          "fifa_rankings_partial",
+          "historical_worldcup_results_blocked",
+          "recent_form_results_blocked",
+          "injury_availability_blocked",
+          "venue_rest_travel_blocked"
+        ],
+        "knockout": {
+          "is_knockout": true,
+          "phase": "round_of_16",
+          "regular_time": {
+            "result": "away_win",
+            "score": {
+              "home": 1,
+              "away": 3
+            }
+          },
+          "extra_time": {
+            "played": false,
+            "result": "",
+            "score": {
+              "home": null,
+              "away": null
+            },
+            "period_score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "penalties": {
+            "played": false,
+            "winner": "",
+            "winner_name": "",
+            "score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "advance": {
+            "winner": "away",
+            "winner_result": "away_advance",
+            "winner_name": "France"
+          }
+        }
+      },
+      "referee_analysis": null,
+      "market_odds": null,
+      "market_odds_status": {
+        "status": "none",
+        "source": "missing",
+        "is_mock": false,
+        "reason": "odds_missing"
+      },
+      "dual_track": null,
+      "analysis_layers": [
+        {
+          "layer_id": "evidence_integrity",
+          "title": "证据完整度层",
+          "verdict": "thin_evidence",
+          "confidence": "medium",
+          "summary": "Evidence has gaps; the model keeps uncertainty visible instead of overclaiming.",
+          "key_drivers": [
+            "baseline edition sources loaded"
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked",
+            "referee_missing",
+            "odds_missing"
+          ],
+          "watch_triggers": [
+            "refresh daily evidence before kickoff",
+            "mark mock sources separately from live sources"
+          ]
+        },
+        {
+          "layer_id": "fundamentals",
+          "title": "基本面强弱层",
+          "verdict": "away_edge",
+          "confidence": "medium",
+          "summary": "Fundamentals plus capped overlay lean France 倾向不败或取胜 with final delta -18.8.",
+          "key_drivers": [
+            "FIFA ranking strength: France edge +46.6",
+            "Squad depth and balance: France edge +8.8",
+            "Historical proxy: France edge +35.0",
+            "Rest/travel context: Norway edge +10.0",
+            "Evidence completeness supports model confidence (+1.98)"
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "ranking and roster updates",
+            "rest-day recalculation after previous matches"
+          ]
+        },
+        {
+          "layer_id": "matchup",
+          "title": "阵容对位层",
+          "verdict": "away_edge",
+          "confidence": "medium",
+          "summary": "This layer turns roster shape into concrete matchup pressure rather than only a total score.",
+          "key_drivers": [
+            "Norway shape: GK3/DF8/MF10/FW5; avg age 26.8, avg height 187.2cm",
+            "France shape: GK3/DF9/MF7/FW7; avg age 27.0, avg height 184.9cm",
+            "France has the cleaner depth/balance score."
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "starting XI",
+            "formation change",
+            "set-piece personnel"
+          ]
+        },
+        {
+          "layer_id": "live_context",
+          "title": "临场变量层",
+          "verdict": "home_edge",
+          "confidence": "medium",
+          "summary": "Late news, rest, travel and referee profile are handled as separate pressure rather than hidden inside one score.",
+          "key_drivers": [
+            "Rest/travel delta: +10.0",
+            "News sentiment delta: 0.0"
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "referee profile missing"
+          ],
+          "watch_triggers": [
+            "team news within 24h",
+            "referee assignment correction",
+            "late travel/weather disruption"
+          ]
+        },
+        {
+          "layer_id": "venue_adaptation",
+          "title": "Venue Adaptation",
+          "verdict": "partial_static_context",
+          "confidence": "low",
+          "summary": "Static venue, travel, temperature and altitude baselines are exposed as evidence. This is not live kickoff weather and does not override verified lineup or injury news.",
+          "key_drivers": [
+            "Venue baseline: East Rutherford 22.0C, 20m, warm_temperate",
+            "Home Norway: static adaptation context missing.",
+            "Away France: travel 5835.5km, temperature delta +3.0C, altitude delta -15m, risk=low."
+          ],
+          "counter_signals": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing."
+          ],
+          "missing_context": [
+            "home_team_home_context_missing"
+          ],
+          "watch_triggers": [
+            "replace static baseline with live venue weather",
+            "confirm team camp/base location",
+            "add humidity, wind, pitch and player acclimatization notes"
+          ]
+        },
+        {
+          "layer_id": "market_track",
+          "title": "市场背离层",
+          "verdict": "untracked",
+          "confidence": "medium",
+          "summary": "Market track is unavailable, so the dual-track read cannot confirm or challenge fundamentals.",
+          "key_drivers": [
+            "No market odds attached to this match evidence."
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "odds_missing"
+          ],
+          "watch_triggers": [
+            "odds refresh",
+            "large implied-probability movement",
+            "market/fundamental divergence near kickoff"
+          ]
+        },
+        {
+          "layer_id": "scenario_tree",
+          "title": "比赛剧本层",
+          "verdict": "away_win",
+          "confidence": "medium",
+          "summary": "Base case: France 倾向不败或取胜, reference score 1-3. The model edge is -18.8 after fundamentals and Tianji overlay.",
+          "key_drivers": [
+            "Base case: France 倾向不败或取胜, reference score 1-3. The model edge is -18.8 after fundamentals and Tianji overlay.",
+            "Counter case: Norway changes the read if lineup news improves, set pieces land, or the favorite is forced into a slow first half.",
+            "Draw case: becomes live if the first 30 minutes stay low-event and both sides protect transition space."
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "confirmed starting XI differs from roster-depth baseline",
+            "late injury or suspension changes the strongest positional unit",
+            "market probability moves against the model by more than 8 percentage points"
+          ]
+        },
+        {
+          "layer_id": "score_distribution",
+          "title": "天纪比分分布",
+          "verdict": "low",
+          "confidence": "low",
+          "summary": "比分由天纪卦象推演，非数学概率。各分支代表不同运势走向。天命主线: 1-3 (29%), 1-2 (28%), 0-2 (23%)。",
+          "key_drivers": [
+            "天纪进球气场: 1.63-2.25",
+            "零封概率 主/客: 8%/25%"
+          ],
+          "counter_signals": [
+            "红牌、点球、定位球和追分状态可能使命运分支快速切换。"
+          ],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked"
+          ],
+          "watch_triggers": [
+            "确认首发阵容",
+            "定位球错位",
+            "红牌或早进球",
+            "下半场换人状态"
+          ]
+        },
+        {
+          "layer_id": "adversarial_review",
+          "title": "反方审稿层",
+          "verdict": "high",
+          "confidence": "medium",
+          "summary": "This layer records why the pick could be wrong before publishing the final entertainment call.",
+          "key_drivers": [
+            "Final model edge -18.8 points toward France 倾向不败或取胜."
+          ],
+          "counter_signals": [
+            "new injury/lineup evidence changes the strongest positional edge",
+            "fresh odds imply a different market favorite",
+            "post-match calibration shows this confidence bucket underperforming",
+            "blocked or partial evidence must be resolved before raising confidence"
+          ],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked"
+          ],
+          "watch_triggers": [
+            "new injury/lineup evidence changes the strongest positional edge",
+            "fresh odds imply a different market favorite",
+            "post-match calibration shows this confidence bucket underperforming",
+            "blocked or partial evidence must be resolved before raising confidence"
+          ]
+        }
+      ],
+      "scenario_analysis": {
+        "base_case": "Base case: France 倾向不败或取胜, reference score 1-3. The model edge is -18.8 after fundamentals and Tianji overlay.",
+        "upset_case": "Counter case: Norway changes the read if lineup news improves, set pieces land, or the favorite is forced into a slow first half.",
+        "draw_case": "Draw case: becomes live if the first 30 minutes stay low-event and both sides protect transition space.",
+        "watch_triggers": [
+          "confirmed starting XI differs from roster-depth baseline",
+          "late injury or suspension changes the strongest positional unit",
+          "market probability moves against the model by more than 8 percentage points"
+        ]
+      },
+      "decision_audit": {
+        "risk_level": "high",
+        "why_this_pick": [
+          "Final model edge -18.8 points toward France 倾向不败或取胜."
+        ],
+        "what_would_change_the_pick": [
+          "new injury/lineup evidence changes the strongest positional edge",
+          "fresh odds imply a different market favorite",
+          "post-match calibration shows this confidence bucket underperforming",
+          "blocked or partial evidence must be resolved before raising confidence"
+        ],
+        "thin_evidence_warnings": [
+          "official_fixtures_partial",
+          "fifa_rankings_partial",
+          "historical_worldcup_results_blocked",
+          "recent_form_results_blocked",
+          "injury_availability_blocked",
+          "venue_rest_travel_blocked"
+        ]
+      },
+      "analysis_summary": {
+        "layer_count": 9,
+        "risk_level": "high",
+        "primary_edge": "away_edge",
+        "edge_tier": "strong",
+        "game_script": "medium-event",
+        "evidence_quality": "thin",
+        "three_track_consensus": "away_win",
+        "storage_note": "JSON report remains the audit artifact; SQLite is an optional query/index layer."
+      },
+      "play_card": {
+        "share_title": "Norway vs France | 娱乐预测 1-3",
+        "match_hook": "France 倾向胜出，总进球参考 4 球。淘汰赛阶段，MetLife Stadium, East Rutherford, N.J.。",
+        "poster_caption": "AI预测比分 1-3，France主线占优，胜负趋势指向客队。",
+        "watch_points": [
+          "多层分析主线：Final model edge -18.8 points toward France 倾向不败或取胜.",
+          "双方实力接近，临场发挥将决定走向",
+          "中场控制权和定位球效率是关键"
+        ],
+        "risk_flags": [
+          "历史战绩数据不足",
+          "近期战绩数据缺失",
+          "伤停信息不完整",
+          "休息和旅行因素未充分计算"
+        ],
+        "poster_angle": "Norway vs France, MetLife Stadium, East Rutherford, N.J., vibrant crowd atmosphere, 中孚 aesthetic overlay, predicted score 1-3, total goals 4",
+        "confidence_meter": "数据 80% | 玄学 20% | 信心: 中等信心",
+        "gameplay_tags": [
+          "胜平负",
+          "比分",
+          "总进球",
+          "看点"
+        ]
+      },
+      "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+      "lessons_applied": null,
+      "run_type": "canonical",
+      "status": "locked_pre_match",
+      "locked_at": "2026-07-01T00:47:52.839366+08:00",
+      "lock_reason": "pre_match_canonical_prediction"
+    },
+    {
+      "match_id": "2026-R16-04",
+      "kickoff_at": "2026-07-06T00:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "group": "",
+      "phase": "round_of_16",
+      "home_team": {
+        "team_id": "mex",
+        "name": "Mexico",
+        "ranking": 15,
+        "points": 1681.03
+      },
+      "away_team": {
+        "team_id": "eng",
+        "name": "England",
+        "ranking": 4,
+        "points": 1825.97
+      },
+      "data_score": {
+        "home": 65.0,
+        "away": 73.7,
+        "components": {
+          "ranking_strength": {
+            "home": 68.72,
+            "away": 89.42,
+            "weight": 0.3
+          },
+          "squad_depth": {
+            "home": 88.8,
+            "away": 93.27,
+            "weight": 0.2
+          },
+          "historical_proxy": {
+            "home": 64.04,
+            "away": 79.56,
+            "weight": 0.2
+          },
+          "rest_travel": {
+            "home": 90.0,
+            "away": 80.0,
+            "weight": 0.15
+          },
+          "evidence_completeness": {
+            "home": 1.98,
+            "away": 1.98,
+            "weight": 0.15
+          }
+        }
+      },
+      "venue_adaptation_context": {
+        "status": "estimated_static_context",
+        "source": "static_venue_team_baseline_v1",
+        "venue": "Estadio Azteca, Mexico City",
+        "venue_context": {
+          "city": "Mexico City",
+          "country": "Mexico",
+          "lat": 19.4326,
+          "lon": -99.1332,
+          "june_temp_c": 18.0,
+          "altitude_m": 2240,
+          "climate_profile": "high_altitude_mild",
+          "matched_key": "mexico city"
+        },
+        "home": {
+          "team_id": "mex",
+          "status": "estimated_static_context",
+          "baseline_city": "Mexico City",
+          "baseline_climate_profile": "high_altitude_mild",
+          "missing_context": [],
+          "travel_km": 0.0,
+          "temperature_delta_c": 0.0,
+          "altitude_delta_m": 0,
+          "adaptation_risk": "low",
+          "adaptation_risk_score": 0,
+          "adaptation_notes": [
+            "short travel footprint",
+            "temperature baseline is broadly familiar"
+          ]
+        },
+        "away": {
+          "team_id": "eng",
+          "status": "estimated_static_context",
+          "baseline_city": "London",
+          "baseline_climate_profile": "temperate_marine",
+          "missing_context": [],
+          "travel_km": 8928.7,
+          "temperature_delta_c": 1.0,
+          "altitude_delta_m": 2229,
+          "adaptation_risk": "medium",
+          "adaptation_risk_score": 3,
+          "adaptation_notes": [
+            "intercontinental travel load",
+            "temperature baseline is broadly familiar",
+            "major altitude gain"
+          ]
+        },
+        "missing_context": [],
+        "limitations": [
+          "Static baseline only; not live kickoff weather.",
+          "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+          "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data."
+        ]
+      },
+      "divination_overlay": {
+        "lunar_date": "农历：丙午马年 5月21日 酉时 (17:00-18:59)",
+        "shichen": "酉时 (17:00-18:59)",
+        "host_palace_branch": "未",
+        "guest_palace_branch": "丑",
+        "home_stars": [
+          "右弼 (Youbi)"
+        ],
+        "away_stars": [],
+        "home_modifier": 0.5,
+        "away_modifier": 0.0,
+        "interpretation": "双方星盘吉凶平稳，气运相持，最终走向更依赖战术和硬实力硬战。",
+        "has_physical_conflict": false,
+        "calculation_timezone": "America/Mexico_City",
+        "local_kickoff_at": "2026-07-05T18:00:00-06:00",
+        "hexagram_number": 46,
+        "hexagram_name": "升",
+        "hexagram": "升",
+        "hexagram_interpretation": "地中生木，升",
+        "hexagram_home_modifier": -2.9,
+        "hexagram_away_modifier": -0.9,
+        "weight": 0.2,
+        "data_weight": 0.8,
+        "combined_home_fortune": "大凶",
+        "combined_away_fortune": "小凶",
+        "hex_pattern": "low-event"
+      },
+      "prediction": {
+        "home_final": 65.8,
+        "away_final": 73.7,
+        "result": "draw",
+        "predicted_outcome": "draw",
+        "score": {
+          "home": 1,
+          "away": 1
+        },
+        "is_opener": false,
+        "total_goals": 2,
+        "goals_line_2_5": "under",
+        "confidence": "medium",
+        "confidence_label": "中等信心",
+        "result_confidence": "medium",
+        "score_confidence": "low",
+        "total_goals_confidence": "low",
+        "confidence_note": "Result direction confidence is not exact-score confidence.",
+        "evidence_quality": "thin",
+        "edge_tier": "slight",
+        "game_script": "low-event",
+        "three_track_votes": {
+          "votes": {
+            "fundamentals": "away_win",
+            "market": null,
+            "information": "draw",
+            "mystic": "away_win"
+          },
+          "counts": {
+            "home_win": 0,
+            "away_win": 2,
+            "draw": 1
+          },
+          "consensus": "away_win",
+          "leaders": [
+            "away_win"
+          ],
+          "tie_on_top": false
+        },
+        "scoreline_distribution": [
+          {
+            "score": {
+              "home": 1,
+              "away": 1
+            },
+            "probability": 0.717,
+            "reason": "Primary football script branch settles on 1-1."
+          },
+          {
+            "score": {
+              "home": 0,
+              "away": 0
+            },
+            "probability": 0.283,
+            "reason": "Low-event branch: control, patience, and few clear chances keep the score compact."
+          }
+        ],
+        "clean_sheet_probability": {
+          "home": 0.2,
+          "away": 0.26
+        },
+        "expected_goals_proxy": {
+          "home": 1.59,
+          "away": 1.59
+        },
+        "venue_adaptation_context": {
+          "status": "estimated_static_context",
+          "source": "static_venue_team_baseline_v1",
+          "venue": "Estadio Azteca, Mexico City",
+          "venue_context": {
+            "city": "Mexico City",
+            "country": "Mexico",
+            "lat": 19.4326,
+            "lon": -99.1332,
+            "june_temp_c": 18.0,
+            "altitude_m": 2240,
+            "climate_profile": "high_altitude_mild",
+            "matched_key": "mexico city"
+          },
+          "home": {
+            "team_id": "mex",
+            "status": "estimated_static_context",
+            "baseline_city": "Mexico City",
+            "baseline_climate_profile": "high_altitude_mild",
+            "missing_context": [],
+            "travel_km": 0.0,
+            "temperature_delta_c": 0.0,
+            "altitude_delta_m": 0,
+            "adaptation_risk": "low",
+            "adaptation_risk_score": 0,
+            "adaptation_notes": [
+              "short travel footprint",
+              "temperature baseline is broadly familiar"
+            ]
+          },
+          "away": {
+            "team_id": "eng",
+            "status": "estimated_static_context",
+            "baseline_city": "London",
+            "baseline_climate_profile": "temperate_marine",
+            "missing_context": [],
+            "travel_km": 8928.7,
+            "temperature_delta_c": 1.0,
+            "altitude_delta_m": 2229,
+            "adaptation_risk": "medium",
+            "adaptation_risk_score": 3,
+            "adaptation_notes": [
+              "intercontinental travel load",
+              "temperature baseline is broadly familiar",
+              "major altitude gain"
+            ]
+          },
+          "missing_context": [],
+          "limitations": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+            "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data."
+          ]
+        },
+        "evidence_gaps": [
+          "official_fixtures_partial",
+          "fifa_rankings_partial",
+          "historical_worldcup_results_blocked",
+          "recent_form_results_blocked",
+          "injury_availability_blocked",
+          "venue_rest_travel_blocked"
+        ],
+        "knockout": {
+          "is_knockout": true,
+          "phase": "round_of_16",
+          "regular_time": {
+            "result": "draw",
+            "score": {
+              "home": 1,
+              "away": 1
+            }
+          },
+          "extra_time": {
+            "played": true,
+            "result": "away_win",
+            "score": {
+              "home": 1,
+              "away": 2
+            },
+            "period_score": {
+              "home": 0,
+              "away": 1
+            }
+          },
+          "penalties": {
+            "played": false,
+            "winner": "",
+            "winner_name": "",
+            "score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "advance": {
+            "winner": "away",
+            "winner_result": "away_advance",
+            "winner_name": "England"
+          }
+        }
+      },
+      "referee_analysis": null,
+      "market_odds": null,
+      "market_odds_status": {
+        "status": "none",
+        "source": "missing",
+        "is_mock": false,
+        "reason": "odds_missing"
+      },
+      "dual_track": null,
+      "analysis_layers": [
+        {
+          "layer_id": "evidence_integrity",
+          "title": "证据完整度层",
+          "verdict": "thin_evidence",
+          "confidence": "medium",
+          "summary": "Evidence has gaps; the model keeps uncertainty visible instead of overclaiming.",
+          "key_drivers": [
+            "baseline edition sources loaded"
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked",
+            "referee_missing",
+            "odds_missing"
+          ],
+          "watch_triggers": [
+            "refresh daily evidence before kickoff",
+            "mark mock sources separately from live sources"
+          ]
+        },
+        {
+          "layer_id": "fundamentals",
+          "title": "基本面强弱层",
+          "verdict": "away_edge",
+          "confidence": "medium",
+          "summary": "Fundamentals plus capped overlay lean 平局拉扯 with final delta -7.9.",
+          "key_drivers": [
+            "FIFA ranking strength: England edge +20.7",
+            "Historical proxy: England edge +15.5",
+            "Rest/travel context: Mexico edge +10.0",
+            "Evidence completeness supports model confidence (+1.98)"
+          ],
+          "counter_signals": [
+            "Squad depth and balance: near-even delta -4.5"
+          ],
+          "missing_context": [],
+          "watch_triggers": [
+            "ranking and roster updates",
+            "rest-day recalculation after previous matches"
+          ]
+        },
+        {
+          "layer_id": "matchup",
+          "title": "阵容对位层",
+          "verdict": "balanced",
+          "confidence": "medium",
+          "summary": "This layer turns roster shape into concrete matchup pressure rather than only a total score.",
+          "key_drivers": [
+            "Mexico shape: GK3/DF7/MF8/FW8; avg age 27.9, avg height 179.5cm",
+            "England shape: GK3/DF9/MF7/FW7; avg age 27.1, avg height 184.2cm",
+            "Squad-balance score is close; tactical execution matters more than raw depth."
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "starting XI",
+            "formation change",
+            "set-piece personnel"
+          ]
+        },
+        {
+          "layer_id": "live_context",
+          "title": "临场变量层",
+          "verdict": "home_edge",
+          "confidence": "medium",
+          "summary": "Late news, rest, travel and referee profile are handled as separate pressure rather than hidden inside one score.",
+          "key_drivers": [
+            "Rest/travel delta: +10.0",
+            "News sentiment delta: 0.0"
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "referee profile missing"
+          ],
+          "watch_triggers": [
+            "team news within 24h",
+            "referee assignment correction",
+            "late travel/weather disruption"
+          ]
+        },
+        {
+          "layer_id": "venue_adaptation",
+          "title": "Venue Adaptation",
+          "verdict": "home_adaptation_edge",
+          "confidence": "medium",
+          "summary": "Static venue, travel, temperature and altitude baselines are exposed as evidence. This is not live kickoff weather and does not override verified lineup or injury news.",
+          "key_drivers": [
+            "Venue baseline: Mexico City 18.0C, 2240m, high_altitude_mild",
+            "Home Mexico: travel 0.0km, temperature delta 0.0C, altitude delta 0m, risk=low.",
+            "Away England: travel 8928.7km, temperature delta +1.0C, altitude delta +2229m, risk=medium."
+          ],
+          "counter_signals": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing."
+          ],
+          "missing_context": [],
+          "watch_triggers": [
+            "replace static baseline with live venue weather",
+            "confirm team camp/base location",
+            "add humidity, wind, pitch and player acclimatization notes"
+          ]
+        },
+        {
+          "layer_id": "market_track",
+          "title": "市场背离层",
+          "verdict": "untracked",
+          "confidence": "medium",
+          "summary": "Market track is unavailable, so the dual-track read cannot confirm or challenge fundamentals.",
+          "key_drivers": [
+            "No market odds attached to this match evidence."
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "odds_missing"
+          ],
+          "watch_triggers": [
+            "odds refresh",
+            "large implied-probability movement",
+            "market/fundamental divergence near kickoff"
+          ]
+        },
+        {
+          "layer_id": "scenario_tree",
+          "title": "比赛剧本层",
+          "verdict": "draw",
+          "confidence": "medium",
+          "summary": "Base case: 平局拉扯, reference score 1-1. The model edge is -7.9 after fundamentals and Tianji overlay.",
+          "key_drivers": [
+            "Base case: 平局拉扯, reference score 1-1. The model edge is -7.9 after fundamentals and Tianji overlay.",
+            "Breakout case: either Mexico or England can flip the draw if early pressing creates a first-half goal.",
+            "Draw case: already material because the model gap is narrow; game state and finishing variance matter."
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "confirmed starting XI differs from roster-depth baseline",
+            "late injury or suspension changes the strongest positional unit",
+            "market probability moves against the model by more than 8 percentage points"
+          ]
+        },
+        {
+          "layer_id": "score_distribution",
+          "title": "天纪比分分布",
+          "verdict": "low",
+          "confidence": "low",
+          "summary": "比分由天纪卦象推演，非数学概率。各分支代表不同运势走向。天命主线: 1-1 (72%), 0-0 (28%)。",
+          "key_drivers": [
+            "天纪进球气场: 1.59-1.59",
+            "零封概率 主/客: 20%/26%"
+          ],
+          "counter_signals": [
+            "红牌、点球、定位球和追分状态可能使命运分支快速切换。"
+          ],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked"
+          ],
+          "watch_triggers": [
+            "确认首发阵容",
+            "定位球错位",
+            "红牌或早进球",
+            "下半场换人状态"
+          ]
+        },
+        {
+          "layer_id": "adversarial_review",
+          "title": "反方审稿层",
+          "verdict": "high",
+          "confidence": "medium",
+          "summary": "This layer records why the pick could be wrong before publishing the final entertainment call.",
+          "key_drivers": [
+            "Final model edge -7.9 points toward 平局拉扯."
+          ],
+          "counter_signals": [
+            "new injury/lineup evidence changes the strongest positional edge",
+            "fresh odds imply a different market favorite",
+            "post-match calibration shows this confidence bucket underperforming",
+            "small model gap means a single major lineup change can flip the pick",
+            "blocked or partial evidence must be resolved before raising confidence"
+          ],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked"
+          ],
+          "watch_triggers": [
+            "new injury/lineup evidence changes the strongest positional edge",
+            "fresh odds imply a different market favorite",
+            "post-match calibration shows this confidence bucket underperforming",
+            "small model gap means a single major lineup change can flip the pick",
+            "blocked or partial evidence must be resolved before raising confidence"
+          ]
+        }
+      ],
+      "scenario_analysis": {
+        "base_case": "Base case: 平局拉扯, reference score 1-1. The model edge is -7.9 after fundamentals and Tianji overlay.",
+        "upset_case": "Breakout case: either Mexico or England can flip the draw if early pressing creates a first-half goal.",
+        "draw_case": "Draw case: already material because the model gap is narrow; game state and finishing variance matter.",
+        "watch_triggers": [
+          "confirmed starting XI differs from roster-depth baseline",
+          "late injury or suspension changes the strongest positional unit",
+          "market probability moves against the model by more than 8 percentage points"
+        ]
+      },
+      "decision_audit": {
+        "risk_level": "high",
+        "why_this_pick": [
+          "Final model edge -7.9 points toward 平局拉扯."
+        ],
+        "what_would_change_the_pick": [
+          "new injury/lineup evidence changes the strongest positional edge",
+          "fresh odds imply a different market favorite",
+          "post-match calibration shows this confidence bucket underperforming",
+          "small model gap means a single major lineup change can flip the pick",
+          "blocked or partial evidence must be resolved before raising confidence"
+        ],
+        "thin_evidence_warnings": [
+          "official_fixtures_partial",
+          "fifa_rankings_partial",
+          "historical_worldcup_results_blocked",
+          "recent_form_results_blocked",
+          "injury_availability_blocked",
+          "venue_rest_travel_blocked"
+        ]
+      },
+      "analysis_summary": {
+        "layer_count": 9,
+        "risk_level": "high",
+        "primary_edge": "away_edge",
+        "edge_tier": "slight",
+        "game_script": "low-event",
+        "evidence_quality": "thin",
+        "three_track_consensus": "away_win",
+        "storage_note": "JSON report remains the audit artifact; SQLite is an optional query/index layer."
+      },
+      "play_card": {
+        "share_title": "Mexico vs England | 娱乐预测 1-1",
+        "match_hook": "平局拉扯，总进球参考 2 球。淘汰赛阶段，Estadio Azteca, Mexico City。",
+        "poster_caption": "AI预测比分 1-1，双方拉扯成局，平局剧本需要重点防范。",
+        "watch_points": [
+          "多层分析主线：Final model edge -7.9 points toward 平局拉扯.",
+          "双方实力接近，临场发挥将决定走向",
+          "中场控制权和定位球效率是关键"
+        ],
+        "risk_flags": [
+          "历史战绩数据不足",
+          "近期战绩数据缺失",
+          "伤停信息不完整",
+          "休息和旅行因素未充分计算"
+        ],
+        "poster_angle": "Mexico vs England, Estadio Azteca, Mexico City, vibrant crowd atmosphere, 升 aesthetic overlay, predicted score 1-1, total goals 2",
+        "confidence_meter": "数据 80% | 玄学 20% | 信心: 中等信心",
+        "gameplay_tags": [
+          "胜平负",
+          "比分",
+          "总进球",
+          "看点"
+        ]
+      },
+      "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+      "lessons_applied": null,
+      "run_type": "canonical",
+      "status": "locked_pre_match",
+      "locked_at": "2026-07-01T00:47:52.839366+08:00",
+      "lock_reason": "pre_match_canonical_prediction"
+    }
+  ],
+  "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+  "safety_invariants": [
+    "predictions_only_for_not_started_unpredicted_matches",
+    "existing_daily_reports_are_locked_not_overwritten",
+    "published_predictions_are_reused_before_regeneration",
+    "force_refresh_does_not_override_canonical_predictions",
+    "started_or_completed_match_predictions_are_never_regenerated",
+    "data_model_weight_is_0_60",
+    "tianji_overlay_weight_is_0_40",
+    "tianji_calculated_from_venue_local_time_when_known",
+    "no_betting_amounts_or_guaranteed_win_language"
+  ]
+}

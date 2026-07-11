@@ -2,23 +2,26 @@
 type: entity
 entity_type: player
 edition: 2026
-status: partial
-updated: 2026-06-09
+status: enriched
+updated: 2026-06-18
 ---
 
-# Unknown Player
+# DE VRIES Francis
 
 ## 基础信息
 
-- Player ID：`nzl-03`
-- 国家队：New Zealand
-- 位置：DF
-- 俱乐部：Auckland FC (NZL)
-- 来源完整性：partial
+- **Player ID**: `nzl-03`
+- **国家队**: New Zealand
+- **位置**: DF
+- **号码**: #3
+- **俱乐部**: Auckland FC (NZL)
+- **出生日期**: 1994-11-28
+- **身高**: 181cm
 
-## 待补深档
+## 当前状态
 
-- 国家队出场和进球
-- 世界杯/洲际赛经历
-- 近期状态、伤停和出场时间
-- 预测相关标签
+✅ 健康可用
+
+---
+
+*Generated at 2026-06-18T19:30:59.213432+08:00*

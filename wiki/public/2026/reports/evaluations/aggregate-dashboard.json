@@ -1,35 +1,35 @@
 {
   "version": 1,
   "edition": "2026",
-  "generated_at": "2026-06-14T14:19:41.886555+08:00",
+  "generated_at": "2026-06-30T21:28:37.293107+08:00",
   "mode": "worldcup-prediction-evaluation-dashboard",
   "status": "written",
   "dashboard_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\evaluations\\aggregate-dashboard.json",
   "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\wiki\\reports\\evaluations\\aggregate-dashboard.md",
   "summary": {
-    "evaluation_days": 2,
-    "evaluated_matches": 3,
-    "blocked_missing_final_score": 100,
-    "result_hits": 3,
-    "score_hits": 1,
-    "total_goals_hits": 1,
+    "evaluation_days": 18,
+    "evaluated_matches": 71,
+    "blocked_missing_final_score": 12,
+    "result_hits": 46,
+    "score_hits": 6,
+    "total_goals_hits": 11,
     "confidence_calibration": {
       "low": {
-        "evaluated_matches": 1,
-        "result_hits": 1,
-        "result_hit_rate": 1.0
+        "evaluated_matches": 25,
+        "result_hits": 13,
+        "result_hit_rate": 0.52
       },
       "medium": {
-        "evaluated_matches": 2,
-        "result_hits": 2,
-        "result_hit_rate": 1.0
+        "evaluated_matches": 46,
+        "result_hits": 33,
+        "result_hit_rate": 0.717391304347826
       }
     }
   },
   "rates": {
-    "result_hit_rate": 1.0,
-    "score_hit_rate": 0.3333333333333333,
-    "total_goals_hit_rate": 0.3333333333333333
+    "result_hit_rate": 0.647887323943662,
+    "score_hit_rate": 0.08450704225352113,
+    "total_goals_hit_rate": 0.15492957746478872
   },
   "days": [
     {
@@ -38,6 +38,150 @@
       "evaluated_matches": 2,
       "blocked_missing_final_score": 0,
       "result_hits": 2,
+      "score_hits": 1,
+      "total_goals_hits": 1
+    },
+    {
+      "date": "2026-06-13",
+      "path": "",
+      "evaluated_matches": 3,
+      "blocked_missing_final_score": 0,
+      "result_hits": 1,
+      "score_hits": 0,
+      "total_goals_hits": 0
+    },
+    {
+      "date": "2026-06-14",
+      "path": "",
+      "evaluated_matches": 5,
+      "blocked_missing_final_score": 0,
+      "result_hits": 2,
+      "score_hits": 0,
+      "total_goals_hits": 0
+    },
+    {
+      "date": "2026-06-15",
+      "path": "",
+      "evaluated_matches": 4,
+      "blocked_missing_final_score": 0,
+      "result_hits": 1,
+      "score_hits": 0,
+      "total_goals_hits": 1
+    },
+    {
+      "date": "2026-06-16",
+      "path": "",
+      "evaluated_matches": 3,
+      "blocked_missing_final_score": 0,
+      "result_hits": 2,
+      "score_hits": 0,
+      "total_goals_hits": 0
+    },
+    {
+      "date": "2026-06-17",
+      "path": "",
+      "evaluated_matches": 5,
+      "blocked_missing_final_score": 0,
+      "result_hits": 3,
+      "score_hits": 0,
+      "total_goals_hits": 1
+    },
+    {
+      "date": "2026-06-18",
+      "path": "",
+      "evaluated_matches": 4,
+      "blocked_missing_final_score": 0,
+      "result_hits": 4,
+      "score_hits": 1,
+      "total_goals_hits": 1
+    },
+    {
+      "date": "2026-06-19",
+      "path": "",
+      "evaluated_matches": 3,
+      "blocked_missing_final_score": 0,
+      "result_hits": 2,
+      "score_hits": 0,
+      "total_goals_hits": 1
+    },
+    {
+      "date": "2026-06-21",
+      "path": "",
+      "evaluated_matches": 5,
+      "blocked_missing_final_score": 0,
+      "result_hits": 3,
+      "score_hits": 0,
+      "total_goals_hits": 1
+    },
+    {
+      "date": "2026-06-23",
+      "path": "",
+      "evaluated_matches": 7,
+      "blocked_missing_final_score": 0,
+      "result_hits": 5,
+      "score_hits": 0,
+      "total_goals_hits": 0
+    },
+    {
+      "date": "2026-06-24",
+      "path": "",
+      "evaluated_matches": 5,
+      "blocked_missing_final_score": 0,
+      "result_hits": 2,
+      "score_hits": 0,
+      "total_goals_hits": 0
+    },
+    {
+      "date": "2026-06-25",
+      "path": "",
+      "evaluated_matches": 6,
+      "blocked_missing_final_score": 0,
+      "result_hits": 4,
+      "score_hits": 2,
+      "total_goals_hits": 3
+    },
+    {
+      "date": "2026-06-26",
+      "path": "",
+      "evaluated_matches": 4,
+      "blocked_missing_final_score": 0,
+      "result_hits": 3,
+      "score_hits": 0,
+      "total_goals_hits": 0
+    },
+    {
+      "date": "2026-06-27",
+      "path": "",
+      "evaluated_matches": 8,
+      "blocked_missing_final_score": 0,
+      "result_hits": 7,
+      "score_hits": 0,
+      "total_goals_hits": 0
+    },
+    {
+      "date": "2026-06-28",
+      "path": "",
+      "evaluated_matches": 2,
+      "blocked_missing_final_score": 0,
+      "result_hits": 2,
+      "score_hits": 1,
+      "total_goals_hits": 1
+    },
+    {
+      "date": "2026-06-29",
+      "path": "",
+      "evaluated_matches": 1,
+      "blocked_missing_final_score": 0,
+      "result_hits": 1,
+      "score_hits": 0,
+      "total_goals_hits": 0
+    },
+    {
+      "date": "2026-06-30",
+      "path": "",
+      "evaluated_matches": 3,
+      "blocked_missing_final_score": 0,
+      "result_hits": 1,
       "score_hits": 1,
       "total_goals_hits": 1
     },

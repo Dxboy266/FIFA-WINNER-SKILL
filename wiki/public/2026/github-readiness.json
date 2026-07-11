@@ -1,21 +1,21 @@
 {
   "version": 1,
   "edition": "2026",
-  "generated_at": "2026-06-12T23:25:52.098980+08:00",
+  "generated_at": "2026-06-21T23:29:38.333227+08:00",
   "mode": "worldcup-github-readiness",
-  "status": "ready_with_known_data_gaps",
-  "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\github-readiness.json",
+  "status": "blocked",
+  "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\github-readiness.json",
   "summary": {
-    "format_ready": true,
-    "agent_interop_ready": true,
+    "format_ready": false,
+    "agent_interop_ready": false,
     "data_accuracy_guardrails_ready": true,
-    "playability_ready": true,
+    "playability_ready": false,
     "known_data_gaps_present": true
   },
   "sections": [
     {
       "section_id": "format",
-      "status": "pass",
+      "status": "fail",
       "checks": [
         {
           "check_id": "file:README.md",
@@ -28,19 +28,9 @@
           "path": "AGENT_README.md"
         },
         {
-          "check_id": "file:TODO.md",
-          "status": "pass",
-          "path": "TODO.md"
-        },
-        {
           "check_id": "file:LICENSE",
           "status": "pass",
           "path": "LICENSE"
-        },
-        {
-          "check_id": "file:install_as_skill.sh",
-          "status": "pass",
-          "path": "install_as_skill.sh"
         },
         {
           "check_id": "file:pyproject.toml",
@@ -53,24 +43,24 @@
           "path": ".github/workflows/ci.yml"
         },
         {
-          "check_id": "file:examples/sample-prediction-report.json",
+          "check_id": "file:docs/examples/sample-prediction-report.json",
           "status": "pass",
-          "path": "examples/sample-prediction-report.json"
+          "path": "docs/examples/sample-prediction-report.json"
         },
         {
-          "check_id": "file:examples/sample-poster-manifest.json",
+          "check_id": "file:docs/examples/sample-poster-manifest.json",
           "status": "pass",
-          "path": "examples/sample-poster-manifest.json"
+          "path": "docs/examples/sample-poster-manifest.json"
         },
         {
-          "check_id": "file:examples/sample-poster-result-blocked.json",
+          "check_id": "file:docs/examples/sample-poster-result-blocked.json",
           "status": "pass",
-          "path": "examples/sample-poster-result-blocked.json"
+          "path": "docs/examples/sample-poster-result-blocked.json"
         },
         {
-          "check_id": "file:examples/sample-poster-result-generated.json",
+          "check_id": "file:docs/examples/sample-poster-result-generated.json",
           "status": "pass",
-          "path": "examples/sample-poster-result-generated.json"
+          "path": "docs/examples/sample-poster-result-generated.json"
         },
         {
           "check_id": "file:assets/posters/2026-06-12-mexico-vs-south-africa.png",
@@ -88,153 +78,153 @@
           "path": "assets/contact/wechat-qr.jpg"
         },
         {
-          "check_id": "file:knowledge-base/agent/AGENT_CARD.json",
+          "check_id": "file:skill/AGENT_CARD.json",
           "status": "pass",
-          "path": "knowledge-base/agent/AGENT_CARD.json"
+          "path": "skill/AGENT_CARD.json"
         },
         {
-          "check_id": "file:knowledge-base/agent/TOOL_CATALOG.json",
+          "check_id": "file:skill/TOOL_CATALOG.json",
           "status": "pass",
-          "path": "knowledge-base/agent/TOOL_CATALOG.json"
+          "path": "skill/TOOL_CATALOG.json"
         },
         {
-          "check_id": "file:knowledge-base/agent/ARCHITECTURE.md",
+          "check_id": "file:skill/ARCHITECTURE.md",
           "status": "pass",
-          "path": "knowledge-base/agent/ARCHITECTURE.md"
+          "path": "skill/ARCHITECTURE.md"
         },
         {
-          "check_id": "file:knowledge-base/agent/RUNBOOK.md",
+          "check_id": "file:skill/RUNBOOK.md",
           "status": "pass",
-          "path": "knowledge-base/agent/RUNBOOK.md"
+          "path": "skill/RUNBOOK.md"
         },
         {
-          "check_id": "file:knowledge-base/agent/GUARDRAILS.md",
+          "check_id": "file:skill/GUARDRAILS.md",
           "status": "pass",
-          "path": "knowledge-base/agent/GUARDRAILS.md"
+          "path": "skill/GUARDRAILS.md"
         },
         {
-          "check_id": "file:knowledge-base/agent/HANDOFFS.md",
+          "check_id": "file:skill/HANDOFFS.md",
           "status": "pass",
-          "path": "knowledge-base/agent/HANDOFFS.md"
+          "path": "skill/HANDOFFS.md"
         },
         {
-          "check_id": "file:knowledge-base/agent/TRACE_EVENTS.md",
+          "check_id": "file:skill/TRACE_EVENTS.md",
           "status": "pass",
-          "path": "knowledge-base/agent/TRACE_EVENTS.md"
+          "path": "skill/TRACE_EVENTS.md"
         },
         {
-          "check_id": "file:scripts/worldcup_core.py",
+          "check_id": "file:skill/scripts/worldcup_core.py",
           "status": "pass",
-          "path": "scripts/worldcup_core.py"
+          "path": "skill/scripts/worldcup_core.py"
         },
         {
-          "check_id": "file:scripts/daily_prediction_runner.py",
+          "check_id": "file:skill/scripts/daily_prediction_runner.py",
           "status": "pass",
-          "path": "scripts/daily_prediction_runner.py"
+          "path": "skill/scripts/daily_prediction_runner.py"
         },
         {
-          "check_id": "file:scripts/prediction_report_prompt_builder.py",
+          "check_id": "file:skill/scripts/prediction_report_prompt_builder.py",
           "status": "pass",
-          "path": "scripts/prediction_report_prompt_builder.py"
+          "path": "skill/scripts/prediction_report_prompt_builder.py"
         },
         {
-          "check_id": "file:scripts/worldcup_prediction_evidence_planner.py",
+          "check_id": "file:skill/scripts/worldcup_prediction_evidence_planner.py",
           "status": "pass",
-          "path": "scripts/worldcup_prediction_evidence_planner.py"
+          "path": "skill/scripts/worldcup_prediction_evidence_planner.py"
         },
         {
-          "check_id": "file:scripts/worldcup_source_snapshot_tool.py",
+          "check_id": "file:skill/scripts/worldcup_source_snapshot_tool.py",
           "status": "pass",
-          "path": "scripts/worldcup_source_snapshot_tool.py"
+          "path": "skill/scripts/worldcup_source_snapshot_tool.py"
         },
         {
-          "check_id": "file:scripts/sync_external_reference_sources.py",
+          "check_id": "file:skill/scripts/sync_external_reference_sources.py",
           "status": "pass",
-          "path": "scripts/sync_external_reference_sources.py"
+          "path": "skill/scripts/sync_external_reference_sources.py"
         },
         {
-          "check_id": "file:scripts/poster_generator.py",
+          "check_id": "file:skill/scripts/poster_generator.py",
           "status": "pass",
-          "path": "scripts/poster_generator.py"
+          "path": "skill/scripts/poster_generator.py"
         },
         {
-          "check_id": "file:schema/match-ledger.schema.json",
+          "check_id": "file:skill/schema/match-ledger.schema.json",
           "status": "pass",
-          "path": "schema/match-ledger.schema.json"
+          "path": "skill/schema/match-ledger.schema.json"
         },
         {
-          "check_id": "file:schema/prediction-evidence-plan.schema.json",
+          "check_id": "file:skill/schema/prediction-evidence-plan.schema.json",
           "status": "pass",
-          "path": "schema/prediction-evidence-plan.schema.json"
+          "path": "skill/schema/prediction-evidence-plan.schema.json"
         },
         {
-          "check_id": "file:schema/daily-prediction-report.schema.json",
+          "check_id": "file:skill/schema/daily-prediction-report.schema.json",
           "status": "pass",
-          "path": "schema/daily-prediction-report.schema.json"
+          "path": "skill/schema/daily-prediction-report.schema.json"
         },
         {
-          "check_id": "file:schema/github-readiness.schema.json",
+          "check_id": "file:skill/schema/github-readiness.schema.json",
           "status": "pass",
-          "path": "schema/github-readiness.schema.json"
+          "path": "skill/schema/github-readiness.schema.json"
         },
         {
-          "check_id": "file:schema/agent-card.schema.json",
+          "check_id": "file:skill/schema/agent-card.schema.json",
           "status": "pass",
-          "path": "schema/agent-card.schema.json"
+          "path": "skill/schema/agent-card.schema.json"
         },
         {
-          "check_id": "file:schema/agent-tool-catalog.schema.json",
+          "check_id": "file:skill/schema/agent-tool-catalog.schema.json",
           "status": "pass",
-          "path": "schema/agent-tool-catalog.schema.json"
+          "path": "skill/schema/agent-tool-catalog.schema.json"
         },
         {
-          "check_id": "file:skills/fifa-winner-skill/SKILL.md",
+          "check_id": "file:skill/SKILL.md",
           "status": "pass",
-          "path": "skills/fifa-winner-skill/SKILL.md"
+          "path": "skill/SKILL.md"
         },
         {
-          "check_id": "file:tests/test_worldcup_predictor_system.py",
+          "check_id": "file:skill/tests/test_worldcup_predictor_system.py",
           "status": "pass",
-          "path": "tests/test_worldcup_predictor_system.py"
+          "path": "skill/tests/test_worldcup_predictor_system.py"
         },
         {
           "check_id": "README.md:Quick Start",
-          "status": "pass",
+          "status": "fail",
           "section": "Quick Start"
         },
         {
           "check_id": "README.md:Roadmap",
-          "status": "pass",
+          "status": "fail",
           "section": "Roadmap"
         },
         {
           "check_id": "README.md:Prediction Evidence",
-          "status": "pass",
+          "status": "fail",
           "section": "Prediction Evidence"
         },
         {
           "check_id": "README.md:Daily Prediction",
-          "status": "pass",
+          "status": "fail",
           "section": "Daily Prediction"
         },
         {
           "check_id": "README.md:GitHub Readiness",
-          "status": "pass",
+          "status": "fail",
           "section": "GitHub Readiness"
         },
         {
           "check_id": "README.md:Playability",
-          "status": "pass",
+          "status": "fail",
           "section": "Playability"
         },
         {
           "check_id": "README.md:Examples",
-          "status": "pass",
+          "status": "fail",
           "section": "Examples"
         },
         {
           "check_id": "README.md:Safety",
-          "status": "pass",
+          "status": "fail",
           "section": "Safety"
         },
         {
@@ -244,173 +234,89 @@
         },
         {
           "check_id": "AGENT_README.md:Install For Runtime Agents",
-          "status": "pass",
+          "status": "fail",
           "section": "Install For Runtime Agents"
         },
         {
           "check_id": "AGENT_README.md:Agent Design Alignment",
-          "status": "pass",
+          "status": "fail",
           "section": "Agent Design Alignment"
         },
         {
           "check_id": "AGENT_README.md:A2A Invocation Contract",
-          "status": "pass",
+          "status": "fail",
           "section": "A2A Invocation Contract"
         },
         {
           "check_id": "AGENT_README.md:Tool Resource Prompt Discovery",
-          "status": "pass",
+          "status": "fail",
           "section": "Tool Resource Prompt Discovery"
         },
         {
           "check_id": "AGENT_README.md:Handoff Contract",
-          "status": "pass",
+          "status": "fail",
           "section": "Handoff Contract"
         },
         {
           "check_id": "AGENT_README.md:Trace Contract",
-          "status": "pass",
+          "status": "fail",
           "section": "Trace Contract"
         },
         {
           "check_id": "AGENT_README.md:Output Contract For A2A Callers",
-          "status": "pass",
+          "status": "fail",
           "section": "Output Contract For A2A Callers"
         },
         {
           "check_id": "AGENT_README.md:Storage Policy",
-          "status": "pass",
+          "status": "fail",
           "section": "Storage Policy"
         },
         {
           "check_id": "AGENT_README.md:Safety Requirements",
-          "status": "pass",
+          "status": "fail",
           "section": "Safety Requirements"
         },
         {
           "check_id": "skills/fifa-winner-skill/SKILL.md:Source Tiers",
-          "status": "pass",
+          "status": "fail",
           "section": "Source Tiers"
         },
         {
           "check_id": "skills/fifa-winner-skill/SKILL.md:Prediction Evidence",
-          "status": "pass",
+          "status": "fail",
           "section": "Prediction Evidence"
         },
         {
           "check_id": "skills/fifa-winner-skill/SKILL.md:Prediction Rules",
-          "status": "pass",
+          "status": "fail",
           "section": "Prediction Rules"
         },
         {
           "check_id": "skills/fifa-winner-skill/SKILL.md:Poster Rules",
-          "status": "pass",
+          "status": "fail",
           "section": "Poster Rules"
         },
         {
           "check_id": "skills/fifa-winner-skill/SKILL.md:玩法卡片",
-          "status": "pass",
+          "status": "fail",
           "section": "玩法卡片"
         }
       ]
     },
     {
       "section_id": "agent_interop",
-      "status": "pass",
+      "status": "fail",
       "checks": [
         {
           "check_id": "agent-card-json-valid",
-          "status": "pass",
-          "error": ""
+          "status": "fail",
+          "error": "missing_file"
         },
         {
           "check_id": "tool-catalog-json-valid",
-          "status": "pass",
-          "error": ""
-        },
-        {
-          "check_id": "agent-card-key:$schema",
-          "status": "pass"
-        },
-        {
-          "check_id": "agent-card-key:agent_id",
-          "status": "pass"
-        },
-        {
-          "check_id": "agent-card-key:name",
-          "status": "pass"
-        },
-        {
-          "check_id": "agent-card-key:runtime_contract",
-          "status": "pass"
-        },
-        {
-          "check_id": "agent-card-key:discovery",
-          "status": "pass"
-        },
-        {
-          "check_id": "agent-card-key:interfaces",
-          "status": "pass"
-        },
-        {
-          "check_id": "agent-card-key:skills",
-          "status": "pass"
-        },
-        {
-          "check_id": "agent-card-key:safety",
-          "status": "pass"
-        },
-        {
-          "check_id": "agent-card-key:capabilities",
-          "status": "pass"
-        },
-        {
-          "check_id": "agent-card-references-tool-catalog",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-key:tools",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-key:resources",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-key:prompts",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-key:guardrails",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-key:handoffs",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-key:trace_events",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-tool:initialize_edition",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-tool:plan_prediction_evidence",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-tool:predict_daily",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-tool:export_standalone",
-          "status": "pass"
-        },
-        {
-          "check_id": "tool-catalog-tools-have-command-and-safety",
-          "status": "pass"
+          "status": "fail",
+          "error": "missing_file"
         }
       ]
     },
@@ -559,7 +465,7 @@
         {
           "check_id": "prediction-evidence-plan-present",
           "status": "pass",
-          "path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\prediction-evidence-plan.json"
+          "path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\prediction-evidence-plan.json"
         },
         {
           "check_id": "source-refs-include-tier-and-allowed-use",
@@ -578,19 +484,19 @@
     },
     {
       "section_id": "playability",
-      "status": "pass",
+      "status": "fail",
       "checks": [
         {
           "check_id": "play-card-builder-present",
-          "status": "pass"
+          "status": "fail"
         },
         {
           "check_id": "daily-report-schema-play-card",
-          "status": "pass"
+          "status": "fail"
         },
         {
           "check_id": "readme-playability-section",
-          "status": "pass"
+          "status": "fail"
         }
       ]
     }

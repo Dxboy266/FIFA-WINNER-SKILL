@@ -2,23 +2,26 @@
 type: entity
 entity_type: player
 edition: 2026
-status: partial
-updated: 2026-06-09
+status: enriched
+updated: 2026-06-18
 ---
 
-# Unknown Player
+# HAALAND Erling
 
 ## 基础信息
 
-- Player ID：`nor-09`
-- 国家队：Norway
-- 位置：FW
-- 俱乐部：Manchester City FC (ENG)
-- 来源完整性：partial
+- **Player ID**: `nor-09`
+- **国家队**: Norway
+- **位置**: FW
+- **号码**: #9
+- **俱乐部**: Manchester City FC (ENG)
+- **出生日期**: 2000-07-21
+- **身高**: 195cm
 
-## 待补深档
+## 当前状态
 
-- 国家队出场和进球
-- 世界杯/洲际赛经历
-- 近期状态、伤停和出场时间
-- 预测相关标签
+✅ 健康可用
+
+---
+
+*Generated at 2026-06-18T19:30:59.213432+08:00*

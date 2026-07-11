@@ -1,21 +1,11 @@
 {
-  "_note": "阶段自适应权重已在代码中实现。此文件保存的全局权重仅作兜底默认值。",
-  "_stage_weights": {
-    "G":   {"data_weight": 0.35, "divination_weight": 0.65, "desc": "小组赛天纪主导"},
-    "R32": {"data_weight": 0.45, "divination_weight": 0.55, "desc": "32强赛天纪略多"},
-    "R16": {"data_weight": 0.55, "divination_weight": 0.45, "desc": "16强赛数据略多"},
-    "QF":  {"data_weight": 0.70, "divination_weight": 0.30, "desc": "八强赛数据主导"},
-    "SF":  {"data_weight": 0.75, "divination_weight": 0.25, "desc": "半决赛"}, 
-    "F":   {"data_weight": 0.80, "divination_weight": 0.20, "desc": "决赛"},
-    "TP":  {"data_weight": 0.80, "divination_weight": 0.20, "desc": "季军赛"}
-  },
-  "data_weight": 0.6,
-  "divination_weight": 0.4,
+  "data_weight": 0.75,
+  "divination_weight": 0.25,
   "component_weights": {
-    "ranking_strength": 0.3,
-    "squad_depth": 0.2,
-    "historical_proxy": 0.2,
-    "rest_travel": 0.15,
-    "evidence_completeness": 0.15
+    "ranking_strength": 0.0953,
+    "squad_depth": 0.2857,
+    "historical_proxy": 0.0476,
+    "rest_travel": 0.2857,
+    "evidence_completeness": 0.2857
   }
 }

@@ -1,0 +1,1227 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-07-08",
+  "generated_at": "2026-07-01T00:47:53.450203+08:00",
+  "mode": "worldcup-daily-pre-match-entertainment-predictions",
+  "status": "created",
+  "report_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-08.json",
+  "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\wiki\\reports\\daily-predictions\\2026-07-08.md",
+  "poster_requested": false,
+  "summary": {
+    "predictions_created": 2,
+    "matches_skipped_started": 0,
+    "matches_skipped_completed": 0,
+    "matches_skipped_missing_kickoff": 0,
+    "locked_existing_predictions": 0,
+    "preserved_predictions": 0,
+    "reused_db_predictions": 0,
+    "reused_report_predictions": 0
+  },
+  "predictions": [
+    {
+      "match_id": "2026-R16-07",
+      "kickoff_at": "2026-07-07T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "group": "",
+      "phase": "round_of_16",
+      "home_team": {
+        "team_id": "sui",
+        "name": "Switzerland",
+        "ranking": 19,
+        "points": 1649.4
+      },
+      "away_team": {
+        "team_id": "aus",
+        "name": "Australia",
+        "ranking": 27,
+        "points": 1580.67
+      },
+      "data_score": {
+        "home": 62.4,
+        "away": 55.9,
+        "components": {
+          "ranking_strength": {
+            "home": 64.2,
+            "away": 54.38,
+            "weight": 0.3
+          },
+          "squad_depth": {
+            "home": 93.74,
+            "away": 86.88,
+            "weight": 0.2
+          },
+          "historical_proxy": {
+            "home": 60.65,
+            "away": 53.29,
+            "weight": 0.2
+          },
+          "rest_travel": {
+            "home": 80.0,
+            "away": 75.0,
+            "weight": 0.15
+          },
+          "evidence_completeness": {
+            "home": 1.98,
+            "away": 1.98,
+            "weight": 0.15
+          }
+        }
+      },
+      "venue_adaptation_context": {
+        "status": "estimated_static_context",
+        "source": "static_venue_team_baseline_v1",
+        "venue": "Mercedes-Benz Stadium, Atlanta",
+        "venue_context": {
+          "city": "Atlanta",
+          "country": "United States",
+          "lat": 33.749,
+          "lon": -84.388,
+          "june_temp_c": 26.0,
+          "altitude_m": 320,
+          "climate_profile": "warm_humid",
+          "matched_key": "atlanta"
+        },
+        "home": {
+          "team_id": "sui",
+          "status": "estimated_static_context",
+          "baseline_city": "Bern",
+          "baseline_climate_profile": "temperate_highland",
+          "missing_context": [],
+          "travel_km": 7470.4,
+          "temperature_delta_c": 9.0,
+          "altitude_delta_m": -220,
+          "adaptation_risk": "medium",
+          "adaptation_risk_score": 2,
+          "adaptation_notes": [
+            "intercontinental travel load",
+            "venue baseline is 9.0C hotter than home baseline"
+          ]
+        },
+        "away": {
+          "team_id": "aus",
+          "status": "estimated_static_context",
+          "baseline_city": "Sydney",
+          "baseline_climate_profile": "cool_coastal",
+          "missing_context": [],
+          "travel_km": 14944.8,
+          "temperature_delta_c": 13.0,
+          "altitude_delta_m": 262,
+          "adaptation_risk": "high",
+          "adaptation_risk_score": 4,
+          "adaptation_notes": [
+            "long-haul travel load",
+            "venue baseline is 13.0C hotter than home baseline"
+          ]
+        },
+        "missing_context": [],
+        "limitations": [
+          "Static baseline only; not live kickoff weather.",
+          "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+          "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data."
+        ]
+      },
+      "divination_overlay": {
+        "lunar_date": "农历：丙午马年 5月23日 午时 (11:00-12:59)",
+        "shichen": "午时 (11:00-12:59)",
+        "host_palace_branch": "戌",
+        "guest_palace_branch": "辰",
+        "home_stars": [
+          "天府 (Tianfu)"
+        ],
+        "away_stars": [],
+        "home_modifier": 1.0,
+        "away_modifier": 0.0,
+        "interpretation": "主队命宫得帝星/府星高照，占据天时地利，发挥较稳健。",
+        "has_physical_conflict": false,
+        "calculation_timezone": "America/New_York",
+        "local_kickoff_at": "2026-07-07T12:00:00-04:00",
+        "hexagram_number": 4,
+        "hexagram_name": "蒙",
+        "hexagram": "蒙",
+        "hexagram_interpretation": "山下出泉，蒙",
+        "hexagram_home_modifier": 0.9,
+        "hexagram_away_modifier": 2.9,
+        "weight": 0.2,
+        "data_weight": 0.8,
+        "combined_home_fortune": "小吉",
+        "combined_away_fortune": "大吉",
+        "hex_pattern": "medium-event"
+      },
+      "prediction": {
+        "home_final": 64.0,
+        "away_final": 55.9,
+        "result": "home_win",
+        "predicted_outcome": "home_win",
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "is_opener": false,
+        "total_goals": 3,
+        "goals_line_2_5": "over",
+        "confidence": "medium",
+        "confidence_label": "中等信心",
+        "result_confidence": "medium",
+        "score_confidence": "low",
+        "total_goals_confidence": "low",
+        "confidence_note": "Result direction confidence is not exact-score confidence.",
+        "evidence_quality": "thin",
+        "edge_tier": "clear",
+        "game_script": "medium-event",
+        "three_track_votes": {
+          "votes": {
+            "fundamentals": "home_win",
+            "market": null,
+            "information": "draw",
+            "mystic": "away_win"
+          },
+          "counts": {
+            "draw": 1,
+            "home_win": 1,
+            "away_win": 1
+          },
+          "consensus": "draw",
+          "leaders": [
+            "draw",
+            "home_win",
+            "away_win"
+          ],
+          "tie_on_top": true
+        },
+        "scoreline_distribution": [
+          {
+            "score": {
+              "home": 2,
+              "away": 1
+            },
+            "probability": 0.293,
+            "reason": "Primary football script branch settles on 2-1."
+          },
+          {
+            "score": {
+              "home": 3,
+              "away": 1
+            },
+            "probability": 0.26,
+            "reason": "Medium-event branch: one side edges it without turning into a track meet."
+          },
+          {
+            "score": {
+              "home": 2,
+              "away": 0
+            },
+            "probability": 0.229,
+            "reason": "Clean-sheet branch keeps 2-0 alive with home shutout chance 20%."
+          },
+          {
+            "score": {
+              "home": 1,
+              "away": 0
+            },
+            "probability": 0.218,
+            "reason": "Clean-sheet branch keeps 1-0 alive with home shutout chance 20%."
+          }
+        ],
+        "clean_sheet_probability": {
+          "home": 0.2,
+          "away": 0.11
+        },
+        "expected_goals_proxy": {
+          "home": 1.98,
+          "away": 1.72
+        },
+        "venue_adaptation_context": {
+          "status": "estimated_static_context",
+          "source": "static_venue_team_baseline_v1",
+          "venue": "Mercedes-Benz Stadium, Atlanta",
+          "venue_context": {
+            "city": "Atlanta",
+            "country": "United States",
+            "lat": 33.749,
+            "lon": -84.388,
+            "june_temp_c": 26.0,
+            "altitude_m": 320,
+            "climate_profile": "warm_humid",
+            "matched_key": "atlanta"
+          },
+          "home": {
+            "team_id": "sui",
+            "status": "estimated_static_context",
+            "baseline_city": "Bern",
+            "baseline_climate_profile": "temperate_highland",
+            "missing_context": [],
+            "travel_km": 7470.4,
+            "temperature_delta_c": 9.0,
+            "altitude_delta_m": -220,
+            "adaptation_risk": "medium",
+            "adaptation_risk_score": 2,
+            "adaptation_notes": [
+              "intercontinental travel load",
+              "venue baseline is 9.0C hotter than home baseline"
+            ]
+          },
+          "away": {
+            "team_id": "aus",
+            "status": "estimated_static_context",
+            "baseline_city": "Sydney",
+            "baseline_climate_profile": "cool_coastal",
+            "missing_context": [],
+            "travel_km": 14944.8,
+            "temperature_delta_c": 13.0,
+            "altitude_delta_m": 262,
+            "adaptation_risk": "high",
+            "adaptation_risk_score": 4,
+            "adaptation_notes": [
+              "long-haul travel load",
+              "venue baseline is 13.0C hotter than home baseline"
+            ]
+          },
+          "missing_context": [],
+          "limitations": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+            "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data."
+          ]
+        },
+        "evidence_gaps": [
+          "official_fixtures_partial",
+          "fifa_rankings_partial",
+          "historical_worldcup_results_blocked",
+          "recent_form_results_blocked",
+          "injury_availability_blocked",
+          "venue_rest_travel_blocked"
+        ],
+        "knockout": {
+          "is_knockout": true,
+          "phase": "round_of_16",
+          "regular_time": {
+            "result": "home_win",
+            "score": {
+              "home": 2,
+              "away": 1
+            }
+          },
+          "extra_time": {
+            "played": false,
+            "result": "",
+            "score": {
+              "home": null,
+              "away": null
+            },
+            "period_score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "penalties": {
+            "played": false,
+            "winner": "",
+            "winner_name": "",
+            "score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "advance": {
+            "winner": "home",
+            "winner_result": "home_advance",
+            "winner_name": "Switzerland"
+          }
+        }
+      },
+      "referee_analysis": null,
+      "market_odds": null,
+      "market_odds_status": {
+        "status": "none",
+        "source": "missing",
+        "is_mock": false,
+        "reason": "odds_missing"
+      },
+      "dual_track": null,
+      "analysis_layers": [
+        {
+          "layer_id": "evidence_integrity",
+          "title": "证据完整度层",
+          "verdict": "thin_evidence",
+          "confidence": "medium",
+          "summary": "Evidence has gaps; the model keeps uncertainty visible instead of overclaiming.",
+          "key_drivers": [
+            "baseline edition sources loaded"
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked",
+            "referee_missing",
+            "odds_missing"
+          ],
+          "watch_triggers": [
+            "refresh daily evidence before kickoff",
+            "mark mock sources separately from live sources"
+          ]
+        },
+        {
+          "layer_id": "fundamentals",
+          "title": "基本面强弱层",
+          "verdict": "home_edge",
+          "confidence": "medium",
+          "summary": "Fundamentals plus capped overlay lean Switzerland 倾向不败或取胜 with final delta +8.1.",
+          "key_drivers": [
+            "FIFA ranking strength: Switzerland edge +9.8",
+            "Squad depth and balance: Switzerland edge +6.9",
+            "Evidence completeness supports model confidence (+1.98)"
+          ],
+          "counter_signals": [
+            "Historical proxy: near-even delta +7.4",
+            "Rest/travel context: near-even delta +5.0"
+          ],
+          "missing_context": [],
+          "watch_triggers": [
+            "ranking and roster updates",
+            "rest-day recalculation after previous matches"
+          ]
+        },
+        {
+          "layer_id": "matchup",
+          "title": "阵容对位层",
+          "verdict": "home_edge",
+          "confidence": "medium",
+          "summary": "This layer turns roster shape into concrete matchup pressure rather than only a total score.",
+          "key_drivers": [
+            "Switzerland shape: GK3/DF8/MF8/FW7; avg age 28.3, avg height 185.2cm",
+            "Australia shape: GK3/DF10/MF5/FW8; avg age 27.4, avg height 183.6cm",
+            "Switzerland has the cleaner depth/balance score."
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "starting XI",
+            "formation change",
+            "set-piece personnel"
+          ]
+        },
+        {
+          "layer_id": "live_context",
+          "title": "临场变量层",
+          "verdict": "home_edge",
+          "confidence": "medium",
+          "summary": "Late news, rest, travel and referee profile are handled as separate pressure rather than hidden inside one score.",
+          "key_drivers": [
+            "Rest/travel delta: +5.0",
+            "News sentiment delta: 0.0"
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "referee profile missing"
+          ],
+          "watch_triggers": [
+            "team news within 24h",
+            "referee assignment correction",
+            "late travel/weather disruption"
+          ]
+        },
+        {
+          "layer_id": "venue_adaptation",
+          "title": "Venue Adaptation",
+          "verdict": "home_adaptation_edge",
+          "confidence": "medium",
+          "summary": "Static venue, travel, temperature and altitude baselines are exposed as evidence. This is not live kickoff weather and does not override verified lineup or injury news.",
+          "key_drivers": [
+            "Venue baseline: Atlanta 26.0C, 320m, warm_humid",
+            "Home Switzerland: travel 7470.4km, temperature delta +9.0C, altitude delta -220m, risk=medium.",
+            "Away Australia: travel 14944.8km, temperature delta +13.0C, altitude delta +262m, risk=high."
+          ],
+          "counter_signals": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing."
+          ],
+          "missing_context": [],
+          "watch_triggers": [
+            "replace static baseline with live venue weather",
+            "confirm team camp/base location",
+            "add humidity, wind, pitch and player acclimatization notes"
+          ]
+        },
+        {
+          "layer_id": "market_track",
+          "title": "市场背离层",
+          "verdict": "untracked",
+          "confidence": "medium",
+          "summary": "Market track is unavailable, so the dual-track read cannot confirm or challenge fundamentals.",
+          "key_drivers": [
+            "No market odds attached to this match evidence."
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "odds_missing"
+          ],
+          "watch_triggers": [
+            "odds refresh",
+            "large implied-probability movement",
+            "market/fundamental divergence near kickoff"
+          ]
+        },
+        {
+          "layer_id": "scenario_tree",
+          "title": "比赛剧本层",
+          "verdict": "home_win",
+          "confidence": "medium",
+          "summary": "Base case: Switzerland 倾向不败或取胜, reference score 2-1. The model edge is +8.1 after fundamentals and Tianji overlay.",
+          "key_drivers": [
+            "Base case: Switzerland 倾向不败或取胜, reference score 2-1. The model edge is +8.1 after fundamentals and Tianji overlay.",
+            "Counter case: Australia changes the read if lineup news improves, set pieces land, or the favorite is forced into a slow first half.",
+            "Draw case: becomes live if the first 30 minutes stay low-event and both sides protect transition space."
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "confirmed starting XI differs from roster-depth baseline",
+            "late injury or suspension changes the strongest positional unit",
+            "market probability moves against the model by more than 8 percentage points"
+          ]
+        },
+        {
+          "layer_id": "score_distribution",
+          "title": "天纪比分分布",
+          "verdict": "low",
+          "confidence": "low",
+          "summary": "比分由天纪卦象推演，非数学概率。各分支代表不同运势走向。天命主线: 2-1 (29%), 3-1 (26%), 2-0 (23%)。",
+          "key_drivers": [
+            "天纪进球气场: 1.98-1.72",
+            "零封概率 主/客: 20%/11%"
+          ],
+          "counter_signals": [
+            "红牌、点球、定位球和追分状态可能使命运分支快速切换。"
+          ],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked"
+          ],
+          "watch_triggers": [
+            "确认首发阵容",
+            "定位球错位",
+            "红牌或早进球",
+            "下半场换人状态"
+          ]
+        },
+        {
+          "layer_id": "adversarial_review",
+          "title": "反方审稿层",
+          "verdict": "high",
+          "confidence": "medium",
+          "summary": "This layer records why the pick could be wrong before publishing the final entertainment call.",
+          "key_drivers": [
+            "Final model edge +8.1 points toward Switzerland 倾向不败或取胜."
+          ],
+          "counter_signals": [
+            "new injury/lineup evidence changes the strongest positional edge",
+            "fresh odds imply a different market favorite",
+            "post-match calibration shows this confidence bucket underperforming",
+            "blocked or partial evidence must be resolved before raising confidence"
+          ],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked"
+          ],
+          "watch_triggers": [
+            "new injury/lineup evidence changes the strongest positional edge",
+            "fresh odds imply a different market favorite",
+            "post-match calibration shows this confidence bucket underperforming",
+            "blocked or partial evidence must be resolved before raising confidence"
+          ]
+        }
+      ],
+      "scenario_analysis": {
+        "base_case": "Base case: Switzerland 倾向不败或取胜, reference score 2-1. The model edge is +8.1 after fundamentals and Tianji overlay.",
+        "upset_case": "Counter case: Australia changes the read if lineup news improves, set pieces land, or the favorite is forced into a slow first half.",
+        "draw_case": "Draw case: becomes live if the first 30 minutes stay low-event and both sides protect transition space.",
+        "watch_triggers": [
+          "confirmed starting XI differs from roster-depth baseline",
+          "late injury or suspension changes the strongest positional unit",
+          "market probability moves against the model by more than 8 percentage points"
+        ]
+      },
+      "decision_audit": {
+        "risk_level": "high",
+        "why_this_pick": [
+          "Final model edge +8.1 points toward Switzerland 倾向不败或取胜."
+        ],
+        "what_would_change_the_pick": [
+          "new injury/lineup evidence changes the strongest positional edge",
+          "fresh odds imply a different market favorite",
+          "post-match calibration shows this confidence bucket underperforming",
+          "blocked or partial evidence must be resolved before raising confidence"
+        ],
+        "thin_evidence_warnings": [
+          "official_fixtures_partial",
+          "fifa_rankings_partial",
+          "historical_worldcup_results_blocked",
+          "recent_form_results_blocked",
+          "injury_availability_blocked",
+          "venue_rest_travel_blocked"
+        ]
+      },
+      "analysis_summary": {
+        "layer_count": 9,
+        "risk_level": "high",
+        "primary_edge": "home_edge",
+        "edge_tier": "clear",
+        "game_script": "medium-event",
+        "evidence_quality": "thin",
+        "three_track_consensus": "draw",
+        "storage_note": "JSON report remains the audit artifact; SQLite is an optional query/index layer."
+      },
+      "play_card": {
+        "share_title": "Switzerland vs Australia | 娱乐预测 2-1",
+        "match_hook": "Switzerland 倾向胜出，总进球参考 3 球。淘汰赛阶段，Mercedes-Benz Stadium, Atlanta。",
+        "poster_caption": "AI预测比分 2-1，Switzerland主线占优，胜负趋势指向主队。",
+        "watch_points": [
+          "多层分析主线：Final model edge +8.1 points toward Switzerland 倾向不败或取胜.",
+          "双方实力接近，临场发挥将决定走向",
+          "中场控制权和定位球效率是关键"
+        ],
+        "risk_flags": [
+          "历史战绩数据不足",
+          "近期战绩数据缺失",
+          "伤停信息不完整",
+          "休息和旅行因素未充分计算"
+        ],
+        "poster_angle": "Switzerland vs Australia, Mercedes-Benz Stadium, Atlanta, vibrant crowd atmosphere, 蒙 aesthetic overlay, predicted score 2-1, total goals 3",
+        "confidence_meter": "数据 80% | 玄学 20% | 信心: 中等信心",
+        "gameplay_tags": [
+          "胜平负",
+          "比分",
+          "总进球",
+          "看点"
+        ]
+      },
+      "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+      "lessons_applied": null,
+      "run_type": "canonical",
+      "status": "locked_pre_match",
+      "locked_at": "2026-07-01T00:47:53.450203+08:00",
+      "lock_reason": "pre_match_canonical_prediction"
+    },
+    {
+      "match_id": "2026-R16-08",
+      "kickoff_at": "2026-07-07T20:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "group": "",
+      "phase": "round_of_16",
+      "home_team": {
+        "team_id": "arg",
+        "name": "Argentina",
+        "ranking": 3,
+        "points": 1874.81
+      },
+      "away_team": {
+        "team_id": "col",
+        "name": "Colombia",
+        "ranking": 13,
+        "points": 1693.09
+      },
+      "data_score": {
+        "home": 75.5,
+        "away": 63.6,
+        "components": {
+          "ranking_strength": {
+            "home": 96.4,
+            "away": 70.44,
+            "weight": 0.3
+          },
+          "squad_depth": {
+            "home": 90.52,
+            "away": 89.1,
+            "weight": 0.2
+          },
+          "historical_proxy": {
+            "home": 84.8,
+            "away": 65.33,
+            "weight": 0.2
+          },
+          "rest_travel": {
+            "home": 75.0,
+            "away": 75.0,
+            "weight": 0.15
+          },
+          "evidence_completeness": {
+            "home": 1.98,
+            "away": 1.98,
+            "weight": 0.15
+          }
+        }
+      },
+      "venue_adaptation_context": {
+        "status": "estimated_static_context",
+        "source": "static_venue_team_baseline_v1",
+        "venue": "BC Place, Vancouver, Canada",
+        "venue_context": {
+          "city": "Vancouver",
+          "country": "Canada",
+          "lat": 49.2827,
+          "lon": -123.1207,
+          "june_temp_c": 17.0,
+          "altitude_m": 70,
+          "climate_profile": "cool_marine",
+          "matched_key": "vancouver"
+        },
+        "home": {
+          "team_id": "arg",
+          "status": "estimated_static_context",
+          "baseline_city": "Buenos Aires",
+          "baseline_climate_profile": "cool_temperate",
+          "missing_context": [],
+          "travel_km": 11298.9,
+          "temperature_delta_c": 5.0,
+          "altitude_delta_m": 45,
+          "adaptation_risk": "medium",
+          "adaptation_risk_score": 2,
+          "adaptation_notes": [
+            "long-haul travel load",
+            "temperature baseline is broadly familiar"
+          ]
+        },
+        "away": {
+          "team_id": "col",
+          "status": "estimated_static_context",
+          "baseline_city": "Bogota",
+          "baseline_climate_profile": "cool_high_altitude",
+          "missing_context": [],
+          "travel_km": 6757.1,
+          "temperature_delta_c": 3.0,
+          "altitude_delta_m": -2570,
+          "adaptation_risk": "low",
+          "adaptation_risk_score": 1,
+          "adaptation_notes": [
+            "intercontinental travel load",
+            "temperature baseline is broadly familiar",
+            "large altitude drop"
+          ]
+        },
+        "missing_context": [],
+        "limitations": [
+          "Static baseline only; not live kickoff weather.",
+          "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+          "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data."
+        ]
+      },
+      "divination_overlay": {
+        "lunar_date": "农历：丙午马年 5月23日 未时 (13:00-14:59)",
+        "shichen": "未时 (13:00-14:59)",
+        "host_palace_branch": "酉",
+        "guest_palace_branch": "卯",
+        "home_stars": [],
+        "away_stars": [],
+        "home_modifier": 0.0,
+        "away_modifier": 0.0,
+        "interpretation": "双方星盘吉凶平稳，气运相持，最终走向更依赖战术和硬实力硬战。",
+        "has_physical_conflict": false,
+        "calculation_timezone": "America/Vancouver",
+        "local_kickoff_at": "2026-07-07T13:00:00-07:00",
+        "hexagram_number": 5,
+        "hexagram_name": "需",
+        "hexagram": "需",
+        "hexagram_interpretation": "云上于天，需",
+        "hexagram_home_modifier": 1.1,
+        "hexagram_away_modifier": 2.8,
+        "weight": 0.2,
+        "data_weight": 0.8,
+        "combined_home_fortune": "吉",
+        "combined_away_fortune": "大吉",
+        "hex_pattern": "medium-event"
+      },
+      "prediction": {
+        "home_final": 75.5,
+        "away_final": 63.6,
+        "result": "home_win",
+        "predicted_outcome": "home_win",
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "is_opener": false,
+        "total_goals": 3,
+        "goals_line_2_5": "over",
+        "confidence": "medium",
+        "confidence_label": "中等信心",
+        "result_confidence": "medium",
+        "score_confidence": "low",
+        "total_goals_confidence": "low",
+        "confidence_note": "Result direction confidence is not exact-score confidence.",
+        "evidence_quality": "thin",
+        "edge_tier": "clear",
+        "game_script": "medium-event",
+        "three_track_votes": {
+          "votes": {
+            "fundamentals": "home_win",
+            "market": null,
+            "information": "draw",
+            "mystic": "away_win"
+          },
+          "counts": {
+            "draw": 1,
+            "home_win": 1,
+            "away_win": 1
+          },
+          "consensus": "draw",
+          "leaders": [
+            "draw",
+            "home_win",
+            "away_win"
+          ],
+          "tie_on_top": true
+        },
+        "scoreline_distribution": [
+          {
+            "score": {
+              "home": 2,
+              "away": 1
+            },
+            "probability": 0.295,
+            "reason": "Primary football script branch settles on 2-1."
+          },
+          {
+            "score": {
+              "home": 3,
+              "away": 1
+            },
+            "probability": 0.284,
+            "reason": "Medium-event branch: one side edges it without turning into a track meet."
+          },
+          {
+            "score": {
+              "home": 2,
+              "away": 0
+            },
+            "probability": 0.224,
+            "reason": "Clean-sheet branch keeps 2-0 alive with home shutout chance 21%."
+          },
+          {
+            "score": {
+              "home": 1,
+              "away": 0
+            },
+            "probability": 0.197,
+            "reason": "Clean-sheet branch keeps 1-0 alive with home shutout chance 21%."
+          }
+        ],
+        "clean_sheet_probability": {
+          "home": 0.21,
+          "away": 0.08
+        },
+        "expected_goals_proxy": {
+          "home": 2.15,
+          "away": 1.77
+        },
+        "venue_adaptation_context": {
+          "status": "estimated_static_context",
+          "source": "static_venue_team_baseline_v1",
+          "venue": "BC Place, Vancouver, Canada",
+          "venue_context": {
+            "city": "Vancouver",
+            "country": "Canada",
+            "lat": 49.2827,
+            "lon": -123.1207,
+            "june_temp_c": 17.0,
+            "altitude_m": 70,
+            "climate_profile": "cool_marine",
+            "matched_key": "vancouver"
+          },
+          "home": {
+            "team_id": "arg",
+            "status": "estimated_static_context",
+            "baseline_city": "Buenos Aires",
+            "baseline_climate_profile": "cool_temperate",
+            "missing_context": [],
+            "travel_km": 11298.9,
+            "temperature_delta_c": 5.0,
+            "altitude_delta_m": 45,
+            "adaptation_risk": "medium",
+            "adaptation_risk_score": 2,
+            "adaptation_notes": [
+              "long-haul travel load",
+              "temperature baseline is broadly familiar"
+            ]
+          },
+          "away": {
+            "team_id": "col",
+            "status": "estimated_static_context",
+            "baseline_city": "Bogota",
+            "baseline_climate_profile": "cool_high_altitude",
+            "missing_context": [],
+            "travel_km": 6757.1,
+            "temperature_delta_c": 3.0,
+            "altitude_delta_m": -2570,
+            "adaptation_risk": "low",
+            "adaptation_risk_score": 1,
+            "adaptation_notes": [
+              "intercontinental travel load",
+              "temperature baseline is broadly familiar",
+              "large altitude drop"
+            ]
+          },
+          "missing_context": [],
+          "limitations": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing.",
+            "Does not yet include humidity, wind, pitch state, player club climate, or acclimatization camp data."
+          ]
+        },
+        "evidence_gaps": [
+          "official_fixtures_partial",
+          "fifa_rankings_partial",
+          "historical_worldcup_results_blocked",
+          "recent_form_results_blocked",
+          "injury_availability_blocked",
+          "venue_rest_travel_blocked"
+        ],
+        "knockout": {
+          "is_knockout": true,
+          "phase": "round_of_16",
+          "regular_time": {
+            "result": "home_win",
+            "score": {
+              "home": 2,
+              "away": 1
+            }
+          },
+          "extra_time": {
+            "played": false,
+            "result": "",
+            "score": {
+              "home": null,
+              "away": null
+            },
+            "period_score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "penalties": {
+            "played": false,
+            "winner": "",
+            "winner_name": "",
+            "score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "advance": {
+            "winner": "home",
+            "winner_result": "home_advance",
+            "winner_name": "Argentina"
+          }
+        }
+      },
+      "referee_analysis": null,
+      "market_odds": null,
+      "market_odds_status": {
+        "status": "none",
+        "source": "missing",
+        "is_mock": false,
+        "reason": "odds_missing"
+      },
+      "dual_track": null,
+      "analysis_layers": [
+        {
+          "layer_id": "evidence_integrity",
+          "title": "证据完整度层",
+          "verdict": "thin_evidence",
+          "confidence": "medium",
+          "summary": "Evidence has gaps; the model keeps uncertainty visible instead of overclaiming.",
+          "key_drivers": [
+            "baseline edition sources loaded"
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked",
+            "referee_missing",
+            "odds_missing"
+          ],
+          "watch_triggers": [
+            "refresh daily evidence before kickoff",
+            "mark mock sources separately from live sources"
+          ]
+        },
+        {
+          "layer_id": "fundamentals",
+          "title": "基本面强弱层",
+          "verdict": "home_edge",
+          "confidence": "medium",
+          "summary": "Fundamentals plus capped overlay lean Argentina 倾向不败或取胜 with final delta +11.9.",
+          "key_drivers": [
+            "FIFA ranking strength: Argentina edge +26.0",
+            "Historical proxy: Argentina edge +19.5",
+            "Evidence completeness supports model confidence (+1.98)"
+          ],
+          "counter_signals": [
+            "Squad depth and balance: near-even delta +1.4",
+            "Rest/travel context: near-even delta 0.0"
+          ],
+          "missing_context": [],
+          "watch_triggers": [
+            "ranking and roster updates",
+            "rest-day recalculation after previous matches"
+          ]
+        },
+        {
+          "layer_id": "matchup",
+          "title": "阵容对位层",
+          "verdict": "balanced",
+          "confidence": "medium",
+          "summary": "This layer turns roster shape into concrete matchup pressure rather than only a total score.",
+          "key_drivers": [
+            "Argentina shape: GK3/DF8/MF8/FW7; avg age 29.1, avg height 179.7cm",
+            "Colombia shape: GK3/DF9/MF8/FW6; avg age 30.1, avg height 180.0cm",
+            "Squad-balance score is close; tactical execution matters more than raw depth."
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "starting XI",
+            "formation change",
+            "set-piece personnel"
+          ]
+        },
+        {
+          "layer_id": "live_context",
+          "title": "临场变量层",
+          "verdict": "balanced",
+          "confidence": "medium",
+          "summary": "Late news, rest, travel and referee profile are handled as separate pressure rather than hidden inside one score.",
+          "key_drivers": [
+            "Rest/travel delta: 0.0",
+            "News sentiment delta: 0.0"
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "referee profile missing"
+          ],
+          "watch_triggers": [
+            "team news within 24h",
+            "referee assignment correction",
+            "late travel/weather disruption"
+          ]
+        },
+        {
+          "layer_id": "venue_adaptation",
+          "title": "Venue Adaptation",
+          "verdict": "balanced_static_context",
+          "confidence": "medium",
+          "summary": "Static venue, travel, temperature and altitude baselines are exposed as evidence. This is not live kickoff weather and does not override verified lineup or injury news.",
+          "key_drivers": [
+            "Venue baseline: Vancouver 17.0C, 70m, cool_marine",
+            "Home Argentina: travel 11298.9km, temperature delta +5.0C, altitude delta +45m, risk=medium.",
+            "Away Colombia: travel 6757.1km, temperature delta +3.0C, altitude delta -2570m, risk=low."
+          ],
+          "counter_signals": [
+            "Static baseline only; not live kickoff weather.",
+            "Travel is great-circle distance from team baseline city to venue city, not actual camp or flight routing."
+          ],
+          "missing_context": [],
+          "watch_triggers": [
+            "replace static baseline with live venue weather",
+            "confirm team camp/base location",
+            "add humidity, wind, pitch and player acclimatization notes"
+          ]
+        },
+        {
+          "layer_id": "market_track",
+          "title": "市场背离层",
+          "verdict": "untracked",
+          "confidence": "medium",
+          "summary": "Market track is unavailable, so the dual-track read cannot confirm or challenge fundamentals.",
+          "key_drivers": [
+            "No market odds attached to this match evidence."
+          ],
+          "counter_signals": [],
+          "missing_context": [
+            "odds_missing"
+          ],
+          "watch_triggers": [
+            "odds refresh",
+            "large implied-probability movement",
+            "market/fundamental divergence near kickoff"
+          ]
+        },
+        {
+          "layer_id": "scenario_tree",
+          "title": "比赛剧本层",
+          "verdict": "home_win",
+          "confidence": "medium",
+          "summary": "Base case: Argentina 倾向不败或取胜, reference score 2-1. The model edge is +11.9 after fundamentals and Tianji overlay.",
+          "key_drivers": [
+            "Base case: Argentina 倾向不败或取胜, reference score 2-1. The model edge is +11.9 after fundamentals and Tianji overlay.",
+            "Counter case: Colombia changes the read if lineup news improves, set pieces land, or the favorite is forced into a slow first half.",
+            "Draw case: becomes live if the first 30 minutes stay low-event and both sides protect transition space."
+          ],
+          "counter_signals": [],
+          "missing_context": [],
+          "watch_triggers": [
+            "confirmed starting XI differs from roster-depth baseline",
+            "late injury or suspension changes the strongest positional unit",
+            "market probability moves against the model by more than 8 percentage points"
+          ]
+        },
+        {
+          "layer_id": "score_distribution",
+          "title": "天纪比分分布",
+          "verdict": "low",
+          "confidence": "low",
+          "summary": "比分由天纪卦象推演，非数学概率。各分支代表不同运势走向。天命主线: 2-1 (30%), 3-1 (28%), 2-0 (22%)。",
+          "key_drivers": [
+            "天纪进球气场: 2.15-1.77",
+            "零封概率 主/客: 21%/8%"
+          ],
+          "counter_signals": [
+            "红牌、点球、定位球和追分状态可能使命运分支快速切换。"
+          ],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked"
+          ],
+          "watch_triggers": [
+            "确认首发阵容",
+            "定位球错位",
+            "红牌或早进球",
+            "下半场换人状态"
+          ]
+        },
+        {
+          "layer_id": "adversarial_review",
+          "title": "反方审稿层",
+          "verdict": "high",
+          "confidence": "medium",
+          "summary": "This layer records why the pick could be wrong before publishing the final entertainment call.",
+          "key_drivers": [
+            "Final model edge +11.9 points toward Argentina 倾向不败或取胜."
+          ],
+          "counter_signals": [
+            "new injury/lineup evidence changes the strongest positional edge",
+            "fresh odds imply a different market favorite",
+            "post-match calibration shows this confidence bucket underperforming",
+            "blocked or partial evidence must be resolved before raising confidence"
+          ],
+          "missing_context": [
+            "official_fixtures_partial",
+            "fifa_rankings_partial",
+            "historical_worldcup_results_blocked",
+            "recent_form_results_blocked",
+            "injury_availability_blocked",
+            "venue_rest_travel_blocked"
+          ],
+          "watch_triggers": [
+            "new injury/lineup evidence changes the strongest positional edge",
+            "fresh odds imply a different market favorite",
+            "post-match calibration shows this confidence bucket underperforming",
+            "blocked or partial evidence must be resolved before raising confidence"
+          ]
+        }
+      ],
+      "scenario_analysis": {
+        "base_case": "Base case: Argentina 倾向不败或取胜, reference score 2-1. The model edge is +11.9 after fundamentals and Tianji overlay.",
+        "upset_case": "Counter case: Colombia changes the read if lineup news improves, set pieces land, or the favorite is forced into a slow first half.",
+        "draw_case": "Draw case: becomes live if the first 30 minutes stay low-event and both sides protect transition space.",
+        "watch_triggers": [
+          "confirmed starting XI differs from roster-depth baseline",
+          "late injury or suspension changes the strongest positional unit",
+          "market probability moves against the model by more than 8 percentage points"
+        ]
+      },
+      "decision_audit": {
+        "risk_level": "high",
+        "why_this_pick": [
+          "Final model edge +11.9 points toward Argentina 倾向不败或取胜."
+        ],
+        "what_would_change_the_pick": [
+          "new injury/lineup evidence changes the strongest positional edge",
+          "fresh odds imply a different market favorite",
+          "post-match calibration shows this confidence bucket underperforming",
+          "blocked or partial evidence must be resolved before raising confidence"
+        ],
+        "thin_evidence_warnings": [
+          "official_fixtures_partial",
+          "fifa_rankings_partial",
+          "historical_worldcup_results_blocked",
+          "recent_form_results_blocked",
+          "injury_availability_blocked",
+          "venue_rest_travel_blocked"
+        ]
+      },
+      "analysis_summary": {
+        "layer_count": 9,
+        "risk_level": "high",
+        "primary_edge": "home_edge",
+        "edge_tier": "clear",
+        "game_script": "medium-event",
+        "evidence_quality": "thin",
+        "three_track_consensus": "draw",
+        "storage_note": "JSON report remains the audit artifact; SQLite is an optional query/index layer."
+      },
+      "play_card": {
+        "share_title": "Argentina vs Colombia | 娱乐预测 2-1",
+        "match_hook": "Argentina 倾向胜出，总进球参考 3 球。淘汰赛阶段，BC Place, Vancouver, Canada。",
+        "poster_caption": "AI预测比分 2-1，Argentina主线占优，胜负趋势指向主队。",
+        "watch_points": [
+          "多层分析主线：Final model edge +11.9 points toward Argentina 倾向不败或取胜.",
+          "双方实力接近，临场发挥将决定走向",
+          "中场控制权和定位球效率是关键"
+        ],
+        "risk_flags": [
+          "历史战绩数据不足",
+          "近期战绩数据缺失",
+          "伤停信息不完整",
+          "休息和旅行因素未充分计算"
+        ],
+        "poster_angle": "Argentina vs Colombia, BC Place, Vancouver, Canada, vibrant crowd atmosphere, 需 aesthetic overlay, predicted score 2-1, total goals 3",
+        "confidence_meter": "数据 80% | 玄学 20% | 信心: 中等信心",
+        "gameplay_tags": [
+          "胜平负",
+          "比分",
+          "总进球",
+          "看点"
+        ]
+      },
+      "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+      "lessons_applied": null,
+      "run_type": "canonical",
+      "status": "locked_pre_match",
+      "locked_at": "2026-07-01T00:47:53.450203+08:00",
+      "lock_reason": "pre_match_canonical_prediction"
+    }
+  ],
+  "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
+  "safety_invariants": [
+    "predictions_only_for_not_started_unpredicted_matches",
+    "existing_daily_reports_are_locked_not_overwritten",
+    "published_predictions_are_reused_before_regeneration",
+    "force_refresh_does_not_override_canonical_predictions",
+    "started_or_completed_match_predictions_are_never_regenerated",
+    "data_model_weight_is_0_60",
+    "tianji_overlay_weight_is_0_40",
+    "tianji_calculated_from_venue_local_time_when_known",
+    "no_betting_amounts_or_guaranteed_win_language"
+  ]
+}

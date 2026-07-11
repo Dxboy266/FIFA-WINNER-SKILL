@@ -1,0 +1,809 @@
+{
+  "version": 2,
+  "edition": "2026",
+  "format": "48-team; top two per group plus eight best third-place teams qualify",
+  "groups": {
+    "A": [
+      {
+        "rank": 1,
+        "team": "Mexico",
+        "stats": {
+          "played": 3,
+          "won": 3,
+          "draw": 0,
+          "lost": 0,
+          "gf": 6,
+          "ga": 0,
+          "pts": 9
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "South Africa",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 2,
+          "ga": 3,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "South Korea",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 0,
+          "lost": 2,
+          "gf": 2,
+          "ga": 3,
+          "pts": 3
+        },
+        "status": "eliminated"
+      },
+      {
+        "rank": 4,
+        "team": "Czechia",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 1,
+          "lost": 2,
+          "gf": 2,
+          "ga": 6,
+          "pts": 1
+        },
+        "status": "eliminated"
+      }
+    ],
+    "B": [
+      {
+        "rank": 1,
+        "team": "Switzerland",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 1,
+          "lost": 0,
+          "gf": 7,
+          "ga": 3,
+          "pts": 7
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Canada",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 8,
+          "ga": 3,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "Bosnia and Herzegovina",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 5,
+          "ga": 6,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 4,
+        "team": "Qatar",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 1,
+          "lost": 2,
+          "gf": 2,
+          "ga": 10,
+          "pts": 1
+        },
+        "status": "eliminated"
+      }
+    ],
+    "C": [
+      {
+        "rank": 1,
+        "team": "Brazil",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 1,
+          "lost": 0,
+          "gf": 7,
+          "ga": 1,
+          "pts": 7
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Morocco",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 1,
+          "lost": 0,
+          "gf": 6,
+          "ga": 3,
+          "pts": 7
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "Scotland",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 0,
+          "lost": 2,
+          "gf": 1,
+          "ga": 4,
+          "pts": 3
+        },
+        "status": "eliminated"
+      },
+      {
+        "rank": 4,
+        "team": "Haiti",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 0,
+          "lost": 3,
+          "gf": 2,
+          "ga": 8,
+          "pts": 0
+        },
+        "status": "eliminated"
+      }
+    ],
+    "D": [
+      {
+        "rank": 1,
+        "team": "United States",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 0,
+          "lost": 1,
+          "gf": 8,
+          "ga": 4,
+          "pts": 6
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Australia",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 2,
+          "ga": 2,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "Paraguay",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 2,
+          "ga": 4,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 4,
+        "team": "Türkiye",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 0,
+          "lost": 2,
+          "gf": 3,
+          "ga": 5,
+          "pts": 3
+        },
+        "status": "eliminated"
+      }
+    ],
+    "E": [
+      {
+        "rank": 1,
+        "team": "Germany",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 0,
+          "lost": 1,
+          "gf": 10,
+          "ga": 4,
+          "pts": 6
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Ivory Coast",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 0,
+          "lost": 1,
+          "gf": 4,
+          "ga": 2,
+          "pts": 6
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "Ecuador",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 2,
+          "ga": 2,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 4,
+        "team": "Curaçao",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 1,
+          "lost": 2,
+          "gf": 1,
+          "ga": 9,
+          "pts": 1
+        },
+        "status": "eliminated"
+      }
+    ],
+    "F": [
+      {
+        "rank": 1,
+        "team": "Netherlands",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 1,
+          "lost": 0,
+          "gf": 10,
+          "ga": 4,
+          "pts": 7
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Japan",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 2,
+          "lost": 0,
+          "gf": 7,
+          "ga": 3,
+          "pts": 5
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "Sweden",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 7,
+          "ga": 7,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 4,
+        "team": "Tunisia",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 0,
+          "lost": 3,
+          "gf": 2,
+          "ga": 12,
+          "pts": 0
+        },
+        "status": "eliminated"
+      }
+    ],
+    "G": [
+      {
+        "rank": 1,
+        "team": "Belgium",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 2,
+          "lost": 0,
+          "gf": 6,
+          "ga": 2,
+          "pts": 5
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Egypt",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 2,
+          "lost": 0,
+          "gf": 5,
+          "ga": 3,
+          "pts": 5
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "Iran",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 3,
+          "lost": 0,
+          "gf": 3,
+          "ga": 3,
+          "pts": 3
+        },
+        "status": "eliminated"
+      },
+      {
+        "rank": 4,
+        "team": "New Zealand",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 1,
+          "lost": 2,
+          "gf": 4,
+          "ga": 10,
+          "pts": 1
+        },
+        "status": "eliminated"
+      }
+    ],
+    "H": [
+      {
+        "rank": 1,
+        "team": "Spain",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 1,
+          "lost": 0,
+          "gf": 5,
+          "ga": 0,
+          "pts": 7
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Cape Verde",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 3,
+          "lost": 0,
+          "gf": 2,
+          "ga": 2,
+          "pts": 3
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "Uruguay",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 2,
+          "lost": 1,
+          "gf": 3,
+          "ga": 4,
+          "pts": 2
+        },
+        "status": "eliminated"
+      },
+      {
+        "rank": 4,
+        "team": "Saudi Arabia",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 2,
+          "lost": 1,
+          "gf": 1,
+          "ga": 5,
+          "pts": 2
+        },
+        "status": "eliminated"
+      }
+    ],
+    "I": [
+      {
+        "rank": 1,
+        "team": "France",
+        "stats": {
+          "played": 3,
+          "won": 3,
+          "draw": 0,
+          "lost": 0,
+          "gf": 10,
+          "ga": 2,
+          "pts": 9
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Norway",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 0,
+          "lost": 1,
+          "gf": 8,
+          "ga": 7,
+          "pts": 6
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "Senegal",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 0,
+          "lost": 2,
+          "gf": 8,
+          "ga": 6,
+          "pts": 3
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 4,
+        "team": "Iraq",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 0,
+          "lost": 3,
+          "gf": 1,
+          "ga": 12,
+          "pts": 0
+        },
+        "status": "eliminated"
+      }
+    ],
+    "J": [
+      {
+        "rank": 1,
+        "team": "Argentina",
+        "stats": {
+          "played": 3,
+          "won": 3,
+          "draw": 0,
+          "lost": 0,
+          "gf": 8,
+          "ga": 1,
+          "pts": 9
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Austria",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 6,
+          "ga": 6,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "Algeria",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 5,
+          "ga": 7,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 4,
+        "team": "Jordan",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 0,
+          "lost": 3,
+          "gf": 3,
+          "ga": 8,
+          "pts": 0
+        },
+        "status": "eliminated"
+      }
+    ],
+    "K": [
+      {
+        "rank": 1,
+        "team": "Colombia",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 1,
+          "lost": 0,
+          "gf": 4,
+          "ga": 1,
+          "pts": 7
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Portugal",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 2,
+          "lost": 0,
+          "gf": 6,
+          "ga": 1,
+          "pts": 5
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "DR Congo",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 4,
+          "ga": 3,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 4,
+        "team": "Uzbekistan",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 0,
+          "lost": 3,
+          "gf": 2,
+          "ga": 11,
+          "pts": 0
+        },
+        "status": "eliminated"
+      }
+    ],
+    "L": [
+      {
+        "rank": 1,
+        "team": "England",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 1,
+          "lost": 0,
+          "gf": 6,
+          "ga": 2,
+          "pts": 7
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "team": "Croatia",
+        "stats": {
+          "played": 3,
+          "won": 2,
+          "draw": 0,
+          "lost": 1,
+          "gf": 5,
+          "ga": 5,
+          "pts": 6
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 3,
+        "team": "Ghana",
+        "stats": {
+          "played": 3,
+          "won": 1,
+          "draw": 1,
+          "lost": 1,
+          "gf": 2,
+          "ga": 2,
+          "pts": 4
+        },
+        "status": "qualified"
+      },
+      {
+        "rank": 4,
+        "team": "Panama",
+        "stats": {
+          "played": 3,
+          "won": 0,
+          "draw": 0,
+          "lost": 3,
+          "gf": 0,
+          "ga": 4,
+          "pts": 0
+        },
+        "status": "eliminated"
+      }
+    ]
+  },
+  "best_third_place_teams": [
+    {
+      "group": "K",
+      "team": "DR Congo",
+      "stats": {
+        "played": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "gf": 4,
+        "ga": 3,
+        "pts": 4
+      }
+    },
+    {
+      "group": "F",
+      "team": "Sweden",
+      "stats": {
+        "played": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "gf": 7,
+        "ga": 7,
+        "pts": 4
+      }
+    },
+    {
+      "group": "E",
+      "team": "Ecuador",
+      "stats": {
+        "played": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "gf": 2,
+        "ga": 2,
+        "pts": 4
+      }
+    },
+    {
+      "group": "L",
+      "team": "Ghana",
+      "stats": {
+        "played": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "gf": 2,
+        "ga": 2,
+        "pts": 4
+      }
+    },
+    {
+      "group": "B",
+      "team": "Bosnia and Herzegovina",
+      "stats": {
+        "played": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "gf": 5,
+        "ga": 6,
+        "pts": 4
+      }
+    },
+    {
+      "group": "J",
+      "team": "Algeria",
+      "stats": {
+        "played": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "gf": 5,
+        "ga": 7,
+        "pts": 4
+      }
+    },
+    {
+      "group": "D",
+      "team": "Paraguay",
+      "stats": {
+        "played": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "gf": 2,
+        "ga": 4,
+        "pts": 4
+      }
+    },
+    {
+      "group": "I",
+      "team": "Senegal",
+      "stats": {
+        "played": 3,
+        "won": 1,
+        "draw": 0,
+        "lost": 2,
+        "gf": 8,
+        "ga": 6,
+        "pts": 3
+      }
+    }
+  ]
+}

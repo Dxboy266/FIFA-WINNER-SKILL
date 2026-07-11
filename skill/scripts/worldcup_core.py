@@ -32,13 +32,17 @@ STAGE_WEIGHT_TABLE: dict[str, tuple[float, float]] = {
 CANONICAL_MATCH_ID_PATTERN = re.compile(r"^\d{4}-(G[A-L]-\d{2}|R32-\d{2}|R16-\d{2}|QF-\d{2}|SF-\d{2}|TP-\d{2}|F-\d{2})$")
 LOCAL_MATCH_OVERLAY_FIELDS = (
     "status",
+    "home_team",
+    "away_team",
     "prediction_report",
     "prediction_status",
     "poster_manifest",
     "poster_outputs",
     "final_score",
+    "knockout_result",
     "evaluation",
 )
+KNOCKOUT_REFERENCE_PATTERN = re.compile(r"^(W|L)(\d{2,3})$")
 
 
 def load_hyperparameters(root: Path, edition: str) -> None:
@@ -434,6 +438,18 @@ def parse_datetime(value: str) -> datetime | None:
     return parsed
 
 
+def beijing_datetime(value: str | datetime | None) -> datetime | None:
+    if isinstance(value, datetime):
+        parsed = value
+    elif isinstance(value, str):
+        parsed = parse_datetime(value)
+    else:
+        parsed = None
+    if not parsed:
+        return None
+    return parsed.astimezone(ZoneInfo("Asia/Shanghai"))
+
+
 def write_json(path: Path, payload: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -599,13 +615,235 @@ def canonical_matches(matches: list[dict]) -> list[dict]:
     return [match for match in matches if is_canonical_match(match)]
 
 
+def _knockout_reference_match_id(edition: str, ref_code: str) -> str:
+    text = str(ref_code or "").strip().upper()
+    match = KNOCKOUT_REFERENCE_PATTERN.match(text)
+    if not match:
+        return ""
+    prefix, number_text = match.groups()
+    number = int(number_text)
+    if 73 <= number <= 88:
+        return f"{edition}-R32-{number - 72:02d}"
+    if 89 <= number <= 96:
+        return f"{edition}-R16-{number - 88:02d}"
+    if 97 <= number <= 100:
+        return f"{edition}-QF-{number - 96:02d}"
+    if 101 <= number <= 102:
+        return f"{edition}-SF-{number - 100:02d}"
+    if number == 103:
+        return f"{edition}-TP-01" if prefix == "L" else f"{edition}-F-01"
+    if number == 104:
+        return f"{edition}-F-01"
+    return ""
+
+
+def _team_copy(team: dict | None) -> dict:
+    return copy.deepcopy(team) if isinstance(team, dict) else {}
+
+
+def _winner_team_from_match(match: dict, *, prefer_actual: bool = True, prefer_prediction: bool = True) -> dict | None:
+    if not isinstance(match, dict):
+        return None
+
+    def _side_to_team(side: str) -> dict | None:
+        if side == "home":
+            team = _team_copy(match.get("home_team"))
+            return team or None
+        if side == "away":
+            team = _team_copy(match.get("away_team"))
+            return team or None
+        return None
+
+    if prefer_actual:
+        knockout_result = match.get("knockout_result") or {}
+        advance = knockout_result.get("advance") or {}
+        winner_side = str(advance.get("winner") or "").strip().lower()
+        winner_team = _side_to_team(winner_side)
+        if winner_team:
+            return winner_team
+        final_score = match.get("final_score") or {}
+        home_score = final_score.get("home")
+        away_score = final_score.get("away")
+        if home_score is not None and away_score is not None:
+            if home_score > away_score:
+                return _side_to_team("home")
+            if away_score > home_score:
+                return _side_to_team("away")
+
+    if prefer_prediction:
+        prediction = match.get("prediction") or {}
+        knockout_prediction = prediction.get("knockout") or {}
+        advance = knockout_prediction.get("advance") or {}
+        winner_side = str(advance.get("winner") or "").strip().lower()
+        winner_team = _side_to_team(winner_side)
+        if winner_team:
+            return winner_team
+
+        predicted_result = str(
+            prediction.get("result")
+            or prediction.get("predicted_outcome")
+            or ""
+        ).strip()
+        if predicted_result == "home_win":
+            return _side_to_team("home")
+        if predicted_result == "away_win":
+            return _side_to_team("away")
+
+        score = prediction.get("score") or {}
+        home_score = score.get("home")
+        away_score = score.get("away")
+        if home_score is not None and away_score is not None:
+            if home_score > away_score:
+                return _side_to_team("home")
+            if away_score > home_score:
+                return _side_to_team("away")
+            home_final = prediction.get("home_final")
+            away_final = prediction.get("away_final")
+            if home_final is not None and away_final is not None:
+                return _side_to_team("home" if float(home_final) >= float(away_final) else "away")
+    return None
+
+
+def resolve_knockout_placeholder_team(
+    team: dict | None,
+    *,
+    edition: str,
+    matches_by_id: dict[str, dict],
+    prefer_actual: bool = True,
+    prefer_prediction: bool = True,
+) -> dict | None:
+    team_data = _team_copy(team)
+    if not team_data:
+        return None
+
+    ref_name = str(team_data.get("name") or "").strip().upper()
+    ref_team_id = str(team_data.get("team_id") or "").strip().upper()
+    ref_code = ref_name if KNOCKOUT_REFERENCE_PATTERN.match(ref_name) else ref_team_id
+    if not KNOCKOUT_REFERENCE_PATTERN.match(ref_code):
+        return team_data
+
+    source_match_id = _knockout_reference_match_id(edition, ref_code)
+    if not source_match_id:
+        return team_data
+
+    source_match = matches_by_id.get(source_match_id)
+    winner_team = _winner_team_from_match(
+        source_match or {},
+        prefer_actual=prefer_actual,
+        prefer_prediction=prefer_prediction,
+    )
+    if winner_team:
+        winner_team.setdefault("source_match_id", source_match_id)
+        winner_team.setdefault("source_reference", ref_code)
+        return winner_team
+    return team_data
+
+
+def project_knockout_matches(
+    matches: list[dict],
+    *,
+    edition: str,
+    prefer_actual: bool = True,
+    prefer_prediction: bool = False,
+) -> list[dict]:
+    projected = [copy.deepcopy(match) for match in matches]
+    matches_by_id = {
+        str(match.get("match_id") or ""): match
+        for match in projected
+        if match.get("match_id")
+    }
+    for match in projected:
+        if str(match.get("phase") or "") not in {
+            "round_of_16",
+            "quarter_final",
+            "semi_final",
+            "third_place",
+            "final",
+        }:
+            continue
+        for side in ("home_team", "away_team"):
+            resolved = resolve_knockout_placeholder_team(
+                match.get(side),
+                edition=edition,
+                matches_by_id=matches_by_id,
+                prefer_actual=prefer_actual,
+                prefer_prediction=prefer_prediction,
+            )
+            if resolved:
+                match[side] = resolved
+    return projected
+
+
+def _is_resolved_knockout_team(team: dict | None) -> bool:
+    team_data = _team_copy(team)
+    if not team_data:
+        return False
+    name = str(team_data.get("name") or "").strip().upper()
+    team_id = str(team_data.get("team_id") or "").strip().upper()
+    if not name or not team_id:
+        return False
+    if KNOCKOUT_REFERENCE_PATTERN.match(name) or KNOCKOUT_REFERENCE_PATTERN.match(team_id):
+        return False
+    return True
+
+
+def materialize_actual_knockout_fixtures(
+    matches: list[dict],
+    *,
+    edition: str,
+) -> list[dict]:
+    """Promote knockout placeholders to official fixtures once predecessors are final.
+
+    This only resolves matches from completed prior rounds and never uses predictions
+    to invent future pairings.
+    """
+    materialized = project_knockout_matches(
+        matches,
+        edition=edition,
+        prefer_actual=True,
+        prefer_prediction=False,
+    )
+    for match in materialized:
+        if str(match.get("phase") or "") not in {
+            "quarter_final",
+            "semi_final",
+            "third_place",
+            "final",
+        }:
+            continue
+        if str(match.get("status") or "") != "knockout_placeholder_until_teams_known":
+            continue
+        if _is_resolved_knockout_team(match.get("home_team")) and _is_resolved_knockout_team(match.get("away_team")):
+            match["status"] = "fixture_official"
+    return materialized
+
+
+def apply_prediction_items_to_matches(matches: list[dict], prediction_items: dict[str, dict] | None) -> list[dict]:
+    if not prediction_items:
+        return [copy.deepcopy(match) for match in matches]
+    enriched = [copy.deepcopy(match) for match in matches]
+    for match in enriched:
+        item = (prediction_items or {}).get(str(match.get("match_id") or ""))
+        if not item:
+            continue
+        prediction = copy.deepcopy(item.get("prediction") or {})
+        if prediction:
+            match["prediction"] = prediction
+        match["prediction_item"] = copy.deepcopy(item)
+        if item.get("prediction_source_path") and not match.get("prediction_report"):
+            match["prediction_report"] = str(item.get("prediction_source_path"))
+        if prediction and not match.get("prediction_status"):
+            match["prediction_status"] = "locked_pre_match"
+    return enriched
+
+
 def match_overrides_path(root: Path, edition: str) -> Path:
-    return edition_data_root(root, edition) / "match-overrides.json"
+    return person_edition_root(root, edition) / "match-overrides.json"
 
 
 def _has_overlay_value(key: str, value: object) -> bool:
     if key == "status":
-        return bool(value) and value not in {"fixture_official", "knockout_placeholder_until_teams_known"}
+        return bool(value) and value != "knockout_placeholder_until_teams_known"
     return value not in (None, "", [], {})
 
 
@@ -802,8 +1040,8 @@ def ensure_edition_wiki(root: Path, edition: str) -> None:
 
 
 def load_match_ledger(root: Path, edition: str) -> dict:
-    local_path = edition_data_root(root, edition) / "match-ledger.json"
-    public_path = public_edition_data_root(root, edition) / "match-ledger.json"
+    local_path = person_edition_root(root, edition) / "match-ledger.json"
+    public_path = edition_data_root(root, edition) / "match-ledger.json"
     overrides_path = match_overrides_path(root, edition)
     public_ledger = load_json(public_path, {}) if public_path.exists() else {}
     local_ledger = load_json(local_path, {}) if local_path.exists() else {}
@@ -816,16 +1054,17 @@ def load_match_ledger(root: Path, edition: str) -> dict:
 def save_match_ledger(root: Path, edition: str, ledger: dict) -> None:
     generated_at = iso_now()
     overrides = match_overrides_from_ledger(ledger, edition, generated_at)
-    if (public_edition_data_root(root, edition) / "match-ledger.json").exists():
+    public_path = edition_data_root(root, edition) / "match-ledger.json"
+    if public_path.exists():
         write_json(match_overrides_path(root, edition), overrides)
         local_ledger = copy.deepcopy(ledger)
         local_ledger["mode"] = "worldcup-local-match-ledger-compat-view"
         local_ledger["summary"] = dict(local_ledger.get("summary", {}))
         local_ledger["summary"]["compat_note"] = "Canonical facts live in wiki/public; local match state lives in match-overrides.json."
         local_ledger["matches"] = canonical_matches(local_ledger.get("matches", []) or [])
-        write_json(edition_data_root(root, edition) / "match-ledger.json", local_ledger)
+        write_json(person_edition_root(root, edition) / "match-ledger.json", local_ledger)
         return
-    write_json(edition_data_root(root, edition) / "match-ledger.json", ledger)
+    write_json(public_path, ledger)
 
 
 def prediction_report_path(root: Path, edition: str, date: str) -> Path:
@@ -848,7 +1087,8 @@ def poster_result_path(root: Path, edition: str, date: str, backend: str) -> Pat
 
 def match_on_date(match: dict, date: str) -> bool:
     kickoff = parse_datetime(str(match.get("kickoff_at", "")))
-    return bool(kickoff and kickoff.date().isoformat() == date)
+    local_kickoff = beijing_datetime(kickoff)
+    return bool(local_kickoff and local_kickoff.date().isoformat() == date)
 
 
 def match_started(match: dict, now: datetime) -> bool:
@@ -1022,6 +1262,15 @@ def render_daily_prediction_markdown(report: dict) -> str:
 
         prediction = item.get("prediction", {})
         score = prediction.get("score", {"home": 0, "away": 0})
+        knockout = prediction.get("knockout") or {}
+        is_knockout = str(item.get("phase") or "").strip().lower() in {
+            "round_of_32",
+            "round_of_16",
+            "quarter_final",
+            "semi_final",
+            "third_place",
+            "final",
+        }
 
         # 1. Basic Info
         lines.extend([
@@ -1047,6 +1296,25 @@ def render_daily_prediction_markdown(report: dict) -> str:
             f"- **回溯决策依据**: {reason}",
             "",
         ])
+
+        if is_knockout and knockout:
+            regular = knockout.get("regular_time", {}) or {}
+            extra = knockout.get("extra_time", {}) or {}
+            penalties = knockout.get("penalties", {}) or {}
+            advance = knockout.get("advance", {}) or {}
+            regular_score = regular.get("score", {}) or {}
+            extra_score = extra.get("score", {}) or {}
+            penalties_score = penalties.get("score", {}) or {}
+            lines.extend([
+                "#### Knockout Prediction",
+                f"- **90分钟比分**: `{regular_score.get('home', '-')}-{regular_score.get('away', '-')}`",
+                f"- **是否进入加时**: `{ '是' if extra.get('played') else '否' }`",
+                f"- **加时比分**: `{extra_score.get('home', '-')}-{extra_score.get('away', '-')}`" if extra.get("played") else "- **加时比分**: `否`",
+                f"- **是否进入点球**: `{ '是' if penalties.get('played') else '否' }`",
+                f"- **点球比分**: `{penalties_score.get('home', '-')}-{penalties_score.get('away', '-')}`" if penalties.get("played") else "- **点球比分**: `否`",
+                f"- **最终晋级**: `{advance.get('winner_name', '待定')}`",
+                "",
+            ])
 
         # 3. Data Model Breakdown
         ds = item.get("data_score", {}) or {}

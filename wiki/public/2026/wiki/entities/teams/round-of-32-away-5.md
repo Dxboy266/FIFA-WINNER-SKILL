@@ -1,0 +1,21 @@
+---
+type: entity
+entity_type: national_team
+edition: 2026
+status: enriched
+updated: 2026-06-18
+---
+
+# Group I runners-up
+
+## 基本信息
+
+- **Team ID**: `round_of_32-away-5`
+
+##  upcoming 比赛
+
+- **2026-06-30T17:00:00Z**: Group E runners-up vs Group I runners-up @ AT&T Stadium, Arlington, Texas
+
+---
+
+*Generated at 2026-06-18T19:30:59.213432+08:00*

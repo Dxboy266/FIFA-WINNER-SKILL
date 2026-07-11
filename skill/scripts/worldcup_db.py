@@ -8,6 +8,12 @@ import sqlite3
 from pathlib import Path
 
 
+CANONICAL_RUN_TYPE = "canonical"
+EXPERIMENT_RUN_TYPE = "experiment"
+LOCKABLE_PREDICTION_STATUSES = {"locked_pre_match", "kickoff_locked", "result_locked"}
+TERMINAL_LOCK_STATUSES = {"kickoff_locked", "result_locked"}
+
+
 def get_db_connection(db_path: str | Path) -> sqlite3.Connection:
     """Get sqlite3 connection with foreign keys enabled."""
     conn = sqlite3.connect(str(db_path))
@@ -83,7 +89,10 @@ def init_database(db_path: str | Path) -> None:
                 CREATE TABLE IF NOT EXISTS predictions (
                     match_id               TEXT PRIMARY KEY,
                     prediction_date        TEXT,
-                    prediction_status      TEXT DEFAULT 'locked_pre_match_prediction',
+                    prediction_status      TEXT DEFAULT 'pending',
+                    locked_at              TEXT,
+                    lock_reason            TEXT,
+                    run_type               TEXT DEFAULT 'canonical',
                     predicted_result       TEXT,
                     predicted_score_home   INTEGER,
                     predicted_score_away   INTEGER,
@@ -100,6 +109,25 @@ def init_database(db_path: str | Path) -> None:
                     FOREIGN KEY (match_id) REFERENCES matches(match_id) ON DELETE CASCADE
                 )
             """)
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS prediction_experiments (
+                    experiment_id          TEXT PRIMARY KEY,
+                    match_id               TEXT NOT NULL,
+                    prediction_date        TEXT,
+                    run_id                 TEXT,
+                    predicted_result       TEXT,
+                    predicted_score_home   INTEGER,
+                    predicted_score_away   INTEGER,
+                    predicted_total_goals  INTEGER,
+                    confidence             TEXT,
+                    evidence_quality       TEXT,
+                    report_json_path       TEXT,
+                    generated_at           TEXT,
+                    payload_json           TEXT NOT NULL,
+                    FOREIGN KEY (match_id) REFERENCES matches(match_id) ON DELETE CASCADE
+                )
+            """)
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_prediction_experiments_match_id ON prediction_experiments(match_id);")
 
             conn.execute("""
                 CREATE TABLE IF NOT EXISTS prediction_analysis_layers (
@@ -115,6 +143,12 @@ def init_database(db_path: str | Path) -> None:
                 )
             """)
             conn.execute("CREATE INDEX IF NOT EXISTS idx_prediction_analysis_layer_id ON prediction_analysis_layers(layer_id);")
+
+            _ensure_column(conn, "predictions", "locked_at", "TEXT")
+            _ensure_column(conn, "predictions", "lock_reason", "TEXT")
+            _ensure_column(conn, "predictions", "run_type", "TEXT DEFAULT 'canonical'")
+            _migrate_prediction_status_values(conn)
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_predictions_run_type ON predictions(run_type);")
 
             # Create Evaluations table
             conn.execute("""
@@ -338,6 +372,138 @@ def init_database(db_path: str | Path) -> None:
         conn.close()
 
 
+def _ensure_column(conn: sqlite3.Connection, table: str, column: str, definition: str) -> None:
+    existing = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})").fetchall()}
+    if column not in existing:
+        conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
+
+
+def _migrate_prediction_status_values(conn: sqlite3.Connection) -> None:
+    mappings = {
+        "locked_pre_match_prediction": "locked_pre_match",
+        "locked_pre_match": "locked_pre_match",
+        "pending": "pending",
+        "kickoff_locked": "kickoff_locked",
+        "result_locked": "result_locked",
+    }
+    for old_status, new_status in mappings.items():
+        conn.execute(
+            "UPDATE predictions SET prediction_status = ? WHERE prediction_status = ?",
+            (new_status, old_status),
+        )
+    conn.execute(
+        """
+        UPDATE predictions
+        SET prediction_status = CASE
+            WHEN prediction_status IS NULL OR TRIM(prediction_status) = '' THEN 'pending'
+            ELSE prediction_status
+        END
+        """
+    )
+    conn.execute(
+        """
+        UPDATE predictions
+        SET run_type = CASE
+            WHEN run_type IS NULL OR TRIM(run_type) = '' THEN 'canonical'
+            ELSE run_type
+        END
+        """
+    )
+
+
+def _canonical_prediction_payload(prediction: dict) -> dict:
+    pred_info = prediction.get("prediction") or {}
+    score = pred_info.get("score") or {}
+    divination = prediction.get("divination_overlay") or {}
+
+    predicted_total_goals = pred_info.get("total_goals")
+    goals_line_2_5 = pred_info.get("goals_line_2_5")
+    evidence_quality = pred_info.get("evidence_quality") or prediction.get("evidence_quality")
+    market_status = prediction.get("market_odds_status") or {}
+    has_usable_market_odds = bool(prediction.get("market_odds")) and not market_status.get("is_mock")
+    has_odds = 1 if (has_usable_market_odds or pred_info.get("has_odds")) else 0
+    has_referee = 1 if (prediction.get("referee_analysis") or pred_info.get("has_referee")) else 0
+    has_news = 1 if (prediction.get("daily_evidence") or pred_info.get("has_news") or prediction.get("late_news")) else 0
+    report_json_path = prediction.get("report_json_path") or prediction.get("prediction_report")
+
+    return {
+        "match_id": prediction["match_id"],
+        "prediction_date": prediction.get("prediction_date") or prediction.get("generated_at", "")[:10],
+        "prediction_status": prediction.get("status") or "locked_pre_match",
+        "locked_at": prediction.get("locked_at") or prediction.get("generated_at"),
+        "lock_reason": prediction.get("lock_reason") or "pre_match_canonical_prediction",
+        "run_type": prediction.get("run_type") or CANONICAL_RUN_TYPE,
+        "predicted_result": pred_info.get("result") or pred_info.get("predicted_outcome"),
+        "predicted_score_home": score.get("home"),
+        "predicted_score_away": score.get("away"),
+        "predicted_total_goals": predicted_total_goals,
+        "goals_line_2_5": goals_line_2_5,
+        "confidence": pred_info.get("confidence"),
+        "divination_hexagram": divination.get("hexagram"),
+        "evidence_quality": evidence_quality,
+        "has_odds": has_odds,
+        "has_referee": has_referee,
+        "has_news": has_news,
+        "report_json_path": report_json_path,
+        "generated_at": prediction.get("generated_at"),
+    }
+
+
+def _merge_pending_prediction(existing: sqlite3.Row, incoming: dict) -> dict:
+    merged = dict(existing)
+    for key, value in incoming.items():
+        if key in {"match_id", "run_type"}:
+            merged[key] = value
+            continue
+        if key == "prediction_status":
+            merged[key] = "locked_pre_match" if value else (existing["prediction_status"] or "pending")
+            continue
+        if key == "locked_at":
+            merged[key] = existing["locked_at"] or value
+            continue
+        if key == "lock_reason":
+            merged[key] = existing["lock_reason"] or value
+            continue
+        if existing[key] in (None, "", 0) and value not in (None, "", 0):
+            merged[key] = value
+    if merged.get("prediction_status") == "pending" and merged.get("predicted_result"):
+        merged["prediction_status"] = "locked_pre_match"
+        merged["locked_at"] = merged.get("locked_at") or incoming.get("generated_at")
+        merged["lock_reason"] = merged.get("lock_reason") or "pending_prediction_completed"
+    return merged
+
+
+def get_prediction(conn: sqlite3.Connection, match_id: str, run_type: str = CANONICAL_RUN_TYPE) -> dict | None:
+    row = conn.execute(
+        "SELECT * FROM predictions WHERE match_id = ? AND run_type = ?",
+        (match_id, run_type),
+    ).fetchone()
+    return dict(row) if row else None
+
+
+def lock_prediction(
+    conn: sqlite3.Connection,
+    match_id: str,
+    *,
+    status: str,
+    locked_at: str | None,
+    reason: str,
+    run_type: str = CANONICAL_RUN_TYPE,
+) -> None:
+    if status not in TERMINAL_LOCK_STATUSES | {"locked_pre_match"}:
+        raise ValueError(f"Unsupported lock status: {status}")
+    conn.execute(
+        """
+        UPDATE predictions
+        SET prediction_status = ?,
+            locked_at = COALESCE(locked_at, ?),
+            lock_reason = COALESCE(lock_reason, ?)
+        WHERE match_id = ? AND run_type = ?
+        """,
+        (status, locked_at, reason, match_id, run_type),
+    )
+
+
 def save_team(conn: sqlite3.Connection, team: dict) -> None:
     """Upsert a team record."""
     conn.execute("""
@@ -444,76 +610,143 @@ def save_match(conn: sqlite3.Connection, match: dict) -> None:
     })
 
 
-def save_prediction(conn: sqlite3.Connection, prediction: dict) -> None:
-    """Upsert a prediction record with rich evidence metadata."""
-    pred_info = prediction.get("prediction") or {}
-    score = pred_info.get("score") or {}
-    divination = prediction.get("divination_overlay") or {}
+def save_prediction(conn: sqlite3.Connection, prediction: dict) -> dict:
+    """Persist a prediction while protecting canonical history from mutation."""
+    run_type = prediction.get("run_type") or CANONICAL_RUN_TYPE
 
-    predicted_total_goals = pred_info.get("total_goals")
-    goals_line_2_5 = pred_info.get("goals_line_2_5")
-    evidence_quality = pred_info.get("evidence_quality") or prediction.get("evidence_quality")
-    
-    market_status = prediction.get("market_odds_status") or {}
-    has_usable_market_odds = bool(prediction.get("market_odds")) and not market_status.get("is_mock")
-    has_odds = 1 if (has_usable_market_odds or pred_info.get("has_odds")) else 0
-    has_referee = 1 if (prediction.get("referee_analysis") or pred_info.get("has_referee")) else 0
-    has_news = 1 if (prediction.get("daily_evidence") or pred_info.get("has_news") or prediction.get("late_news")) else 0
-    report_json_path = prediction.get("report_json_path") or prediction.get("prediction_report")
+    if run_type == EXPERIMENT_RUN_TYPE:
+        pred_info = prediction.get("prediction") or {}
+        score = pred_info.get("score") or {}
+        experiment_id = prediction.get("experiment_id") or (
+            f"{prediction['match_id']}::{prediction.get('generated_at', '')}::{prediction.get('run_id', 'manual')}"
+        )
+        conn.execute(
+            """
+            INSERT INTO prediction_experiments (
+                experiment_id, match_id, prediction_date, run_id, predicted_result,
+                predicted_score_home, predicted_score_away, predicted_total_goals,
+                confidence, evidence_quality, report_json_path, generated_at, payload_json
+            )
+            VALUES (
+                :experiment_id, :match_id, :prediction_date, :run_id, :predicted_result,
+                :predicted_score_home, :predicted_score_away, :predicted_total_goals,
+                :confidence, :evidence_quality, :report_json_path, :generated_at, :payload_json
+            )
+            ON CONFLICT(experiment_id) DO UPDATE SET
+                prediction_date = excluded.prediction_date,
+                run_id = excluded.run_id,
+                predicted_result = excluded.predicted_result,
+                predicted_score_home = excluded.predicted_score_home,
+                predicted_score_away = excluded.predicted_score_away,
+                predicted_total_goals = excluded.predicted_total_goals,
+                confidence = excluded.confidence,
+                evidence_quality = excluded.evidence_quality,
+                report_json_path = excluded.report_json_path,
+                generated_at = excluded.generated_at,
+                payload_json = excluded.payload_json
+            """,
+            {
+                "experiment_id": experiment_id,
+                "match_id": prediction["match_id"],
+                "prediction_date": prediction.get("prediction_date") or prediction.get("generated_at", "")[:10],
+                "run_id": prediction.get("run_id") or "manual",
+                "predicted_result": pred_info.get("result") or pred_info.get("predicted_outcome"),
+                "predicted_score_home": score.get("home"),
+                "predicted_score_away": score.get("away"),
+                "predicted_total_goals": pred_info.get("total_goals"),
+                "confidence": pred_info.get("confidence"),
+                "evidence_quality": pred_info.get("evidence_quality") or prediction.get("evidence_quality"),
+                "report_json_path": prediction.get("report_json_path") or prediction.get("prediction_report"),
+                "generated_at": prediction.get("generated_at"),
+                "payload_json": json.dumps(prediction, ensure_ascii=False, sort_keys=True),
+            },
+        )
+        return {"status": "saved_experiment", "match_id": prediction["match_id"], "run_type": run_type}
 
-    conn.execute("""
+    payload = _canonical_prediction_payload(prediction)
+    existing = conn.execute(
+        "SELECT * FROM predictions WHERE match_id = ? AND run_type = ?",
+        (payload["match_id"], CANONICAL_RUN_TYPE),
+    ).fetchone()
+
+    if existing:
+        if existing["prediction_status"] in TERMINAL_LOCK_STATUSES:
+            return {
+                "status": "skipped_locked",
+                "match_id": payload["match_id"],
+                "run_type": CANONICAL_RUN_TYPE,
+                "prediction_status": existing["prediction_status"],
+            }
+        if existing["prediction_status"] == "locked_pre_match":
+            return {
+                "status": "reused_existing",
+                "match_id": payload["match_id"],
+                "run_type": CANONICAL_RUN_TYPE,
+                "prediction_status": existing["prediction_status"],
+            }
+        payload = _merge_pending_prediction(existing, payload)
+
+    conn.execute(
+        """
         INSERT INTO predictions (
-            match_id, prediction_date, prediction_status, predicted_result, 
-            predicted_score_home, predicted_score_away, predicted_total_goals, 
-            goals_line_2_5, confidence, divination_hexagram, evidence_quality, 
+            match_id, prediction_date, prediction_status, locked_at, lock_reason, run_type,
+            predicted_result, predicted_score_home, predicted_score_away, predicted_total_goals,
+            goals_line_2_5, confidence, divination_hexagram, evidence_quality,
             has_odds, has_referee, has_news, report_json_path, generated_at
         )
         VALUES (
-            :match_id, :prediction_date, :prediction_status, :predicted_result, 
-            :predicted_score_home, :predicted_score_away, :predicted_total_goals, 
-            :goals_line_2_5, :confidence, :divination_hexagram, :evidence_quality, 
+            :match_id, :prediction_date, :prediction_status, :locked_at, :lock_reason, :run_type,
+            :predicted_result, :predicted_score_home, :predicted_score_away, :predicted_total_goals,
+            :goals_line_2_5, :confidence, :divination_hexagram, :evidence_quality,
             :has_odds, :has_referee, :has_news, :report_json_path, :generated_at
         )
         ON CONFLICT(match_id) DO UPDATE SET
             prediction_date = excluded.prediction_date,
             prediction_status = excluded.prediction_status,
-            predicted_result = excluded.predicted_result,
-            predicted_score_home = excluded.predicted_score_home,
-            predicted_score_away = excluded.predicted_score_away,
-            predicted_total_goals = excluded.predicted_total_goals,
-            goals_line_2_5 = excluded.goals_line_2_5,
-            confidence = excluded.confidence,
-            divination_hexagram = excluded.divination_hexagram,
-            evidence_quality = excluded.evidence_quality,
-            has_odds = excluded.has_odds,
-            has_referee = excluded.has_referee,
-            has_news = excluded.has_news,
-            report_json_path = excluded.report_json_path,
-            generated_at = excluded.generated_at
-    """, {
-        "match_id": prediction["match_id"],
-        "prediction_date": prediction.get("prediction_date") or prediction.get("generated_at", "")[:10],
-        "prediction_status": prediction.get("status") or "locked_pre_match_prediction",
-        "predicted_result": pred_info.get("result") or pred_info.get("predicted_outcome"),
-        "predicted_score_home": score.get("home"),
-        "predicted_score_away": score.get("away"),
-        "predicted_total_goals": predicted_total_goals,
-        "goals_line_2_5": goals_line_2_5,
-        "confidence": pred_info.get("confidence"),
-        "divination_hexagram": divination.get("hexagram"),
-        "evidence_quality": evidence_quality,
-        "has_odds": has_odds,
-        "has_referee": has_referee,
-        "has_news": has_news,
-        "report_json_path": report_json_path,
-        "generated_at": prediction.get("generated_at")
-    })
+            locked_at = COALESCE(predictions.locked_at, excluded.locked_at),
+            lock_reason = COALESCE(predictions.lock_reason, excluded.lock_reason),
+            run_type = excluded.run_type,
+            predicted_result = COALESCE(predictions.predicted_result, excluded.predicted_result),
+            predicted_score_home = COALESCE(predictions.predicted_score_home, excluded.predicted_score_home),
+            predicted_score_away = COALESCE(predictions.predicted_score_away, excluded.predicted_score_away),
+            predicted_total_goals = COALESCE(predictions.predicted_total_goals, excluded.predicted_total_goals),
+            goals_line_2_5 = COALESCE(predictions.goals_line_2_5, excluded.goals_line_2_5),
+            confidence = COALESCE(predictions.confidence, excluded.confidence),
+            divination_hexagram = COALESCE(predictions.divination_hexagram, excluded.divination_hexagram),
+            evidence_quality = COALESCE(predictions.evidence_quality, excluded.evidence_quality),
+            has_odds = CASE WHEN predictions.has_odds = 0 THEN excluded.has_odds ELSE predictions.has_odds END,
+            has_referee = CASE WHEN predictions.has_referee = 0 THEN excluded.has_referee ELSE predictions.has_referee END,
+            has_news = CASE WHEN predictions.has_news = 0 THEN excluded.has_news ELSE predictions.has_news END,
+            report_json_path = COALESCE(predictions.report_json_path, excluded.report_json_path),
+            generated_at = COALESCE(predictions.generated_at, excluded.generated_at)
+        """,
+        payload,
+    )
+    return {
+        "status": "saved_canonical" if not existing else "merged_pending",
+        "match_id": payload["match_id"],
+        "run_type": CANONICAL_RUN_TYPE,
+        "prediction_status": payload["prediction_status"],
+    }
 
 
 def save_prediction_analysis_layers(conn: sqlite3.Connection, prediction: dict) -> None:
     """Store explainability layers as a query index while keeping JSON reports canonical."""
     match_id = prediction["match_id"]
     generated_at = prediction.get("generated_at")
+    run_type = prediction.get("run_type") or CANONICAL_RUN_TYPE
+    if run_type == CANONICAL_RUN_TYPE:
+        pred_row = conn.execute(
+            "SELECT prediction_status FROM predictions WHERE match_id = ? AND run_type = ?",
+            (match_id, CANONICAL_RUN_TYPE),
+        ).fetchone()
+        if pred_row and pred_row["prediction_status"] in LOCKABLE_PREDICTION_STATUSES:
+            existing_count = conn.execute(
+                "SELECT COUNT(1) AS c FROM prediction_analysis_layers WHERE match_id = ?",
+                (match_id,),
+            ).fetchone()["c"]
+            if existing_count:
+                return
     for layer in prediction.get("analysis_layers", []) or []:
         layer_id = str(layer.get("layer_id") or "")
         if not layer_id:
@@ -673,6 +906,14 @@ def save_evaluation(conn: sqlite3.Connection, evaluation: dict) -> None:
     stat_date = evaluation.get("evaluation_date") or evaluation.get("evaluated_at", "")[:10]
     if stat_date:
         rebuild_daily_stats(conn, stat_date)
+    lock_prediction(
+        conn,
+        match_id,
+        status="result_locked",
+        locked_at=evaluation.get("evaluated_at") or evaluation.get("evaluation_date"),
+        reason="actual_result_recorded",
+        run_type=CANONICAL_RUN_TYPE,
+    )
 
 
 def rebuild_daily_stats(conn: sqlite3.Connection, stat_date: str) -> None:

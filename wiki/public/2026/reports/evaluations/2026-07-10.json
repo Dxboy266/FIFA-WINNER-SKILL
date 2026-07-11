@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-07-10",
+  "generated_at": "2026-07-11T16:45:30+08:00",
+  "mode": "worldcup-prediction-post-match-evaluation",
+  "summary": {
+    "evaluations": 1,
+    "evaluated_matches": 1,
+    "blocked_missing_final_score": 0,
+    "result_hits": 1,
+    "score_hits": 1,
+    "total_goals_hits": 1,
+    "confidence_calibration": {
+      "medium": {
+        "evaluated_matches": 1,
+        "result_hits": 1,
+        "result_hit_rate": 1.0
+      }
+    }
+  },
+  "evaluations": [
+    {
+      "match_id": "2026-QF-01",
+      "status": "evaluated",
+      "predicted_result": "home_win",
+      "prediction_confidence": "medium",
+      "actual_result": "home_win",
+      "actual_score": {
+        "home": 2,
+        "away": 0
+      },
+      "actual_total_goals": 2,
+      "result_hit": true,
+      "score_hit": true,
+      "total_goals_hit": true,
+      "prediction_kept_locked": true,
+      "actual_regular_time_score": {
+        "home": 2,
+        "away": 0
+      },
+      "actual_regular_time_result": "home_win",
+      "regular_time_result_hit": true,
+      "regular_time_score_hit": true,
+      "actual_knockout_result": {
+        "regular_time": {
+          "home": 2,
+          "away": 0,
+          "result": "home_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "home"
+        },
+        "full_time": {
+          "home": 2,
+          "away": 0,
+          "result": "home_win"
+        }
+      },
+      "knockout_prediction": {
+        "is_knockout": true,
+        "phase": "quarter_final",
+        "regular_time": {
+          "result": "home_win",
+          "score": {
+            "home": 2,
+            "away": 0
+          }
+        },
+        "extra_time": {
+          "played": false,
+          "result": "",
+          "score": {
+            "home": null,
+            "away": null
+          },
+          "period_score": {
+            "home": null,
+            "away": null
+          }
+        },
+        "penalties": {
+          "played": false,
+          "winner": "",
+          "winner_name": "",
+          "score": {
+            "home": null,
+            "away": null
+          }
+        },
+        "advance": {
+          "winner": "home",
+          "winner_result": "home_advance",
+          "winner_name": "France"
+        }
+      },
+      "extra_time_hit": true,
+      "penalties_hit": true,
+      "advance_hit": true
+    }
+  ],
+  "safety_invariants": [
+    "post_match_evaluation_does_not_rewrite_locked_pre_match_predictions"
+  ]
+}

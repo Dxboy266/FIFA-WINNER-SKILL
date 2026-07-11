@@ -2,23 +2,26 @@
 type: entity
 entity_type: player
 edition: 2026
-status: partial
-updated: 2026-06-09
+status: enriched
+updated: 2026-06-18
 ---
 
-# Unknown Player
+# MODIBA Aubrey
 
 ## 基础信息
 
-- Player ID：`rsa-06`
-- 国家队：South Africa
-- 位置：DF
-- 俱乐部：Mamelodi Sundowns FC (RSA)
-- 来源完整性：partial
+- **Player ID**: `rsa-06`
+- **国家队**: South Africa
+- **位置**: DF
+- **号码**: #6
+- **俱乐部**: Mamelodi Sundowns FC (RSA)
+- **出生日期**: 1995-07-22
+- **身高**: 171cm
 
-## 待补深档
+## 当前状态
 
-- 国家队出场和进球
-- 世界杯/洲际赛经历
-- 近期状态、伤停和出场时间
-- 预测相关标签
+✅ 健康可用
+
+---
+
+*Generated at 2026-06-18T19:30:59.213432+08:00*

@@ -128,6 +128,12 @@ Every daily prediction should include `play_card` with share title, match hook, 
 - Missing roster, injury, lineup or recent-form evidence must downgrade confidence.
 - Reports must keep the entertainment disclaimer.
 
+- Exact score must come from a scoreline distribution, not from a single default template.
+- Encode scoreline failure modes explicitly: repeated `2-1`, `1-2`, and `1-1` overuse is a model issue, not a harmless style choice.
+- Treat `result correct + score wrong` as a separate learning signal; do not only tune winner/loser direction.
+- If evaluated matches show more clean sheets than predictions, increase shutout branches and suppress automatic loser-goal assumptions.
+- Keep scoreline heuristics only when post-match evidence supports them; validation beats intuition.
+
 ## Poster Rules
 
 - `image2` is a configurable backend alias.

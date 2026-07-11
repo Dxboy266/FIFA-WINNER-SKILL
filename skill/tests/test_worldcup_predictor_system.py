@@ -1,7 +1,9 @@
 import importlib.util
 import json
 import tempfile
+import threading
 import unittest
+import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -269,6 +271,170 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
             self.assertEqual(second["summary"]["predictions_created"], 0)
             self.assertEqual(second["summary"]["locked_existing_predictions"], 1)
 
+    def test_daily_prediction_reuses_published_report_when_db_missing(self):
+        init_module = load_script("worldcup_edition_init.py")
+        daily_module = load_script("daily_prediction_runner.py")
+        core_module = load_script("worldcup_core.py")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            ledger_path = core_module.edition_data_root(root, "2098") / "match-ledger.json"
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            now = datetime(2026, 6, 9, 12, tzinfo=timezone.utc)
+            ledger["matches"] = [ledger["matches"][0]]
+            ledger["matches"][0]["kickoff_at"] = (now + timedelta(hours=4)).isoformat()
+            ledger["matches"][0]["home_team"] = {"name": "Alpha", "team_id": "alpha"}
+            ledger["matches"][0]["away_team"] = {"name": "Beta", "team_id": "beta"}
+            ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            first = daily_module.run_daily_predictions(
+                root=root,
+                edition="2098",
+                date="2026-06-09",
+                now="2026-06-09T12:00:00+00:00",
+                poster=False,
+            )
+            first_prediction = first["predictions"][0]["prediction"]
+
+            db_path = core_module.worldcup_db_path(root, "2098")
+            if db_path.exists():
+                db_path.unlink()
+
+            def should_not_regenerate(**kwargs):
+                raise AssertionError("published prediction should be reused instead of regenerated")
+
+            daily_module.predict_match = should_not_regenerate
+            second = daily_module.run_daily_predictions(
+                root=root,
+                edition="2098",
+                date="2026-06-09",
+                now="2026-06-09T12:30:00+00:00",
+                poster=False,
+            )
+
+            self.assertEqual(second["summary"]["predictions_created"], 0)
+            self.assertEqual(second["summary"]["locked_existing_predictions"], 1)
+            self.assertEqual(second["summary"]["reused_report_predictions"], 1)
+            self.assertEqual(second["predictions"][0]["prediction"]["result"], first_prediction["result"])
+            self.assertEqual(second["predictions"][0]["prediction"]["score"], first_prediction["score"])
+
+    def test_daily_prediction_passes_history_index_and_reconciled_evidence(self):
+        init_module = load_script("worldcup_edition_init.py")
+        daily_module = load_script("daily_prediction_runner.py")
+        core_module = load_script("worldcup_core.py")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            ledger_path = core_module.edition_data_root(root, "2098") / "match-ledger.json"
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            ledger["matches"] = [ledger["matches"][0]]
+            ledger["matches"][0]["kickoff_at"] = "2026-06-09T18:00:00+00:00"
+            ledger["matches"][0]["home_team"] = {"name": "Alpha", "team_id": "alpha"}
+            ledger["matches"][0]["away_team"] = {"name": "Beta", "team_id": "beta"}
+            ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            history_path = core_module.edition_data_root(root, "2098") / "history" / "team-wc-history.json"
+            history_path.parent.mkdir(parents=True, exist_ok=True)
+            history_path.write_text(
+                json.dumps(
+                    {
+                        "teams": [
+                            {"team_id": "alpha", "wc_appearances": 5, "wc_titles": 1, "wc_total_matches": 20, "wc_wins": 10, "wc_best_result": "winner"},
+                            {"team_id": "beta", "wc_appearances": 1, "wc_titles": 0, "wc_total_matches": 3, "wc_wins": 0, "wc_best_result": "group_stage"},
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            roster_path = core_module.raw_edition_root(root, "2098") / "rosters" / "fifa-squad-lists.json"
+            roster_path.parent.mkdir(parents=True, exist_ok=True)
+            roster_path.write_text(
+                json.dumps(
+                    {
+                        "version": 1,
+                        "edition": "2098",
+                        "source_integrity": "complete",
+                        "teams": [
+                            {"team_id": "alpha", "players": [{"position": "GK"}, {"position": "DF"}, {"position": "MF"}, {"position": "FW"}], "avg_age_years": 27.8, "avg_height_cm": 183.0},
+                            {"team_id": "beta", "players": [{"position": "GK"}, {"position": "DF"}, {"position": "MF"}, {"position": "FW"}], "avg_age_years": 27.8, "avg_height_cm": 183.0},
+                        ],
+                        "summary": {"teams": 2, "players": 8},
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            evidence_plan_path = core_module.edition_data_root(root, "2098") / "prediction-evidence-plan.json"
+            evidence_plan_path.write_text(
+                json.dumps(
+                    {
+                        "items": [
+                            {"evidence_id": "official_rosters", "status": "blocked", "current_counts": {}, "blockers": ["roster_missing"]},
+                            {"evidence_id": "historical_worldcup_results", "status": "blocked", "current_counts": {}, "blockers": ["history_missing"]},
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            captured = {}
+            original_predict_match = daily_module.predict_match
+
+            def fake_predict_match(**kwargs):
+                captured["history_index"] = kwargs.get("history_index")
+                captured["evidence_index"] = kwargs.get("evidence_index")
+                return {
+                    "match_id": kwargs["match"]["match_id"],
+                    "kickoff_at": kwargs["match"]["kickoff_at"],
+                    "venue": kwargs["match"].get("venue", ""),
+                    "group": kwargs["match"].get("group", ""),
+                    "phase": kwargs["match"].get("phase", "group"),
+                    "home_team": {"team_id": "alpha", "name": "Alpha", "ranking": 0, "points": 0.0},
+                    "away_team": {"team_id": "beta", "name": "Beta", "ranking": 0, "points": 0.0},
+                    "prediction": {
+                        "result": "draw",
+                        "predicted_outcome": "draw",
+                        "score": {"home": 1, "away": 1},
+                        "total_goals": 2,
+                        "goals_line_2_5": "under",
+                        "confidence": "low",
+                        "confidence_label": "low",
+                        "evidence_quality": "thin",
+                    },
+                    "analysis_layers": [],
+                    "market_odds_status": {"status": "none"},
+                    "disclaimer": "test",
+                }
+
+            daily_module.predict_match = fake_predict_match
+            try:
+                daily_module.run_daily_predictions(
+                    root=root,
+                    edition="2098",
+                    date="2026-06-09",
+                    now="2026-06-09T12:00:00+00:00",
+                    poster=False,
+                )
+            finally:
+                daily_module.predict_match = original_predict_match
+
+            self.assertIn("ALPHA", captured["history_index"])
+            self.assertIn("BETA", captured["history_index"])
+            self.assertIn("official_rosters", captured["evidence_index"])
+            self.assertIn("historical_worldcup_results", captured["evidence_index"])
+
     def test_poster_generator_blocks_missing_image2_backend_without_fake_success(self):
         init_module = load_script("worldcup_edition_init.py")
         daily_module = load_script("daily_prediction_runner.py")
@@ -456,8 +622,93 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
             self.assertEqual(team_report["summary"]["predictions_created"], 1)
             self.assertEqual(team_report["filters"]["teams"], ["Alpha", "Beta"])
             self.assertTrue(
-                (root / "_meta/projects/世界杯预测/wiki/public/2098/reports/2026-06-09-alpha-vs-beta-prediction-report.json").exists()
+                (root / "_meta/projects/世界杯预测/wiki/public/2098/reports/backtests/2026-06-09-alpha-vs-beta-prediction-report.json").exists()
             )
+
+    def test_historical_proxy_missing_history_shrinks_ranking_signal(self):
+        scoring_module = load_script("prediction_scoring_model.py")
+
+        elite_ranking = {"points": 1900}
+        no_history_score = scoring_module.score_historical_proxy(elite_ranking, None)
+
+        self.assertEqual(scoring_module.score_ranking_strength(elite_ranking), 100.0)
+        self.assertEqual(no_history_score, 87.5)
+        self.assertLess(no_history_score, 100.0)
+
+        real_history_score = scoring_module.score_historical_proxy(
+            elite_ranking,
+            {
+                "wc_appearances": 18,
+                "wc_titles": 5,
+                "wc_total_matches": 110,
+                "wc_wins": 75,
+                "wc_best_result": "winner",
+            },
+        )
+        self.assertGreater(real_history_score, no_history_score)
+
+    def test_low_evidence_outcome_gate_prefers_draw_or_small_edge_contextually(self):
+        scoring_module = load_script("prediction_scoring_model.py")
+
+        draw_result = scoring_module._determine_outcome_from_context(
+            home_final=59.3,
+            away_final=42.6,
+            phase="group",
+            market_status="mock_invalid",
+            market_outcome=None,
+            home_news_sentiment=2.0,
+            away_news_sentiment=0.0,
+            rs_home=59.33,
+            rs_away=11.65,
+            sd_home=91.38,
+            sd_away=89.46,
+            evidence_quality="unusable",
+            three_track_votes={
+                "consensus": "home_win",
+                "counts": {"home_win": 3, "draw": 0, "away_win": 0},
+            },
+        )
+        self.assertEqual(draw_result[0], "home_win")
+
+        away_coinflip = scoring_module._determine_outcome_from_context(
+            home_final=56.6,
+            away_final=58.8,
+            phase="group",
+            market_status="none",
+            market_outcome=None,
+            home_news_sentiment=0.0,
+            away_news_sentiment=0.0,
+            rs_home=47.57,
+            rs_away=56.4,
+            sd_home=84.85,
+            sd_away=89.34,
+            evidence_quality="thin",
+            three_track_votes={
+                "consensus": "away_win",
+                "counts": {"home_win": 0, "draw": 1, "away_win": 2},
+            },
+        )
+        self.assertEqual(away_coinflip[0], "away_win")
+
+        home_coinflip = scoring_module._determine_outcome_from_context(
+            home_final=57.5,
+            away_final=55.7,
+            phase="group",
+            market_status="none",
+            market_outcome=None,
+            home_news_sentiment=1.0,
+            away_news_sentiment=0.0,
+            rs_home=55.52,
+            rs_away=43.05,
+            sd_home=85.01,
+            sd_away=92.6,
+            evidence_quality="thin",
+            three_track_votes={
+                "consensus": "draw",
+                "counts": {"home_win": 1, "draw": 1, "away_win": 1},
+            },
+        )
+        self.assertEqual(home_coinflip[0], "home_win")
 
     def test_prediction_evidence_plan_lists_required_families_and_current_status(self):
         init_module = load_script("worldcup_edition_init.py")
@@ -1202,9 +1453,17 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
             html_file = wiki_edition_root(root, "2098") / "dashboard" / "index.html"
             self.assertTrue(html_file.exists())
             html_content = html_file.read_text(encoding="utf-8")
-            self.assertIn("Team A", html_content)
-            self.assertIn("Team B", html_content)
-            self.assertIn("Fix alignment", html_content)
+            self.assertNotIn('id="dashData"', html_content)
+            self.assertIn('id="dashBootstrap"', html_content)
+            self.assertIn('id="btn-refresh-data"', html_content)
+            self.assertIn('prediction-dashboard.json', html_content)
+
+            static_data = wiki_edition_root(root, "2098") / "dashboard" / "prediction-dashboard.json"
+            self.assertTrue(static_data.exists())
+            static_payload = json.loads(static_data.read_text(encoding="utf-8"))
+            self.assertIn("Team A", static_payload["rendered"]["cards_html"])
+            self.assertIn("Team B", static_payload["rendered"]["cards_html"])
+            self.assertIn("Fix alignment", static_payload["rendered"]["actions_html"])
 
     def test_visual_dashboard_prefers_daily_evidence_odds_status_over_mock_report(self):
         init_module = load_script("worldcup_edition_init.py")
@@ -1387,6 +1646,488 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
             self.assertEqual(card["prediction_source"], "octopus_default")
             self.assertEqual(card["score_text"], "2-0")
 
+    def test_visual_dashboard_defaults_to_recent_two_dates_visible(self):
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        payload = {
+            "edition": "2098",
+            "generated_at": "2026-06-18T20:44:44+08:00",
+            "summary": {
+                "evaluated_matches": 0,
+                "result_hits": 0,
+                "avg_brier_score": 0.0,
+                "predictions": 2,
+                "placeholder_count": 0,
+                "total_cards": 2,
+            },
+            "comparison_stats": {},
+            "corrective_actions": [],
+            "model_issue_tags": [],
+            "daily_stats": [],
+            "schedule_data": {},
+            "cards": [
+                {
+                    "match_id": "2098-GA-01",
+                    "phase": "group",
+                    "group": "A",
+                    "beijing_date": "2026-06-17",
+                    "beijing_time": "19:00",
+                    "kickoff_at": "2026-06-17T11:00:00+00:00",
+                    "data_source": "prediction_report",
+                    "home_name": "Alpha",
+                    "away_name": "Beta",
+                    "score_text": "1-0",
+                    "predicted_result": "home_win",
+                },
+                {
+                    "match_id": "2098-GA-02",
+                    "phase": "group",
+                    "group": "A",
+                    "beijing_date": "2026-06-18",
+                    "beijing_time": "19:00",
+                    "kickoff_at": "2026-06-18T11:00:00+00:00",
+                    "data_source": "prediction_report",
+                    "home_name": "Gamma",
+                    "away_name": "Delta",
+                    "score_text": "1-1",
+                    "predicted_result": "draw",
+                },
+            ],
+        }
+
+        html = dashboard_module.render_html(payload, root=ROOT, html_path=ROOT / "dashboard.html")
+
+        self.assertEqual(payload["ui_defaults"]["active_date"], "2026-06-18")
+        self.assertEqual(payload["ui_defaults"]["visible_dates"], ["2026-06-17", "2026-06-18"])
+        self.assertNotIn('id="dashData"', html)
+        self.assertIn('id="dashBootstrap"', html)
+        self.assertIn('id="btn-refresh-data"', html)
+        self.assertIn('id="loadStatus"', html)
+
+    def test_knockout_prediction_structure_is_emitted(self):
+        model_module = load_script("prediction_scoring_model.py")
+
+        knockout = model_module._build_knockout_prediction(
+            phase="round_of_16",
+            predicted_outcome="draw",
+            predicted_score={"home": 1, "away": 1},
+            home_name="Alpha",
+            away_name="Beta",
+            home_final=62.0,
+            away_final=60.5,
+            edge_tier="slight",
+            game_script="low-event",
+            confidence="medium",
+        )
+
+        self.assertTrue(knockout["is_knockout"])
+        self.assertEqual(knockout["regular_time"]["score"]["home"], 1)
+        self.assertEqual(knockout["regular_time"]["score"]["away"], 1)
+        self.assertIn(knockout["advance"]["winner"], {"home", "away"})
+        self.assertTrue(knockout["extra_time"]["played"])
+        self.assertIn(knockout["penalties"]["played"], {True, False})
+
+    def test_fetch_knockout_payload_derives_regular_time_from_extra_time(self):
+        fetch_module = load_script("fetch_match_results.py")
+
+        knockout = fetch_module._build_knockout_result_payload(
+            {
+                "duration": "EXTRA_TIME",
+                "fullTime": {"home": 3, "away": 2},
+                "regularTime": {"home": None, "away": None},
+                "extraTime": {"home": 2, "away": 1},
+            },
+            "HOME_TEAM",
+        )
+
+        self.assertEqual(knockout["regular_time"]["home"], 1)
+        self.assertEqual(knockout["regular_time"]["away"], 1)
+        self.assertEqual(knockout["extra_time"]["home"], 2)
+        self.assertEqual(knockout["extra_time"]["away"], 1)
+        self.assertFalse(knockout["penalties"]["played"])
+        self.assertEqual(knockout["advance"]["winner"], "home")
+
+    def test_fetch_knockout_payload_derives_penalty_shootout_score(self):
+        fetch_module = load_script("fetch_match_results.py")
+
+        knockout = fetch_module._build_knockout_result_payload(
+            {
+                "duration": "PENALTY_SHOOTOUT",
+                "fullTime": {"home": 3, "away": 5},
+                "regularTime": {"home": 1, "away": 1},
+                "extraTime": {"home": 0, "away": 0},
+                "penalties": {"home": 4, "away": 4},
+            },
+            "AWAY_TEAM",
+        )
+
+        self.assertEqual(knockout["regular_time"]["home"], 1)
+        self.assertEqual(knockout["regular_time"]["away"], 1)
+        self.assertEqual(knockout["extra_time"]["home"], 0)
+        self.assertEqual(knockout["extra_time"]["away"], 0)
+        self.assertEqual(knockout["penalties"]["home"], 2)
+        self.assertEqual(knockout["penalties"]["away"], 4)
+        self.assertTrue(knockout["penalties"]["played"])
+        self.assertEqual(knockout["penalties"]["winner"], "away")
+        self.assertEqual(knockout["advance"]["winner"], "away")
+
+    def test_visual_dashboard_renders_knockout_compare_rows(self):
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        card = {
+            "match_id": "2098-R16-01",
+            "phase": "round_of_16",
+            "group": "",
+            "home_name": "Alpha",
+            "away_name": "Beta",
+            "venue": "Test Stadium",
+            "kickoff_at": "2026-06-30T12:00:00+00:00",
+            "beijing_date": "2026-06-30",
+            "beijing_time": "20:00",
+            "prediction_status": "locked_pre_match_prediction",
+            "predicted_result": "draw",
+            "score_text": "1-1",
+            "confidence": "medium",
+            "knockout_prediction": {
+                "regular_time": {"score": {"home": 1, "away": 1}, "result": "draw"},
+                "extra_time": {"played": True, "score": {"home": 2, "away": 1}, "result": "home_win"},
+                "penalties": {"played": False, "score": {"home": None, "away": None}, "winner": ""},
+                "advance": {"winner": "home", "winner_name": "Alpha"},
+            },
+            "actual_score_home": 2,
+            "actual_score_away": 1,
+            "knockout_actual": {
+                "regular_time": {"home": 1, "away": 1, "result": "draw"},
+                "extra_time": {"played": True, "home": 2, "away": 1, "result": "home_win"},
+                "penalties": {"played": False, "home": None, "away": None, "winner": ""},
+                "advance": {"winner": "home", "winner_name": "Alpha"},
+            },
+            "data_source": "official",
+        }
+
+        normalized = dashboard_module._normalize_card_state(card)
+        html = dashboard_module._render_match_card(normalized)
+
+        self.assertIn("90分钟", html)
+        self.assertIn("加时", html)
+        self.assertIn("点球", html)
+        self.assertIn("晋级", html)
+        self.assertIn("Alpha", html)
+
+    def test_visual_dashboard_writes_static_dashboard_json_next_to_html(self):
+        init_module = load_script("worldcup_edition_init.py")
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            res = dashboard_module.write_visual_dashboard(root=root, edition="2098", now="2026-06-13T12:00:00+08:00")
+
+            self.assertIn("static_data_path", res)
+            static_path = root / res["static_data_path"]
+            self.assertTrue(static_path.exists())
+            static_payload = json.loads(static_path.read_text(encoding="utf-8"))
+            self.assertIn("rendered", static_payload)
+            self.assertIn("cards_html", static_payload["rendered"])
+
+    def test_dashboard_api_returns_json_without_rewriting_html(self):
+        init_module = load_script("worldcup_edition_init.py")
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+            dashboard_module.write_visual_dashboard(root=root, edition="2098", now="2026-06-13T12:00:00+08:00")
+
+            _, html_path = dashboard_module._dashboard_paths(root, "2098")
+            before_html = html_path.read_text(encoding="utf-8")
+
+            server_address = ("127.0.0.1", 0)
+            httpd = dashboard_module.http.server.HTTPServer(server_address, dashboard_module.DashboardHTTPRequestHandler)
+            httpd.dashboard_root = root
+            httpd.dashboard_edition = "2098"
+            httpd.dashboard_now = "2026-06-13T12:00:00+08:00"
+
+            thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+            thread.start()
+            try:
+                port = httpd.server_address[1]
+                with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/dashboard?edition=2098") as resp:
+                    body = resp.read().decode("utf-8")
+                    cache_control = resp.headers.get("Cache-Control")
+                payload = json.loads(body)
+                self.assertEqual(cache_control, "no-store")
+                self.assertEqual(payload["edition"], "2098")
+                self.assertIn("rendered", payload)
+                self.assertIn("cards_html", payload["rendered"])
+            finally:
+                httpd.shutdown()
+                httpd.server_close()
+                thread.join(timeout=2)
+
+            after_html = html_path.read_text(encoding="utf-8")
+            self.assertEqual(before_html, after_html)
+
+    def test_dashboard_overview_api_returns_lightweight_cards(self):
+        init_module = load_script("worldcup_edition_init.py")
+        db_module = load_script("worldcup_db.py")
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            from worldcup_core import worldcup_db_path
+            db_path = worldcup_db_path(root, "2098")
+            conn = db_module.get_db_connection(db_path)
+            try:
+                with conn:
+                    db_module.save_match(conn, {
+                        "match_id": "2098-GA-01",
+                        "edition": "2098",
+                        "phase": "group",
+                        "home_team": {"team_id": "alpha", "name": "Alpha"},
+                        "away_team": {"team_id": "beta", "name": "Beta"},
+                        "status": "fixture_official",
+                        "kickoff_at": "2026-06-13T10:00:00+00:00",
+                    })
+                    db_module.save_prediction(conn, {
+                        "match_id": "2098-GA-01",
+                        "prediction_date": "2026-06-12",
+                        "status": "locked_pre_match_prediction",
+                        "prediction": {
+                            "result": "home_win",
+                            "score": {"home": 2, "away": 1},
+                            "confidence": "medium",
+                        }
+                    })
+            finally:
+                conn.close()
+
+            server_address = ("127.0.0.1", 0)
+            httpd = dashboard_module.http.server.HTTPServer(server_address, dashboard_module.DashboardHTTPRequestHandler)
+            httpd.dashboard_root = root
+            httpd.dashboard_edition = "2098"
+            httpd.dashboard_now = "2026-06-13T12:00:00+08:00"
+
+            thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+            thread.start()
+            try:
+                port = httpd.server_address[1]
+                with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/dashboard/overview?edition=2098") as resp:
+                    payload = json.loads(resp.read().decode("utf-8"))
+                    cache_control = resp.headers.get("Cache-Control")
+                self.assertEqual(cache_control, "no-store")
+                self.assertTrue(payload["api_capabilities"]["match_detail"])
+                self.assertIn("cards", payload)
+                self.assertTrue(payload["cards"])
+                card = payload["cards"][0]
+                self.assertIn("match_id", card)
+                self.assertIn("scoreline_distribution", card)
+                self.assertNotIn("home_players", card)
+                self.assertNotIn("away_players", card)
+                self.assertIn("rendered", payload)
+                self.assertIn("cards_html", payload["rendered"])
+            finally:
+                httpd.shutdown()
+                httpd.server_close()
+                thread.join(timeout=2)
+
+    def test_dashboard_match_api_returns_detail_card(self):
+        init_module = load_script("worldcup_edition_init.py")
+        db_module = load_script("worldcup_db.py")
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            from worldcup_core import worldcup_db_path
+            db_path = worldcup_db_path(root, "2098")
+            conn = db_module.get_db_connection(db_path)
+            try:
+                with conn:
+                    db_module.save_match(conn, {
+                        "match_id": "2098-GA-01",
+                        "edition": "2098",
+                        "phase": "group",
+                        "home_team": {"team_id": "alpha", "name": "Alpha"},
+                        "away_team": {"team_id": "beta", "name": "Beta"},
+                        "status": "fixture_official",
+                        "kickoff_at": "2026-06-13T10:00:00+00:00",
+                    })
+                    db_module.save_prediction(conn, {
+                        "match_id": "2098-GA-01",
+                        "prediction_date": "2026-06-12",
+                        "status": "locked_pre_match_prediction",
+                        "prediction": {
+                            "result": "home_win",
+                            "score": {"home": 2, "away": 1},
+                            "confidence": "medium",
+                        }
+                    })
+            finally:
+                conn.close()
+
+            server_address = ("127.0.0.1", 0)
+            httpd = dashboard_module.http.server.HTTPServer(server_address, dashboard_module.DashboardHTTPRequestHandler)
+            httpd.dashboard_root = root
+            httpd.dashboard_edition = "2098"
+            httpd.dashboard_now = "2026-06-13T12:00:00+08:00"
+
+            thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+            thread.start()
+            try:
+                port = httpd.server_address[1]
+                with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/dashboard/match?edition=2098&match_id=2098-GA-01") as resp:
+                    payload = json.loads(resp.read().decode("utf-8"))
+                    cache_control = resp.headers.get("Cache-Control")
+                self.assertEqual(cache_control, "no-store")
+                self.assertEqual(payload["match_id"], "2098-GA-01")
+                self.assertIn("home_players", payload)
+                self.assertIn("away_players", payload)
+                self.assertIn("analysis_layers", payload)
+            finally:
+                httpd.shutdown()
+                httpd.server_close()
+                thread.join(timeout=2)
+
+    def test_dashboard_normalizes_cards_into_state_buckets(self):
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        payload = {
+            "summary": {},
+            "cards": [
+                {
+                    "match_id": "pred-only",
+                    "data_source": "official",
+                    "prediction_status": "locked_pre_match_prediction",
+                    "predicted_result": "home_win",
+                    "score_text": "2-1",
+                    "home_name": "Alpha",
+                    "away_name": "Beta",
+                },
+                {
+                    "match_id": "actual-only",
+                    "data_source": "official",
+                    "prediction_status": "not_predicted",
+                    "predicted_result": "",
+                    "score_text": "-:-",
+                    "actual_score_home": 1,
+                    "actual_score_away": 0,
+                    "home_name": "Gamma",
+                    "away_name": "Delta",
+                },
+                {
+                    "match_id": "evaluated",
+                    "data_source": "official",
+                    "prediction_status": "locked_pre_match_prediction",
+                    "predicted_result": "draw",
+                    "score_text": "1-1",
+                    "actual_score_home": 1,
+                    "actual_score_away": 1,
+                    "result_hit": True,
+                    "score_hit": True,
+                    "home_name": "Epsilon",
+                    "away_name": "Zeta",
+                },
+                {
+                    "match_id": "fixture-only",
+                    "data_source": "official",
+                    "prediction_status": "not_predicted",
+                    "predicted_result": "",
+                    "score_text": "-:-",
+                    "home_name": "Eta",
+                    "away_name": "Theta",
+                },
+                {
+                    "match_id": "placeholder",
+                    "data_source": "placeholder",
+                    "prediction_status": "not_predicted",
+                    "predicted_result": "",
+                    "score_text": "-:-",
+                    "home_name": "TBD A",
+                    "away_name": "TBD B",
+                },
+            ]
+        }
+
+        dashboard_module._refresh_dashboard_summary(payload)
+        cards = {c["match_id"]: c for c in payload["cards"]}
+
+        self.assertEqual(cards["pred-only"]["display_state"], "predicted")
+        self.assertTrue(cards["pred-only"]["prediction"]["exists"])
+        self.assertFalse(cards["pred-only"]["actual"]["exists"])
+
+        self.assertEqual(cards["actual-only"]["display_state"], "actual_only")
+        self.assertFalse(cards["actual-only"]["prediction"]["exists"])
+        self.assertTrue(cards["actual-only"]["actual"]["exists"])
+
+        self.assertEqual(cards["evaluated"]["display_state"], "evaluated")
+        self.assertTrue(cards["evaluated"]["evaluation"]["exists"])
+        self.assertEqual(cards["evaluated"]["evaluation"]["label"], "完美双中")
+
+        self.assertEqual(cards["fixture-only"]["display_state"], "fixture")
+        self.assertEqual(cards["placeholder"]["display_state"], "placeholder")
+
+        self.assertEqual(payload["summary"]["predicted_matches"], 2)
+        self.assertEqual(payload["summary"]["actual_matches"], 2)
+        self.assertEqual(payload["summary"]["evaluated_matches"], 1)
+        self.assertEqual(payload["summary"]["actual_only_matches"], 1)
+        self.assertEqual(payload["summary"]["prediction_only_matches"], 1)
+        self.assertEqual(payload["summary"]["fixture_only_matches"], 1)
+
+    def test_save_config_api_does_not_regenerate_dashboard_html(self):
+        init_module = load_script("worldcup_edition_init.py")
+        dashboard_module = load_script("prediction_visual_dashboard.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+            dashboard_module.write_visual_dashboard(root=root, edition="2098", now="2026-06-13T12:00:00+08:00")
+
+            _, html_path = dashboard_module._dashboard_paths(root, "2098")
+            before_html = html_path.read_text(encoding="utf-8")
+
+            server_address = ("127.0.0.1", 0)
+            httpd = dashboard_module.http.server.HTTPServer(server_address, dashboard_module.DashboardHTTPRequestHandler)
+            httpd.dashboard_root = root
+            httpd.dashboard_edition = "2098"
+            httpd.dashboard_now = "2026-06-13T12:00:00+08:00"
+
+            thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+            thread.start()
+            try:
+                port = httpd.server_address[1]
+                req = urllib.request.Request(
+                    f"http://127.0.0.1:{port}/api/save-config",
+                    data=json.dumps({
+                        "data_weight": 0.55,
+                        "divination_weight": 0.45,
+                        "component_weights": {
+                            "ranking_strength": 0.30,
+                            "squad_depth": 0.20,
+                            "historical_proxy": 0.20,
+                            "rest_travel": 0.15,
+                            "evidence_completeness": 0.15,
+                        },
+                    }).encode("utf-8"),
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                with urllib.request.urlopen(req) as resp:
+                    body = resp.read().decode("utf-8")
+                payload = json.loads(body)
+                self.assertEqual(payload["status"], "success")
+            finally:
+                httpd.shutdown()
+                httpd.server_close()
+                thread.join(timeout=2)
+
+            after_html = html_path.read_text(encoding="utf-8")
+            self.assertEqual(before_html, after_html)
+
     def test_octopus_reflection_tuning(self):
         init_module = load_script("worldcup_edition_init.py")
         db_module = load_script("worldcup_db.py")
@@ -1480,9 +2221,131 @@ class WorldCupPredictorSystemTest(unittest.TestCase):
             self.assertAlmostEqual(sum(tuned_comp.values()), 1.0)
             for k, v in tuned_comp.items():
                 self.assertTrue(0.05 <= v <= 0.50)
+            self.assertIn("scoreline_tuning", tuned_hyper)
                 
             self.assertGreaterEqual(tuned_hyper["data_weight"], 0.60)
             self.assertLessEqual(tuned_hyper["divination_weight"], 0.40)
+
+    def test_scoreline_history_multiplier_penalizes_repeated_safe_templates(self):
+        scoring_module = load_script("prediction_scoring_model.py")
+
+        calibration = {
+            "global": {
+                "sample_size": 12,
+                "actual_score_rates": {"1-0": 0.25, "2-0": 0.17, "2-1": 0.02},
+                "predicted_score_rates": {"2-1": 0.34, "1-0": 0.06, "2-0": 0.04},
+                "actual_clean_sheet_rate": 0.50,
+                "predicted_clean_sheet_rate": 0.10,
+                "avg_actual_total_goals": 1.9,
+            },
+            "by_phase": {},
+            "by_phase_outcome": {},
+        }
+
+        collapsed = scoring_module._scoreline_history_multiplier(
+            {"home": 2, "away": 1},
+            phase="group",
+            predicted_outcome="home_win",
+            calibration=calibration,
+        )
+        clean_sheet = scoring_module._scoreline_history_multiplier(
+            {"home": 1, "away": 0},
+            phase="group",
+            predicted_outcome="home_win",
+            calibration=calibration,
+        )
+
+        self.assertLess(collapsed, 1.0)
+        self.assertGreater(clean_sheet, collapsed)
+
+    def test_tuning_loop_updates_scoreline_hyperparameters_on_exact_score_miss(self):
+        init_module = load_script("worldcup_edition_init.py")
+        db_module = load_script("worldcup_db.py")
+        tuning_module = load_script("octopus_reflection_tuning.py")
+        core_module = load_script("worldcup_core.py")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            init_module.initialize_edition(root=root, edition="2098", now="2026-06-09T12:00:00+08:00")
+
+            ledger_path = core_module.edition_data_root(root, "2098") / "match-ledger.json"
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            ledger["matches"] = [ledger["matches"][0]]
+            ledger["matches"][0]["match_id"] = "2098-GA-01"
+            ledger["matches"][0]["home_team"] = {"team_id": "alpha", "name": "Alpha Team"}
+            ledger["matches"][0]["away_team"] = {"team_id": "beta", "name": "Beta Team"}
+            ledger["matches"][0]["kickoff_at"] = "2026-06-12T18:00:00+08:00"
+            ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            db_path = core_module.worldcup_db_path(root, "2098")
+            conn = db_module.get_db_connection(db_path)
+            try:
+                with conn:
+                    db_module.save_match(conn, {
+                        "match_id": "2098-GA-01",
+                        "edition": "2098",
+                        "phase": "group",
+                        "home_team": {"team_id": "alpha", "name": "Alpha Team"},
+                        "away_team": {"team_id": "beta", "name": "Beta Team"},
+                        "status": "fixture_official",
+                        "kickoff_at": "2026-06-12T18:00:00+08:00",
+                    })
+                    db_module.save_prediction(conn, {
+                        "match_id": "2098-GA-01",
+                        "prediction_date": "2026-06-11",
+                        "status": "locked_pre_match_prediction",
+                        "prediction": {
+                            "result": "home_win",
+                            "score": {"home": 2, "away": 1},
+                            "confidence": "medium",
+                            "confidence_label": "medium",
+                        }
+                    })
+                    db_module.save_evaluation(conn, {
+                        "match_id": "2098-GA-01",
+                        "actual_score_home": 1,
+                        "actual_score_away": 0,
+                        "is_result_correct": 1,
+                        "is_score_correct": 0,
+                        "primary_error": "Overestimated away goal expectation",
+                        "model_issue_tags_str": "single_point_scoreline,away_floor_goal_rate_too_high",
+                        "evaluated_at": "2026-06-12T21:00:00+08:00"
+                    })
+            finally:
+                conn.close()
+
+            hyper_path = core_module.edition_data_root(root, "2098") / "model-hyperparameters.json"
+            hyper_path.write_text(
+                json.dumps(
+                    {
+                        "data_weight": 0.60,
+                        "divination_weight": 0.40,
+                        "component_weights": {
+                            "ranking_strength": 0.30,
+                            "squad_depth": 0.20,
+                            "historical_proxy": 0.20,
+                            "rest_travel": 0.15,
+                            "evidence_completeness": 0.15,
+                        },
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+
+            res = tuning_module.run_tuning_loop(root=root, edition="2098", lr=0.05)
+
+            self.assertEqual(res["status"], "success")
+            self.assertFalse(res["tuned_any_weights"])
+            self.assertTrue(res["tuned_any_scoreline"])
+
+            tuned_hyper = json.loads(hyper_path.read_text(encoding="utf-8"))
+            scoreline_tuning = tuned_hyper["scoreline_tuning"]
+            self.assertLess(scoreline_tuning["paired_score_bias"], 0.84)
+            self.assertLess(scoreline_tuning["mode_collapse_penalty"], 0.88)
+            self.assertGreater(scoreline_tuning["clean_sheet_bias"], 1.24)
+            self.assertLess(scoreline_tuning["loser_xg_suppression"]["slight"], 0.86)
 
 
 if __name__ == "__main__":

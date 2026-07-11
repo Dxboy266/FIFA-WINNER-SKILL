@@ -121,8 +121,33 @@ python skill/scripts/worldcup_edition_init.py init --edition 2026 --root .
 python skill/scripts/octopus_paul_agent.py predict --edition 2026 --all
 ```
 
-**All generated data** (predictions, evidence, evaluations, dashboards) is written to `wiki/person/<edition>/`.
+**Storage policy is split in two layers**:
+
+- `wiki/public/<edition>/` = public facts and reusable packaged defaults
+- `wiki/person/<edition>/` = your private predictions, evidence, overlays, evaluations and dashboards
+
+The dashboard is built by overlaying `public facts + packaged default predictions + user-local predictions`.
+If a user-local prediction exists, it replaces the packaged default for that match.
+If no user-local prediction exists, the dashboard still shows the factual match card and any packaged default prediction.
+
 **Do NOT commit `wiki/person/` to git** — it's `.gitignored` and contains your private data.
+
+### Canonical Prediction Freeze
+
+Canonical pre-match predictions are immutable after they are issued:
+
+- before kickoff: status `locked_pre_match`
+- after kickoff: status `kickoff_locked`
+- after final result: status `result_locked`
+
+Host agents must treat this as a hard rule:
+
+- never regenerate a canonical prediction if one already exists
+- never overwrite a match after kickoff
+- never overwrite a match after a final result exists
+- use `run_type=experiment` / backtest outputs for model experiments and historical replay
+
+In conflicts, prefer the locked canonical report over any later experiment result.
 
 ---
 
@@ -145,6 +170,15 @@ IF stored_public_hash != current_public_hash:
 IF both unchanged:
     skip pull, run normally
 ```
+
+### Daily Run Semantics
+
+`daily_prediction_runner.py run` is `missing_only` by default:
+
+- reuse existing canonical predictions first
+- reuse published reports if the DB is missing
+- only generate predictions for matches that have not started and still lack a canonical prediction
+- refresh evidence only; do not rewrite historical predictions
 
 ### Pseudo-code
 

@@ -11,7 +11,7 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
 
-from worldcup_core import edition_data_root, iso_now, load_json, prediction_report_path, save_match_ledger, wiki_edition_root, worldcup_db_path, write_json, write_text  # noqa: E402
+from worldcup_core import edition_data_root, iso_now, load_json, load_match_ledger, prediction_report_path, save_match_ledger, wiki_edition_root, worldcup_db_path, write_json, write_text  # noqa: E402
 
 
 def result_from_score(home: int, away: int) -> str:
@@ -20,6 +20,35 @@ def result_from_score(home: int, away: int) -> str:
     if away > home:
         return "away_win"
     return "draw"
+
+
+def _is_knockout_phase(phase: str) -> bool:
+    return str(phase or "").strip().lower() in {
+        "round_of_32",
+        "round_of_16",
+        "quarter_final",
+        "semi_final",
+        "third_place",
+        "final",
+    }
+
+
+def _score_hit(expected: dict | None, actual: dict | None) -> bool | None:
+    expected = expected or {}
+    actual = actual or {}
+    if expected.get("home") is None or expected.get("away") is None:
+        return None
+    if actual.get("home") is None or actual.get("away") is None:
+        return None
+    return expected.get("home") == actual.get("home") and expected.get("away") == actual.get("away")
+
+
+def _winner_side_from_result(result: str) -> str:
+    if result == "home_win":
+        return "home"
+    if result == "away_win":
+        return "away"
+    return ""
 
 
 def confidence_level(value: object) -> str:
@@ -79,14 +108,16 @@ def evaluate_predictions(*, root: Path, edition: str, date: str, now: str | None
             except Exception:
                 pass
 
-    ledger = load_json(ed_root / "match-ledger.json", {"matches": []})
+    ledger = load_match_ledger(root, edition)
     ledger_by_id = {match.get("match_id"): match for match in ledger.get("matches", [])}
     evaluations = []
     for prediction in all_predictions:
         evaluated_match_ids.add(prediction.get("match_id", ""))
         match = ledger_by_id.get(prediction["match_id"], {})
         final_score = match.get("final_score")
+        knockout_result = match.get("knockout_result") or {}
         prediction_body = prediction.get("prediction", {})
+        knockout_prediction = prediction_body.get("knockout") or {}
         prediction_confidence = confidence_level(prediction_body.get("confidence"))
         if not final_score:
             evaluations.append(
@@ -104,6 +135,11 @@ def evaluate_predictions(*, root: Path, edition: str, date: str, now: str | None
         predicted_result = prediction_body.get("result") or prediction_body.get("predicted_outcome")
         predicted_total_goals = prediction_body.get("total_goals")
         actual_result = result_from_score(actual_home, actual_away)
+        phase = str(match.get("phase") or prediction.get("phase") or "")
+        regular_time_actual = (knockout_result.get("regular_time") or final_score or {})
+        regular_time_home = regular_time_actual.get("home", actual_home)
+        regular_time_away = regular_time_actual.get("away", actual_away)
+        regular_time_result = result_from_score(int(regular_time_home), int(regular_time_away))
         evaluation = {
             "match_id": prediction["match_id"],
             "status": "evaluated",
@@ -112,11 +148,67 @@ def evaluate_predictions(*, root: Path, edition: str, date: str, now: str | None
             "actual_result": actual_result,
             "actual_score": {"home": actual_home, "away": actual_away},
             "actual_total_goals": actual_home + actual_away,
-            "result_hit": predicted_result == actual_result,
-            "score_hit": predicted_score.get("home") == actual_home and predicted_score.get("away") == actual_away,
+            "result_hit": predicted_result == regular_time_result,
+            "score_hit": predicted_score.get("home") == regular_time_home and predicted_score.get("away") == regular_time_away,
             "total_goals_hit": predicted_total_goals == actual_home + actual_away,
             "prediction_kept_locked": True,
         }
+        if _is_knockout_phase(phase):
+            regular_time_prediction = (knockout_prediction.get("regular_time") or {})
+            extra_time_prediction = (knockout_prediction.get("extra_time") or {})
+            penalties_prediction = (knockout_prediction.get("penalties") or {})
+            advance_prediction = (knockout_prediction.get("advance") or {})
+
+            extra_time_actual = (knockout_result.get("extra_time") or {})
+            penalties_actual = (knockout_result.get("penalties") or {})
+            advance_actual = (knockout_result.get("advance") or {})
+
+            regular_time_pred_score = regular_time_prediction.get("score") or predicted_score
+            regular_time_pred_result = regular_time_prediction.get("result") or predicted_result
+            extra_time_played_pred = bool(extra_time_prediction.get("played"))
+            extra_time_played_actual = bool(extra_time_actual.get("played"))
+            penalties_played_pred = bool(penalties_prediction.get("played"))
+            penalties_played_actual = bool(penalties_actual.get("played"))
+
+            advance_actual_side = (
+                advance_actual.get("winner")
+                or penalties_actual.get("winner")
+                or _winner_side_from_result(extra_time_actual.get("result") or "")
+                or _winner_side_from_result(actual_result)
+            )
+
+            evaluation.update(
+                {
+                    "actual_regular_time_score": {"home": regular_time_home, "away": regular_time_away},
+                    "actual_regular_time_result": regular_time_result,
+                    "regular_time_result_hit": regular_time_pred_result == regular_time_result,
+                    "regular_time_score_hit": _score_hit(
+                        regular_time_pred_score,
+                        {"home": regular_time_home, "away": regular_time_away},
+                    ),
+                    "actual_knockout_result": knockout_result,
+                    "knockout_prediction": knockout_prediction,
+                    "extra_time_hit": (
+                        extra_time_played_pred == extra_time_played_actual
+                        and (
+                            not extra_time_played_actual
+                            or _score_hit(extra_time_prediction.get("score"), extra_time_actual)
+                            or extra_time_prediction.get("result") == extra_time_actual.get("result")
+                        )
+                    ),
+                    "penalties_hit": (
+                        penalties_played_pred == penalties_played_actual
+                        and (
+                            not penalties_played_actual
+                            or _score_hit(penalties_prediction.get("score"), penalties_actual)
+                            or penalties_prediction.get("winner") == penalties_actual.get("winner")
+                        )
+                    ),
+                    "advance_hit": advance_prediction.get("winner") == advance_actual_side if advance_prediction.get("winner") else None,
+                }
+            )
+            evaluation["result_hit"] = evaluation.get("regular_time_result_hit")
+            evaluation["score_hit"] = evaluation.get("regular_time_score_hit")
         match["evaluation"] = evaluation
         evaluations.append(evaluation)
 
