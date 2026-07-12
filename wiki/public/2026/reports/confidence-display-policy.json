@@ -1,0 +1,6 @@
+{
+  "force_high_confidence_match_ids": [],
+  "min_level": null,
+  "note": "No display force-high. Confidence is earned by prediction_scoring_model._score_prediction_confidence from data readiness, edge tier, evidence quality, scoreline concentration, and market alignment. High requires multi-factor support; coinflip cannot be high.",
+  "updated_at": "2026-07-12"
+}

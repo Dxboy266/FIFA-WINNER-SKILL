@@ -104,6 +104,22 @@
       "safety_profile": "evidence_boundary"
     },
     {
+      "id": "compile_prediction_evidence",
+      "kind": "cli_tool",
+      "description": "Compile tournament evidence from match-ledger/raw: recent-form, head-to-head, injury checked-empty, rest-travel features, history/rankings paths, and scaffold daily-evidence for open knockout dates.",
+      "command_template": "python skill/scripts/compile_prediction_evidence.py",
+      "inputs": ["edition"],
+      "outputs": [
+        "evidence/recent-form.json",
+        "evidence/injury-availability.json",
+        "evidence/head-to-head.json",
+        "evidence/rest-travel-features.json",
+        "history/team-wc-history.json",
+        "daily-evidence/*.json"
+      ],
+      "safety_profile": "evidence_boundary"
+    },
+    {
       "id": "fetch_live_odds",
       "kind": "cli_tool",
       "description": "Fetch live odds from The Odds API or generate mock odds for evidence.",
@@ -133,8 +149,8 @@
     {
       "id": "predict_scoring",
       "kind": "cli_tool",
-      "description": "Run physics prediction model (ELO, rankings, rest, travel) for specified filters.",
-      "command_template": "python skill/scripts/prediction_scoring_model.py predict --edition <edition> [--date <date> | --teams <teams> | --match-id <match_id>] --root .",
+      "description": "Run scoring model for filters: compute outcome/scoreline first, then multi-factor confidence (no force-high). Coinflip edges cannot be high.",
+      "command_template": "python skill/scripts/prediction_scoring_model.py predict --edition <edition> [--date <date> | --teams <teams> | --match-id <match_id>] [--force] --root .",
       "inputs": ["edition"],
       "outputs": ["prediction-report.json"],
       "safety_profile": "entertainment_prediction_only"
@@ -142,7 +158,7 @@
     {
       "id": "predict_daily",
       "kind": "cli_tool",
-      "description": "End-to-end daily prediction runner: collect evidence, run model, lock reports.",
+      "description": "End-to-end daily prediction runner for all unstarted matches on a date: evidence index + model + locked reports.",
       "command_template": "python skill/scripts/daily_prediction_runner.py run --edition <edition> --date <YYYY-MM-DD> [--poster] --root .",
       "inputs": ["edition", "date"],
       "outputs": ["prediction-report.json"],

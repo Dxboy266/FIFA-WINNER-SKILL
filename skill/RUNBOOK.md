@@ -22,12 +22,31 @@ python skill/scripts/worldcup_github_readiness_auditor.py write --edition 2026 -
 
 ## 预测流程
 
+对**任意未开球比赛**（含淘汰赛 SF/F）走同一套：
+
 ```bash
-python skill/scripts/worldcup_edition_init.py init --edition 2026 --root .
+# 证据编译 + 计划刷新
+python skill/scripts/compile_prediction_evidence.py
 python skill/scripts/worldcup_prediction_evidence_planner.py write --edition 2026 --root .
-python skill/scripts/daily_evidence_input.py init --edition 2026 --date 2026-06-11 --root .
-python skill/scripts/daily_prediction_runner.py run --edition 2026 --date 2026-06-11 --root .
+
+# 当日证据 + 可选 live 赔率/新闻
+python skill/scripts/daily_evidence_input.py init --edition 2026 --date YYYY-MM-DD --root .
+python skill/scripts/worldcup_live_fetcher.py fetch-odds --edition 2026 --date YYYY-MM-DD --root .
+python skill/scripts/worldcup_live_fetcher.py fetch-news --edition 2026 --date YYYY-MM-DD --root .
+
+# 预测（先算赛果/比分，再评信心）
+python skill/scripts/daily_prediction_runner.py run --edition 2026 --date YYYY-MM-DD --root .
+# 或单场：
+python skill/scripts/prediction_scoring_model.py predict --edition 2026 --match-id 2026-SF-01 --root .
+# 或阶段：
+python skill/scripts/octopus_paul_agent.py predict --edition 2026 --phase semi_final --root .
 ```
+
+规则：
+
+- 信心由 `_score_prediction_confidence` 实算；禁止 force-high / 改前端徽章。
+- `coinflip` 边差不能 high；证据齐全也不例外。
+- 已锁定正式预测优先复用；开球后禁止改写。
 
 使用 `prediction_scoring_model.py predict` 或 `octopus_paul_agent.py predict` 进行按比赛/球队/小组/阶段/全量的预测。
 

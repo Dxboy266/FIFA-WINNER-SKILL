@@ -1,0 +1,1646 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-07-12T14:48:32Z",
+  "mode": "compiled_from_match_ledger",
+  "status": "partial",
+  "summary": {
+    "items": 204,
+    "teams": 48
+  },
+  "items": [
+    {
+      "team_id": "alg",
+      "match_id": "2026-GJ-01",
+      "kickoff_at": "2026-06-17T01:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "alg",
+      "match_id": "2026-GJ-04",
+      "kickoff_at": "2026-06-23T03:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": 6.08,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "alg",
+      "match_id": "2026-GJ-05",
+      "kickoff_at": "2026-06-28T02:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": 4.96,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "alg",
+      "match_id": "2026-R32-13",
+      "kickoff_at": "2026-07-03T03:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 5.04,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-GJ-01",
+      "kickoff_at": "2026-06-17T01:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-GJ-03",
+      "kickoff_at": "2026-06-22T17:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 5.67,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-GJ-06",
+      "kickoff_at": "2026-06-28T02:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 5.38,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-R32-15",
+      "kickoff_at": "2026-07-03T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": 5.83,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-R16-07",
+      "kickoff_at": "2026-07-07T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 3.75,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-QF-04",
+      "kickoff_at": "2026-07-12T01:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": 4.38,
+      "prior_matches": 5
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-SF-02",
+      "kickoff_at": "2026-07-15T19:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 3.75,
+      "prior_matches": 6
+    },
+    {
+      "team_id": "aus",
+      "match_id": "2026-GD-02",
+      "kickoff_at": "2026-06-14T04:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "aus",
+      "match_id": "2026-GD-03",
+      "kickoff_at": "2026-06-19T19:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": 5.62,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "aus",
+      "match_id": "2026-GD-06",
+      "kickoff_at": "2026-06-26T02:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": 6.29,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "aus",
+      "match_id": "2026-R32-14",
+      "kickoff_at": "2026-07-03T18:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 7.67,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "aut",
+      "match_id": "2026-GJ-02",
+      "kickoff_at": "2026-06-17T04:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "aut",
+      "match_id": "2026-GJ-03",
+      "kickoff_at": "2026-06-22T17:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 5.54,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "aut",
+      "match_id": "2026-GJ-05",
+      "kickoff_at": "2026-06-28T02:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": 5.38,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "aut",
+      "match_id": "2026-R32-11",
+      "kickoff_at": "2026-07-02T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 4.71,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-GG-01",
+      "kickoff_at": "2026-06-15T22:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-GG-03",
+      "kickoff_at": "2026-06-21T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 5.88,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-GG-06",
+      "kickoff_at": "2026-06-27T03:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 5.33,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-R32-09",
+      "kickoff_at": "2026-07-01T20:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": 4.71,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-R16-06",
+      "kickoff_at": "2026-07-06T21:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": 5.04,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-QF-02",
+      "kickoff_at": "2026-07-10T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 3.92,
+      "prior_matches": 5
+    },
+    {
+      "team_id": "bih",
+      "match_id": "2026-GB-01",
+      "kickoff_at": "2026-06-12T19:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "bih",
+      "match_id": "2026-GB-03",
+      "kickoff_at": "2026-06-18T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "bih",
+      "match_id": "2026-GB-06",
+      "kickoff_at": "2026-06-24T19:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "bih",
+      "match_id": "2026-R32-10",
+      "kickoff_at": "2026-07-02T00:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": 7.21,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "bra",
+      "match_id": "2026-GC-01",
+      "kickoff_at": "2026-06-13T22:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "bra",
+      "match_id": "2026-GC-04",
+      "kickoff_at": "2026-06-20T01:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": 6.12,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "bra",
+      "match_id": "2026-GC-05",
+      "kickoff_at": "2026-06-24T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": 4.88,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "bra",
+      "match_id": "2026-R32-02",
+      "kickoff_at": "2026-06-29T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": 4.79,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "bra",
+      "match_id": "2026-R16-03",
+      "kickoff_at": "2026-07-05T20:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": 6.12,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "can",
+      "match_id": "2026-GB-01",
+      "kickoff_at": "2026-06-12T19:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "can",
+      "match_id": "2026-GB-04",
+      "kickoff_at": "2026-06-18T22:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 6.12,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "can",
+      "match_id": "2026-GB-05",
+      "kickoff_at": "2026-06-24T19:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 5.88,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "can",
+      "match_id": "2026-R32-01",
+      "kickoff_at": "2026-06-28T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 4.0,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "can",
+      "match_id": "2026-R16-01",
+      "kickoff_at": "2026-07-04T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": 5.92,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "civ",
+      "match_id": "2026-GE-02",
+      "kickoff_at": "2026-06-14T23:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "civ",
+      "match_id": "2026-GE-03",
+      "kickoff_at": "2026-06-20T20:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": 5.88,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "civ",
+      "match_id": "2026-GE-06",
+      "kickoff_at": "2026-06-25T20:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": 5.0,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "civ",
+      "match_id": "2026-R32-05",
+      "kickoff_at": "2026-06-30T17:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 4.88,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "cod",
+      "match_id": "2026-GK-01",
+      "kickoff_at": "2026-06-17T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "cod",
+      "match_id": "2026-GK-04",
+      "kickoff_at": "2026-06-24T02:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "rest_days_since_prev": 6.38,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "cod",
+      "match_id": "2026-GK-06",
+      "kickoff_at": "2026-06-27T23:30:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 3.9,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "cod",
+      "match_id": "2026-R32-08",
+      "kickoff_at": "2026-07-01T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 3.69,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "col",
+      "match_id": "2026-GK-02",
+      "kickoff_at": "2026-06-18T02:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "col",
+      "match_id": "2026-GK-04",
+      "kickoff_at": "2026-06-24T02:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "col",
+      "match_id": "2026-GK-05",
+      "kickoff_at": "2026-06-27T23:30:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": 3.9,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "col",
+      "match_id": "2026-R32-16",
+      "kickoff_at": "2026-07-04T01:30:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": 6.08,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "col",
+      "match_id": "2026-R16-08",
+      "kickoff_at": "2026-07-07T20:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 3.77,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "cpv",
+      "match_id": "2026-GH-01",
+      "kickoff_at": "2026-06-15T17:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "cpv",
+      "match_id": "2026-GH-04",
+      "kickoff_at": "2026-06-21T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": 6.21,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "cpv",
+      "match_id": "2026-GH-05",
+      "kickoff_at": "2026-06-27T00:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": 5.08,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "cpv",
+      "match_id": "2026-R32-15",
+      "kickoff_at": "2026-07-03T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": 6.92,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "cro",
+      "match_id": "2026-GL-01",
+      "kickoff_at": "2026-06-17T20:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "cro",
+      "match_id": "2026-GL-04",
+      "kickoff_at": "2026-06-23T23:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": 6.12,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "cro",
+      "match_id": "2026-GL-06",
+      "kickoff_at": "2026-06-27T21:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": 3.92,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "cro",
+      "match_id": "2026-R32-12",
+      "kickoff_at": "2026-07-02T23:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": 5.08,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "cuw",
+      "match_id": "2026-GE-01",
+      "kickoff_at": "2026-06-14T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "cuw",
+      "match_id": "2026-GE-04",
+      "kickoff_at": "2026-06-21T00:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": 6.29,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "cuw",
+      "match_id": "2026-GE-06",
+      "kickoff_at": "2026-06-25T20:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": 4.83,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "cze",
+      "match_id": "2026-GA-02",
+      "kickoff_at": "2026-06-12T02:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "cze",
+      "match_id": "2026-GA-03",
+      "kickoff_at": "2026-06-18T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 6.58,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "cze",
+      "match_id": "2026-GA-05",
+      "kickoff_at": "2026-06-25T01:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "rest_days_since_prev": 6.38,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "ecu",
+      "match_id": "2026-GE-02",
+      "kickoff_at": "2026-06-14T23:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "ecu",
+      "match_id": "2026-GE-04",
+      "kickoff_at": "2026-06-21T00:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": 6.04,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "ecu",
+      "match_id": "2026-GE-05",
+      "kickoff_at": "2026-06-25T20:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": 4.83,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "ecu",
+      "match_id": "2026-R32-07",
+      "kickoff_at": "2026-07-01T01:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "rest_days_since_prev": 5.21,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "egy",
+      "match_id": "2026-GG-01",
+      "kickoff_at": "2026-06-15T22:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "egy",
+      "match_id": "2026-GG-04",
+      "kickoff_at": "2026-06-22T01:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 6.12,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "egy",
+      "match_id": "2026-GG-05",
+      "kickoff_at": "2026-06-27T03:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": 5.08,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "egy",
+      "match_id": "2026-R32-14",
+      "kickoff_at": "2026-07-03T18:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 6.62,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "egy",
+      "match_id": "2026-R16-07",
+      "kickoff_at": "2026-07-07T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 3.92,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-GL-01",
+      "kickoff_at": "2026-06-17T20:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-GL-03",
+      "kickoff_at": "2026-06-23T20:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-GL-05",
+      "kickoff_at": "2026-06-27T21:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": 4.04,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-R32-08",
+      "kickoff_at": "2026-07-01T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 3.79,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-R16-04",
+      "kickoff_at": "2026-07-06T00:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "rest_days_since_prev": 4.33,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-QF-03",
+      "kickoff_at": "2026-07-11T21:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": 5.88,
+      "prior_matches": 5
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-SF-02",
+      "kickoff_at": "2026-07-15T19:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 3.92,
+      "prior_matches": 6
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-GH-01",
+      "kickoff_at": "2026-06-15T17:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-GH-03",
+      "kickoff_at": "2026-06-21T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 5.96,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-GH-06",
+      "kickoff_at": "2026-06-27T00:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "rest_days_since_prev": 5.33,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-R32-11",
+      "kickoff_at": "2026-07-02T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 5.79,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-R16-05",
+      "kickoff_at": "2026-07-06T19:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 4.0,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-QF-02",
+      "kickoff_at": "2026-07-10T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 4.0,
+      "prior_matches": 5
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-SF-01",
+      "kickoff_at": "2026-07-14T19:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 4.0,
+      "prior_matches": 6
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-GI-01",
+      "kickoff_at": "2026-06-16T19:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-GI-03",
+      "kickoff_at": "2026-06-22T21:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": 6.08,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-GI-05",
+      "kickoff_at": "2026-06-26T19:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": 3.92,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-R32-06",
+      "kickoff_at": "2026-06-30T21:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": 4.08,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-R16-02",
+      "kickoff_at": "2026-07-04T21:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": 4.0,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-QF-01",
+      "kickoff_at": "2026-07-09T20:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": 4.96,
+      "prior_matches": 5
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-SF-01",
+      "kickoff_at": "2026-07-14T19:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 4.96,
+      "prior_matches": 6
+    },
+    {
+      "team_id": "ger",
+      "match_id": "2026-GE-01",
+      "kickoff_at": "2026-06-14T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "ger",
+      "match_id": "2026-GE-03",
+      "kickoff_at": "2026-06-20T20:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": 6.12,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "ger",
+      "match_id": "2026-GE-05",
+      "kickoff_at": "2026-06-25T20:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": 5.0,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "ger",
+      "match_id": "2026-R32-03",
+      "kickoff_at": "2026-06-29T20:30:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": 4.02,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "gha",
+      "match_id": "2026-GL-02",
+      "kickoff_at": "2026-06-17T23:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "gha",
+      "match_id": "2026-GL-03",
+      "kickoff_at": "2026-06-23T20:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": 5.88,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "gha",
+      "match_id": "2026-GL-06",
+      "kickoff_at": "2026-06-27T21:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": 4.04,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "gha",
+      "match_id": "2026-R32-16",
+      "kickoff_at": "2026-07-04T01:30:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": 6.19,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "hai",
+      "match_id": "2026-GC-02",
+      "kickoff_at": "2026-06-14T01:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "hai",
+      "match_id": "2026-GC-04",
+      "kickoff_at": "2026-06-20T01:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "hai",
+      "match_id": "2026-GC-06",
+      "kickoff_at": "2026-06-24T22:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 4.88,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "irn",
+      "match_id": "2026-GG-02",
+      "kickoff_at": "2026-06-16T04:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "irn",
+      "match_id": "2026-GG-03",
+      "kickoff_at": "2026-06-21T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 5.62,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "irn",
+      "match_id": "2026-GG-05",
+      "kickoff_at": "2026-06-27T03:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": 5.33,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "irq",
+      "match_id": "2026-GI-02",
+      "kickoff_at": "2026-06-16T22:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "irq",
+      "match_id": "2026-GI-03",
+      "kickoff_at": "2026-06-22T21:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": 5.96,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "irq",
+      "match_id": "2026-GI-06",
+      "kickoff_at": "2026-06-26T19:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": 3.92,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "jor",
+      "match_id": "2026-GJ-02",
+      "kickoff_at": "2026-06-17T04:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "jor",
+      "match_id": "2026-GJ-04",
+      "kickoff_at": "2026-06-23T03:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": 5.96,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "jor",
+      "match_id": "2026-GJ-06",
+      "kickoff_at": "2026-06-28T02:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 4.96,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "jpn",
+      "match_id": "2026-GF-01",
+      "kickoff_at": "2026-06-14T20:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "jpn",
+      "match_id": "2026-GF-04",
+      "kickoff_at": "2026-06-21T04:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "rest_days_since_prev": 6.33,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "jpn",
+      "match_id": "2026-GF-05",
+      "kickoff_at": "2026-06-25T23:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 4.79,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "jpn",
+      "match_id": "2026-R32-02",
+      "kickoff_at": "2026-06-29T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": 3.75,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "kor",
+      "match_id": "2026-GA-02",
+      "kickoff_at": "2026-06-12T02:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "kor",
+      "match_id": "2026-GA-04",
+      "kickoff_at": "2026-06-19T03:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "rest_days_since_prev": 7.04,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "kor",
+      "match_id": "2026-GA-06",
+      "kickoff_at": "2026-06-25T01:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "rest_days_since_prev": 5.92,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "ksa",
+      "match_id": "2026-GH-02",
+      "kickoff_at": "2026-06-15T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "ksa",
+      "match_id": "2026-GH-03",
+      "kickoff_at": "2026-06-21T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 5.75,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "ksa",
+      "match_id": "2026-GH-05",
+      "kickoff_at": "2026-06-27T00:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": 5.33,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-GC-01",
+      "kickoff_at": "2026-06-13T22:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-GC-03",
+      "kickoff_at": "2026-06-19T22:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-GC-06",
+      "kickoff_at": "2026-06-24T22:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 5.0,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-R32-04",
+      "kickoff_at": "2026-06-30T01:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "rest_days_since_prev": 5.12,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-R16-01",
+      "kickoff_at": "2026-07-04T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": 4.67,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-QF-01",
+      "kickoff_at": "2026-07-09T20:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": 5.12,
+      "prior_matches": 5
+    },
+    {
+      "team_id": "mex",
+      "match_id": "2026-GA-01",
+      "kickoff_at": "2026-06-11T19:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "mex",
+      "match_id": "2026-GA-04",
+      "kickoff_at": "2026-06-19T03:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "rest_days_since_prev": 7.33,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "mex",
+      "match_id": "2026-GA-05",
+      "kickoff_at": "2026-06-25T01:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "rest_days_since_prev": 5.92,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "mex",
+      "match_id": "2026-R32-07",
+      "kickoff_at": "2026-07-01T01:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "mex",
+      "match_id": "2026-R16-04",
+      "kickoff_at": "2026-07-06T00:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "rest_days_since_prev": 4.96,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "ned",
+      "match_id": "2026-GF-01",
+      "kickoff_at": "2026-06-14T20:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "ned",
+      "match_id": "2026-GF-03",
+      "kickoff_at": "2026-06-20T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": 5.88,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "ned",
+      "match_id": "2026-GF-06",
+      "kickoff_at": "2026-06-25T23:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": 5.25,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "ned",
+      "match_id": "2026-R32-04",
+      "kickoff_at": "2026-06-30T01:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "rest_days_since_prev": 4.08,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-GI-02",
+      "kickoff_at": "2026-06-16T22:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-GI-04",
+      "kickoff_at": "2026-06-23T00:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": 6.08,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-GI-05",
+      "kickoff_at": "2026-06-26T19:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": 3.79,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-R32-05",
+      "kickoff_at": "2026-06-30T17:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 3.92,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-R16-03",
+      "kickoff_at": "2026-07-05T20:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": 5.12,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-QF-03",
+      "kickoff_at": "2026-07-11T21:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": 6.04,
+      "prior_matches": 5
+    },
+    {
+      "team_id": "nzl",
+      "match_id": "2026-GG-02",
+      "kickoff_at": "2026-06-16T04:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "nzl",
+      "match_id": "2026-GG-04",
+      "kickoff_at": "2026-06-22T01:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 5.88,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "nzl",
+      "match_id": "2026-GG-06",
+      "kickoff_at": "2026-06-27T03:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 5.08,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "pan",
+      "match_id": "2026-GL-02",
+      "kickoff_at": "2026-06-17T23:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "pan",
+      "match_id": "2026-GL-04",
+      "kickoff_at": "2026-06-23T23:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "pan",
+      "match_id": "2026-GL-05",
+      "kickoff_at": "2026-06-27T21:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": 3.92,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "par",
+      "match_id": "2026-GD-01",
+      "kickoff_at": "2026-06-13T01:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "par",
+      "match_id": "2026-GD-04",
+      "kickoff_at": "2026-06-20T04:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": 7.12,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "par",
+      "match_id": "2026-GD-06",
+      "kickoff_at": "2026-06-26T02:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": 5.92,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "par",
+      "match_id": "2026-R32-03",
+      "kickoff_at": "2026-06-29T20:30:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": 3.77,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "par",
+      "match_id": "2026-R16-02",
+      "kickoff_at": "2026-07-04T21:00:00Z",
+      "venue": "Lincoln Financial Field, Philadelphia",
+      "rest_days_since_prev": 5.02,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "por",
+      "match_id": "2026-GK-01",
+      "kickoff_at": "2026-06-17T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "por",
+      "match_id": "2026-GK-03",
+      "kickoff_at": "2026-06-23T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "por",
+      "match_id": "2026-GK-05",
+      "kickoff_at": "2026-06-27T23:30:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": 4.27,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "por",
+      "match_id": "2026-R32-12",
+      "kickoff_at": "2026-07-02T23:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": 4.98,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "por",
+      "match_id": "2026-R16-05",
+      "kickoff_at": "2026-07-06T19:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 3.83,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "qat",
+      "match_id": "2026-GB-02",
+      "kickoff_at": "2026-06-13T19:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "qat",
+      "match_id": "2026-GB-04",
+      "kickoff_at": "2026-06-18T22:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 5.12,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "qat",
+      "match_id": "2026-GB-06",
+      "kickoff_at": "2026-06-24T19:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": 5.88,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "rsa",
+      "match_id": "2026-GA-01",
+      "kickoff_at": "2026-06-11T19:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "rsa",
+      "match_id": "2026-GA-03",
+      "kickoff_at": "2026-06-18T16:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 6.88,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "rsa",
+      "match_id": "2026-GA-06",
+      "kickoff_at": "2026-06-25T01:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "rest_days_since_prev": 6.38,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "rsa",
+      "match_id": "2026-R32-01",
+      "kickoff_at": "2026-06-28T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 3.75,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "sco",
+      "match_id": "2026-GC-02",
+      "kickoff_at": "2026-06-14T01:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "sco",
+      "match_id": "2026-GC-03",
+      "kickoff_at": "2026-06-19T22:00:00Z",
+      "venue": "Gillette Stadium, Foxborough, Mass.",
+      "rest_days_since_prev": 5.88,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "sco",
+      "match_id": "2026-GC-05",
+      "kickoff_at": "2026-06-24T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": 5.0,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "sen",
+      "match_id": "2026-GI-01",
+      "kickoff_at": "2026-06-16T19:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "sen",
+      "match_id": "2026-GI-04",
+      "kickoff_at": "2026-06-23T00:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": 6.21,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "sen",
+      "match_id": "2026-GI-06",
+      "kickoff_at": "2026-06-26T19:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "rest_days_since_prev": 3.79,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "sen",
+      "match_id": "2026-R32-09",
+      "kickoff_at": "2026-07-01T20:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": 5.04,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-GB-02",
+      "kickoff_at": "2026-06-13T19:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-GB-03",
+      "kickoff_at": "2026-06-18T19:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 5.0,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-GB-05",
+      "kickoff_at": "2026-06-24T19:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-R32-13",
+      "kickoff_at": "2026-07-03T03:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 8.33,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-R16-08",
+      "kickoff_at": "2026-07-07T20:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": 4.71,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-QF-04",
+      "kickoff_at": "2026-07-12T01:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": 4.21,
+      "prior_matches": 5
+    },
+    {
+      "team_id": "swe",
+      "match_id": "2026-GF-02",
+      "kickoff_at": "2026-06-15T02:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "swe",
+      "match_id": "2026-GF-03",
+      "kickoff_at": "2026-06-20T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": 5.62,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "swe",
+      "match_id": "2026-GF-05",
+      "kickoff_at": "2026-06-25T23:00:00Z",
+      "venue": "AT&T Stadium, Arlington, Texas",
+      "rest_days_since_prev": 5.25,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "swe",
+      "match_id": "2026-R32-06",
+      "kickoff_at": "2026-06-30T21:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford, N.J.",
+      "rest_days_since_prev": 4.92,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "tun",
+      "match_id": "2026-GF-02",
+      "kickoff_at": "2026-06-15T02:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "tun",
+      "match_id": "2026-GF-04",
+      "kickoff_at": "2026-06-21T04:00:00Z",
+      "venue": "Estadio BBVA, Guadalupe, Mexico",
+      "rest_days_since_prev": 6.08,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "tun",
+      "match_id": "2026-GF-06",
+      "kickoff_at": "2026-06-25T23:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City, Mo.",
+      "rest_days_since_prev": 4.79,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "tur",
+      "match_id": "2026-GD-02",
+      "kickoff_at": "2026-06-14T04:00:00Z",
+      "venue": "BC Place, Vancouver, Canada",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "tur",
+      "match_id": "2026-GD-04",
+      "kickoff_at": "2026-06-20T04:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "tur",
+      "match_id": "2026-GD-05",
+      "kickoff_at": "2026-06-26T02:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 5.92,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "uru",
+      "match_id": "2026-GH-02",
+      "kickoff_at": "2026-06-15T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "uru",
+      "match_id": "2026-GH-04",
+      "kickoff_at": "2026-06-21T22:00:00Z",
+      "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
+      "rest_days_since_prev": 6.0,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "uru",
+      "match_id": "2026-GH-06",
+      "kickoff_at": "2026-06-27T00:00:00Z",
+      "venue": "Estadio Akron, Zapopan, Mexico",
+      "rest_days_since_prev": 5.08,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "usa",
+      "match_id": "2026-GD-01",
+      "kickoff_at": "2026-06-13T01:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "usa",
+      "match_id": "2026-GD-03",
+      "kickoff_at": "2026-06-19T19:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": 6.75,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "usa",
+      "match_id": "2026-GD-05",
+      "kickoff_at": "2026-06-26T02:00:00Z",
+      "venue": "SoFi Stadium, Inglewood, Calif.",
+      "rest_days_since_prev": 6.29,
+      "prior_matches": 2
+    },
+    {
+      "team_id": "usa",
+      "match_id": "2026-R32-10",
+      "kickoff_at": "2026-07-02T00:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara, Calif.",
+      "rest_days_since_prev": 5.92,
+      "prior_matches": 3
+    },
+    {
+      "team_id": "usa",
+      "match_id": "2026-R16-06",
+      "kickoff_at": "2026-07-06T21:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "rest_days_since_prev": 4.88,
+      "prior_matches": 4
+    },
+    {
+      "team_id": "uzb",
+      "match_id": "2026-GK-02",
+      "kickoff_at": "2026-06-18T02:00:00Z",
+      "venue": "Estadio Azteca, Mexico City",
+      "rest_days_since_prev": null,
+      "prior_matches": 0
+    },
+    {
+      "team_id": "uzb",
+      "match_id": "2026-GK-03",
+      "kickoff_at": "2026-06-23T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "rest_days_since_prev": 5.62,
+      "prior_matches": 1
+    },
+    {
+      "team_id": "uzb",
+      "match_id": "2026-GK-06",
+      "kickoff_at": "2026-06-27T23:30:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "rest_days_since_prev": 4.27,
+      "prior_matches": 2
+    }
+  ],
+  "note": "Rest intervals derived from match-ledger kickoffs; travel distance not modeled."
+}

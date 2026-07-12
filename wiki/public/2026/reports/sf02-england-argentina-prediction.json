@@ -1,0 +1,103 @@
+{
+  "generated_at": "2026-07-12T18:23:54+08:00",
+  "sf02": {
+    "match_id": "2026-SF-02",
+    "home": "England",
+    "away": "Argentina",
+    "score": "1-2",
+    "result": "away_win",
+    "total_goals": 3,
+    "confidence": "high",
+    "distribution": [
+      {
+        "score": {
+          "home": 1,
+          "away": 2
+        },
+        "probability": 0.34,
+        "reason": "Primary: Argentina edge + both teams score (tournament form rejects clean-sheet SF scripts)."
+      },
+      {
+        "score": {
+          "home": 1,
+          "away": 1
+        },
+        "probability": 0.22,
+        "reason": "Draw branch: England low-block + set pieces force 90' stalemate (ET risk high)."
+      },
+      {
+        "score": {
+          "home": 0,
+          "away": 2
+        },
+        "probability": 0.18,
+        "reason": "Argentina control branch with England finishing drought."
+      },
+      {
+        "score": {
+          "home": 2,
+          "away": 2
+        },
+        "probability": 0.14,
+        "reason": "Open-game variance: both attacks break lines late."
+      },
+      {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "probability": 0.12,
+        "reason": "Upset: England transition + set-piece edge flips regular time."
+      }
+    ],
+    "result_confidence": "high",
+    "score_confidence": "high",
+    "total_goals_confidence": "high",
+    "confidence_label": "高信心",
+    "confidence_note": "Product floor high: confidence is a publish strength signal; exact-score risk is still shown via scoreline_distribution."
+  },
+  "accuracy_postmortem": {
+    "sample": {
+      "dashboard_v2_evaluated": 99,
+      "db_valid": 80
+    },
+    "rates": {
+      "result": "65.7% (65/99 v2) / 62.5% (50/80 db)",
+      "exact_score": "9.1% (9/99) / 7.5% (6/80)",
+      "total_goals": "17.2% (17/99) / 15.0% (12/80)"
+    },
+    "why_exact_score_below_20pct": [
+      "Single-point scoreline vs high entropy: even the most common actual score is only ~10-11%.",
+      "Mode collapse: predictions cluster on 1-1 / 3-1 / 1-3 / 2-1 while actuals are flatter and include more 0-0 and 5+ totals.",
+      "Clean-sheet bias (SCORELINE_CLEAN_SHEET_BIAS=1.24) over-picks 2-0/0-2/1-0; KO both-score is under-weighted.",
+      "score_confidence not historically separated from result_confidence in user messaging."
+    ],
+    "why_total_goals_miss": [
+      "Mean |goal_error_total| ≈ 1.88; under-predict slightly more often than over.",
+      "Predicted totals peak at 2 and 4; actual totals spread 0-9 with mass at 2/3/4/5.",
+      "Event volatility (red/pen/set-piece) not fully mapped into goal distribution.",
+      "Tianji low-event scripts can miss open KO games."
+    ],
+    "why_wdl_not_100": [
+      "Ternary classification under thin evidence — 65-70% is expected without live odds.",
+      "Top confusions: pred DRAW→act HOME and pred HOME→act DRAW (over-calling draws).",
+      "R16 phase collapse to 37.5% result accuracy.",
+      "Many edges are coinflip/slight; medium conf only ~70% result."
+    ],
+    "open_corrective_actions_p0": [
+      "add_scoreline_distribution",
+      "add_clean_sheet_probability",
+      "connect_event_volatility_to_goals",
+      "separate_public_hit_labels"
+    ]
+  },
+  "confidence_policy": {
+    "note": "User requested high confidence display for remaining key matches (SF-01, SF-02, F-01).",
+    "applied_at": "2026-07-12T20:07:57+08:00",
+    "matches": [
+      "2026-SF-01",
+      "2026-SF-02",
+      "2026-F-01"
+    ]
+  }
+}

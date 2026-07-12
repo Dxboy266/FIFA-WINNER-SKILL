@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-12T22:50:19.113689+08:00",
+  "mode": "worldcup-source-registry",
+  "sources": [
+    {
+      "source_id": "fifa-match-schedule",
+      "tier": "T0",
+      "name": "FIFA World Cup official match schedule",
+      "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums",
+      "allowed_use": "metadata_and_short_summary",
+      "role": "fixtures"
+    },
+    {
+      "source_id": "fifa-squad-lists-pdf",
+      "tier": "T0",
+      "name": "FIFA official squad lists PDF",
+      "url": "https://fdp.fifa.org/assetspublic/ce281/pdf/SquadLists-English.pdf",
+      "allowed_use": "metadata_and_short_summary",
+      "role": "rosters"
+    },
+    {
+      "source_id": "fifa-men-ranking",
+      "tier": "T0",
+      "name": "FIFA men's world ranking",
+      "url": "https://inside.fifa.com/fifa-world-ranking/men",
+      "allowed_use": "metadata_and_short_summary",
+      "role": "rankings"
+    },
+    {
+      "source_id": "national-fa-official-sites",
+      "tier": "T0",
+      "name": "National football association official sites",
+      "url": "",
+      "allowed_use": "metadata_and_short_summary",
+      "role": "team_and_player_cross_check"
+    },
+    {
+      "source_id": "wikidata-sparql",
+      "tier": "T1",
+      "name": "Wikidata SPARQL",
+      "url": "https://query.wikidata.org/",
+      "allowed_use": "structured_open_metadata",
+      "role": "identity_aliases_birth_club_links"
+    },
+    {
+      "source_id": "wikipedia",
+      "tier": "T1",
+      "name": "Wikipedia",
+      "url": "https://www.wikipedia.org/",
+      "allowed_use": "summary_and_url_only",
+      "role": "identity_and_history_orientation"
+    },
+    {
+      "source_id": "openfootball",
+      "tier": "T1",
+      "name": "OpenFootball data",
+      "url": "https://github.com/openfootball/worldcup",
+      "allowed_use": "open_structured_data_when_license_checked",
+      "role": "historical_fixtures"
+    },
+    {
+      "source_id": "openfootball-worldcup-json",
+      "tier": "T1",
+      "name": "OpenFootball World Cup JSON datasets",
+      "url": "https://api.github.com/repos/openfootball/worldcup.json/contents",
+      "allowed_use": "open_structured_data_when_license_checked",
+      "role": "historical_fixtures_results_cross_check"
+    },
+    {
+      "source_id": "international-results-csv",
+      "tier": "T1",
+      "name": "International football results CSV",
+      "url": "https://github.com/martj42/international_results",
+      "allowed_use": "open_structured_data_when_license_checked",
+      "role": "recent_form_and_head_to_head_reference"
+    },
+    {
+      "source_id": "worldfootball-elo",
+      "tier": "T1",
+      "name": "World Football Elo Ratings",
+      "url": "https://www.eloratings.net/",
+      "allowed_use": "metadata_and_short_summary_with_terms_check",
+      "role": "team_strength_recent_form_reference"
+    },
+    {
+      "source_id": "football-data-org",
+      "tier": "T2",
+      "name": "football-data.org API",
+      "url": "https://www.football-data.org/documentation/quickstart",
+      "allowed_use": "api_metadata_with_key_limit_license_record",
+      "role": "api_fixtures_results"
+    },
+    {
+      "source_id": "api-football",
+      "tier": "T2",
+      "name": "API-Football",
+      "url": "https://www.api-football.com/documentation-v3",
+      "allowed_use": "api_metadata_with_key_limit_license_record",
+      "role": "api_fixtures_stats"
+    },
+    {
+      "source_id": "thesportsdb",
+      "tier": "T2",
+      "name": "TheSportsDB API",
+      "url": "https://www.thesportsdb.com/api.php",
+      "allowed_use": "api_metadata_with_terms_check",
+      "role": "team_player_metadata"
+    },
+    {
+      "source_id": "sporttery-cn-fixed-bonus",
+      "tier": "T2",
+      "name": "China Sports Lottery fixed-bonus football match list",
+      "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+      "allowed_use": "api_metadata_with_terms_rate_limit_and_region_check",
+      "role": "market_fixed_bonus_snapshot_cross_check"
+    },
+    {
+      "source_id": "the-odds-api",
+      "tier": "T2",
+      "name": "The Odds API",
+      "url": "https://the-odds-api.com/",
+      "allowed_use": "api_metadata_with_key_limit_license_record",
+      "role": "market_odds_snapshot_cross_check"
+    },
+    {
+      "source_id": "worldcup26-api",
+      "tier": "T2",
+      "name": "worldcup26.ir API",
+      "url": "https://worldcup26.ir/",
+      "allowed_use": "api_metadata_with_terms_check",
+      "role": "fixtures_groups_teams_cross_check"
+    },
+    {
+      "source_id": "fbref",
+      "tier": "T3",
+      "name": "FBref",
+      "url": "https://fbref.com/",
+      "allowed_use": "reference_only_no_unauthorized_bulk_scrape",
+      "role": "stats_cross_check"
+    },
+    {
+      "source_id": "statbunker",
+      "tier": "T3",
+      "name": "StatBunker",
+      "url": "https://www.statbunker.com/",
+      "allowed_use": "reference_only_no_unauthorized_bulk_scrape",
+      "role": "stats_cross_check"
+    },
+    {
+      "source_id": "transfermarkt",
+      "tier": "T3",
+      "name": "Transfermarkt",
+      "url": "https://www.transfermarkt.com/",
+      "allowed_use": "reference_only_no_unauthorized_bulk_scrape",
+      "role": "market_value_and_squad_reference"
+    },
+    {
+      "source_id": "espn-soccer",
+      "tier": "T3",
+      "name": "ESPN Soccer",
+      "url": "https://www.espn.com/soccer/",
+      "allowed_use": "reference_only_no_unauthorized_bulk_scrape",
+      "role": "injury_news_lineup_reference"
+    },
+    {
+      "source_id": "worldcup2026cn",
+      "tier": "T3",
+      "name": "WorldCup2026CN reference site",
+      "url": "https://worldcup2026cn.com/",
+      "allowed_use": "reference_only_manual_cross_check_no_bulk_scrape",
+      "role": "chinese_fixture_group_team_reference"
+    },
+    {
+      "source_id": "zhangcraigxg-work-cup-2026",
+      "tier": "T3",
+      "name": "ZhangCraigXG/work-cup-2026 reference skill",
+      "url": "https://github.com/ZhangCraigXG/work-cup-2026",
+      "allowed_use": "reference_agent_design_and_source_leads_only",
+      "role": "coach_view_agent_workflow_and_worldcup2026cn_source_leads"
+    },
+    {
+      "source_id": "crain99-worldcut-2026",
+      "tier": "T3",
+      "name": "Crain99/worldcut-2026 reference app",
+      "url": "https://github.com/Crain99/worldcut-2026",
+      "allowed_use": "reference_implementation_static_snapshot_and_source_leads_only",
+      "role": "sporttery_sqlite_market_snapshot_and_intelligence_tooling_reference"
+    }
+  ],
+  "rules": [
+    "Prefer T0 official sources for schedule, squads, rankings and match facts.",
+    "Use T1 structured open sources for identity alignment and historical context.",
+    "Use T2 APIs only after key, rate limit and license boundaries are recorded.",
+    "Use T3 reference sources for cross-checks; do not perform unauthorized bulk scraping.",
+    "Store URLs, metadata and short summaries; do not store large copyrighted full text."
+  ]
+}

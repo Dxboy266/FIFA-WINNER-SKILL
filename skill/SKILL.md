@@ -57,6 +57,9 @@ If running inside the `dxboy` knowledge base, use the project path `_meta/projec
   - `python3 skill/scripts/worldcup_squad_depth_compiler.py build --edition <edition> --root .`
 - **Roster Alignment compiler**:
   - `python3 skill/scripts/worldcup_roster_compiler.py compile --edition <edition> --root .`
+- **Compile Tournament Evidence (recent form / H2H / injury check / rest / history paths)**:
+  - `python3 skill/scripts/compile_prediction_evidence.py`
+  - Rebuilds `wiki/public/<edition>/evidence/*`, copies history/rankings to expected paths, scaffolds matchday `daily-evidence` when needed.
 - **Adjust Daily Context Evidences (Weather, Injuries, Referee)**:
   - `python3 skill/scripts/daily_evidence_input.py init --edition <edition> --date YYYY-MM-DD --root .`
   - `python3 skill/scripts/daily_evidence_input.py status --edition <edition> --date YYYY-MM-DD --root .`
@@ -65,10 +68,11 @@ If running inside the `dxboy` knowledge base, use the project path `_meta/projec
   - `python3 skill/scripts/worldcup_live_fetcher.py fetch-news --edition <edition> --date YYYY-MM-DD --root .`
 - **Historical Results Fetcher**:
   - `python3 skill/scripts/worldcup_history_fetcher.py fetch --edition <edition> --root .`
-- **Physics Prediction Model (ELo, Rankings, Rest, Travel)**:
+- **Physics Prediction Model (rankings, squad, rest, evidence completeness → outcome → confidence)**:
   - `python3 skill/scripts/prediction_scoring_model.py predict --edition <edition> --date YYYY-MM-DD --root .`
   - By teams: `python3 skill/scripts/prediction_scoring_model.py predict --edition <edition> --teams "TeamA,TeamB" --root .`
   - By match ID: `python3 skill/scripts/prediction_scoring_model.py predict --edition <edition> --match-id <match_id> --root .`
+  - Optional: `--now ISO-time --force` to re-run pre-kickoff; never rewrite after kickoff lock.
 - **Daily Prediction Runner (E2E daily runner)**:
   - `python3 skill/scripts/daily_prediction_runner.py run --edition <edition> --date YYYY-MM-DD [--now ISO-time] [--poster] --root .`
 - **Unified Agent Entrypoint (Octopus Paul Agent)**:
@@ -97,7 +101,13 @@ If running inside the `dxboy` knowledge base, use the project path `_meta/projec
 2. Run source readiness before claiming sources are usable.
 3. Snapshot T0/T1 sources before parsing them; every snapshot needs URL, tier, hash and allowed-use metadata.
 4. Parse official fixtures, rosters and rankings before stronger prediction claims.
-5. Run prediction evidence planning before daily predictions.
+5. **Every remaining match uses the same pipeline** (group → R32 → R16 → QF → SF → F):
+   1. Update `match-ledger` (teams bound, kickoffs, final scores for finished games).
+   2. `compile_prediction_evidence.py` then `worldcup_prediction_evidence_planner.py write`.
+   3. Init/refresh `daily-evidence/<date>.json`; fetch odds/news when available.
+   4. **Predict outcome/score first** via `prediction_scoring_model.py` / `daily_prediction_runner.py` / `octopus_paul_agent.py`.
+   5. **Then score confidence** with `_score_prediction_confidence` (earned only — never force high / never patch frontend labels).
+   6. Publish locked report + optional dashboard rebuild.
 6. Mark missing evidence as `partial` or `blocked`; never pretend it is complete.
 7. Only predict matches that have not kicked off. Prefer `prediction_scoring_model.py` for official reports.
 8. Lock pre-match reports. Do not overwrite them after kickoff.
@@ -117,15 +127,63 @@ Check these before daily predictions: official fixtures, official rosters, FIFA 
 
 Statuses must be `complete`, `partial` or `blocked`.
 
+Compile from disk when families are stale:
+
+```bash
+python3 skill/scripts/compile_prediction_evidence.py
+python3 skill/scripts/worldcup_prediction_evidence_planner.py write --edition 2026 --root .
+```
+
+Artifact roots (public edition data):
+
+- `wiki/public/<edition>/evidence/recent-form.json`
+- `wiki/public/<edition>/evidence/injury-availability.json`
+- `wiki/public/<edition>/evidence/head-to-head.json`
+- `wiki/public/<edition>/evidence/rest-travel-features.json`
+- `wiki/public/<edition>/history/team-wc-history.json`
+- `wiki/public/<edition>/daily-evidence/<YYYY-MM-DD>.json`
+- `wiki/public/<edition>/prediction-evidence-plan.json`
+
+## Standard Match Prediction (all remaining fixtures)
+
+Use this for **any** unstarted match (including SF/F). Same code path — no special-case high labels.
+
+```bash
+# 1) evidence
+python3 skill/scripts/compile_prediction_evidence.py
+python3 skill/scripts/worldcup_prediction_evidence_planner.py write --edition 2026 --root .
+python3 skill/scripts/daily_evidence_input.py init --edition 2026 --date YYYY-MM-DD --root .
+python3 skill/scripts/worldcup_live_fetcher.py fetch-odds --edition 2026 --date YYYY-MM-DD --root .   # when feed available
+python3 skill/scripts/worldcup_live_fetcher.py fetch-news --edition 2026 --date YYYY-MM-DD --root .
+
+# 2) predict (single match OR whole day OR phase)
+python3 skill/scripts/prediction_scoring_model.py predict --edition 2026 --match-id <match_id> --root .
+# or whole day:
+python3 skill/scripts/daily_prediction_runner.py run --edition 2026 --date YYYY-MM-DD --root .
+# or phase / all open:
+python3 skill/scripts/octopus_paul_agent.py predict --edition 2026 --phase semi_final --root .
+
+# 3) dashboard (optional)
+python3 skill/scripts/prediction_visual_dashboard.py write --edition 2026 --root .
+# dashboard-v2 rebuild if using wiki/public/2026/dashboard-v2/build_data.py
+```
+
 ## 玩法卡片
 
 Every daily prediction should include `play_card` with share title, match hook, watch points, risk flags, poster angle, confidence meter and gameplay tags. Keep it fun and shareable, but never gambling-oriented.
 
 ## Prediction Rules
 
-- 数据模型权重 (基本面 + 市场)：60%。
+- 数据模型权重 (基本面 + 市场)：60%（阶段权重可在模型内微调；以报告 JSON 为准）。
 - 天纪气运娱乐层权重：上限 40%。
+- **Order is fixed: compute outcome + scoreline first, then multi-factor confidence.** Never force `high` via display policy or frontend badges.
+- Confidence comes only from `prediction_scoring_model._score_prediction_confidence`:
+  - Inputs: data readiness, edge tier, evidence quality, evidence gaps, scoreline mode, market status, track votes, KO adjustments.
+  - `edge_tier == coinflip` **hard-blocks high** (even with complete evidence).
+  - High needs score ≥ ~72, multi-support factors, no critical gaps / unusable market.
 - Missing roster, injury, lineup or recent-form evidence must downgrade confidence.
+- `odds_unavailable` is **no market** (status `none`), not mock-invalid — do not mark evidence `unusable` solely for missing odds.
+- Knockout: no primary draw unless true coinflip lean; prefer directional + both-score scoreline pool (`knockout_policy` / `scoreline_tuning` in `model-hyperparameters.json`).
 - Reports must keep the entertainment disclaimer.
 
 - Exact score must come from a scoreline distribution, not from a single default template.

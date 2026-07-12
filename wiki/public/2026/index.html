@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跳转中...</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background: #04060D;
+  color: #EAEDF8;
+  font-family: -apple-system, system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.loading {
+  text-align: center;
+}
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(108,99,255,0.2);
+  border-top-color: #6C63FF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
+<script>
+  // Relative redirect works for both local server and GitHub Project Pages
+  // (e.g. https://user.github.io/REPO/ -> ./dashboard-v2/).
+  location.replace('./dashboard-v2/');
+</script>
+</head>
+<body>
+<div class="loading">
+  <div class="spinner"></div>
+  <p>正在跳转到 Dashboard V2...</p>
+  <p style="font-size: 12px; color: #7A7A90; margin-top: 0.5rem;">
+    如果没有自动跳转，请<a href="./dashboard-v2/" style="color: #6C63FF;">点击这里</a>
+  </p>
+</div>
+</body>
+</html>

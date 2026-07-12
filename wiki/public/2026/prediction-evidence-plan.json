@@ -1,17 +1,17 @@
 {
   "version": 1,
   "edition": "2026",
-  "generated_at": "2026-06-12T22:50:19.839830+08:00",
+  "generated_at": "2026-07-12T22:35:32.376943+08:00",
   "mode": "worldcup-prediction-evidence-plan",
   "status": "written",
-  "plan_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\prediction-evidence-plan.json",
-  "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\wiki\\synthesis\\prediction-evidence-plan.md",
+  "plan_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\prediction-evidence-plan.json",
+  "markdown_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\wiki\\synthesis\\prediction-evidence-plan.md",
   "summary": {
-    "requirements": 12,
-    "complete": 2,
-    "partial": 4,
-    "blocked": 6,
-    "optional": 4
+    "requirements": 10,
+    "complete": 7,
+    "partial": 2,
+    "blocked": 1,
+    "optional": 2
   },
   "items": [
     {
@@ -24,17 +24,14 @@
       ],
       "minimum_status_for_prediction": "partial",
       "confidence_impact": "missing_or_placeholder_fixtures_block_daily_prediction_for_real_matches",
-      "status": "partial",
+      "status": "complete",
       "current_counts": {
-        "matches": 208,
+        "matches": 104,
         "matches_with_kickoff": 104
       },
-      "blockers": [
-        "fixture_schedule_not_imported"
-      ],
+      "blockers": [],
       "artifacts": [
-        "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\match-ledger.json",
-        "raw/体育/世界杯/2026/snapshots/fifa-match-schedule-2026-06-09.bin"
+        "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\match-ledger.json"
       ],
       "source_refs": [
         {
@@ -64,7 +61,7 @@
       },
       "blockers": [],
       "artifacts": [
-        "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\rosters\\fifa-squad-lists.json"
+        "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\raw\\rosters\\fifa-squad-lists.json"
       ],
       "source_refs": [
         {
@@ -91,15 +88,13 @@
       ],
       "minimum_status_for_prediction": "partial",
       "confidence_impact": "missing_rankings_cap_confidence_at_low",
-      "status": "partial",
+      "status": "complete",
       "current_counts": {
-        "ranked_teams": 0
+        "ranked_teams": 48
       },
-      "blockers": [
-        "ranking_json_empty"
-      ],
+      "blockers": [],
       "artifacts": [
-        "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\rankings\\fifa-men-ranking.json"
+        "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\raw\\rankings\\fifa-men-ranking.json"
       ],
       "source_refs": [
         {
@@ -118,21 +113,22 @@
       "source_ids": [
         "openfootball",
         "openfootball-worldcup-json",
-        "international-results-csv",
         "wikipedia"
       ],
       "minimum_status_for_prediction": "partial",
       "confidence_impact": "missing_history_reduces_knockout_context",
-      "status": "blocked",
+      "status": "partial",
       "current_counts": {
-        "snapshots": 0
+        "teams_with_history": 37,
+        "teams": 48,
+        "editions_processed": 19
       },
       "blockers": [
-        "historical_results_snapshot_missing",
-        "historical_results_fetch_failed",
-        "source_fetch_failed"
+        "historical_results_compiled_from_snapshot_not_live_feed"
       ],
-      "artifacts": [],
+      "artifacts": [
+        "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\history\\team-wc-history.json"
+      ],
       "source_refs": [
         {
           "source_id": "openfootball",
@@ -144,12 +140,6 @@
           "source_id": "openfootball-worldcup-json",
           "tier": "T1",
           "url": "https://api.github.com/repos/openfootball/worldcup.json/contents",
-          "allowed_use": "open_structured_data_when_license_checked"
-        },
-        {
-          "source_id": "international-results-csv",
-          "tier": "T1",
-          "url": "https://github.com/martj42/international_results",
           "allowed_use": "open_structured_data_when_license_checked"
         },
         {
@@ -169,19 +159,18 @@
         "football-data-org",
         "api-football",
         "worldfootball-elo",
-        "international-results-csv",
         "national-fa-official-sites"
       ],
       "minimum_status_for_prediction": "partial",
       "confidence_impact": "missing_recent_form_cap_confidence_at_low_or_medium",
-      "status": "blocked",
+      "status": "complete",
       "current_counts": {
-        "matches": 0
+        "matches": 192
       },
-      "blockers": [
-        "recent_form_results_missing"
+      "blockers": [],
+      "artifacts": [
+        "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\evidence\\recent-form.json"
       ],
-      "artifacts": [],
       "source_refs": [
         {
           "source_id": "football-data-org",
@@ -202,12 +191,6 @@
           "allowed_use": "metadata_and_short_summary_with_terms_check"
         },
         {
-          "source_id": "international-results-csv",
-          "tier": "T1",
-          "url": "https://github.com/martj42/international_results",
-          "allowed_use": "open_structured_data_when_license_checked"
-        },
-        {
           "source_id": "national-fa-official-sites",
           "tier": "T0",
           "url": "",
@@ -225,17 +208,13 @@
       ],
       "minimum_status_for_prediction": "partial",
       "confidence_impact": "missing_depth_features_keep_model_at_seed_baseline",
-      "status": "partial",
+      "status": "complete",
       "current_counts": {
-        "teams": 48,
-        "players": 1248,
-        "coaches": 48
+        "teams": 48
       },
-      "blockers": [
-        "position_depth_features_not_compiled"
-      ],
+      "blockers": [],
       "artifacts": [
-        "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\rosters\\fifa-squad-lists.json"
+        "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\squad-depth-features.json"
       ],
       "source_refs": [
         {
@@ -259,14 +238,14 @@
       ],
       "minimum_status_for_prediction": "partial",
       "confidence_impact": "missing_availability_cap_confidence_at_low",
-      "status": "blocked",
+      "status": "complete",
       "current_counts": {
-        "items": 0
+        "items": 4
       },
-      "blockers": [
-        "daily_injury_availability_check_missing"
+      "blockers": [],
+      "artifacts": [
+        "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\evidence\\injury-availability.json"
       ],
-      "artifacts": [],
       "source_refs": [
         {
           "source_id": "national-fa-official-sites",
@@ -304,18 +283,16 @@
       ],
       "minimum_status_for_prediction": "partial",
       "confidence_impact": "missing_rest_travel_reduces_total_goals_confidence",
-      "status": "blocked",
+      "status": "partial",
       "current_counts": {
-        "matches": 208,
-        "matches_with_kickoff": 104
+        "rest_items": 204,
+        "teams": 48
       },
       "blockers": [
-        "fixture_schedule_required_for_rest_travel",
-        "fixture_schedule_not_imported"
+        "travel_distance_not_modeled"
       ],
       "artifacts": [
-        "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\match-ledger.json",
-        "raw/体育/世界杯/2026/snapshots/fifa-match-schedule-2026-06-09.bin"
+        "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\evidence\\rest-travel-features.json"
       ],
       "source_refs": [
         {
@@ -334,19 +311,18 @@
       "source_ids": [
         "openfootball",
         "openfootball-worldcup-json",
-        "international-results-csv",
         "wikipedia"
       ],
       "minimum_status_for_prediction": "optional",
       "confidence_impact": "missing_h2h_does_not_block_prediction",
-      "status": "blocked",
+      "status": "complete",
       "current_counts": {
-        "items": 0
+        "items": 102
       },
-      "blockers": [
-        "head_to_head_dataset_missing"
+      "blockers": [],
+      "artifacts": [
+        "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\evidence\\head-to-head.json"
       ],
-      "artifacts": [],
       "source_refs": [
         {
           "source_id": "openfootball",
@@ -358,12 +334,6 @@
           "source_id": "openfootball-worldcup-json",
           "tier": "T1",
           "url": "https://api.github.com/repos/openfootball/worldcup.json/contents",
-          "allowed_use": "open_structured_data_when_license_checked"
-        },
-        {
-          "source_id": "international-results-csv",
-          "tier": "T1",
-          "url": "https://github.com/martj42/international_results",
           "allowed_use": "open_structured_data_when_license_checked"
         },
         {
@@ -405,101 +375,6 @@
           "tier": "T1",
           "url": "https://www.wikipedia.org/",
           "allowed_use": "summary_and_url_only"
-        }
-      ]
-    },
-    {
-      "evidence_id": "market_odds_signal",
-      "name": "市场盘口和赔率信号",
-      "why_needed": "用于检测市场预期和基本面判断的共振/背离，只能作为校正或风险提示，不能转成投注建议。",
-      "required": false,
-      "source_ids": [
-        "sporttery-cn-fixed-bonus",
-        "the-odds-api",
-        "crain99-worldcut-2026"
-      ],
-      "minimum_status_for_prediction": "optional",
-      "confidence_impact": "missing_market_signal_reduces_divergence_detection_but_does_not_block_prediction",
-      "status": "partial",
-      "current_counts": {
-        "daily_evidence_files_with_market_refs": 3
-      },
-      "blockers": [
-        "live_market_feed_not_required_for_prediction_but_should_be_refreshed_near_kickoff"
-      ],
-      "artifacts": [
-        "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\daily-evidence\\2026-06-11.json",
-        "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\daily-evidence\\2026-06-12.json",
-        "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\daily-evidence\\2026-06-13.json",
-        "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\external-reference-sources.json"
-      ],
-      "source_refs": [
-        {
-          "source_id": "sporttery-cn-fixed-bonus",
-          "tier": "T2",
-          "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
-          "allowed_use": "api_metadata_with_terms_rate_limit_and_region_check"
-        },
-        {
-          "source_id": "the-odds-api",
-          "tier": "T2",
-          "url": "https://the-odds-api.com/",
-          "allowed_use": "api_metadata_with_key_limit_license_record"
-        },
-        {
-          "source_id": "crain99-worldcut-2026",
-          "tier": "T3",
-          "url": "https://github.com/Crain99/worldcut-2026",
-          "allowed_use": "reference_implementation_static_snapshot_and_source_leads_only"
-        }
-      ]
-    },
-    {
-      "evidence_id": "reference_agent_source_alignment",
-      "name": "参考 Agent 数据源和工作流对齐",
-      "why_needed": "记录 ZhangCraigXG/work-cup-2026 和 Crain99/worldcut-2026 的可参考数据线索、SQLite/缓存/情报工具设计，方便 A2A runtime agent 知道本项目已对齐哪些外部设计。",
-      "required": false,
-      "source_ids": [
-        "zhangcraigxg-work-cup-2026",
-        "crain99-worldcut-2026",
-        "worldcup2026cn",
-        "sporttery-cn-fixed-bonus"
-      ],
-      "minimum_status_for_prediction": "optional",
-      "confidence_impact": "missing_reference_alignment_does_not_block_prediction_but_limits_agent_interop_notes",
-      "status": "complete",
-      "current_counts": {
-        "reference_projects": 2,
-        "checked_reference_projects": 2
-      },
-      "blockers": [],
-      "artifacts": [
-        "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\external-reference-sources.json"
-      ],
-      "source_refs": [
-        {
-          "source_id": "zhangcraigxg-work-cup-2026",
-          "tier": "T3",
-          "url": "https://github.com/ZhangCraigXG/work-cup-2026",
-          "allowed_use": "reference_agent_design_and_source_leads_only"
-        },
-        {
-          "source_id": "crain99-worldcut-2026",
-          "tier": "T3",
-          "url": "https://github.com/Crain99/worldcut-2026",
-          "allowed_use": "reference_implementation_static_snapshot_and_source_leads_only"
-        },
-        {
-          "source_id": "worldcup2026cn",
-          "tier": "T3",
-          "url": "https://worldcup2026cn.com/",
-          "allowed_use": "reference_only_manual_cross_check_no_bulk_scrape"
-        },
-        {
-          "source_id": "sporttery-cn-fixed-bonus",
-          "tier": "T2",
-          "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
-          "allowed_use": "api_metadata_with_terms_rate_limit_and_region_check"
         }
       ]
     }

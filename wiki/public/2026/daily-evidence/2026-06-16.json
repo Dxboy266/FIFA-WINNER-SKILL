@@ -1,0 +1,230 @@
+{
+  "date": "2026-06-16",
+  "edition": "2026",
+  "data_sources": [
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-16T12:46:02.807464+00:00Z"
+    },
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-16T12:59:25.617305+00:00Z"
+    },
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-16T13:03:21.610960+00:00Z"
+    },
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-16T13:04:35.805613+00:00Z"
+    },
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-16T13:31:02.242407+00:00Z"
+    },
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-16T13:32:16.299196+00:00Z"
+    }
+  ],
+  "injuries": {
+    "edition": "2026",
+    "date": "2026-06-16",
+    "teams": {},
+    "summary": {
+      "total_teams": 48,
+      "teams_with_injuries": 0,
+      "total_injuries": 0,
+      "total_suspensions": 0
+    }
+  },
+  "matches": [
+    {
+      "match_id": "2026-GG-02",
+      "referee": null,
+      "odds": {
+        "home_win": 5.2,
+        "draw": 3.75,
+        "away_win": 1.6,
+        "source": "mock_bookmaker",
+        "is_mock": true
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GI-01",
+      "referee": null,
+      "odds": {
+        "home_win": 5.35,
+        "away_win": 12.0,
+        "draw": 1.19,
+        "source": "Marathon Bet"
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GI-02",
+      "referee": null,
+      "odds": {
+        "home_win": 15.0,
+        "away_win": 1.23,
+        "draw": 7.05,
+        "source": "Coolbet"
+      },
+      "sentiment": null
+    }
+  ],
+  "generated_at": "2026-06-16T21:32:21.393286+08:00",
+  "status": "updated",
+  "source_refs": [
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-16T20:46:05.883332+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-16T20:46:07.036880+08:00"
+    },
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-16T20:59:28.297273+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-16T20:59:29.374181+08:00"
+    },
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-16T21:03:25.043463+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-16T21:03:26.710908+08:00"
+    },
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-16T21:04:40.410104+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-16T21:04:41.888243+08:00"
+    },
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-16T21:31:05.018957+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-16T21:31:08.590367+08:00"
+    },
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-16T21:32:20.152690+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-16T21:32:21.393305+08:00"
+    }
+  ],
+  "late_news": [
+    {
+      "headline": "'Repressed' Iran forced to leave U.S. after game",
+      "detail": "Iran coach Amir Ghalenoei called his team perhaps the \"most oppressed team in the whole World Cup,\" after he said Iran have been forced to leave Los Angeles and return to their base camp in Tijuana, Mexico, immediately following their opening match.",
+      "sentiment": "positive",
+      "team_code": "irn",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-16T20:46:07.036846+08:00"
+    },
+    {
+      "headline": "Senegal coach calls on NYC diaspora to show out",
+      "detail": "Senegal head coach Pape Thiaw has called on the country's diaspora community in New York and beyond to put their full backing behind the team when they face France in their FIFA World Cup opener on Tuesday.",
+      "sentiment": "neutral",
+      "team_code": "fra",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-16T20:46:07.036865+08:00"
+    },
+    {
+      "headline": "Senegal coach calls on NYC diaspora to show out",
+      "detail": "Senegal head coach Pape Thiaw has called on the country's diaspora community in New York and beyond to put their full backing behind the team when they face France in their FIFA World Cup opener on Tuesday.",
+      "sentiment": "neutral",
+      "team_code": "sen",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-16T20:46:07.036868+08:00"
+    },
+    {
+      "headline": "Iran's entertaining draw with New Zealand offers r...",
+      "detail": "For 90 minutes, the Iran national team was allowed to focus on soccer. And then, alas, reality descended once more.",
+      "sentiment": "neutral",
+      "team_code": "irn",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-16T20:46:07.036870+08:00"
+    },
+    {
+      "headline": "Iran's entertaining draw with New Zealand offers r...",
+      "detail": "For 90 minutes, the Iran national team was allowed to focus on soccer. And then, alas, reality descended once more.",
+      "sentiment": "neutral",
+      "team_code": "nzl",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-16T20:46:07.036872+08:00"
+    },
+    {
+      "headline": "'Finally': Norway star Erling Haaland on fulfilling World Cup dream",
+      "detail": "Erling Haaland tells ESPN he is ready to make his World Cup debut and show his love for Norway on football's biggest stage.",
+      "sentiment": "neutral",
+      "team_code": "nor",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-16T20:46:07.036874+08:00"
+    },
+    {
+      "headline": "Why Michael Olise is the key to France's World Cup...",
+      "detail": "It's all eyes on Olise after Didier Deschamps finally called the Bayern Munich star up to the France senior side.",
+      "sentiment": "neutral",
+      "team_code": "fra",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-16T20:46:07.036876+08:00"
+    }
+  ],
+  "injuries_extracted": {
+    "edition": "2026",
+    "date": "2026-06-16",
+    "teams": {
+      "MEX": {
+        "team_code": "MEX",
+        "team_name": "Mexico",
+        "injuries": [],
+        "suspensions": []
+      },
+      "FRA": {
+        "team_code": "FRA",
+        "team_name": "France",
+        "injuries": [],
+        "suspensions": []
+      }
+    },
+    "summary": {
+      "total_teams": 2,
+      "total_injuries": 0,
+      "total_suspensions": 0
+    },
+    "extraction_method": "nlp_from_news",
+    "confidence": "low"
+  }
+}

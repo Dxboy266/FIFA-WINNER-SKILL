@@ -33,7 +33,11 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         if: steps.pages.outcome == 'success'
         with:
-          path: wiki/public/2026/wiki
+          # Publish whole public edition root so dashboard-v2 + wiki/dashboard both work:
+          #   /              -> index.html redirect to dashboard-v2
+          #   /dashboard-v2/ -> new UI
+          #   /wiki/dashboard/ or /dashboard/ (if mirrored) -> legacy
+          path: wiki/public/2026
       - id: deployment
         if: steps.pages.outcome == 'success'
         uses: actions/deploy-pages@v4

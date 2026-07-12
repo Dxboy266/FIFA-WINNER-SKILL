@@ -1,0 +1,2848 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-07-12T14:48:32Z",
+  "mode": "compiled_from_match_ledger_finals",
+  "status": "complete",
+  "summary": {
+    "teams": 48,
+    "matches": 192
+  },
+  "teams": [
+    {
+      "team_id": "alg",
+      "matches_used": 4,
+      "points": 4,
+      "gf": 5,
+      "ga": 9,
+      "gd": -4,
+      "ppg": 1.0,
+      "last_results": [
+        "L",
+        "W",
+        "D",
+        "L"
+      ]
+    },
+    {
+      "team_id": "arg",
+      "matches_used": 5,
+      "points": 15,
+      "gf": 14,
+      "ga": 6,
+      "gd": 8,
+      "ppg": 3.0,
+      "last_results": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "W"
+      ]
+    },
+    {
+      "team_id": "aus",
+      "matches_used": 4,
+      "points": 4,
+      "gf": 5,
+      "ga": 7,
+      "gd": -2,
+      "ppg": 1.0,
+      "last_results": [
+        "W",
+        "L",
+        "D",
+        "L"
+      ]
+    },
+    {
+      "team_id": "aut",
+      "matches_used": 4,
+      "points": 4,
+      "gf": 6,
+      "ga": 9,
+      "gd": -3,
+      "ppg": 1.0,
+      "last_results": [
+        "W",
+        "L",
+        "D",
+        "L"
+      ]
+    },
+    {
+      "team_id": "bel",
+      "matches_used": 5,
+      "points": 10,
+      "gf": 13,
+      "ga": 6,
+      "gd": 7,
+      "ppg": 2.0,
+      "last_results": [
+        "D",
+        "W",
+        "W",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "bih",
+      "matches_used": 4,
+      "points": 4,
+      "gf": 5,
+      "ga": 8,
+      "gd": -3,
+      "ppg": 1.0,
+      "last_results": [
+        "D",
+        "L",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "bra",
+      "matches_used": 5,
+      "points": 10,
+      "gf": 10,
+      "ga": 4,
+      "gd": 6,
+      "ppg": 2.0,
+      "last_results": [
+        "D",
+        "W",
+        "W",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "can",
+      "matches_used": 5,
+      "points": 7,
+      "gf": 9,
+      "ga": 6,
+      "gd": 3,
+      "ppg": 1.4,
+      "last_results": [
+        "D",
+        "W",
+        "L",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "civ",
+      "matches_used": 4,
+      "points": 6,
+      "gf": 5,
+      "ga": 4,
+      "gd": 1,
+      "ppg": 1.5,
+      "last_results": [
+        "W",
+        "L",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "cod",
+      "matches_used": 4,
+      "points": 4,
+      "gf": 5,
+      "ga": 5,
+      "gd": 0,
+      "ppg": 1.0,
+      "last_results": [
+        "D",
+        "L",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "col",
+      "matches_used": 5,
+      "points": 10,
+      "gf": 8,
+      "ga": 5,
+      "gd": 3,
+      "ppg": 2.0,
+      "last_results": [
+        "W",
+        "W",
+        "D",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "cpv",
+      "matches_used": 4,
+      "points": 3,
+      "gf": 4,
+      "ga": 5,
+      "gd": -1,
+      "ppg": 0.75,
+      "last_results": [
+        "D",
+        "D",
+        "D",
+        "L"
+      ]
+    },
+    {
+      "team_id": "cro",
+      "matches_used": 4,
+      "points": 6,
+      "gf": 6,
+      "ga": 7,
+      "gd": -1,
+      "ppg": 1.5,
+      "last_results": [
+        "L",
+        "W",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "cuw",
+      "matches_used": 3,
+      "points": 1,
+      "gf": 1,
+      "ga": 9,
+      "gd": -8,
+      "ppg": 0.333,
+      "last_results": [
+        "L",
+        "D",
+        "L"
+      ]
+    },
+    {
+      "team_id": "cze",
+      "matches_used": 3,
+      "points": 1,
+      "gf": 2,
+      "ga": 6,
+      "gd": -4,
+      "ppg": 0.333,
+      "last_results": [
+        "L",
+        "D",
+        "L"
+      ]
+    },
+    {
+      "team_id": "ecu",
+      "matches_used": 4,
+      "points": 4,
+      "gf": 2,
+      "ga": 4,
+      "gd": -2,
+      "ppg": 1.0,
+      "last_results": [
+        "L",
+        "D",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "egy",
+      "matches_used": 5,
+      "points": 8,
+      "gf": 12,
+      "ga": 9,
+      "gd": 3,
+      "ppg": 1.6,
+      "last_results": [
+        "D",
+        "W",
+        "D",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "eng",
+      "matches_used": 5,
+      "points": 13,
+      "gf": 9,
+      "ga": 4,
+      "gd": 5,
+      "ppg": 2.6,
+      "last_results": [
+        "D",
+        "W",
+        "W",
+        "W",
+        "W"
+      ]
+    },
+    {
+      "team_id": "esp",
+      "matches_used": 5,
+      "points": 15,
+      "gf": 11,
+      "ga": 1,
+      "gd": 10,
+      "ppg": 3.0,
+      "last_results": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "W"
+      ]
+    },
+    {
+      "team_id": "fra",
+      "matches_used": 5,
+      "points": 15,
+      "gf": 13,
+      "ga": 1,
+      "gd": 12,
+      "ppg": 3.0,
+      "last_results": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "W"
+      ]
+    },
+    {
+      "team_id": "ger",
+      "matches_used": 4,
+      "points": 6,
+      "gf": 14,
+      "ga": 9,
+      "gd": 5,
+      "ppg": 1.5,
+      "last_results": [
+        "W",
+        "W",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "gha",
+      "matches_used": 4,
+      "points": 4,
+      "gf": 2,
+      "ga": 3,
+      "gd": -1,
+      "ppg": 1.0,
+      "last_results": [
+        "W",
+        "D",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "hai",
+      "matches_used": 3,
+      "points": 0,
+      "gf": 2,
+      "ga": 8,
+      "gd": -6,
+      "ppg": 0.0,
+      "last_results": [
+        "L",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "irn",
+      "matches_used": 3,
+      "points": 3,
+      "gf": 3,
+      "ga": 3,
+      "gd": 0,
+      "ppg": 1.0,
+      "last_results": [
+        "D",
+        "D",
+        "D"
+      ]
+    },
+    {
+      "team_id": "irq",
+      "matches_used": 3,
+      "points": 0,
+      "gf": 1,
+      "ga": 12,
+      "gd": -11,
+      "ppg": 0.0,
+      "last_results": [
+        "L",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "jor",
+      "matches_used": 3,
+      "points": 0,
+      "gf": 3,
+      "ga": 8,
+      "gd": -5,
+      "ppg": 0.0,
+      "last_results": [
+        "L",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "jpn",
+      "matches_used": 4,
+      "points": 5,
+      "gf": 8,
+      "ga": 5,
+      "gd": 3,
+      "ppg": 1.25,
+      "last_results": [
+        "D",
+        "W",
+        "D",
+        "L"
+      ]
+    },
+    {
+      "team_id": "kor",
+      "matches_used": 3,
+      "points": 3,
+      "gf": 2,
+      "ga": 3,
+      "gd": -1,
+      "ppg": 1.0,
+      "last_results": [
+        "W",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "ksa",
+      "matches_used": 3,
+      "points": 2,
+      "gf": 1,
+      "ga": 5,
+      "gd": -4,
+      "ppg": 0.667,
+      "last_results": [
+        "D",
+        "L",
+        "D"
+      ]
+    },
+    {
+      "team_id": "mar",
+      "matches_used": 5,
+      "points": 12,
+      "gf": 12,
+      "ga": 7,
+      "gd": 5,
+      "ppg": 2.4,
+      "last_results": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "mex",
+      "matches_used": 5,
+      "points": 12,
+      "gf": 10,
+      "ga": 3,
+      "gd": 7,
+      "ppg": 2.4,
+      "last_results": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "ned",
+      "matches_used": 4,
+      "points": 7,
+      "gf": 13,
+      "ga": 8,
+      "gd": 5,
+      "ppg": 1.75,
+      "last_results": [
+        "D",
+        "W",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "nor",
+      "matches_used": 5,
+      "points": 9,
+      "gf": 9,
+      "ga": 10,
+      "gd": -1,
+      "ppg": 1.8,
+      "last_results": [
+        "W",
+        "L",
+        "W",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "nzl",
+      "matches_used": 3,
+      "points": 1,
+      "gf": 4,
+      "ga": 10,
+      "gd": -6,
+      "ppg": 0.333,
+      "last_results": [
+        "D",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "pan",
+      "matches_used": 3,
+      "points": 0,
+      "gf": 0,
+      "ga": 4,
+      "gd": -4,
+      "ppg": 0.0,
+      "last_results": [
+        "L",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "par",
+      "matches_used": 5,
+      "points": 7,
+      "gf": 7,
+      "ga": 9,
+      "gd": -2,
+      "ppg": 1.4,
+      "last_results": [
+        "L",
+        "W",
+        "D",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "por",
+      "matches_used": 5,
+      "points": 8,
+      "gf": 8,
+      "ga": 3,
+      "gd": 5,
+      "ppg": 1.6,
+      "last_results": [
+        "D",
+        "W",
+        "D",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "qat",
+      "matches_used": 3,
+      "points": 1,
+      "gf": 2,
+      "ga": 10,
+      "gd": -8,
+      "ppg": 0.333,
+      "last_results": [
+        "D",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "rsa",
+      "matches_used": 4,
+      "points": 4,
+      "gf": 2,
+      "ga": 4,
+      "gd": -2,
+      "ppg": 1.0,
+      "last_results": [
+        "L",
+        "D",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "sco",
+      "matches_used": 3,
+      "points": 3,
+      "gf": 1,
+      "ga": 4,
+      "gd": -3,
+      "ppg": 1.0,
+      "last_results": [
+        "W",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "sen",
+      "matches_used": 4,
+      "points": 3,
+      "gf": 10,
+      "ga": 9,
+      "gd": 1,
+      "ppg": 0.75,
+      "last_results": [
+        "L",
+        "L",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "sui",
+      "matches_used": 5,
+      "points": 12,
+      "gf": 13,
+      "ga": 8,
+      "gd": 5,
+      "ppg": 2.4,
+      "last_results": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "swe",
+      "matches_used": 4,
+      "points": 4,
+      "gf": 7,
+      "ga": 10,
+      "gd": -3,
+      "ppg": 1.0,
+      "last_results": [
+        "W",
+        "L",
+        "D",
+        "L"
+      ]
+    },
+    {
+      "team_id": "tun",
+      "matches_used": 3,
+      "points": 0,
+      "gf": 2,
+      "ga": 12,
+      "gd": -10,
+      "ppg": 0.0,
+      "last_results": [
+        "L",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "team_id": "tur",
+      "matches_used": 3,
+      "points": 3,
+      "gf": 3,
+      "ga": 5,
+      "gd": -2,
+      "ppg": 1.0,
+      "last_results": [
+        "L",
+        "L",
+        "W"
+      ]
+    },
+    {
+      "team_id": "uru",
+      "matches_used": 3,
+      "points": 2,
+      "gf": 3,
+      "ga": 4,
+      "gd": -1,
+      "ppg": 0.667,
+      "last_results": [
+        "D",
+        "D",
+        "L"
+      ]
+    },
+    {
+      "team_id": "usa",
+      "matches_used": 5,
+      "points": 9,
+      "gf": 11,
+      "ga": 8,
+      "gd": 3,
+      "ppg": 1.8,
+      "last_results": [
+        "W",
+        "W",
+        "L",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "team_id": "uzb",
+      "matches_used": 3,
+      "points": 0,
+      "gf": 2,
+      "ga": 11,
+      "gd": -9,
+      "ppg": 0.0,
+      "last_results": [
+        "L",
+        "L",
+        "L"
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "team_id": "alg",
+      "match_id": "2026-GJ-01",
+      "kickoff_at": "2026-06-17T01:00:00Z",
+      "opponent_id": "arg",
+      "side": "away",
+      "gf": 0,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "alg",
+      "match_id": "2026-GJ-04",
+      "kickoff_at": "2026-06-23T03:00:00Z",
+      "opponent_id": "jor",
+      "side": "away",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "alg",
+      "match_id": "2026-GJ-05",
+      "kickoff_at": "2026-06-28T02:00:00Z",
+      "opponent_id": "aut",
+      "side": "home",
+      "gf": 3,
+      "ga": 3,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "alg",
+      "match_id": "2026-R32-13",
+      "kickoff_at": "2026-07-03T03:00:00Z",
+      "opponent_id": "sui",
+      "side": "away",
+      "gf": 0,
+      "ga": 2,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-GJ-03",
+      "kickoff_at": "2026-06-22T17:00:00Z",
+      "opponent_id": "aut",
+      "side": "home",
+      "gf": 2,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-GJ-06",
+      "kickoff_at": "2026-06-28T02:00:00Z",
+      "opponent_id": "jor",
+      "side": "away",
+      "gf": 3,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-R32-15",
+      "kickoff_at": "2026-07-03T22:00:00Z",
+      "opponent_id": "cpv",
+      "side": "home",
+      "gf": 3,
+      "ga": 2,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-R16-07",
+      "kickoff_at": "2026-07-07T16:00:00Z",
+      "opponent_id": "egy",
+      "side": "home",
+      "gf": 3,
+      "ga": 2,
+      "pts": 3,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "arg",
+      "match_id": "2026-QF-04",
+      "kickoff_at": "2026-07-12T01:00:00Z",
+      "opponent_id": "sui",
+      "side": "home",
+      "gf": 3,
+      "ga": 1,
+      "pts": 3,
+      "phase": "quarter_final"
+    },
+    {
+      "team_id": "aus",
+      "match_id": "2026-GD-02",
+      "kickoff_at": "2026-06-14T04:00:00Z",
+      "opponent_id": "tur",
+      "side": "home",
+      "gf": 2,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "aus",
+      "match_id": "2026-GD-03",
+      "kickoff_at": "2026-06-19T19:00:00Z",
+      "opponent_id": "usa",
+      "side": "away",
+      "gf": 0,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "aus",
+      "match_id": "2026-GD-06",
+      "kickoff_at": "2026-06-26T02:00:00Z",
+      "opponent_id": "par",
+      "side": "away",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "aus",
+      "match_id": "2026-R32-14",
+      "kickoff_at": "2026-07-03T18:00:00Z",
+      "opponent_id": "egy",
+      "side": "home",
+      "gf": 3,
+      "ga": 5,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "aut",
+      "match_id": "2026-GJ-02",
+      "kickoff_at": "2026-06-17T04:00:00Z",
+      "opponent_id": "jor",
+      "side": "home",
+      "gf": 3,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "aut",
+      "match_id": "2026-GJ-03",
+      "kickoff_at": "2026-06-22T17:00:00Z",
+      "opponent_id": "arg",
+      "side": "away",
+      "gf": 0,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "aut",
+      "match_id": "2026-GJ-05",
+      "kickoff_at": "2026-06-28T02:00:00Z",
+      "opponent_id": "alg",
+      "side": "away",
+      "gf": 3,
+      "ga": 3,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "aut",
+      "match_id": "2026-R32-11",
+      "kickoff_at": "2026-07-02T19:00:00Z",
+      "opponent_id": "esp",
+      "side": "away",
+      "gf": 0,
+      "ga": 3,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-GG-03",
+      "kickoff_at": "2026-06-21T19:00:00Z",
+      "opponent_id": "irn",
+      "side": "home",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-GG-06",
+      "kickoff_at": "2026-06-27T03:00:00Z",
+      "opponent_id": "nzl",
+      "side": "away",
+      "gf": 5,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-R32-09",
+      "kickoff_at": "2026-07-01T20:00:00Z",
+      "opponent_id": "sen",
+      "side": "home",
+      "gf": 3,
+      "ga": 2,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-R16-06",
+      "kickoff_at": "2026-07-06T21:00:00Z",
+      "opponent_id": "usa",
+      "side": "away",
+      "gf": 4,
+      "ga": 1,
+      "pts": 3,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "bel",
+      "match_id": "2026-QF-02",
+      "kickoff_at": "2026-07-10T19:00:00Z",
+      "opponent_id": "esp",
+      "side": "away",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "quarter_final"
+    },
+    {
+      "team_id": "bih",
+      "match_id": "2026-GB-01",
+      "kickoff_at": "2026-06-12T19:00:00Z",
+      "opponent_id": "can",
+      "side": "away",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "bih",
+      "match_id": "2026-GB-03",
+      "kickoff_at": "2026-06-18T19:00:00Z",
+      "opponent_id": "sui",
+      "side": "away",
+      "gf": 1,
+      "ga": 4,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "bih",
+      "match_id": "2026-GB-06",
+      "kickoff_at": "2026-06-24T19:00:00Z",
+      "opponent_id": "qat",
+      "side": "home",
+      "gf": 3,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "bih",
+      "match_id": "2026-R32-10",
+      "kickoff_at": "2026-07-02T00:00:00Z",
+      "opponent_id": "usa",
+      "side": "away",
+      "gf": 0,
+      "ga": 2,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "bra",
+      "match_id": "2026-GC-01",
+      "kickoff_at": "2026-06-13T22:00:00Z",
+      "opponent_id": "mar",
+      "side": "home",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "bra",
+      "match_id": "2026-GC-04",
+      "kickoff_at": "2026-06-20T01:00:00Z",
+      "opponent_id": "hai",
+      "side": "home",
+      "gf": 3,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "bra",
+      "match_id": "2026-GC-05",
+      "kickoff_at": "2026-06-24T22:00:00Z",
+      "opponent_id": "sco",
+      "side": "away",
+      "gf": 3,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "bra",
+      "match_id": "2026-R32-02",
+      "kickoff_at": "2026-06-29T17:00:00Z",
+      "opponent_id": "jpn",
+      "side": "home",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "bra",
+      "match_id": "2026-R16-03",
+      "kickoff_at": "2026-07-05T20:00:00Z",
+      "opponent_id": "nor",
+      "side": "home",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "can",
+      "match_id": "2026-GB-01",
+      "kickoff_at": "2026-06-12T19:00:00Z",
+      "opponent_id": "bih",
+      "side": "home",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "can",
+      "match_id": "2026-GB-04",
+      "kickoff_at": "2026-06-18T22:00:00Z",
+      "opponent_id": "qat",
+      "side": "home",
+      "gf": 6,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "can",
+      "match_id": "2026-GB-05",
+      "kickoff_at": "2026-06-24T19:00:00Z",
+      "opponent_id": "sui",
+      "side": "away",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "can",
+      "match_id": "2026-R32-01",
+      "kickoff_at": "2026-06-28T19:00:00Z",
+      "opponent_id": "rsa",
+      "side": "away",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "can",
+      "match_id": "2026-R16-01",
+      "kickoff_at": "2026-07-04T17:00:00Z",
+      "opponent_id": "mar",
+      "side": "home",
+      "gf": 0,
+      "ga": 3,
+      "pts": 0,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "civ",
+      "match_id": "2026-GE-02",
+      "kickoff_at": "2026-06-14T23:00:00Z",
+      "opponent_id": "ecu",
+      "side": "home",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "civ",
+      "match_id": "2026-GE-03",
+      "kickoff_at": "2026-06-20T20:00:00Z",
+      "opponent_id": "ger",
+      "side": "away",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "civ",
+      "match_id": "2026-GE-06",
+      "kickoff_at": "2026-06-25T20:00:00Z",
+      "opponent_id": "cuw",
+      "side": "away",
+      "gf": 2,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "civ",
+      "match_id": "2026-R32-05",
+      "kickoff_at": "2026-06-30T17:00:00Z",
+      "opponent_id": "nor",
+      "side": "home",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "cod",
+      "match_id": "2026-GK-01",
+      "kickoff_at": "2026-06-17T17:00:00Z",
+      "opponent_id": "por",
+      "side": "away",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "cod",
+      "match_id": "2026-GK-04",
+      "kickoff_at": "2026-06-24T02:00:00Z",
+      "opponent_id": "col",
+      "side": "away",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "cod",
+      "match_id": "2026-GK-06",
+      "kickoff_at": "2026-06-27T23:30:00Z",
+      "opponent_id": "uzb",
+      "side": "home",
+      "gf": 3,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "cod",
+      "match_id": "2026-R32-08",
+      "kickoff_at": "2026-07-01T16:00:00Z",
+      "opponent_id": "eng",
+      "side": "away",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "col",
+      "match_id": "2026-GK-02",
+      "kickoff_at": "2026-06-18T02:00:00Z",
+      "opponent_id": "uzb",
+      "side": "away",
+      "gf": 3,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "col",
+      "match_id": "2026-GK-04",
+      "kickoff_at": "2026-06-24T02:00:00Z",
+      "opponent_id": "cod",
+      "side": "home",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "col",
+      "match_id": "2026-GK-05",
+      "kickoff_at": "2026-06-27T23:30:00Z",
+      "opponent_id": "por",
+      "side": "home",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "col",
+      "match_id": "2026-R32-16",
+      "kickoff_at": "2026-07-04T01:30:00Z",
+      "opponent_id": "gha",
+      "side": "home",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "col",
+      "match_id": "2026-R16-08",
+      "kickoff_at": "2026-07-07T20:00:00Z",
+      "opponent_id": "sui",
+      "side": "away",
+      "gf": 3,
+      "ga": 4,
+      "pts": 0,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "cpv",
+      "match_id": "2026-GH-01",
+      "kickoff_at": "2026-06-15T17:00:00Z",
+      "opponent_id": "esp",
+      "side": "away",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "cpv",
+      "match_id": "2026-GH-04",
+      "kickoff_at": "2026-06-21T22:00:00Z",
+      "opponent_id": "uru",
+      "side": "away",
+      "gf": 2,
+      "ga": 2,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "cpv",
+      "match_id": "2026-GH-05",
+      "kickoff_at": "2026-06-27T00:00:00Z",
+      "opponent_id": "ksa",
+      "side": "home",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "cpv",
+      "match_id": "2026-R32-15",
+      "kickoff_at": "2026-07-03T22:00:00Z",
+      "opponent_id": "arg",
+      "side": "away",
+      "gf": 2,
+      "ga": 3,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "cro",
+      "match_id": "2026-GL-01",
+      "kickoff_at": "2026-06-17T20:00:00Z",
+      "opponent_id": "eng",
+      "side": "away",
+      "gf": 2,
+      "ga": 4,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "cro",
+      "match_id": "2026-GL-04",
+      "kickoff_at": "2026-06-23T23:00:00Z",
+      "opponent_id": "pan",
+      "side": "away",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "cro",
+      "match_id": "2026-GL-06",
+      "kickoff_at": "2026-06-27T21:00:00Z",
+      "opponent_id": "gha",
+      "side": "home",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "cro",
+      "match_id": "2026-R32-12",
+      "kickoff_at": "2026-07-02T23:00:00Z",
+      "opponent_id": "por",
+      "side": "away",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "cuw",
+      "match_id": "2026-GE-01",
+      "kickoff_at": "2026-06-14T17:00:00Z",
+      "opponent_id": "ger",
+      "side": "away",
+      "gf": 1,
+      "ga": 7,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "cuw",
+      "match_id": "2026-GE-04",
+      "kickoff_at": "2026-06-21T00:00:00Z",
+      "opponent_id": "ecu",
+      "side": "away",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "cuw",
+      "match_id": "2026-GE-06",
+      "kickoff_at": "2026-06-25T20:00:00Z",
+      "opponent_id": "civ",
+      "side": "home",
+      "gf": 0,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "cze",
+      "match_id": "2026-GA-02",
+      "kickoff_at": "2026-06-12T02:00:00Z",
+      "opponent_id": "kor",
+      "side": "away",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "cze",
+      "match_id": "2026-GA-03",
+      "kickoff_at": "2026-06-18T16:00:00Z",
+      "opponent_id": "rsa",
+      "side": "home",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "cze",
+      "match_id": "2026-GA-05",
+      "kickoff_at": "2026-06-25T01:00:00Z",
+      "opponent_id": "mex",
+      "side": "home",
+      "gf": 0,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "ecu",
+      "match_id": "2026-GE-02",
+      "kickoff_at": "2026-06-14T23:00:00Z",
+      "opponent_id": "civ",
+      "side": "away",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "ecu",
+      "match_id": "2026-GE-04",
+      "kickoff_at": "2026-06-21T00:00:00Z",
+      "opponent_id": "cuw",
+      "side": "home",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "ecu",
+      "match_id": "2026-GE-05",
+      "kickoff_at": "2026-06-25T20:00:00Z",
+      "opponent_id": "ger",
+      "side": "home",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "ecu",
+      "match_id": "2026-R32-07",
+      "kickoff_at": "2026-07-01T01:00:00Z",
+      "opponent_id": "mex",
+      "side": "away",
+      "gf": 0,
+      "ga": 2,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "egy",
+      "match_id": "2026-GG-01",
+      "kickoff_at": "2026-06-15T22:00:00Z",
+      "opponent_id": "bel",
+      "side": "away",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "egy",
+      "match_id": "2026-GG-04",
+      "kickoff_at": "2026-06-22T01:00:00Z",
+      "opponent_id": "nzl",
+      "side": "away",
+      "gf": 3,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "egy",
+      "match_id": "2026-GG-05",
+      "kickoff_at": "2026-06-27T03:00:00Z",
+      "opponent_id": "irn",
+      "side": "home",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "egy",
+      "match_id": "2026-R32-14",
+      "kickoff_at": "2026-07-03T18:00:00Z",
+      "opponent_id": "aus",
+      "side": "away",
+      "gf": 5,
+      "ga": 3,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "egy",
+      "match_id": "2026-R16-07",
+      "kickoff_at": "2026-07-07T16:00:00Z",
+      "opponent_id": "arg",
+      "side": "away",
+      "gf": 2,
+      "ga": 3,
+      "pts": 0,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-GL-03",
+      "kickoff_at": "2026-06-23T20:00:00Z",
+      "opponent_id": "gha",
+      "side": "home",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-GL-05",
+      "kickoff_at": "2026-06-27T21:00:00Z",
+      "opponent_id": "pan",
+      "side": "away",
+      "gf": 2,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-R32-08",
+      "kickoff_at": "2026-07-01T16:00:00Z",
+      "opponent_id": "cod",
+      "side": "home",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-R16-04",
+      "kickoff_at": "2026-07-06T00:00:00Z",
+      "opponent_id": "mex",
+      "side": "away",
+      "gf": 3,
+      "ga": 2,
+      "pts": 3,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "eng",
+      "match_id": "2026-QF-03",
+      "kickoff_at": "2026-07-11T21:00:00Z",
+      "opponent_id": "nor",
+      "side": "away",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "quarter_final"
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-GH-03",
+      "kickoff_at": "2026-06-21T16:00:00Z",
+      "opponent_id": "ksa",
+      "side": "home",
+      "gf": 4,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-GH-06",
+      "kickoff_at": "2026-06-27T00:00:00Z",
+      "opponent_id": "uru",
+      "side": "away",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-R32-11",
+      "kickoff_at": "2026-07-02T19:00:00Z",
+      "opponent_id": "aut",
+      "side": "home",
+      "gf": 3,
+      "ga": 0,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-R16-05",
+      "kickoff_at": "2026-07-06T19:00:00Z",
+      "opponent_id": "por",
+      "side": "away",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "esp",
+      "match_id": "2026-QF-02",
+      "kickoff_at": "2026-07-10T19:00:00Z",
+      "opponent_id": "bel",
+      "side": "home",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "quarter_final"
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-GI-03",
+      "kickoff_at": "2026-06-22T21:00:00Z",
+      "opponent_id": "irq",
+      "side": "home",
+      "gf": 3,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-GI-05",
+      "kickoff_at": "2026-06-26T19:00:00Z",
+      "opponent_id": "nor",
+      "side": "away",
+      "gf": 4,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-R32-06",
+      "kickoff_at": "2026-06-30T21:00:00Z",
+      "opponent_id": "swe",
+      "side": "home",
+      "gf": 3,
+      "ga": 0,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-R16-02",
+      "kickoff_at": "2026-07-04T21:00:00Z",
+      "opponent_id": "par",
+      "side": "away",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "fra",
+      "match_id": "2026-QF-01",
+      "kickoff_at": "2026-07-09T20:00:00Z",
+      "opponent_id": "mar",
+      "side": "home",
+      "gf": 2,
+      "ga": 0,
+      "pts": 3,
+      "phase": "quarter_final"
+    },
+    {
+      "team_id": "ger",
+      "match_id": "2026-GE-01",
+      "kickoff_at": "2026-06-14T17:00:00Z",
+      "opponent_id": "cuw",
+      "side": "home",
+      "gf": 7,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "ger",
+      "match_id": "2026-GE-03",
+      "kickoff_at": "2026-06-20T20:00:00Z",
+      "opponent_id": "civ",
+      "side": "home",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "ger",
+      "match_id": "2026-GE-05",
+      "kickoff_at": "2026-06-25T20:00:00Z",
+      "opponent_id": "ecu",
+      "side": "away",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "ger",
+      "match_id": "2026-R32-03",
+      "kickoff_at": "2026-06-29T20:30:00Z",
+      "opponent_id": "par",
+      "side": "home",
+      "gf": 4,
+      "ga": 5,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "gha",
+      "match_id": "2026-GL-02",
+      "kickoff_at": "2026-06-17T23:00:00Z",
+      "opponent_id": "pan",
+      "side": "home",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "gha",
+      "match_id": "2026-GL-03",
+      "kickoff_at": "2026-06-23T20:00:00Z",
+      "opponent_id": "eng",
+      "side": "away",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "gha",
+      "match_id": "2026-GL-06",
+      "kickoff_at": "2026-06-27T21:00:00Z",
+      "opponent_id": "cro",
+      "side": "away",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "gha",
+      "match_id": "2026-R32-16",
+      "kickoff_at": "2026-07-04T01:30:00Z",
+      "opponent_id": "col",
+      "side": "away",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "hai",
+      "match_id": "2026-GC-02",
+      "kickoff_at": "2026-06-14T01:00:00Z",
+      "opponent_id": "sco",
+      "side": "home",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "hai",
+      "match_id": "2026-GC-04",
+      "kickoff_at": "2026-06-20T01:00:00Z",
+      "opponent_id": "bra",
+      "side": "away",
+      "gf": 0,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "hai",
+      "match_id": "2026-GC-06",
+      "kickoff_at": "2026-06-24T22:00:00Z",
+      "opponent_id": "mar",
+      "side": "away",
+      "gf": 2,
+      "ga": 4,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "irn",
+      "match_id": "2026-GG-02",
+      "kickoff_at": "2026-06-16T04:00:00Z",
+      "opponent_id": "nzl",
+      "side": "home",
+      "gf": 2,
+      "ga": 2,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "irn",
+      "match_id": "2026-GG-03",
+      "kickoff_at": "2026-06-21T19:00:00Z",
+      "opponent_id": "bel",
+      "side": "away",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "irn",
+      "match_id": "2026-GG-05",
+      "kickoff_at": "2026-06-27T03:00:00Z",
+      "opponent_id": "egy",
+      "side": "away",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "irq",
+      "match_id": "2026-GI-02",
+      "kickoff_at": "2026-06-16T22:00:00Z",
+      "opponent_id": "nor",
+      "side": "home",
+      "gf": 1,
+      "ga": 4,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "irq",
+      "match_id": "2026-GI-03",
+      "kickoff_at": "2026-06-22T21:00:00Z",
+      "opponent_id": "fra",
+      "side": "away",
+      "gf": 0,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "irq",
+      "match_id": "2026-GI-06",
+      "kickoff_at": "2026-06-26T19:00:00Z",
+      "opponent_id": "sen",
+      "side": "away",
+      "gf": 0,
+      "ga": 5,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "jor",
+      "match_id": "2026-GJ-02",
+      "kickoff_at": "2026-06-17T04:00:00Z",
+      "opponent_id": "aut",
+      "side": "away",
+      "gf": 1,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "jor",
+      "match_id": "2026-GJ-04",
+      "kickoff_at": "2026-06-23T03:00:00Z",
+      "opponent_id": "alg",
+      "side": "home",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "jor",
+      "match_id": "2026-GJ-06",
+      "kickoff_at": "2026-06-28T02:00:00Z",
+      "opponent_id": "arg",
+      "side": "home",
+      "gf": 1,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "jpn",
+      "match_id": "2026-GF-01",
+      "kickoff_at": "2026-06-14T20:00:00Z",
+      "opponent_id": "ned",
+      "side": "away",
+      "gf": 2,
+      "ga": 2,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "jpn",
+      "match_id": "2026-GF-04",
+      "kickoff_at": "2026-06-21T04:00:00Z",
+      "opponent_id": "tun",
+      "side": "away",
+      "gf": 4,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "jpn",
+      "match_id": "2026-GF-05",
+      "kickoff_at": "2026-06-25T23:00:00Z",
+      "opponent_id": "swe",
+      "side": "home",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "jpn",
+      "match_id": "2026-R32-02",
+      "kickoff_at": "2026-06-29T17:00:00Z",
+      "opponent_id": "bra",
+      "side": "away",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "kor",
+      "match_id": "2026-GA-02",
+      "kickoff_at": "2026-06-12T02:00:00Z",
+      "opponent_id": "cze",
+      "side": "home",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "kor",
+      "match_id": "2026-GA-04",
+      "kickoff_at": "2026-06-19T03:00:00Z",
+      "opponent_id": "mex",
+      "side": "away",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "kor",
+      "match_id": "2026-GA-06",
+      "kickoff_at": "2026-06-25T01:00:00Z",
+      "opponent_id": "rsa",
+      "side": "away",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "ksa",
+      "match_id": "2026-GH-02",
+      "kickoff_at": "2026-06-15T22:00:00Z",
+      "opponent_id": "uru",
+      "side": "home",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "ksa",
+      "match_id": "2026-GH-03",
+      "kickoff_at": "2026-06-21T16:00:00Z",
+      "opponent_id": "esp",
+      "side": "away",
+      "gf": 0,
+      "ga": 4,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "ksa",
+      "match_id": "2026-GH-05",
+      "kickoff_at": "2026-06-27T00:00:00Z",
+      "opponent_id": "cpv",
+      "side": "away",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-GC-03",
+      "kickoff_at": "2026-06-19T22:00:00Z",
+      "opponent_id": "sco",
+      "side": "away",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-GC-06",
+      "kickoff_at": "2026-06-24T22:00:00Z",
+      "opponent_id": "hai",
+      "side": "home",
+      "gf": 4,
+      "ga": 2,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-R32-04",
+      "kickoff_at": "2026-06-30T01:00:00Z",
+      "opponent_id": "ned",
+      "side": "away",
+      "gf": 4,
+      "ga": 3,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-R16-01",
+      "kickoff_at": "2026-07-04T17:00:00Z",
+      "opponent_id": "can",
+      "side": "away",
+      "gf": 3,
+      "ga": 0,
+      "pts": 3,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "mar",
+      "match_id": "2026-QF-01",
+      "kickoff_at": "2026-07-09T20:00:00Z",
+      "opponent_id": "fra",
+      "side": "away",
+      "gf": 0,
+      "ga": 2,
+      "pts": 0,
+      "phase": "quarter_final"
+    },
+    {
+      "team_id": "mex",
+      "match_id": "2026-GA-01",
+      "kickoff_at": "2026-06-11T19:00:00Z",
+      "opponent_id": "rsa",
+      "side": "home",
+      "gf": 2,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "mex",
+      "match_id": "2026-GA-04",
+      "kickoff_at": "2026-06-19T03:00:00Z",
+      "opponent_id": "kor",
+      "side": "home",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "mex",
+      "match_id": "2026-GA-05",
+      "kickoff_at": "2026-06-25T01:00:00Z",
+      "opponent_id": "cze",
+      "side": "away",
+      "gf": 3,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "mex",
+      "match_id": "2026-R32-07",
+      "kickoff_at": "2026-07-01T01:00:00Z",
+      "opponent_id": "ecu",
+      "side": "home",
+      "gf": 2,
+      "ga": 0,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "mex",
+      "match_id": "2026-R16-04",
+      "kickoff_at": "2026-07-06T00:00:00Z",
+      "opponent_id": "eng",
+      "side": "home",
+      "gf": 2,
+      "ga": 3,
+      "pts": 0,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "ned",
+      "match_id": "2026-GF-01",
+      "kickoff_at": "2026-06-14T20:00:00Z",
+      "opponent_id": "jpn",
+      "side": "home",
+      "gf": 2,
+      "ga": 2,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "ned",
+      "match_id": "2026-GF-03",
+      "kickoff_at": "2026-06-20T17:00:00Z",
+      "opponent_id": "swe",
+      "side": "home",
+      "gf": 5,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "ned",
+      "match_id": "2026-GF-06",
+      "kickoff_at": "2026-06-25T23:00:00Z",
+      "opponent_id": "tun",
+      "side": "away",
+      "gf": 3,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "ned",
+      "match_id": "2026-R32-04",
+      "kickoff_at": "2026-06-30T01:00:00Z",
+      "opponent_id": "mar",
+      "side": "home",
+      "gf": 3,
+      "ga": 4,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-GI-04",
+      "kickoff_at": "2026-06-23T00:00:00Z",
+      "opponent_id": "sen",
+      "side": "home",
+      "gf": 3,
+      "ga": 2,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-GI-05",
+      "kickoff_at": "2026-06-26T19:00:00Z",
+      "opponent_id": "fra",
+      "side": "home",
+      "gf": 1,
+      "ga": 4,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-R32-05",
+      "kickoff_at": "2026-06-30T17:00:00Z",
+      "opponent_id": "civ",
+      "side": "away",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-R16-03",
+      "kickoff_at": "2026-07-05T20:00:00Z",
+      "opponent_id": "bra",
+      "side": "away",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "nor",
+      "match_id": "2026-QF-03",
+      "kickoff_at": "2026-07-11T21:00:00Z",
+      "opponent_id": "eng",
+      "side": "home",
+      "gf": 1,
+      "ga": 2,
+      "pts": 0,
+      "phase": "quarter_final"
+    },
+    {
+      "team_id": "nzl",
+      "match_id": "2026-GG-02",
+      "kickoff_at": "2026-06-16T04:00:00Z",
+      "opponent_id": "irn",
+      "side": "away",
+      "gf": 2,
+      "ga": 2,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "nzl",
+      "match_id": "2026-GG-04",
+      "kickoff_at": "2026-06-22T01:00:00Z",
+      "opponent_id": "egy",
+      "side": "home",
+      "gf": 1,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "nzl",
+      "match_id": "2026-GG-06",
+      "kickoff_at": "2026-06-27T03:00:00Z",
+      "opponent_id": "bel",
+      "side": "home",
+      "gf": 1,
+      "ga": 5,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "pan",
+      "match_id": "2026-GL-02",
+      "kickoff_at": "2026-06-17T23:00:00Z",
+      "opponent_id": "gha",
+      "side": "away",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "pan",
+      "match_id": "2026-GL-04",
+      "kickoff_at": "2026-06-23T23:00:00Z",
+      "opponent_id": "cro",
+      "side": "home",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "pan",
+      "match_id": "2026-GL-05",
+      "kickoff_at": "2026-06-27T21:00:00Z",
+      "opponent_id": "eng",
+      "side": "home",
+      "gf": 0,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "par",
+      "match_id": "2026-GD-01",
+      "kickoff_at": "2026-06-13T01:00:00Z",
+      "opponent_id": "usa",
+      "side": "away",
+      "gf": 1,
+      "ga": 4,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "par",
+      "match_id": "2026-GD-04",
+      "kickoff_at": "2026-06-20T04:00:00Z",
+      "opponent_id": "tur",
+      "side": "away",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "par",
+      "match_id": "2026-GD-06",
+      "kickoff_at": "2026-06-26T02:00:00Z",
+      "opponent_id": "aus",
+      "side": "home",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "par",
+      "match_id": "2026-R32-03",
+      "kickoff_at": "2026-06-29T20:30:00Z",
+      "opponent_id": "ger",
+      "side": "away",
+      "gf": 5,
+      "ga": 4,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "par",
+      "match_id": "2026-R16-02",
+      "kickoff_at": "2026-07-04T21:00:00Z",
+      "opponent_id": "fra",
+      "side": "home",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "por",
+      "match_id": "2026-GK-01",
+      "kickoff_at": "2026-06-17T17:00:00Z",
+      "opponent_id": "cod",
+      "side": "home",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "por",
+      "match_id": "2026-GK-03",
+      "kickoff_at": "2026-06-23T17:00:00Z",
+      "opponent_id": "uzb",
+      "side": "home",
+      "gf": 5,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "por",
+      "match_id": "2026-GK-05",
+      "kickoff_at": "2026-06-27T23:30:00Z",
+      "opponent_id": "col",
+      "side": "away",
+      "gf": 0,
+      "ga": 0,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "por",
+      "match_id": "2026-R32-12",
+      "kickoff_at": "2026-07-02T23:00:00Z",
+      "opponent_id": "cro",
+      "side": "home",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "por",
+      "match_id": "2026-R16-05",
+      "kickoff_at": "2026-07-06T19:00:00Z",
+      "opponent_id": "esp",
+      "side": "home",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "qat",
+      "match_id": "2026-GB-02",
+      "kickoff_at": "2026-06-13T19:00:00Z",
+      "opponent_id": "sui",
+      "side": "home",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "qat",
+      "match_id": "2026-GB-04",
+      "kickoff_at": "2026-06-18T22:00:00Z",
+      "opponent_id": "can",
+      "side": "away",
+      "gf": 0,
+      "ga": 6,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "qat",
+      "match_id": "2026-GB-06",
+      "kickoff_at": "2026-06-24T19:00:00Z",
+      "opponent_id": "bih",
+      "side": "away",
+      "gf": 1,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "rsa",
+      "match_id": "2026-GA-01",
+      "kickoff_at": "2026-06-11T19:00:00Z",
+      "opponent_id": "mex",
+      "side": "away",
+      "gf": 0,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "rsa",
+      "match_id": "2026-GA-03",
+      "kickoff_at": "2026-06-18T16:00:00Z",
+      "opponent_id": "cze",
+      "side": "away",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "rsa",
+      "match_id": "2026-GA-06",
+      "kickoff_at": "2026-06-25T01:00:00Z",
+      "opponent_id": "kor",
+      "side": "home",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "rsa",
+      "match_id": "2026-R32-01",
+      "kickoff_at": "2026-06-28T19:00:00Z",
+      "opponent_id": "can",
+      "side": "home",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "sco",
+      "match_id": "2026-GC-02",
+      "kickoff_at": "2026-06-14T01:00:00Z",
+      "opponent_id": "hai",
+      "side": "away",
+      "gf": 1,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "sco",
+      "match_id": "2026-GC-03",
+      "kickoff_at": "2026-06-19T22:00:00Z",
+      "opponent_id": "mar",
+      "side": "home",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "sco",
+      "match_id": "2026-GC-05",
+      "kickoff_at": "2026-06-24T22:00:00Z",
+      "opponent_id": "bra",
+      "side": "home",
+      "gf": 0,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "sen",
+      "match_id": "2026-GI-01",
+      "kickoff_at": "2026-06-16T19:00:00Z",
+      "opponent_id": "fra",
+      "side": "away",
+      "gf": 1,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "sen",
+      "match_id": "2026-GI-04",
+      "kickoff_at": "2026-06-23T00:00:00Z",
+      "opponent_id": "nor",
+      "side": "away",
+      "gf": 2,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "sen",
+      "match_id": "2026-GI-06",
+      "kickoff_at": "2026-06-26T19:00:00Z",
+      "opponent_id": "irq",
+      "side": "home",
+      "gf": 5,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "sen",
+      "match_id": "2026-R32-09",
+      "kickoff_at": "2026-07-01T20:00:00Z",
+      "opponent_id": "bel",
+      "side": "away",
+      "gf": 2,
+      "ga": 3,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-GB-03",
+      "kickoff_at": "2026-06-18T19:00:00Z",
+      "opponent_id": "bih",
+      "side": "home",
+      "gf": 4,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-GB-05",
+      "kickoff_at": "2026-06-24T19:00:00Z",
+      "opponent_id": "can",
+      "side": "home",
+      "gf": 2,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-R32-13",
+      "kickoff_at": "2026-07-03T03:00:00Z",
+      "opponent_id": "alg",
+      "side": "home",
+      "gf": 2,
+      "ga": 0,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-R16-08",
+      "kickoff_at": "2026-07-07T20:00:00Z",
+      "opponent_id": "col",
+      "side": "home",
+      "gf": 4,
+      "ga": 3,
+      "pts": 3,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "sui",
+      "match_id": "2026-QF-04",
+      "kickoff_at": "2026-07-12T01:00:00Z",
+      "opponent_id": "arg",
+      "side": "away",
+      "gf": 1,
+      "ga": 3,
+      "pts": 0,
+      "phase": "quarter_final"
+    },
+    {
+      "team_id": "swe",
+      "match_id": "2026-GF-02",
+      "kickoff_at": "2026-06-15T02:00:00Z",
+      "opponent_id": "tun",
+      "side": "home",
+      "gf": 5,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "swe",
+      "match_id": "2026-GF-03",
+      "kickoff_at": "2026-06-20T17:00:00Z",
+      "opponent_id": "ned",
+      "side": "away",
+      "gf": 1,
+      "ga": 5,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "swe",
+      "match_id": "2026-GF-05",
+      "kickoff_at": "2026-06-25T23:00:00Z",
+      "opponent_id": "jpn",
+      "side": "away",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "swe",
+      "match_id": "2026-R32-06",
+      "kickoff_at": "2026-06-30T21:00:00Z",
+      "opponent_id": "fra",
+      "side": "away",
+      "gf": 0,
+      "ga": 3,
+      "pts": 0,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "tun",
+      "match_id": "2026-GF-02",
+      "kickoff_at": "2026-06-15T02:00:00Z",
+      "opponent_id": "swe",
+      "side": "away",
+      "gf": 1,
+      "ga": 5,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "tun",
+      "match_id": "2026-GF-04",
+      "kickoff_at": "2026-06-21T04:00:00Z",
+      "opponent_id": "jpn",
+      "side": "home",
+      "gf": 0,
+      "ga": 4,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "tun",
+      "match_id": "2026-GF-06",
+      "kickoff_at": "2026-06-25T23:00:00Z",
+      "opponent_id": "ned",
+      "side": "home",
+      "gf": 1,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "tur",
+      "match_id": "2026-GD-02",
+      "kickoff_at": "2026-06-14T04:00:00Z",
+      "opponent_id": "aus",
+      "side": "away",
+      "gf": 0,
+      "ga": 2,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "tur",
+      "match_id": "2026-GD-04",
+      "kickoff_at": "2026-06-20T04:00:00Z",
+      "opponent_id": "par",
+      "side": "home",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "tur",
+      "match_id": "2026-GD-05",
+      "kickoff_at": "2026-06-26T02:00:00Z",
+      "opponent_id": "usa",
+      "side": "home",
+      "gf": 3,
+      "ga": 2,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "uru",
+      "match_id": "2026-GH-02",
+      "kickoff_at": "2026-06-15T22:00:00Z",
+      "opponent_id": "ksa",
+      "side": "away",
+      "gf": 1,
+      "ga": 1,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "uru",
+      "match_id": "2026-GH-04",
+      "kickoff_at": "2026-06-21T22:00:00Z",
+      "opponent_id": "cpv",
+      "side": "home",
+      "gf": 2,
+      "ga": 2,
+      "pts": 1,
+      "phase": "group"
+    },
+    {
+      "team_id": "uru",
+      "match_id": "2026-GH-06",
+      "kickoff_at": "2026-06-27T00:00:00Z",
+      "opponent_id": "esp",
+      "side": "home",
+      "gf": 0,
+      "ga": 1,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "usa",
+      "match_id": "2026-GD-01",
+      "kickoff_at": "2026-06-13T01:00:00Z",
+      "opponent_id": "par",
+      "side": "home",
+      "gf": 4,
+      "ga": 1,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "usa",
+      "match_id": "2026-GD-03",
+      "kickoff_at": "2026-06-19T19:00:00Z",
+      "opponent_id": "aus",
+      "side": "home",
+      "gf": 2,
+      "ga": 0,
+      "pts": 3,
+      "phase": "group"
+    },
+    {
+      "team_id": "usa",
+      "match_id": "2026-GD-05",
+      "kickoff_at": "2026-06-26T02:00:00Z",
+      "opponent_id": "tur",
+      "side": "away",
+      "gf": 2,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "usa",
+      "match_id": "2026-R32-10",
+      "kickoff_at": "2026-07-02T00:00:00Z",
+      "opponent_id": "bih",
+      "side": "home",
+      "gf": 2,
+      "ga": 0,
+      "pts": 3,
+      "phase": "round_of_32"
+    },
+    {
+      "team_id": "usa",
+      "match_id": "2026-R16-06",
+      "kickoff_at": "2026-07-06T21:00:00Z",
+      "opponent_id": "bel",
+      "side": "home",
+      "gf": 1,
+      "ga": 4,
+      "pts": 0,
+      "phase": "round_of_16"
+    },
+    {
+      "team_id": "uzb",
+      "match_id": "2026-GK-02",
+      "kickoff_at": "2026-06-18T02:00:00Z",
+      "opponent_id": "col",
+      "side": "home",
+      "gf": 1,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "uzb",
+      "match_id": "2026-GK-03",
+      "kickoff_at": "2026-06-23T17:00:00Z",
+      "opponent_id": "por",
+      "side": "away",
+      "gf": 0,
+      "ga": 5,
+      "pts": 0,
+      "phase": "group"
+    },
+    {
+      "team_id": "uzb",
+      "match_id": "2026-GK-06",
+      "kickoff_at": "2026-06-27T23:30:00Z",
+      "opponent_id": "cod",
+      "side": "away",
+      "gf": 1,
+      "ga": 3,
+      "pts": 0,
+      "phase": "group"
+    }
+  ],
+  "note": "Recent form compiled from 2026 tournament completed matches (last 5 per team)."
+}

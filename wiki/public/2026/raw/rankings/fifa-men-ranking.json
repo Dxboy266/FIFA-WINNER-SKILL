@@ -1,0 +1,696 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-06-10T18:44:11.861926+08:00",
+  "mode": "fifa-men-ranking",
+  "source_url": "https://inside.fifa.com/fifa-world-ranking/men",
+  "source_tier": "T0",
+  "snapshot_manifest": "raw/体育/世界杯/2026/evidence-packets/fifa-men-ranking-2026-06-09-snapshot-manifest.json",
+  "rankings": [
+    {
+      "rank": 1,
+      "team_name": "France",
+      "team_code": "FRA",
+      "points": 1877.32,
+      "world_rank": 1
+    },
+    {
+      "rank": 2,
+      "team_name": "Spain",
+      "team_code": "ESP",
+      "points": 1876.4,
+      "world_rank": 2
+    },
+    {
+      "rank": 3,
+      "team_name": "Argentina",
+      "team_code": "ARG",
+      "points": 1874.81,
+      "world_rank": 3
+    },
+    {
+      "rank": 4,
+      "team_name": "England",
+      "team_code": "ENG",
+      "points": 1825.97,
+      "world_rank": 4
+    },
+    {
+      "rank": 5,
+      "team_name": "Portugal",
+      "team_code": "POR",
+      "points": 1763.83,
+      "world_rank": 5
+    },
+    {
+      "rank": 6,
+      "team_name": "Brazil",
+      "team_code": "BRA",
+      "points": 1761.16,
+      "world_rank": 6
+    },
+    {
+      "rank": 7,
+      "team_name": "Netherlands",
+      "team_code": "NED",
+      "points": 1757.87,
+      "world_rank": 7
+    },
+    {
+      "rank": 8,
+      "team_name": "Morocco",
+      "team_code": "MAR",
+      "points": 1755.87,
+      "world_rank": 8
+    },
+    {
+      "rank": 9,
+      "team_name": "Belgium",
+      "team_code": "BEL",
+      "points": 1734.71,
+      "world_rank": 9
+    },
+    {
+      "rank": 10,
+      "team_name": "Germany",
+      "team_code": "GER",
+      "points": 1730.37,
+      "world_rank": 10
+    },
+    {
+      "rank": 11,
+      "team_name": "Croatia",
+      "team_code": "CRO",
+      "points": 1717.07,
+      "world_rank": 11
+    },
+    {
+      "rank": 13,
+      "team_name": "Colombia",
+      "team_code": "COL",
+      "points": 1693.09,
+      "world_rank": 13
+    },
+    {
+      "rank": 14,
+      "team_name": "Senegal",
+      "team_code": "SEN",
+      "points": 1688.99,
+      "world_rank": 14
+    },
+    {
+      "rank": 15,
+      "team_name": "Mexico",
+      "team_code": "MEX",
+      "points": 1681.03,
+      "world_rank": 15
+    },
+    {
+      "rank": 16,
+      "team_name": "USA",
+      "team_code": "USA",
+      "points": 1673.13,
+      "world_rank": 16
+    },
+    {
+      "rank": 17,
+      "team_name": "Uruguay",
+      "team_code": "URU",
+      "points": 1673.07,
+      "world_rank": 17
+    },
+    {
+      "rank": 18,
+      "team_name": "Japan",
+      "team_code": "JPN",
+      "points": 1660.43,
+      "world_rank": 18
+    },
+    {
+      "rank": 19,
+      "team_name": "Switzerland",
+      "team_code": "SUI",
+      "points": 1649.4,
+      "world_rank": 19
+    },
+    {
+      "rank": 21,
+      "team_name": "Iran",
+      "team_code": "IRN",
+      "points": 1615.3,
+      "world_rank": 21
+    },
+    {
+      "rank": 22,
+      "team_name": "Turkey",
+      "team_code": "TUR",
+      "points": 1599.04,
+      "world_rank": 22
+    },
+    {
+      "rank": 23,
+      "team_name": "Ecuador",
+      "team_code": "ECU",
+      "points": 1594.78,
+      "world_rank": 23
+    },
+    {
+      "rank": 24,
+      "team_name": "Austria",
+      "team_code": "AUT",
+      "points": 1593.45,
+      "world_rank": 24
+    },
+    {
+      "rank": 25,
+      "team_name": "South Korea",
+      "team_code": "KOR",
+      "points": 1588.66,
+      "world_rank": 25
+    },
+    {
+      "rank": 27,
+      "team_name": "Australia",
+      "team_code": "AUS",
+      "points": 1580.67,
+      "world_rank": 27
+    },
+    {
+      "rank": 28,
+      "team_name": "Algeria",
+      "team_code": "ALG",
+      "points": 1564.26,
+      "world_rank": 28
+    },
+    {
+      "rank": 29,
+      "team_name": "Egypt",
+      "team_code": "EGY",
+      "points": 1563.24,
+      "world_rank": 29
+    },
+    {
+      "rank": 30,
+      "team_name": "Canada",
+      "team_code": "CAN",
+      "points": 1556.48,
+      "world_rank": 30
+    },
+    {
+      "rank": 31,
+      "team_name": "Norway",
+      "team_code": "NOR",
+      "points": 1550.94,
+      "world_rank": 31
+    },
+    {
+      "rank": 33,
+      "team_name": "Panama",
+      "team_code": "PAN",
+      "points": 1540.64,
+      "world_rank": 33
+    },
+    {
+      "rank": 34,
+      "team_name": "Ivory Coast",
+      "team_code": "CIV",
+      "points": 1532.98,
+      "world_rank": 34
+    },
+    {
+      "rank": 38,
+      "team_name": "Sweden",
+      "team_code": "SWE",
+      "points": 1514.77,
+      "world_rank": 38
+    },
+    {
+      "rank": 40,
+      "team_name": "Paraguay",
+      "team_code": "PAR",
+      "points": 1503.5,
+      "world_rank": 40
+    },
+    {
+      "rank": 41,
+      "team_name": "Czech Republic",
+      "team_code": "CZE",
+      "points": 1501.38,
+      "world_rank": 41
+    },
+    {
+      "rank": 43,
+      "team_name": "Scotland",
+      "team_code": "SCO",
+      "points": 1498.35,
+      "world_rank": 43
+    },
+    {
+      "rank": 44,
+      "team_name": "Tunisia",
+      "team_code": "TUN",
+      "points": 1483.05,
+      "world_rank": 44
+    },
+    {
+      "rank": 46,
+      "team_name": "DR Congo",
+      "team_code": "COD",
+      "points": 1478.35,
+      "world_rank": 46
+    },
+    {
+      "rank": 50,
+      "team_name": "Uzbekistan",
+      "team_code": "UZB",
+      "points": 1465.34,
+      "world_rank": 50
+    },
+    {
+      "rank": 55,
+      "team_name": "Qatar",
+      "team_code": "QAT",
+      "points": 1454.96,
+      "world_rank": 55
+    },
+    {
+      "rank": 57,
+      "team_name": "Iraq",
+      "team_code": "IRQ",
+      "points": 1447.14,
+      "world_rank": 57
+    },
+    {
+      "rank": 60,
+      "team_name": "South Africa",
+      "team_code": "RSA",
+      "points": 1429.73,
+      "world_rank": 60
+    },
+    {
+      "rank": 61,
+      "team_name": "Saudi Arabia",
+      "team_code": "KSA",
+      "points": 1421.43,
+      "world_rank": 61
+    },
+    {
+      "rank": 63,
+      "team_name": "Jordan",
+      "team_code": "JOR",
+      "points": 1391.45,
+      "world_rank": 63
+    },
+    {
+      "rank": 65,
+      "team_name": "Bosnia and Herzegovina",
+      "team_code": "BIH",
+      "points": 1385.84,
+      "world_rank": 65
+    },
+    {
+      "rank": 69,
+      "team_name": "Cape Verde",
+      "team_code": "CPV",
+      "points": 1366.13,
+      "world_rank": 69
+    },
+    {
+      "rank": 74,
+      "team_name": "Ghana",
+      "team_code": "GHA",
+      "points": 1346.31,
+      "world_rank": 74
+    },
+    {
+      "rank": 82,
+      "team_name": "Curacao",
+      "team_code": "CUW",
+      "points": 1294.65,
+      "world_rank": 82
+    },
+    {
+      "rank": 83,
+      "team_name": "Haiti",
+      "team_code": "HAI",
+      "points": 1291.71,
+      "world_rank": 83
+    },
+    {
+      "rank": 85,
+      "team_name": "New Zealand",
+      "team_code": "NZL",
+      "points": 1281.57,
+      "world_rank": 85
+    }
+  ],
+  "summary": {
+    "total_teams": 211,
+    "qualified_teams": 48,
+    "ranking_date": "2026-06-10",
+    "source_integrity": "complete"
+  },
+  "safety_invariants": [
+    "ranking_output_contains_only_qualified_teams",
+    "rankings_sorted_by_world_rank_ascending",
+    "missing_qualified_teams_recorded_in_source_integrity"
+  ],
+  "teams": [
+    {
+      "rank": 1,
+      "team_name": "France",
+      "team_code": "FRA",
+      "points": 1877.32,
+      "world_rank": 1
+    },
+    {
+      "rank": 2,
+      "team_name": "Spain",
+      "team_code": "ESP",
+      "points": 1876.4,
+      "world_rank": 2
+    },
+    {
+      "rank": 3,
+      "team_name": "Argentina",
+      "team_code": "ARG",
+      "points": 1874.81,
+      "world_rank": 3
+    },
+    {
+      "rank": 4,
+      "team_name": "England",
+      "team_code": "ENG",
+      "points": 1825.97,
+      "world_rank": 4
+    },
+    {
+      "rank": 5,
+      "team_name": "Portugal",
+      "team_code": "POR",
+      "points": 1763.83,
+      "world_rank": 5
+    },
+    {
+      "rank": 6,
+      "team_name": "Brazil",
+      "team_code": "BRA",
+      "points": 1761.16,
+      "world_rank": 6
+    },
+    {
+      "rank": 7,
+      "team_name": "Netherlands",
+      "team_code": "NED",
+      "points": 1757.87,
+      "world_rank": 7
+    },
+    {
+      "rank": 8,
+      "team_name": "Morocco",
+      "team_code": "MAR",
+      "points": 1755.87,
+      "world_rank": 8
+    },
+    {
+      "rank": 9,
+      "team_name": "Belgium",
+      "team_code": "BEL",
+      "points": 1734.71,
+      "world_rank": 9
+    },
+    {
+      "rank": 10,
+      "team_name": "Germany",
+      "team_code": "GER",
+      "points": 1730.37,
+      "world_rank": 10
+    },
+    {
+      "rank": 11,
+      "team_name": "Croatia",
+      "team_code": "CRO",
+      "points": 1717.07,
+      "world_rank": 11
+    },
+    {
+      "rank": 13,
+      "team_name": "Colombia",
+      "team_code": "COL",
+      "points": 1693.09,
+      "world_rank": 13
+    },
+    {
+      "rank": 14,
+      "team_name": "Senegal",
+      "team_code": "SEN",
+      "points": 1688.99,
+      "world_rank": 14
+    },
+    {
+      "rank": 15,
+      "team_name": "Mexico",
+      "team_code": "MEX",
+      "points": 1681.03,
+      "world_rank": 15
+    },
+    {
+      "rank": 16,
+      "team_name": "USA",
+      "team_code": "USA",
+      "points": 1673.13,
+      "world_rank": 16
+    },
+    {
+      "rank": 17,
+      "team_name": "Uruguay",
+      "team_code": "URU",
+      "points": 1673.07,
+      "world_rank": 17
+    },
+    {
+      "rank": 18,
+      "team_name": "Japan",
+      "team_code": "JPN",
+      "points": 1660.43,
+      "world_rank": 18
+    },
+    {
+      "rank": 19,
+      "team_name": "Switzerland",
+      "team_code": "SUI",
+      "points": 1649.4,
+      "world_rank": 19
+    },
+    {
+      "rank": 21,
+      "team_name": "Iran",
+      "team_code": "IRN",
+      "points": 1615.3,
+      "world_rank": 21
+    },
+    {
+      "rank": 22,
+      "team_name": "Turkey",
+      "team_code": "TUR",
+      "points": 1599.04,
+      "world_rank": 22
+    },
+    {
+      "rank": 23,
+      "team_name": "Ecuador",
+      "team_code": "ECU",
+      "points": 1594.78,
+      "world_rank": 23
+    },
+    {
+      "rank": 24,
+      "team_name": "Austria",
+      "team_code": "AUT",
+      "points": 1593.45,
+      "world_rank": 24
+    },
+    {
+      "rank": 25,
+      "team_name": "South Korea",
+      "team_code": "KOR",
+      "points": 1588.66,
+      "world_rank": 25
+    },
+    {
+      "rank": 27,
+      "team_name": "Australia",
+      "team_code": "AUS",
+      "points": 1580.67,
+      "world_rank": 27
+    },
+    {
+      "rank": 28,
+      "team_name": "Algeria",
+      "team_code": "ALG",
+      "points": 1564.26,
+      "world_rank": 28
+    },
+    {
+      "rank": 29,
+      "team_name": "Egypt",
+      "team_code": "EGY",
+      "points": 1563.24,
+      "world_rank": 29
+    },
+    {
+      "rank": 30,
+      "team_name": "Canada",
+      "team_code": "CAN",
+      "points": 1556.48,
+      "world_rank": 30
+    },
+    {
+      "rank": 31,
+      "team_name": "Norway",
+      "team_code": "NOR",
+      "points": 1550.94,
+      "world_rank": 31
+    },
+    {
+      "rank": 33,
+      "team_name": "Panama",
+      "team_code": "PAN",
+      "points": 1540.64,
+      "world_rank": 33
+    },
+    {
+      "rank": 34,
+      "team_name": "Ivory Coast",
+      "team_code": "CIV",
+      "points": 1532.98,
+      "world_rank": 34
+    },
+    {
+      "rank": 38,
+      "team_name": "Sweden",
+      "team_code": "SWE",
+      "points": 1514.77,
+      "world_rank": 38
+    },
+    {
+      "rank": 40,
+      "team_name": "Paraguay",
+      "team_code": "PAR",
+      "points": 1503.5,
+      "world_rank": 40
+    },
+    {
+      "rank": 41,
+      "team_name": "Czech Republic",
+      "team_code": "CZE",
+      "points": 1501.38,
+      "world_rank": 41
+    },
+    {
+      "rank": 43,
+      "team_name": "Scotland",
+      "team_code": "SCO",
+      "points": 1498.35,
+      "world_rank": 43
+    },
+    {
+      "rank": 44,
+      "team_name": "Tunisia",
+      "team_code": "TUN",
+      "points": 1483.05,
+      "world_rank": 44
+    },
+    {
+      "rank": 46,
+      "team_name": "DR Congo",
+      "team_code": "COD",
+      "points": 1478.35,
+      "world_rank": 46
+    },
+    {
+      "rank": 50,
+      "team_name": "Uzbekistan",
+      "team_code": "UZB",
+      "points": 1465.34,
+      "world_rank": 50
+    },
+    {
+      "rank": 55,
+      "team_name": "Qatar",
+      "team_code": "QAT",
+      "points": 1454.96,
+      "world_rank": 55
+    },
+    {
+      "rank": 57,
+      "team_name": "Iraq",
+      "team_code": "IRQ",
+      "points": 1447.14,
+      "world_rank": 57
+    },
+    {
+      "rank": 60,
+      "team_name": "South Africa",
+      "team_code": "RSA",
+      "points": 1429.73,
+      "world_rank": 60
+    },
+    {
+      "rank": 61,
+      "team_name": "Saudi Arabia",
+      "team_code": "KSA",
+      "points": 1421.43,
+      "world_rank": 61
+    },
+    {
+      "rank": 63,
+      "team_name": "Jordan",
+      "team_code": "JOR",
+      "points": 1391.45,
+      "world_rank": 63
+    },
+    {
+      "rank": 65,
+      "team_name": "Bosnia and Herzegovina",
+      "team_code": "BIH",
+      "points": 1385.84,
+      "world_rank": 65
+    },
+    {
+      "rank": 69,
+      "team_name": "Cape Verde",
+      "team_code": "CPV",
+      "points": 1366.13,
+      "world_rank": 69
+    },
+    {
+      "rank": 74,
+      "team_name": "Ghana",
+      "team_code": "GHA",
+      "points": 1346.31,
+      "world_rank": 74
+    },
+    {
+      "rank": 82,
+      "team_name": "Curacao",
+      "team_code": "CUW",
+      "points": 1294.65,
+      "world_rank": 82
+    },
+    {
+      "rank": 83,
+      "team_name": "Haiti",
+      "team_code": "HAI",
+      "points": 1291.71,
+      "world_rank": 83
+    },
+    {
+      "rank": 85,
+      "team_name": "New Zealand",
+      "team_code": "NZL",
+      "points": 1281.57,
+      "world_rank": 85
+    }
+  ]
+}

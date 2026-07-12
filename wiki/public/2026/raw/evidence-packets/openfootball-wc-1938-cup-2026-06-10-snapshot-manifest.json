@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "wc_year": 1938,
+  "file_tag": "cup",
+  "url": "https://raw.githubusercontent.com/openfootball/worldcup/master/1938--france/cup.txt",
+  "generated_at": "2026-06-10T19:20:46.795628+08:00",
+  "mode": "openfootball-snapshot",
+  "status": "snapshot_written",
+  "snapshot_path": "raw/体育/世界杯/2026/snapshots/openfootball-wc-1938-cup-2026-06-10.txt",
+  "manifest_path": "raw/体育/世界杯/2026/evidence-packets/openfootball-wc-1938-cup-2026-06-10-snapshot-manifest.json",
+  "bytes": 3310,
+  "sha256": "e48fa13e4cc52aee5ab797355d93dcff8ced13f9b43012fc7b396bb49b849aca",
+  "summary": {
+    "fetches_performed": 1,
+    "raw_writes_performed": 2
+  },
+  "safety_invariants": [
+    "raw_snapshot_preserves_original_source_bytes",
+    "snapshot_manifest_records_url_hash_and_byte_count"
+  ]
+}

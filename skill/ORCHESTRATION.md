@@ -22,24 +22,27 @@
 ## 2. 每日预测
 
 ```
-触发条件：用户要求预测某天的比赛
+触发条件：用户要求预测某天的比赛，或后续任意淘汰赛日
 
 推荐步骤：
-1. 检查证据状态：
+1. 编译/刷新证据：
+   python skill/scripts/compile_prediction_evidence.py
    python skill/scripts/worldcup_source_readiness_auditor.py write --edition <edition> --root .
-   
+   python skill/scripts/worldcup_prediction_evidence_planner.py write --edition <edition> --root .
+
 2. 采集每日证据（如果缺失）：
    python skill/scripts/daily_evidence_input.py init --edition <edition> --date <date> --root .
    python skill/scripts/worldcup_live_fetcher.py fetch-odds --edition <edition> --date <date> --root .
    python skill/scripts/worldcup_live_fetcher.py fetch-news --edition <edition> --date <date> --root .
-   
-3. 生成预测：
+
+3. 生成预测（先 outcome/score，再 confidence）：
    python skill/scripts/daily_prediction_runner.py run --edition <edition> --date <date> --root .
-   
+
 4. 更新看板：
    python skill/scripts/prediction_visual_dashboard.py write --edition <edition> --root .
 
 注意：
+- 小组赛到决赛同一管线；不因“关键场”改标识抬高信心
 - 证据不完整时仍然可以预测，但要在回答中声明 evidence gaps
 - 预测一旦生成就锁定，开球后不得修改
 - 必须附加安全声明：娱乐预测，非投注建议
@@ -51,6 +54,10 @@
 触发条件：用户要求预测特定比赛
 
 推荐步骤：
+0. 可选先编译证据：
+   python skill/scripts/compile_prediction_evidence.py
+   python skill/scripts/worldcup_prediction_evidence_planner.py write --edition <edition> --root .
+
 1. 按球队预测：
    python skill/scripts/prediction_scoring_model.py predict --edition <edition> --teams "Team A,Team B" --root .
    
@@ -59,6 +66,7 @@
    
 3. 按小组/阶段预测：
    python skill/scripts/octopus_paul_agent.py predict --edition <edition> --group <group> --root .
+   python skill/scripts/octopus_paul_agent.py predict --edition <edition> --phase <phase> --root .
    python skill/scripts/octopus_paul_agent.py predict --edition <edition> --all --root .
 ```
 

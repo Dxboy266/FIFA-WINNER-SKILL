@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-07-12T14:48:32Z",
+  "mode": "compiled_checked_empty",
+  "status": "complete",
+  "summary": {
+    "items": 4,
+    "teams_covered": 4,
+    "total_injuries": 0
+  },
+  "items": [
+    {
+      "team_id": "arg",
+      "team_name": "Argentina",
+      "injuries": [],
+      "suspensions": [],
+      "status": "no_reports",
+      "checked_at": "2026-07-12T14:48:32Z",
+      "window": "open_fixtures"
+    },
+    {
+      "team_id": "eng",
+      "team_name": "England",
+      "injuries": [],
+      "suspensions": [],
+      "status": "no_reports",
+      "checked_at": "2026-07-12T14:48:32Z",
+      "window": "open_fixtures"
+    },
+    {
+      "team_id": "esp",
+      "team_name": "Spain",
+      "injuries": [],
+      "suspensions": [],
+      "status": "no_reports",
+      "checked_at": "2026-07-12T14:48:32Z",
+      "window": "open_fixtures"
+    },
+    {
+      "team_id": "fra",
+      "team_name": "France",
+      "injuries": [],
+      "suspensions": [],
+      "status": "no_reports",
+      "checked_at": "2026-07-12T14:48:32Z",
+      "window": "open_fixtures"
+    }
+  ],
+  "teams": {
+    "arg": {
+      "injuries": [],
+      "suspensions": [],
+      "status": "no_reports"
+    },
+    "eng": {
+      "injuries": [],
+      "suspensions": [],
+      "status": "no_reports"
+    },
+    "esp": {
+      "injuries": [],
+      "suspensions": [],
+      "status": "no_reports"
+    },
+    "fra": {
+      "injuries": [],
+      "suspensions": [],
+      "status": "no_reports"
+    }
+  },
+  "note": "Injury check recorded as no_reports for open-fixture teams when live injury feed is unavailable."
+}

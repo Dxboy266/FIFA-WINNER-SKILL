@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "source_id": "fifa-squad-lists-pdf",
+  "source_name": "FIFA official squad lists PDF",
+  "source_tier": "T0",
+  "url": "https://fdp.fifa.org/assetspublic/ce281/pdf/SquadLists-English.pdf",
+  "generated_at": "2026-06-09T22:50:00+08:00",
+  "mode": "source-snapshot-apply",
+  "status": "snapshot_written",
+  "snapshot_path": "raw/体育/世界杯/2026/snapshots/fifa-squad-lists-pdf-2026-06-09.pdf",
+  "manifest_path": "raw/体育/世界杯/2026/evidence-packets/fifa-squad-lists-pdf-2026-06-09-snapshot-manifest.json",
+  "bytes": 750404,
+  "sha256": "47f2e8c200a381d5975c030e545741109631d234fbbb5abe8babe01b05252ed7",
+  "allowed_use": "metadata_and_short_summary",
+  "summary": {
+    "fetches_performed": 1,
+    "raw_writes_performed": 2
+  },
+  "safety_invariants": [
+    "raw_snapshot_preserves_original_source_bytes",
+    "snapshot_manifest_records_source_url_tier_hash_and_allowed_use"
+  ]
+}

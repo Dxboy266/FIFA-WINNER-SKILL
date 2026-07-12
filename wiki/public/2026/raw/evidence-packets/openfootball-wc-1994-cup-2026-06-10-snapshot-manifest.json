@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "wc_year": 1994,
+  "file_tag": "cup",
+  "url": "https://raw.githubusercontent.com/openfootball/worldcup/master/1994--usa/cup.txt",
+  "generated_at": "2026-06-10T19:21:53.857146+08:00",
+  "mode": "openfootball-snapshot",
+  "status": "snapshot_written",
+  "snapshot_path": "raw/体育/世界杯/2026/snapshots/openfootball-wc-1994-cup-2026-06-10.txt",
+  "manifest_path": "raw/体育/世界杯/2026/evidence-packets/openfootball-wc-1994-cup-2026-06-10-snapshot-manifest.json",
+  "bytes": 3201,
+  "sha256": "0f5caf65620708a1ce603850d681e0790206f0f0e69f1884a6a62d17a9965cd7",
+  "summary": {
+    "fetches_performed": 1,
+    "raw_writes_performed": 2
+  },
+  "safety_invariants": [
+    "raw_snapshot_preserves_original_source_bytes",
+    "snapshot_manifest_records_url_hash_and_byte_count"
+  ]
+}

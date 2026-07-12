@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-06-15",
+  "generated_at": "2026-06-15T21:56:16.225044+08:00",
+  "mode": "daily-evidence",
+  "status": "updated",
+  "matches": [
+    {
+      "match_id": "2026-GF-02",
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "no matching live odds returned",
+        "is_mock": false
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GG-01",
+      "referee": null,
+      "odds": {
+        "home_win": 1.6,
+        "away_win": 6.2,
+        "draw": 4.18,
+        "source": "Pinnacle"
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GH-01",
+      "referee": null,
+      "odds": {
+        "away_win": 36.0,
+        "home_win": 1.08,
+        "draw": 15.5,
+        "source": "Pinnacle"
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GH-02",
+      "referee": null,
+      "odds": {
+        "home_win": 8.65,
+        "away_win": 1.47,
+        "draw": 4.5,
+        "source": "Pinnacle"
+      },
+      "sentiment": null
+    }
+  ],
+  "injuries": {
+    "edition": "2026",
+    "date": "2026-06-15",
+    "teams": {},
+    "summary": {
+      "total_teams": 48,
+      "teams_with_injuries": 0,
+      "total_injuries": 0,
+      "total_suspensions": 0
+    }
+  },
+  "suspensions": [],
+  "probable_lineups": [],
+  "late_news": [
+    {
+      "headline": "Explained: How a chip in the ball allowed World Cu...",
+      "detail": "VAR overturned an offside decision after ruling there was a slight flick on the ball by Sweden's Alexander Isak.",
+      "sentiment": "neutral",
+      "team_code": "swe",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-15T20:37:13.897455+08:00"
+    },
+    {
+      "headline": "Egypt coach tabs Barça teen as Salah successor",
+      "detail": "New Barcelona signing Hamza Abdelkarim is ready to star at the FIFA World Cup, and could prove that he'll be the player to one day take the mantle from Mohamed Salah as Egypt's talisman.",
+      "sentiment": "neutral",
+      "team_code": "egy",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-15T20:37:13.897476+08:00"
+    },
+    {
+      "headline": "Yamal on bench for Cape Verde clash - Spain boss",
+      "detail": "Spain head coach Luis de la Fuente has confirmed that Lamine Yamal is \"in perfect condition\" but said the star forward is set to start on the bench in the country's World Cup debut against Cape Verde.",
+      "sentiment": "neutral",
+      "team_code": "esp",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-15T20:37:13.897481+08:00"
+    },
+    {
+      "headline": "Yamal on bench for Cape Verde clash - Spain boss",
+      "detail": "Spain head coach Luis de la Fuente has confirmed that Lamine Yamal is \"in perfect condition\" but said the star forward is set to start on the bench in the country's World Cup debut against Cape Verde.",
+      "sentiment": "neutral",
+      "team_code": "cpv",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-15T20:37:13.897483+08:00"
+    }
+  ],
+  "source_refs": [
+    {
+      "source": "mock_bookmaker",
+      "url": "",
+      "recorded_at": "2026-06-15T20:37:11.965309+08:00",
+      "note": "Explicit mock fallback; do not use as market evidence."
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-15T20:37:13.897488+08:00"
+    },
+    {
+      "source": "mock_bookmaker",
+      "url": "",
+      "recorded_at": "2026-06-15T20:53:03.665571+08:00",
+      "note": "Explicit mock fallback; do not use as market evidence."
+    },
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-15T21:56:16.225061+08:00"
+    }
+  ],
+  "data_sources": [
+    {
+      "type": "injuries",
+      "source": "transfermarkt",
+      "fetched_at": "2026-06-15T12:53:02.367961+00:00Z"
+    },
+    {
+      "type": "injuries",
+      "source": "web_scrape (espn_rss + espn_roster + transfermarkt)",
+      "fetched_at": "2026-06-15T13:02:18.609697+00:00Z"
+    },
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-15T14:10:09.896951+00:00Z"
+    }
+  ]
+}

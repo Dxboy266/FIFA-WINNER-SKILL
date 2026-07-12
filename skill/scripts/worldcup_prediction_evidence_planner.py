@@ -141,7 +141,7 @@ def ranking_status(root: Path, edition: str) -> dict:
     ranking_path = raw_edition_root(root, edition) / "rankings" / "fifa-men-ranking.json"
     if ranking_path.exists():
         ranking = load_json(ranking_path)
-        teams = ranking.get("teams", [])
+        teams = ranking.get("teams") or ranking.get("rankings") or []
         return {
             "status": "complete" if teams else "partial",
             "current_counts": {"ranked_teams": len(teams)},
@@ -188,6 +188,25 @@ def derive_status(root: Path, edition: str, evidence_id: str) -> dict:
     if evidence_id == "fifa_rankings":
         return ranking_status(root, edition)
     if evidence_id == "squad_depth_position_balance":
+        features_path = edition_data_root(root, edition) / "squad-depth-features.json"
+        if features_path.exists():
+            features = load_json(features_path)
+            teams = features.get("teams", [])
+            with_pos = sum(1 for t in teams if t.get("position_counts"))
+            if with_pos >= 40:
+                return {
+                    "status": "complete",
+                    "current_counts": {"teams": with_pos},
+                    "blockers": [],
+                    "artifacts": [str(features_path)],
+                }
+            if with_pos:
+                return {
+                    "status": "partial",
+                    "current_counts": {"teams": with_pos},
+                    "blockers": ["position_depth_features_incomplete"],
+                    "artifacts": [str(features_path)],
+                }
         status = roster_status(root, edition)
         if status["status"] == "complete":
             return {
@@ -198,6 +217,35 @@ def derive_status(root: Path, edition: str, evidence_id: str) -> dict:
             }
         return status
     if evidence_id == "historical_worldcup_results":
+        ed = edition_data_root(root, edition)
+        history_paths = [
+            ed / "history" / "team-wc-history.json",
+            ed / "raw" / "history" / "team-wc-history.json",
+        ]
+        for history_path in history_paths:
+            if not history_path.exists():
+                continue
+            history = load_json(history_path)
+            teams = history.get("teams", [])
+            with_hist = sum(1 for t in teams if int(t.get("wc_appearances", 0) or 0) > 0)
+            if with_hist >= 30:
+                return {
+                    "status": "partial",
+                    "current_counts": {
+                        "teams_with_history": with_hist,
+                        "teams": len(teams),
+                        "editions_processed": (history.get("summary") or {}).get("editions_processed", 0),
+                    },
+                    "blockers": ["historical_results_compiled_from_snapshot_not_live_feed"],
+                    "artifacts": [str(history_path)],
+                }
+            if teams:
+                return {
+                    "status": "partial",
+                    "current_counts": {"teams_with_history": with_hist, "teams": len(teams)},
+                    "blockers": ["historical_results_incomplete"],
+                    "artifacts": [str(history_path)],
+                }
         openfootball_snapshot = latest_successful_snapshot_manifest(root, edition, "openfootball")
         openfootball_json_snapshot = latest_successful_snapshot_manifest(root, edition, "openfootball-worldcup-json")
         failed_blockers = [
@@ -222,6 +270,20 @@ def derive_status(root: Path, edition: str, evidence_id: str) -> dict:
     if evidence_id == "injury_availability":
         return file_backed_status(root, edition, "evidence/injury-availability.json", "items", "daily_injury_availability_check_missing")
     if evidence_id == "venue_rest_travel":
+        rest_path = edition_data_root(root, edition) / "evidence" / "rest-travel-features.json"
+        if rest_path.exists():
+            rest = load_json(rest_path)
+            rest_items = rest.get("items") or []
+            if len(rest_items) >= 20:
+                return {
+                    "status": "partial",
+                    "current_counts": {
+                        "rest_items": len(rest_items),
+                        "teams": (rest.get("summary") or {}).get("teams", 0),
+                    },
+                    "blockers": ["travel_distance_not_modeled"],
+                    "artifacts": [str(rest_path)],
+                }
         status = fixture_status(root, edition)
         if status["status"] == "complete":
             return {

@@ -1,0 +1,271 @@
+{
+  "date": "2026-06-17",
+  "edition": "2026",
+  "data_sources": [
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-17T14:39:50.210134+00:00Z"
+    },
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-17T14:41:56.871329+00:00Z"
+    },
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-17T14:49:50.374282+00:00Z"
+    },
+    {
+      "type": "injuries",
+      "source": "web (espn_rss_nlp + espn_roster)",
+      "fetched_at": "2026-06-18T11:01:37.766006+00:00Z"
+    }
+  ],
+  "injuries": {
+    "edition": "2026",
+    "date": "2026-06-17",
+    "teams": {},
+    "summary": {
+      "total_teams": 48,
+      "teams_with_injuries": 0,
+      "total_injuries": 0,
+      "total_suspensions": 0
+    }
+  },
+  "matches": [
+    {
+      "match_id": "2026-GJ-01",
+      "referee": null,
+      "odds": {
+        "home_win": 1.7,
+        "draw": 3.5,
+        "away_win": 4.8,
+        "source": "mock_bookmaker",
+        "is_mock": true
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GJ-02",
+      "referee": null,
+      "odds": {
+        "home_win": 2.5,
+        "draw": 3.1,
+        "away_win": 2.8,
+        "source": "mock_bookmaker",
+        "is_mock": true
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GK-01",
+      "referee": null,
+      "odds": {
+        "home_win": 5.2,
+        "draw": 3.75,
+        "away_win": 1.6,
+        "source": "mock_bookmaker",
+        "is_mock": true
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GL-01",
+      "referee": null,
+      "odds": {
+        "home_win": 1.7,
+        "draw": 3.5,
+        "away_win": 4.8,
+        "source": "mock_bookmaker",
+        "is_mock": true
+      },
+      "sentiment": null
+    },
+    {
+      "match_id": "2026-GL-02",
+      "referee": null,
+      "odds": {
+        "home_win": 5.2,
+        "draw": 3.75,
+        "away_win": 1.6,
+        "source": "mock_bookmaker",
+        "is_mock": true
+      },
+      "sentiment": null
+    }
+  ],
+  "generated_at": "2026-06-18T19:01:42.097662+08:00",
+  "status": "updated",
+  "source_refs": [
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-17T22:39:54.174687+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-17T22:39:55.731110+08:00"
+    },
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-17T22:42:00.595305+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-17T22:42:01.756866+08:00"
+    },
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-17T22:49:53.886368+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-17T22:49:55.222138+08:00"
+    },
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-06-18T19:01:40.423888+08:00"
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-06-18T19:01:42.097666+08:00"
+    }
+  ],
+  "late_news": [
+    {
+      "headline": "World Cup VAR review: Should Messi have been sent ...",
+      "detail": "It was a magical night for Lionel Messi and Argentina, but it was nearly cut short by a questionable challenge that could have resulted in a red card.",
+      "sentiment": "neutral",
+      "team_code": "arg",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-17T22:39:55.731060+08:00"
+    },
+    {
+      "headline": "Messi rolls back the clock for Argentina to start ...",
+      "detail": "It wasn't entirely clear if Lionel Messi would play this summer. But his hat trick showed how ready he is.",
+      "sentiment": "neutral",
+      "team_code": "arg",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-17T22:39:55.731086+08:00"
+    },
+    {
+      "headline": "Scaloni at 'loss for words' on record-setting Mess...",
+      "detail": "Argentina coach Lionel Scaloni admitted he has no words left to describe Lionel Messi's brilliance after his hat trick secured a 3-0 win over Algeria in their World Cup opener.",
+      "sentiment": "neutral",
+      "team_code": "arg",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-17T22:39:55.731090+08:00"
+    },
+    {
+      "headline": "Scaloni at 'loss for words' on record-setting Mess...",
+      "detail": "Argentina coach Lionel Scaloni admitted he has no words left to describe Lionel Messi's brilliance after his hat trick secured a 3-0 win over Algeria in their World Cup opener.",
+      "sentiment": "neutral",
+      "team_code": "alg",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-17T22:39:55.731093+08:00"
+    },
+    {
+      "headline": "Ronaldo has youthful enthusiasm in sixth WCup",
+      "detail": "Portugal head coach Roberto Martinez has said that Cristiano Ronaldo is showing so much intensity and enthusiasm in training it seems as though he is preparing for his first World Cup.",
+      "sentiment": "positive",
+      "team_code": "por",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-17T22:39:55.731096+08:00"
+    },
+    {
+      "headline": "Runners-up in 2018, third place in 2022: Can Croat...",
+      "detail": "Croatia have continued to punch above their weight at consecutive World Cups, but despite some aging players -- can they surprise people yet again?",
+      "sentiment": "neutral",
+      "team_code": "cro",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-17T22:39:55.731099+08:00"
+    },
+    {
+      "headline": "Key issues for England at 2026 World Cup: Fatigue,...",
+      "detail": "null",
+      "sentiment": "neutral",
+      "team_code": "eng",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-17T22:39:55.731101+08:00"
+    },
+    {
+      "headline": "Portugal have a Ronaldo problem (again)",
+      "detail": "Cristiano Ronaldo will go down as one of Portugal -- and soccer's -- best players, but in a disappointing World Cup opener, he struggled to have an impact for his national team.",
+      "sentiment": "neutral",
+      "team_code": "por",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-18T19:01:42.097635+08:00"
+    },
+    {
+      "headline": "Ronaldo: Portugal's World Cup 'far from over'",
+      "detail": "Cristiano Ronaldo defended Portugal's performance against Congo DR in their World Cup opener but is already looking ahead to the next game.",
+      "sentiment": "neutral",
+      "team_code": "por",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-18T19:01:42.097654+08:00"
+    },
+    {
+      "headline": "Kane and Bellingham put on a show in England's thr...",
+      "detail": "When have England been this fun at a World Cup? We react to it all: Kane, Bellingham, Tuchel. As for Croatia: Where was Modric?",
+      "sentiment": "neutral",
+      "team_code": "eng",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-18T19:01:42.097658+08:00"
+    },
+    {
+      "headline": "Kane and Bellingham put on a show in England's thr...",
+      "detail": "When have England been this fun at a World Cup? We react to it all: Kane, Bellingham, Tuchel. As for Croatia: Where was Modric?",
+      "sentiment": "neutral",
+      "team_code": "cro",
+      "source": "espn_rss",
+      "recorded_at": "2026-06-18T19:01:42.097660+08:00"
+    }
+  ],
+  "injuries_extracted": {
+    "edition": "2026",
+    "date": "2026-06-17",
+    "teams": {
+      "ARG": {
+        "team_code": "ARG",
+        "team_name": "Argentina",
+        "injuries": [],
+        "suspensions": [
+          {
+            "player_name": "In A",
+            "reason": "Suspension (extracted from news)",
+            "source": "news_extraction",
+            "source_url": ""
+          }
+        ]
+      },
+      "POR": {
+        "team_code": "POR",
+        "team_name": "Portugal",
+        "injuries": [],
+        "suspensions": []
+      },
+      "ENG": {
+        "team_code": "ENG",
+        "team_name": "England",
+        "injuries": [],
+        "suspensions": []
+      }
+    },
+    "summary": {
+      "total_teams": 3,
+      "total_injuries": 0,
+      "total_suspensions": 1
+    },
+    "extraction_method": "nlp_from_news",
+    "confidence": "low"
+  }
+}

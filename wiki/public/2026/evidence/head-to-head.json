@@ -1,0 +1,2231 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "generated_at": "2026-07-12T14:48:32Z",
+  "mode": "compiled_from_match_ledger",
+  "status": "partial",
+  "summary": {
+    "items": 102
+  },
+  "items": [
+    {
+      "pair": [
+        "alg",
+        "arg"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GJ-01",
+          "kickoff_at": "2026-06-17T01:00:00Z",
+          "home": "arg",
+          "away": "alg",
+          "score": {
+            "home": 3,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "alg",
+        "aut"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GJ-05",
+          "kickoff_at": "2026-06-28T02:00:00Z",
+          "home": "alg",
+          "away": "aut",
+          "score": {
+            "home": 3,
+            "away": 3
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "alg",
+        "jor"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GJ-04",
+          "kickoff_at": "2026-06-23T03:00:00Z",
+          "home": "jor",
+          "away": "alg",
+          "score": {
+            "home": 1,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "alg",
+        "sui"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-13",
+          "kickoff_at": "2026-07-03T03:00:00Z",
+          "home": "sui",
+          "away": "alg",
+          "score": {
+            "home": 2,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "arg",
+        "aut"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GJ-03",
+          "kickoff_at": "2026-06-22T17:00:00Z",
+          "home": "arg",
+          "away": "aut",
+          "score": {
+            "home": 2,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "arg",
+        "cpv"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-15",
+          "kickoff_at": "2026-07-03T22:00:00Z",
+          "home": "arg",
+          "away": "cpv",
+          "score": {
+            "home": 3,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "arg",
+        "egy"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R16-07",
+          "kickoff_at": "2026-07-07T16:00:00Z",
+          "home": "arg",
+          "away": "egy",
+          "score": {
+            "home": 3,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "round_of_16"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "arg",
+        "jor"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GJ-06",
+          "kickoff_at": "2026-06-28T02:00:00Z",
+          "home": "jor",
+          "away": "arg",
+          "score": {
+            "home": 1,
+            "away": 3
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "arg",
+        "sui"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-QF-04",
+          "kickoff_at": "2026-07-12T01:00:00Z",
+          "home": "arg",
+          "away": "sui",
+          "score": {
+            "home": 3,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "quarter_final"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "aus",
+        "egy"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-14",
+          "kickoff_at": "2026-07-03T18:00:00Z",
+          "home": "aus",
+          "away": "egy",
+          "score": {
+            "home": 3,
+            "away": 5
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "aus",
+        "par"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GD-06",
+          "kickoff_at": "2026-06-26T02:00:00Z",
+          "home": "par",
+          "away": "aus",
+          "score": {
+            "home": 0,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "aus",
+        "tur"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GD-02",
+          "kickoff_at": "2026-06-14T04:00:00Z",
+          "home": "aus",
+          "away": "tur",
+          "score": {
+            "home": 2,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "aus",
+        "usa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GD-03",
+          "kickoff_at": "2026-06-19T19:00:00Z",
+          "home": "usa",
+          "away": "aus",
+          "score": {
+            "home": 2,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "aut",
+        "esp"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-11",
+          "kickoff_at": "2026-07-02T19:00:00Z",
+          "home": "esp",
+          "away": "aut",
+          "score": {
+            "home": 3,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "aut",
+        "jor"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GJ-02",
+          "kickoff_at": "2026-06-17T04:00:00Z",
+          "home": "aut",
+          "away": "jor",
+          "score": {
+            "home": 3,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bel",
+        "egy"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GG-01",
+          "kickoff_at": "2026-06-15T22:00:00Z",
+          "home": "bel",
+          "away": "egy",
+          "score": {
+            "home": 1,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bel",
+        "esp"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-QF-02",
+          "kickoff_at": "2026-07-10T19:00:00Z",
+          "home": "esp",
+          "away": "bel",
+          "score": {
+            "home": 2,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "quarter_final"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bel",
+        "irn"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GG-03",
+          "kickoff_at": "2026-06-21T19:00:00Z",
+          "home": "bel",
+          "away": "irn",
+          "score": {
+            "home": 0,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bel",
+        "nzl"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GG-06",
+          "kickoff_at": "2026-06-27T03:00:00Z",
+          "home": "nzl",
+          "away": "bel",
+          "score": {
+            "home": 1,
+            "away": 5
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bel",
+        "sen"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-09",
+          "kickoff_at": "2026-07-01T20:00:00Z",
+          "home": "bel",
+          "away": "sen",
+          "score": {
+            "home": 3,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bel",
+        "usa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R16-06",
+          "kickoff_at": "2026-07-06T21:00:00Z",
+          "home": "usa",
+          "away": "bel",
+          "score": {
+            "home": 1,
+            "away": 4
+          },
+          "competition": "wc2026",
+          "phase": "round_of_16"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bih",
+        "can"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GB-01",
+          "kickoff_at": "2026-06-12T19:00:00Z",
+          "home": "can",
+          "away": "bih",
+          "score": {
+            "home": 1,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bih",
+        "qat"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GB-06",
+          "kickoff_at": "2026-06-24T19:00:00Z",
+          "home": "bih",
+          "away": "qat",
+          "score": {
+            "home": 3,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bih",
+        "sui"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GB-03",
+          "kickoff_at": "2026-06-18T19:00:00Z",
+          "home": "sui",
+          "away": "bih",
+          "score": {
+            "home": 4,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bih",
+        "usa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-10",
+          "kickoff_at": "2026-07-02T00:00:00Z",
+          "home": "usa",
+          "away": "bih",
+          "score": {
+            "home": 2,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bra",
+        "hai"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GC-04",
+          "kickoff_at": "2026-06-20T01:00:00Z",
+          "home": "bra",
+          "away": "hai",
+          "score": {
+            "home": 3,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bra",
+        "jpn"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-02",
+          "kickoff_at": "2026-06-29T17:00:00Z",
+          "home": "bra",
+          "away": "jpn",
+          "score": {
+            "home": 2,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bra",
+        "mar"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GC-01",
+          "kickoff_at": "2026-06-13T22:00:00Z",
+          "home": "bra",
+          "away": "mar",
+          "score": {
+            "home": 1,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bra",
+        "nor"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R16-03",
+          "kickoff_at": "2026-07-05T20:00:00Z",
+          "home": "bra",
+          "away": "nor",
+          "score": {
+            "home": 1,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "round_of_16"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "bra",
+        "sco"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GC-05",
+          "kickoff_at": "2026-06-24T22:00:00Z",
+          "home": "sco",
+          "away": "bra",
+          "score": {
+            "home": 0,
+            "away": 3
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "can",
+        "mar"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R16-01",
+          "kickoff_at": "2026-07-04T17:00:00Z",
+          "home": "can",
+          "away": "mar",
+          "score": {
+            "home": 0,
+            "away": 3
+          },
+          "competition": "wc2026",
+          "phase": "round_of_16"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "can",
+        "qat"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GB-04",
+          "kickoff_at": "2026-06-18T22:00:00Z",
+          "home": "can",
+          "away": "qat",
+          "score": {
+            "home": 6,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "can",
+        "rsa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-01",
+          "kickoff_at": "2026-06-28T19:00:00Z",
+          "home": "rsa",
+          "away": "can",
+          "score": {
+            "home": 0,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "can",
+        "sui"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GB-05",
+          "kickoff_at": "2026-06-24T19:00:00Z",
+          "home": "sui",
+          "away": "can",
+          "score": {
+            "home": 2,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "civ",
+        "cuw"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GE-06",
+          "kickoff_at": "2026-06-25T20:00:00Z",
+          "home": "cuw",
+          "away": "civ",
+          "score": {
+            "home": 0,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "civ",
+        "ecu"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GE-02",
+          "kickoff_at": "2026-06-14T23:00:00Z",
+          "home": "civ",
+          "away": "ecu",
+          "score": {
+            "home": 1,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "civ",
+        "ger"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GE-03",
+          "kickoff_at": "2026-06-20T20:00:00Z",
+          "home": "ger",
+          "away": "civ",
+          "score": {
+            "home": 2,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "civ",
+        "nor"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-05",
+          "kickoff_at": "2026-06-30T17:00:00Z",
+          "home": "civ",
+          "away": "nor",
+          "score": {
+            "home": 1,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cod",
+        "col"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GK-04",
+          "kickoff_at": "2026-06-24T02:00:00Z",
+          "home": "col",
+          "away": "cod",
+          "score": {
+            "home": 1,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cod",
+        "eng"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-08",
+          "kickoff_at": "2026-07-01T16:00:00Z",
+          "home": "eng",
+          "away": "cod",
+          "score": {
+            "home": 2,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cod",
+        "por"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GK-01",
+          "kickoff_at": "2026-06-17T17:00:00Z",
+          "home": "por",
+          "away": "cod",
+          "score": {
+            "home": 1,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cod",
+        "uzb"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GK-06",
+          "kickoff_at": "2026-06-27T23:30:00Z",
+          "home": "cod",
+          "away": "uzb",
+          "score": {
+            "home": 3,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "col",
+        "gha"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-16",
+          "kickoff_at": "2026-07-04T01:30:00Z",
+          "home": "col",
+          "away": "gha",
+          "score": {
+            "home": 1,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "col",
+        "por"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GK-05",
+          "kickoff_at": "2026-06-27T23:30:00Z",
+          "home": "col",
+          "away": "por",
+          "score": {
+            "home": 0,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "col",
+        "sui"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R16-08",
+          "kickoff_at": "2026-07-07T20:00:00Z",
+          "home": "sui",
+          "away": "col",
+          "score": {
+            "home": 4,
+            "away": 3
+          },
+          "competition": "wc2026",
+          "phase": "round_of_16"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "col",
+        "uzb"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GK-02",
+          "kickoff_at": "2026-06-18T02:00:00Z",
+          "home": "uzb",
+          "away": "col",
+          "score": {
+            "home": 1,
+            "away": 3
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cpv",
+        "esp"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GH-01",
+          "kickoff_at": "2026-06-15T17:00:00Z",
+          "home": "esp",
+          "away": "cpv",
+          "score": {
+            "home": 0,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cpv",
+        "ksa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GH-05",
+          "kickoff_at": "2026-06-27T00:00:00Z",
+          "home": "cpv",
+          "away": "ksa",
+          "score": {
+            "home": 0,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cpv",
+        "uru"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GH-04",
+          "kickoff_at": "2026-06-21T22:00:00Z",
+          "home": "uru",
+          "away": "cpv",
+          "score": {
+            "home": 2,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cro",
+        "eng"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GL-01",
+          "kickoff_at": "2026-06-17T20:00:00Z",
+          "home": "eng",
+          "away": "cro",
+          "score": {
+            "home": 4,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cro",
+        "gha"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GL-06",
+          "kickoff_at": "2026-06-27T21:00:00Z",
+          "home": "cro",
+          "away": "gha",
+          "score": {
+            "home": 2,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cro",
+        "pan"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GL-04",
+          "kickoff_at": "2026-06-23T23:00:00Z",
+          "home": "pan",
+          "away": "cro",
+          "score": {
+            "home": 0,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cro",
+        "por"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-12",
+          "kickoff_at": "2026-07-02T23:00:00Z",
+          "home": "por",
+          "away": "cro",
+          "score": {
+            "home": 2,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cuw",
+        "ecu"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GE-04",
+          "kickoff_at": "2026-06-21T00:00:00Z",
+          "home": "ecu",
+          "away": "cuw",
+          "score": {
+            "home": 0,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cuw",
+        "ger"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GE-01",
+          "kickoff_at": "2026-06-14T17:00:00Z",
+          "home": "ger",
+          "away": "cuw",
+          "score": {
+            "home": 7,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cze",
+        "kor"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GA-02",
+          "kickoff_at": "2026-06-12T02:00:00Z",
+          "home": "kor",
+          "away": "cze",
+          "score": {
+            "home": 2,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cze",
+        "mex"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GA-05",
+          "kickoff_at": "2026-06-25T01:00:00Z",
+          "home": "cze",
+          "away": "mex",
+          "score": {
+            "home": 0,
+            "away": 3
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "cze",
+        "rsa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GA-03",
+          "kickoff_at": "2026-06-18T16:00:00Z",
+          "home": "cze",
+          "away": "rsa",
+          "score": {
+            "home": 1,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "ecu",
+        "ger"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GE-05",
+          "kickoff_at": "2026-06-25T20:00:00Z",
+          "home": "ecu",
+          "away": "ger",
+          "score": {
+            "home": 2,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "ecu",
+        "mex"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-07",
+          "kickoff_at": "2026-07-01T01:00:00Z",
+          "home": "mex",
+          "away": "ecu",
+          "score": {
+            "home": 2,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "egy",
+        "irn"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GG-05",
+          "kickoff_at": "2026-06-27T03:00:00Z",
+          "home": "egy",
+          "away": "irn",
+          "score": {
+            "home": 1,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "egy",
+        "nzl"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GG-04",
+          "kickoff_at": "2026-06-22T01:00:00Z",
+          "home": "nzl",
+          "away": "egy",
+          "score": {
+            "home": 1,
+            "away": 3
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "eng",
+        "gha"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GL-03",
+          "kickoff_at": "2026-06-23T20:00:00Z",
+          "home": "eng",
+          "away": "gha",
+          "score": {
+            "home": 0,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "eng",
+        "mex"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R16-04",
+          "kickoff_at": "2026-07-06T00:00:00Z",
+          "home": "mex",
+          "away": "eng",
+          "score": {
+            "home": 2,
+            "away": 3
+          },
+          "competition": "wc2026",
+          "phase": "round_of_16"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "eng",
+        "nor"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-QF-03",
+          "kickoff_at": "2026-07-11T21:00:00Z",
+          "home": "nor",
+          "away": "eng",
+          "score": {
+            "home": 1,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "quarter_final"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "eng",
+        "pan"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GL-05",
+          "kickoff_at": "2026-06-27T21:00:00Z",
+          "home": "pan",
+          "away": "eng",
+          "score": {
+            "home": 0,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "esp",
+        "ksa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GH-03",
+          "kickoff_at": "2026-06-21T16:00:00Z",
+          "home": "esp",
+          "away": "ksa",
+          "score": {
+            "home": 4,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "esp",
+        "por"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R16-05",
+          "kickoff_at": "2026-07-06T19:00:00Z",
+          "home": "por",
+          "away": "esp",
+          "score": {
+            "home": 0,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "round_of_16"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "esp",
+        "uru"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GH-06",
+          "kickoff_at": "2026-06-27T00:00:00Z",
+          "home": "uru",
+          "away": "esp",
+          "score": {
+            "home": 0,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "fra",
+        "irq"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GI-03",
+          "kickoff_at": "2026-06-22T21:00:00Z",
+          "home": "fra",
+          "away": "irq",
+          "score": {
+            "home": 3,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "fra",
+        "mar"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-QF-01",
+          "kickoff_at": "2026-07-09T20:00:00Z",
+          "home": "fra",
+          "away": "mar",
+          "score": {
+            "home": 2,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "quarter_final"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "fra",
+        "nor"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GI-05",
+          "kickoff_at": "2026-06-26T19:00:00Z",
+          "home": "nor",
+          "away": "fra",
+          "score": {
+            "home": 1,
+            "away": 4
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "fra",
+        "par"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R16-02",
+          "kickoff_at": "2026-07-04T21:00:00Z",
+          "home": "par",
+          "away": "fra",
+          "score": {
+            "home": 0,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "round_of_16"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "fra",
+        "sen"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GI-01",
+          "kickoff_at": "2026-06-16T19:00:00Z",
+          "home": "fra",
+          "away": "sen",
+          "score": {
+            "home": 3,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "fra",
+        "swe"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-06",
+          "kickoff_at": "2026-06-30T21:00:00Z",
+          "home": "fra",
+          "away": "swe",
+          "score": {
+            "home": 3,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "ger",
+        "par"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-03",
+          "kickoff_at": "2026-06-29T20:30:00Z",
+          "home": "ger",
+          "away": "par",
+          "score": {
+            "home": 4,
+            "away": 5
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "gha",
+        "pan"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GL-02",
+          "kickoff_at": "2026-06-17T23:00:00Z",
+          "home": "gha",
+          "away": "pan",
+          "score": {
+            "home": 1,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "hai",
+        "mar"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GC-06",
+          "kickoff_at": "2026-06-24T22:00:00Z",
+          "home": "mar",
+          "away": "hai",
+          "score": {
+            "home": 4,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "hai",
+        "sco"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GC-02",
+          "kickoff_at": "2026-06-14T01:00:00Z",
+          "home": "hai",
+          "away": "sco",
+          "score": {
+            "home": 0,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "irn",
+        "nzl"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GG-02",
+          "kickoff_at": "2026-06-16T04:00:00Z",
+          "home": "irn",
+          "away": "nzl",
+          "score": {
+            "home": 2,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "irq",
+        "nor"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GI-02",
+          "kickoff_at": "2026-06-16T22:00:00Z",
+          "home": "irq",
+          "away": "nor",
+          "score": {
+            "home": 1,
+            "away": 4
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "irq",
+        "sen"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GI-06",
+          "kickoff_at": "2026-06-26T19:00:00Z",
+          "home": "sen",
+          "away": "irq",
+          "score": {
+            "home": 5,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "jpn",
+        "ned"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GF-01",
+          "kickoff_at": "2026-06-14T20:00:00Z",
+          "home": "ned",
+          "away": "jpn",
+          "score": {
+            "home": 2,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "jpn",
+        "swe"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GF-05",
+          "kickoff_at": "2026-06-25T23:00:00Z",
+          "home": "jpn",
+          "away": "swe",
+          "score": {
+            "home": 1,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "jpn",
+        "tun"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GF-04",
+          "kickoff_at": "2026-06-21T04:00:00Z",
+          "home": "tun",
+          "away": "jpn",
+          "score": {
+            "home": 0,
+            "away": 4
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "kor",
+        "mex"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GA-04",
+          "kickoff_at": "2026-06-19T03:00:00Z",
+          "home": "mex",
+          "away": "kor",
+          "score": {
+            "home": 1,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "kor",
+        "rsa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GA-06",
+          "kickoff_at": "2026-06-25T01:00:00Z",
+          "home": "rsa",
+          "away": "kor",
+          "score": {
+            "home": 1,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "ksa",
+        "uru"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GH-02",
+          "kickoff_at": "2026-06-15T22:00:00Z",
+          "home": "ksa",
+          "away": "uru",
+          "score": {
+            "home": 1,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "mar",
+        "ned"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-R32-04",
+          "kickoff_at": "2026-06-30T01:00:00Z",
+          "home": "ned",
+          "away": "mar",
+          "score": {
+            "home": 3,
+            "away": 4
+          },
+          "competition": "wc2026",
+          "phase": "round_of_32"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "mar",
+        "sco"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GC-03",
+          "kickoff_at": "2026-06-19T22:00:00Z",
+          "home": "sco",
+          "away": "mar",
+          "score": {
+            "home": 0,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "mex",
+        "rsa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GA-01",
+          "kickoff_at": "2026-06-11T19:00:00Z",
+          "home": "mex",
+          "away": "rsa",
+          "score": {
+            "home": 2,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "ned",
+        "swe"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GF-03",
+          "kickoff_at": "2026-06-20T17:00:00Z",
+          "home": "ned",
+          "away": "swe",
+          "score": {
+            "home": 5,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "ned",
+        "tun"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GF-06",
+          "kickoff_at": "2026-06-25T23:00:00Z",
+          "home": "tun",
+          "away": "ned",
+          "score": {
+            "home": 1,
+            "away": 3
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "nor",
+        "sen"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GI-04",
+          "kickoff_at": "2026-06-23T00:00:00Z",
+          "home": "nor",
+          "away": "sen",
+          "score": {
+            "home": 3,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "par",
+        "tur"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GD-04",
+          "kickoff_at": "2026-06-20T04:00:00Z",
+          "home": "tur",
+          "away": "par",
+          "score": {
+            "home": 0,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "par",
+        "usa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GD-01",
+          "kickoff_at": "2026-06-13T01:00:00Z",
+          "home": "usa",
+          "away": "par",
+          "score": {
+            "home": 4,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "por",
+        "uzb"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GK-03",
+          "kickoff_at": "2026-06-23T17:00:00Z",
+          "home": "por",
+          "away": "uzb",
+          "score": {
+            "home": 5,
+            "away": 0
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "qat",
+        "sui"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GB-02",
+          "kickoff_at": "2026-06-13T19:00:00Z",
+          "home": "qat",
+          "away": "sui",
+          "score": {
+            "home": 1,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "swe",
+        "tun"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GF-02",
+          "kickoff_at": "2026-06-15T02:00:00Z",
+          "home": "swe",
+          "away": "tun",
+          "score": {
+            "home": 5,
+            "away": 1
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "tur",
+        "usa"
+      ],
+      "meetings": [
+        {
+          "match_id": "2026-GD-05",
+          "kickoff_at": "2026-06-26T02:00:00Z",
+          "home": "tur",
+          "away": "usa",
+          "score": {
+            "home": 3,
+            "away": 2
+          },
+          "competition": "wc2026",
+          "phase": "group"
+        }
+      ],
+      "meetings_count": 1,
+      "source": "wc2026_ledger"
+    },
+    {
+      "pair": [
+        "esp",
+        "fra"
+      ],
+      "meetings": [],
+      "meetings_count": 0,
+      "source": "none_in_2026"
+    },
+    {
+      "pair": [
+        "arg",
+        "eng"
+      ],
+      "meetings": [],
+      "meetings_count": 0,
+      "source": "none_in_2026"
+    }
+  ],
+  "note": "H2H limited to 2026 tournament meetings; pre-tournament H2H feed unavailable."
+}

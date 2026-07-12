@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 世界杯 AI 预测中心 | FIFA Winner Skill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Grain overlay -->
+  <div class="grain"></div>
+
+  <!-- App Shell -->
+  <div class="app-shell">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
+            <path d="M16 8v8l5 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>FIFA 2026</span>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 7h14M3 13h14"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <a href="#overview" class="nav-item active" data-view="overview">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="6" height="6" rx="1"/>
+              <rect x="11" y="3" width="6" height="6" rx="1"/>
+              <rect x="3" y="11" width="6" height="6" rx="1"/>
+              <rect x="11" y="11" width="6" height="6" rx="1"/>
+            </svg>
+            <span>总览看板</span>
+          </a>
+          <a href="#predictions" class="nav-item" data-view="predictions">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="10" cy="10" r="7"/>
+              <path d="M10 6v4l3 2"/>
+            </svg>
+            <span>比赛预测</span>
+          </a>
+          <a href="#analytics" class="nav-item" data-view="analytics">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 17V9l4-4 4 4 6-6v14"/>
+            </svg>
+            <span>数据分析</span>
+          </a>
+          <a href="#accuracy" class="nav-item" data-view="accuracy">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/>
+            </svg>
+            <span>准确率追踪</span>
+          </a>
+          <a href="#tianji" class="nav-item" data-view="tianji">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="10" cy="10" r="7"/>
+              <path d="M10 3v7l4 4"/>
+            </svg>
+            <span>天纪占卜</span>
+          </a>
+        </div>
+
+        <div class="nav-section nav-section-bottom">
+          <a href="#settings" class="nav-item" data-view="settings">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="10" cy="10" r="3"/>
+              <path d="M10 1v2m0 14v2M1 10h2m14 0h2m-2.9-7.1L14.7 4.3m-9.4 9.4L3.9 15.1m11.8 0l-1.4-1.4M4.3 5.7L5.7 4.3"/>
+            </svg>
+            <span>设置</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title">总览看板</h1>
+          <div class="breadcrumb">
+            <span class="breadcrumb-item">首页</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item active">总览</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="status-indicator">
+            <span class="status-dot status-live"></span>
+            <span class="status-text">实时数据</span>
+          </div>
+          <button class="btn-icon" id="refreshBtn" aria-label="刷新数据">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 8C16 5 13 3 10 3 6 3 3 6 3 10s3 7 7 7c3 0 6-2 7-5"/>
+              <path d="M17 3v5h-5"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Views -->
+      <div class="content-wrapper">
+        <!-- Overview View -->
+        <div id="view-overview" class="view-panel active">
+          <!-- Hero Stats -->
+          <div class="hero-stats">
+            <div class="stat-card stat-primary">
+              <div class="stat-label">预测总场次</div>
+              <div class="stat-value" id="totalPredictions">--</div>
+              <div class="stat-detail">覆盖 2026 世界杯全部赛程</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">胜负准确率</div>
+              <div class="stat-value stat-accent" id="accuracyRate">--</div>
+              <div class="stat-trend stat-meta">
+                <span>加载中…</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">完全命中</div>
+              <div class="stat-value" id="perfectHits">--</div>
+              <div class="stat-detail">比分+胜负全中</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">胜负命中</div>
+              <div class="stat-value" id="resultHits">--</div>
+              <div class="stat-detail">仅胜负结果正确</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">待赛预测</div>
+              <div class="stat-value" id="todayMatches">--</div>
+              <div class="stat-detail">已预测、尚未开赛</div>
+            </div>
+          </div>
+
+          <!-- Phase Progress -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">赛程进度</h2>
+              <button type="button" class="btn-text" id="phaseDetailBtn" title="查看准确率分阶段明细">准确率明细 →</button>
+            </div>
+            <div class="phase-tracker" id="phaseTracker">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+          <!-- Recent Predictions -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">最近预测</h2>
+              <div class="section-actions">
+                <button class="filter-chip active" data-filter="all">全部</button>
+                <button class="filter-chip" data-filter="today">今日</button>
+                <button class="filter-chip" data-filter="upcoming">即将开始</button>
+              </div>
+            </div>
+            <div class="match-list" id="recentMatches">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+          <!-- Accuracy Chart -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">预测表现趋势</h2>
+            </div>
+            <div class="chart-container">
+              <div id="accuracyChart" class="chart"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Predictions View -->
+        <div id="view-predictions" class="view-panel">
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">比赛预测列表</h2>
+              <div class="toolbar">
+                <select class="select-input" id="phaseFilter">
+                  <option value="all">全部阶段</option>
+                  <option value="group">小组赛</option>
+                  <option value="round_of_32">三十二强</option>
+                  <option value="round_of_16">十六强</option>
+                  <option value="quarter_final">四分之一决赛</option>
+                  <option value="semi_final">半决赛</option>
+                  <option value="final">决赛</option>
+                </select>
+                <select class="select-input date-select" id="dateFilter" title="按北京时间比赛日筛选">
+                  <option value="">全部日期</option>
+                </select>
+                <button class="btn-secondary" id="clearFilters">清除筛选</button>
+              </div>
+            </div>
+            <div class="predictions-grid" id="predictionsGrid">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Analytics View -->
+        <div id="view-analytics" class="view-panel">
+          <div class="section">
+            <h2 class="section-title">深度数据分析</h2>
+            <div class="analytics-grid">
+              <div class="analytics-card">
+                <h3 class="card-title">基本面实力分布</h3>
+                <div id="strengthChart" class="chart"></div>
+              </div>
+              <div class="analytics-card">
+                <h3 class="card-title">预测信心度分析</h3>
+                <div id="confidenceChart" class="chart"></div>
+              </div>
+              <div class="analytics-card span-2">
+                <h3 class="card-title">阶段命中结构（堆叠）</h3>
+                <div id="heatmapChart" class="chart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accuracy View -->
+        <div id="view-accuracy" class="view-panel">
+          <div class="section">
+            <h2 class="section-title">准确率详细追踪</h2>
+            <div class="accuracy-stats">
+              <div class="accuracy-card">
+                <div class="accuracy-label">胜负准确率</div>
+                <div class="accuracy-meter">
+                  <div class="meter-track">
+                    <div class="meter-fill" style="width: 0%"></div>
+                  </div>
+                  <div class="meter-value">--</div>
+                </div>
+              </div>
+              <div class="accuracy-card">
+                <div class="accuracy-label">比分准确率</div>
+                <div class="accuracy-meter">
+                  <div class="meter-track">
+                    <div class="meter-fill" style="width: 0%"></div>
+                  </div>
+                  <div class="meter-value">--</div>
+                </div>
+              </div>
+              <div class="accuracy-card">
+                <div class="accuracy-label">失误率</div>
+                <div class="accuracy-meter">
+                  <div class="meter-track">
+                    <div class="meter-fill meter-fill-warn" style="width: 0%"></div>
+                  </div>
+                  <div class="meter-value">--</div>
+                </div>
+              </div>
+            </div>
+            <div class="data-table-wrapper">
+              <table class="data-table" id="accuracyTable">
+                <thead>
+                  <tr>
+                    <th>阶段</th>
+                    <th class="text-right">预测场次</th>
+                    <th class="text-right">完全命中</th>
+                    <th class="text-right">胜负命中</th>
+                    <th class="text-right">完全失误</th>
+                    <th class="text-right">准确率</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Filled by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tianji View -->
+        <div id="view-tianji" class="view-panel">
+          <div class="section">
+            <h2 class="section-title">天纪占卜系统</h2>
+            <p class="section-description">基于紫微斗数、干支历法、卦象推演的玄学预测维度</p>
+            <div class="tianji-grid">
+              <div class="tianji-card">
+                <h3 class="card-title">今日卦象</h3>
+                <div id="todayHexagram" class="hexagram-display">
+                  <!-- Filled by JS -->
+                </div>
+              </div>
+              <div class="tianji-card">
+                <h3 class="card-title">星曜分布</h3>
+                <div id="starsChart" class="chart"></div>
+              </div>
+              <div class="tianji-card span-2">
+                <h3 class="card-title">气运走势</h3>
+                <div id="fortuneChart" class="chart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings View -->
+        <div id="view-settings" class="view-panel">
+          <div class="section">
+            <h2 class="section-title">关于本看板</h2>
+            <div class="settings-list">
+              <div class="setting-item">
+                <div class="setting-info">
+                  <div class="setting-label">数据更新方式</div>
+                  <div class="setting-description">静态嵌入发布时的预测数据。重新构建并部署后才会更新，页面内刷新不会拉新赛果。</div>
+                </div>
+              </div>
+              <div class="setting-item">
+                <div class="setting-info">
+                  <div class="setting-label">展示范围</div>
+                  <div class="setting-description">小组赛 → 决赛；三四名不展示。半决赛已预测，决赛待球队绑定后再生成。</div>
+                </div>
+              </div>
+              <div class="setting-item">
+                <div class="setting-info">
+                  <div class="setting-label">声明</div>
+                  <div class="setting-description">娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。</div>
+                </div>
+              </div>
+              <div class="setting-item">
+                <div class="setting-info">
+                  <div class="setting-label">深色主题</div>
+                  <div class="setting-description">当前固定深色主题。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 嵌入真实数据（file:// 可直接打开，无需 HTTP 服务器） -->
+  <script src="./data-embedded.js"></script>
+  <script src="./app-mock.js"></script>
+</body>
+</html>

@@ -18,12 +18,19 @@
 
 做出预测摘要前，宿主 Agent 应检查：
 
-1. `wiki/<edition>/data/match-ledger.json` 是否存在
-2. `wiki/<edition>/data/prediction-evidence-plan.json` 是否存在
-3. 日期相关任务时，`wiki/<edition>/data/daily-evidence/<date>.json` 是否存在
+1. `wiki/public/<edition>/match-ledger.json`（或 edition data root 下的 match-ledger）是否存在
+2. `wiki/public/<edition>/prediction-evidence-plan.json` 是否存在；缺失/过期时先跑 `compile_prediction_evidence.py` + planner `write`
+3. 日期相关任务时，`wiki/public/<edition>/daily-evidence/<date>.json` 是否存在
 4. 目标比赛是否尚未开始
 
 如果证据状态为 `partial` 或 `blocked`，必须在回答中保持可见。不得因为叙事听起来合理就提升置信度。
+
+## 信心护栏
+
+- 必须先算出赛果/比分，再调用评分器给信心；禁止只改 UI/展示策略把场次标成 high。
+- `edge_tier=coinflip` 不得 high。
+- 缺失赔率记为 market `none`，不是 mock 伪造盘口；不要因此把 evidence_quality 打成 `unusable`。
+- `confidence-display-policy.json` 的 force-high 列表应为空；信心以模型 JSON 为准。
 
 ## 存储护栏
 

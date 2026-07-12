@@ -1,7 +1,7 @@
 {
   "version": 1,
   "edition": "2026",
-  "generated_at": "2026-07-04T12:16:12.849392+08:00",
+  "generated_at": "2026-07-12T13:59:22.997974+08:00",
   "mode": "worldcup-match-ledger-merged-public-local",
   "summary": {
     "match_count": 104,
@@ -9,7 +9,10 @@
     "knockout_matches": 32,
     "source_policy": "canonical_fifa_schedule_facts_only_local_predictions_excluded",
     "public_base": true,
-    "local_overrides": 104
+    "local_overrides": 104,
+    "fixture_status": "official_schedule_imported",
+    "matches": 104,
+    "matches_with_kickoff": 104
   },
   "matches": [
     {
@@ -58487,7 +58490,7 @@
       "match_number": 83,
       "kickoff_at": "2026-07-02T19:00:00Z",
       "venue": "SoFi Stadium, Inglewood, Calif.",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "esp",
         "name": "Spain",
@@ -58505,7 +58508,20 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-02.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 3,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-07-05T14:26:24.180619+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn-match-centre",
+            "tier": "T3",
+            "url": "https://www.espn.com/soccer/match/_/gameId/760497",
+            "observed_result": "Spain 3-0 Austria"
+          }
+        ]
+      },
       "evaluation": null,
       "source_refs": [
         {
@@ -59241,6 +59257,33 @@
         "locked_at": "2026-06-28T10:00:00+08:00",
         "lock_reason": "pre_match_canonical_prediction",
         "prediction_source_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-03.json"
+      },
+      "knockout_result": {
+        "regular_time": {
+          "home": 3,
+          "away": 0,
+          "result": "home_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "home"
+        },
+        "full_time": {
+          "home": 3,
+          "away": 0,
+          "result": "home_win"
+        }
       }
     },
     {
@@ -59251,7 +59294,7 @@
       "match_number": 84,
       "kickoff_at": "2026-07-02T23:00:00Z",
       "venue": "BMO Field, Toronto",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "por",
         "name": "Portugal",
@@ -59269,7 +59312,20 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-02.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 2,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-07-05T14:26:24.180619+08:00",
+        "source_refs": [
+          {
+            "source_id": "espn-match-centre",
+            "tier": "T3",
+            "url": "https://www.espn.com/football/match/_/gameId/760496/croatia-portugal",
+            "observed_result": "Portugal 2-1 Croatia"
+          }
+        ]
+      },
       "evaluation": null,
       "source_refs": [
         {
@@ -59969,6 +60025,33 @@
         "locked_at": "2026-06-28T10:00:00+08:00",
         "lock_reason": "pre_match_canonical_prediction",
         "prediction_source_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-03.json"
+      },
+      "knockout_result": {
+        "regular_time": {
+          "home": 2,
+          "away": 1,
+          "result": "home_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "home"
+        },
+        "full_time": {
+          "home": 2,
+          "away": 1,
+          "result": "home_win"
+        }
       }
     },
     {
@@ -63142,19 +63225,40 @@
       "match_number": 89,
       "kickoff_at": "2026-07-04T17:00:00Z",
       "venue": "NRG Stadium, Houston",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "round_of_16-home-1",
-        "name": "W73"
+        "team_id": "can",
+        "name": "Canada",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "round_of_16-away-1",
-        "name": "W74"
+        "team_id": "mar",
+        "name": "Morocco",
+        "slot": 2
       },
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-04.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 0,
+        "away": 3,
+        "status": "final",
+        "recorded_at": "2026-07-05T14:26:24.180619+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa-match-report",
+            "tier": "T0",
+            "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/canada-morocco-match-report-highlights",
+            "observed_result": "Canada 0-3 Morocco"
+          },
+          {
+            "source_id": "ap-match-report",
+            "tier": "T3",
+            "url": "https://apnews.com/article/canada-morocco-world-cup-score-cb40f19e9517f2ea369841d1051d6b8d",
+            "observed_result": "Canada 0-3 Morocco"
+          }
+        ]
+      },
       "evaluation": null,
       "prediction_status": "locked_pre_match_prediction",
       "prediction": {
@@ -63933,6 +64037,33 @@
         "locked_at": "2026-07-01T00:47:52.623585+08:00",
         "lock_reason": "pre_match_canonical_prediction",
         "prediction_source_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-05.json"
+      },
+      "knockout_result": {
+        "regular_time": {
+          "home": 0,
+          "away": 3,
+          "result": "away_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 0,
+          "away": 3,
+          "result": "away_win"
+        }
       }
     },
     {
@@ -63943,19 +64074,40 @@
       "match_number": 90,
       "kickoff_at": "2026-07-04T21:00:00Z",
       "venue": "Lincoln Financial Field, Philadelphia",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "round_of_16-home-2",
-        "name": "W75"
+        "team_id": "par",
+        "name": "Paraguay",
+        "slot": 2
       },
       "away_team": {
-        "team_id": "round_of_16-away-2",
-        "name": "W76"
+        "team_id": "fra",
+        "name": "France",
+        "slot": 1
       },
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-04.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 0,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-07-05T14:26:24.180619+08:00",
+        "source_refs": [
+          {
+            "source_id": "ap-match-report",
+            "tier": "T3",
+            "url": "https://apnews.com/article/paraguay-france-world-cup-score-aa910eff4ccd515d390f90f7b537c94b",
+            "observed_result": "Paraguay 0-1 France"
+          },
+          {
+            "source_id": "espn-live-report",
+            "tier": "T3",
+            "url": "https://www.espn.com/soccer/story/_/id/49269293/paraguay-france-live-world-cup-2026-latest-updates-commentary-score-result",
+            "observed_result": "Paraguay 0-1 France"
+          }
+        ]
+      },
       "evaluation": null,
       "prediction_status": "locked_pre_match_prediction",
       "prediction": {
@@ -64744,6 +64896,33 @@
         "locked_at": "2026-07-01T00:47:52.623585+08:00",
         "lock_reason": "pre_match_canonical_prediction",
         "prediction_source_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-05.json"
+      },
+      "knockout_result": {
+        "regular_time": {
+          "home": 0,
+          "away": 1,
+          "result": "away_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 0,
+          "away": 1,
+          "result": "away_win"
+        }
       }
     },
     {
@@ -64754,20 +64933,125 @@
       "match_number": 91,
       "kickoff_at": "2026-07-05T20:00:00Z",
       "venue": "MetLife Stadium, East Rutherford, N.J.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "round_of_16-home-3",
-        "name": "W77"
+        "team_id": "bra",
+        "name": "Brazil",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "round_of_16-away-3",
-        "name": "W78"
+        "team_id": "nor",
+        "name": "Norway",
+        "slot": 2
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-05.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-07-06.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 1,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-07-11T16:40:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa-match-centre",
+            "tier": "T0",
+            "url": "https://www.fifa.com/en/match-centre/match/17/285023/289288/400021532",
+            "fixture_id": "400021532",
+            "observed_result": "Brazil 1-2 Norway"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-R16-03",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 1,
+          "away": 2
+        },
+        "actual_total_goals": 3,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true,
+        "actual_regular_time_score": {
+          "home": 1,
+          "away": 2
+        },
+        "actual_regular_time_result": "away_win",
+        "regular_time_result_hit": false,
+        "regular_time_score_hit": false,
+        "actual_knockout_result": {
+          "regular_time": {
+            "home": 1,
+            "away": 2,
+            "result": "away_win"
+          },
+          "extra_time": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "result": ""
+          },
+          "penalties": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "winner": ""
+          },
+          "advance": {
+            "winner": "away"
+          },
+          "full_time": {
+            "home": 1,
+            "away": 2,
+            "result": "away_win"
+          }
+        },
+        "knockout_prediction": {
+          "is_knockout": true,
+          "phase": "round_of_16",
+          "regular_time": {
+            "result": "home_win",
+            "score": {
+              "home": 2,
+              "away": 0
+            }
+          },
+          "extra_time": {
+            "played": false,
+            "result": "",
+            "score": {
+              "home": null,
+              "away": null
+            },
+            "period_score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "penalties": {
+            "played": false,
+            "winner": "",
+            "winner_name": "",
+            "score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "advance": {
+            "winner": "home",
+            "winner_result": "home_advance",
+            "winner_name": "Brazil"
+          }
+        },
+        "extra_time_hit": true,
+        "penalties_hit": true,
+        "advance_hit": false
+      },
       "prediction_status": "locked_pre_match_prediction",
       "prediction": {
         "home_final": 57.9,
@@ -65554,6 +65838,33 @@
         "locked_at": "2026-07-01T00:47:52.839366+08:00",
         "lock_reason": "pre_match_canonical_prediction",
         "prediction_source_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-06.json"
+      },
+      "knockout_result": {
+        "regular_time": {
+          "home": 1,
+          "away": 2,
+          "result": "away_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 1,
+          "away": 2,
+          "result": "away_win"
+        }
       }
     },
     {
@@ -65564,20 +65875,125 @@
       "match_number": 92,
       "kickoff_at": "2026-07-06T00:00:00Z",
       "venue": "Estadio Azteca, Mexico City",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "round_of_16-home-4",
-        "name": "W79"
+        "team_id": "mex",
+        "name": "Mexico",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "round_of_16-away-4",
-        "name": "W80"
+        "team_id": "eng",
+        "name": "England",
+        "slot": 2
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-06.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-07-06.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
+      "final_score": {
+        "home": 2,
+        "away": 3,
+        "status": "final",
+        "recorded_at": "2026-07-11T16:40:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa-match-centre",
+            "tier": "T0",
+            "url": "https://www.fifa.com/en/match-centre/match/17/285023/289288/400021531?date=2026-07-06",
+            "fixture_id": "400021531",
+            "observed_result": "Mexico 2-3 England"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-R16-04",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 2,
+          "away": 3
+        },
+        "actual_total_goals": 5,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true,
+        "actual_regular_time_score": {
+          "home": 2,
+          "away": 3
+        },
+        "actual_regular_time_result": "away_win",
+        "regular_time_result_hit": false,
+        "regular_time_score_hit": false,
+        "actual_knockout_result": {
+          "regular_time": {
+            "home": 2,
+            "away": 3,
+            "result": "away_win"
+          },
+          "extra_time": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "result": ""
+          },
+          "penalties": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "winner": ""
+          },
+          "advance": {
+            "winner": "away"
+          },
+          "full_time": {
+            "home": 2,
+            "away": 3,
+            "result": "away_win"
+          }
+        },
+        "knockout_prediction": {
+          "is_knockout": true,
+          "phase": "round_of_16",
+          "regular_time": {
+            "result": "draw",
+            "score": {
+              "home": 1,
+              "away": 1
+            }
+          },
+          "extra_time": {
+            "played": true,
+            "result": "away_win",
+            "score": {
+              "home": 1,
+              "away": 2
+            },
+            "period_score": {
+              "home": 0,
+              "away": 1
+            }
+          },
+          "penalties": {
+            "played": false,
+            "winner": "",
+            "winner_name": "",
+            "score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "advance": {
+            "winner": "away",
+            "winner_result": "away_advance",
+            "winner_name": "England"
+          }
+        },
+        "extra_time_hit": false,
+        "penalties_hit": true,
+        "advance_hit": true
+      },
       "prediction_status": "locked_pre_match_prediction",
       "prediction": {
         "home_final": 65.8,
@@ -66327,6 +66743,33 @@
         "locked_at": "2026-07-01T00:47:52.839366+08:00",
         "lock_reason": "pre_match_canonical_prediction",
         "prediction_source_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-06.json"
+      },
+      "knockout_result": {
+        "regular_time": {
+          "home": 2,
+          "away": 3,
+          "result": "away_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 2,
+          "away": 3,
+          "result": "away_win"
+        }
       }
     },
     {
@@ -66337,21 +66780,153 @@
       "match_number": 93,
       "kickoff_at": "2026-07-06T19:00:00Z",
       "venue": "AT&T Stadium, Arlington, Texas",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "round_of_16-home-5",
-        "name": "W81"
+        "team_id": "por",
+        "name": "Portugal",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "round_of_16-away-5",
-        "name": "W82"
+        "team_id": "esp",
+        "name": "Spain",
+        "slot": 2
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-06.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-07-07.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 0,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-07-11T16:40:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa-match-centre",
+            "tier": "T0",
+            "url": "https://www.fifa.com/en/match-centre/match/17/285023/289288/400021529",
+            "fixture_id": "400021529",
+            "observed_result": "Portugal 0-1 Spain"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-R16-05",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 0,
+          "away": 1
+        },
+        "actual_total_goals": 1,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true,
+        "actual_regular_time_score": {
+          "home": 0,
+          "away": 1
+        },
+        "actual_regular_time_result": "away_win",
+        "regular_time_result_hit": false,
+        "regular_time_score_hit": false,
+        "actual_knockout_result": {
+          "regular_time": {
+            "home": 0,
+            "away": 1,
+            "result": "away_win"
+          },
+          "extra_time": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "result": ""
+          },
+          "penalties": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "winner": ""
+          },
+          "advance": {
+            "winner": "away"
+          },
+          "full_time": {
+            "home": 0,
+            "away": 1,
+            "result": "away_win"
+          }
+        },
+        "knockout_prediction": {
+          "is_knockout": true,
+          "phase": "round_of_16",
+          "regular_time": {
+            "result": "draw",
+            "score": {
+              "home": 1,
+              "away": 1
+            }
+          },
+          "extra_time": {
+            "played": true,
+            "result": "away_win",
+            "score": {
+              "home": 1,
+              "away": 2
+            },
+            "period_score": {
+              "home": 0,
+              "away": 1
+            }
+          },
+          "penalties": {
+            "played": false,
+            "winner": "",
+            "winner_name": "",
+            "score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "advance": {
+            "winner": "away",
+            "winner_result": "away_advance",
+            "winner_name": "Spain"
+          }
+        },
+        "extra_time_hit": false,
+        "penalties_hit": true,
+        "advance_hit": true
+      },
+      "prediction_status": "locked_pre_match_prediction",
+      "knockout_result": {
+        "regular_time": {
+          "home": 0,
+          "away": 1,
+          "result": "away_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 0,
+          "away": 1,
+          "result": "away_win"
+        }
+      }
     },
     {
       "match_id": "2026-R16-06",
@@ -66361,21 +66936,153 @@
       "match_number": 94,
       "kickoff_at": "2026-07-06T21:00:00Z",
       "venue": "Lumen Field, Seattle",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "round_of_16-home-6",
-        "name": "W83"
+        "team_id": "usa",
+        "name": "USA",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "round_of_16-away-6",
-        "name": "W84"
+        "team_id": "bel",
+        "name": "Belgium",
+        "slot": 2
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-06.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-07-07.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 1,
+        "away": 4,
+        "status": "final",
+        "recorded_at": "2026-07-11T16:40:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa-match-centre",
+            "tier": "T0",
+            "url": "https://www.fifa.com/en/match-centre/match/17/285023/289288/400021534",
+            "fixture_id": "400021534",
+            "observed_result": "USA 1-4 Belgium"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-R16-06",
+        "status": "evaluated",
+        "predicted_result": "draw",
+        "prediction_confidence": "medium",
+        "actual_result": "away_win",
+        "actual_score": {
+          "home": 1,
+          "away": 4
+        },
+        "actual_total_goals": 5,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true,
+        "actual_regular_time_score": {
+          "home": 1,
+          "away": 4
+        },
+        "actual_regular_time_result": "away_win",
+        "regular_time_result_hit": false,
+        "regular_time_score_hit": false,
+        "actual_knockout_result": {
+          "regular_time": {
+            "home": 1,
+            "away": 4,
+            "result": "away_win"
+          },
+          "extra_time": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "result": ""
+          },
+          "penalties": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "winner": ""
+          },
+          "advance": {
+            "winner": "away"
+          },
+          "full_time": {
+            "home": 1,
+            "away": 4,
+            "result": "away_win"
+          }
+        },
+        "knockout_prediction": {
+          "is_knockout": true,
+          "phase": "round_of_16",
+          "regular_time": {
+            "result": "draw",
+            "score": {
+              "home": 1,
+              "away": 1
+            }
+          },
+          "extra_time": {
+            "played": true,
+            "result": "draw",
+            "score": {
+              "home": 1,
+              "away": 1
+            },
+            "period_score": {
+              "home": 0,
+              "away": 0
+            }
+          },
+          "penalties": {
+            "played": true,
+            "winner": "away",
+            "winner_name": "Belgium",
+            "score": {
+              "home": 4,
+              "away": 5
+            }
+          },
+          "advance": {
+            "winner": "away",
+            "winner_result": "away_advance",
+            "winner_name": "Belgium"
+          }
+        },
+        "extra_time_hit": false,
+        "penalties_hit": false,
+        "advance_hit": true
+      },
+      "prediction_status": "locked_pre_match_prediction",
+      "knockout_result": {
+        "regular_time": {
+          "home": 1,
+          "away": 4,
+          "result": "away_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 1,
+          "away": 4,
+          "result": "away_win"
+        }
+      }
     },
     {
       "match_id": "2026-R16-07",
@@ -66385,21 +67092,153 @@
       "match_number": 95,
       "kickoff_at": "2026-07-07T16:00:00Z",
       "venue": "Mercedes-Benz Stadium, Atlanta",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "round_of_16-home-7",
-        "name": "W85"
+        "team_id": "arg",
+        "name": "Argentina",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "round_of_16-away-7",
-        "name": "W86"
+        "team_id": "egy",
+        "name": "Egypt",
+        "slot": 2
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-07.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-07-08.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 3,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-07-11T16:40:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa-match-centre",
+            "tier": "T0",
+            "url": "https://www.fifa.com/en/match-centre/match/17/285023/289288/400021528",
+            "fixture_id": "400021528",
+            "observed_result": "Argentina 3-2 Egypt"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-R16-07",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 3,
+          "away": 2
+        },
+        "actual_total_goals": 5,
+        "result_hit": true,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true,
+        "actual_regular_time_score": {
+          "home": 3,
+          "away": 2
+        },
+        "actual_regular_time_result": "home_win",
+        "regular_time_result_hit": true,
+        "regular_time_score_hit": false,
+        "actual_knockout_result": {
+          "regular_time": {
+            "home": 3,
+            "away": 2,
+            "result": "home_win"
+          },
+          "extra_time": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "result": ""
+          },
+          "penalties": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "winner": ""
+          },
+          "advance": {
+            "winner": "home"
+          },
+          "full_time": {
+            "home": 3,
+            "away": 2,
+            "result": "home_win"
+          }
+        },
+        "knockout_prediction": {
+          "is_knockout": true,
+          "phase": "round_of_16",
+          "regular_time": {
+            "result": "home_win",
+            "score": {
+              "home": 2,
+              "away": 0
+            }
+          },
+          "extra_time": {
+            "played": false,
+            "result": "",
+            "score": {
+              "home": null,
+              "away": null
+            },
+            "period_score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "penalties": {
+            "played": false,
+            "winner": "",
+            "winner_name": "",
+            "score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "advance": {
+            "winner": "home",
+            "winner_result": "home_advance",
+            "winner_name": "Argentina"
+          }
+        },
+        "extra_time_hit": true,
+        "penalties_hit": true,
+        "advance_hit": true
+      },
+      "prediction_status": "locked_pre_match_prediction",
+      "knockout_result": {
+        "regular_time": {
+          "home": 3,
+          "away": 2,
+          "result": "home_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "home"
+        },
+        "full_time": {
+          "home": 3,
+          "away": 2,
+          "result": "home_win"
+        }
+      }
     },
     {
       "match_id": "2026-R16-08",
@@ -66409,21 +67248,153 @@
       "match_number": 96,
       "kickoff_at": "2026-07-07T20:00:00Z",
       "venue": "BC Place, Vancouver, Canada",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "round_of_16-home-8",
-        "name": "W87"
+        "team_id": "sui",
+        "name": "Switzerland",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "round_of_16-away-8",
-        "name": "W88"
+        "team_id": "col",
+        "name": "Colombia",
+        "slot": 2
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-07.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-07-08.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 4,
+        "away": 3,
+        "status": "final",
+        "recorded_at": "2026-07-11T16:40:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa-match-centre",
+            "tier": "T0",
+            "url": "https://www.fifa.com/en/match-centre/match/17/285023/289288/400021535?date=2026-07-07",
+            "fixture_id": "400021535",
+            "observed_result": "Switzerland 4-3 Colombia (pens)"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-R16-08",
+        "status": "evaluated",
+        "predicted_result": "away_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 4,
+          "away": 3
+        },
+        "actual_total_goals": 7,
+        "result_hit": false,
+        "score_hit": false,
+        "total_goals_hit": false,
+        "prediction_kept_locked": true,
+        "actual_regular_time_score": {
+          "home": 0,
+          "away": 0
+        },
+        "actual_regular_time_result": "draw",
+        "regular_time_result_hit": false,
+        "regular_time_score_hit": false,
+        "actual_knockout_result": {
+          "regular_time": {
+            "home": 0,
+            "away": 0,
+            "result": "draw"
+          },
+          "extra_time": {
+            "played": true,
+            "home": 0,
+            "away": 0,
+            "result": "draw"
+          },
+          "penalties": {
+            "played": true,
+            "home": 4,
+            "away": 3,
+            "winner": "home"
+          },
+          "advance": {
+            "winner": "home"
+          },
+          "full_time": {
+            "home": 4,
+            "away": 3,
+            "result": "home_win"
+          }
+        },
+        "knockout_prediction": {
+          "is_knockout": true,
+          "phase": "round_of_16",
+          "regular_time": {
+            "result": "away_win",
+            "score": {
+              "home": 0,
+              "away": 2
+            }
+          },
+          "extra_time": {
+            "played": false,
+            "result": "",
+            "score": {
+              "home": null,
+              "away": null
+            },
+            "period_score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "penalties": {
+            "played": false,
+            "winner": "",
+            "winner_name": "",
+            "score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "advance": {
+            "winner": "away",
+            "winner_result": "away_advance",
+            "winner_name": "Colombia"
+          }
+        },
+        "extra_time_hit": false,
+        "penalties_hit": false,
+        "advance_hit": false
+      },
+      "prediction_status": "locked_pre_match_prediction",
+      "knockout_result": {
+        "regular_time": {
+          "home": 0,
+          "away": 0,
+          "result": "draw"
+        },
+        "extra_time": {
+          "played": true,
+          "home": 0,
+          "away": 0,
+          "result": "draw"
+        },
+        "penalties": {
+          "played": true,
+          "home": 4,
+          "away": 3,
+          "winner": "home"
+        },
+        "advance": {
+          "winner": "home"
+        },
+        "full_time": {
+          "home": 4,
+          "away": 3,
+          "result": "home_win"
+        }
+      }
     },
     {
       "match_id": "2026-QF-01",
@@ -66433,21 +67404,153 @@
       "match_number": 97,
       "kickoff_at": "2026-07-09T20:00:00Z",
       "venue": "Gillette Stadium, Foxborough, Mass.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "quarter_final-home-1",
-        "name": "W89"
+        "team_id": "fra",
+        "name": "France",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "quarter_final-away-1",
-        "name": "W90"
+        "team_id": "mar",
+        "name": "Morocco",
+        "slot": 2
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-09.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-07-10.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
-      "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "final_score": {
+        "home": 2,
+        "away": 0,
+        "status": "final",
+        "recorded_at": "2026-07-11T16:40:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa-match-report",
+            "tier": "T0",
+            "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/france-morocco-match-report-highlights",
+            "fixture_id": "400021536",
+            "observed_result": "France 2-0 Morocco"
+          }
+        ]
+      },
+      "evaluation": {
+        "match_id": "2026-QF-01",
+        "status": "evaluated",
+        "predicted_result": "home_win",
+        "prediction_confidence": "medium",
+        "actual_result": "home_win",
+        "actual_score": {
+          "home": 2,
+          "away": 0
+        },
+        "actual_total_goals": 2,
+        "result_hit": true,
+        "score_hit": true,
+        "total_goals_hit": true,
+        "prediction_kept_locked": true,
+        "actual_regular_time_score": {
+          "home": 2,
+          "away": 0
+        },
+        "actual_regular_time_result": "home_win",
+        "regular_time_result_hit": true,
+        "regular_time_score_hit": true,
+        "actual_knockout_result": {
+          "regular_time": {
+            "home": 2,
+            "away": 0,
+            "result": "home_win"
+          },
+          "extra_time": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "result": ""
+          },
+          "penalties": {
+            "played": false,
+            "home": null,
+            "away": null,
+            "winner": ""
+          },
+          "advance": {
+            "winner": "home"
+          },
+          "full_time": {
+            "home": 2,
+            "away": 0,
+            "result": "home_win"
+          }
+        },
+        "knockout_prediction": {
+          "is_knockout": true,
+          "phase": "quarter_final",
+          "regular_time": {
+            "result": "home_win",
+            "score": {
+              "home": 2,
+              "away": 0
+            }
+          },
+          "extra_time": {
+            "played": false,
+            "result": "",
+            "score": {
+              "home": null,
+              "away": null
+            },
+            "period_score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "penalties": {
+            "played": false,
+            "winner": "",
+            "winner_name": "",
+            "score": {
+              "home": null,
+              "away": null
+            }
+          },
+          "advance": {
+            "winner": "home",
+            "winner_result": "home_advance",
+            "winner_name": "France"
+          }
+        },
+        "extra_time_hit": true,
+        "penalties_hit": true,
+        "advance_hit": true
+      },
+      "prediction_status": "locked_pre_match_prediction",
+      "knockout_result": {
+        "regular_time": {
+          "home": 2,
+          "away": 0,
+          "result": "home_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "home"
+        },
+        "full_time": {
+          "home": 2,
+          "away": 0,
+          "result": "home_win"
+        }
+      }
     },
     {
       "match_id": "2026-QF-02",
@@ -66457,21 +67560,64 @@
       "match_number": 98,
       "kickoff_at": "2026-07-10T19:00:00Z",
       "venue": "SoFi Stadium, Inglewood, Calif.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "quarter_final-home-2",
-        "name": "W91"
+        "team_id": "esp",
+        "name": "Spain",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "quarter_final-away-2",
-        "name": "W92"
+        "team_id": "bel",
+        "name": "Belgium",
+        "slot": 2
       },
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-10.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 2,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-07-11T16:40:00+08:00",
+        "source_refs": [
+          {
+            "source_id": "fifa-match-report",
+            "tier": "T0",
+            "url": "https://www.fifa.com/en/articles/spain-belgium-match-report-highlights",
+            "fixture_id": "400021538",
+            "observed_result": "Spain 2-1 Belgium"
+          }
+        ]
+      },
       "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "prediction_status": "locked_pre_match_prediction",
+      "knockout_result": {
+        "regular_time": {
+          "home": 2,
+          "away": 1,
+          "result": "home_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "home"
+        },
+        "full_time": {
+          "home": 2,
+          "away": 1,
+          "result": "home_win"
+        }
+      }
     },
     {
       "match_id": "2026-QF-03",
@@ -66481,21 +67627,36 @@
       "match_number": 99,
       "kickoff_at": "2026-07-11T21:00:00Z",
       "venue": "Hard Rock Stadium, Miami Gardens, Fla.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "quarter_final-home-3",
-        "name": "W93"
+        "team_id": "nor",
+        "name": "Norway",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "quarter_final-away-3",
-        "name": "W94"
+        "team_id": "eng",
+        "name": "England",
+        "slot": 2
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-11.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-07-12.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 1,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-07-12T13:59:21.974137+08:00",
+        "source_refs": [
+          {
+            "source_id": "inline_manual",
+            "tier": "T2",
+            "fixture_id": null,
+            "observed_result": "Norway 1-2 England"
+          }
+        ]
+      },
       "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-QF-04",
@@ -66505,21 +67666,36 @@
       "match_number": 100,
       "kickoff_at": "2026-07-12T01:00:00Z",
       "venue": "Arrowhead Stadium, Kansas City, Mo.",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "final",
       "home_team": {
-        "team_id": "quarter_final-home-4",
-        "name": "W95"
+        "team_id": "arg",
+        "name": "Argentina",
+        "slot": 1
       },
       "away_team": {
-        "team_id": "quarter_final-away-4",
-        "name": "W96"
+        "team_id": "sui",
+        "name": "Switzerland",
+        "slot": 2
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-12.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\person\\2026\\reports\\daily-predictions\\2026-07-12.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 3,
+        "away": 1,
+        "status": "final",
+        "recorded_at": "2026-07-12T13:59:22.997837+08:00",
+        "source_refs": [
+          {
+            "source_id": "inline_manual",
+            "tier": "T2",
+            "fixture_id": null,
+            "observed_result": "Argentina 3-1 Switzerland"
+          }
+        ]
+      },
       "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-SF-01",
@@ -66529,21 +67705,27 @@
       "match_number": 101,
       "kickoff_at": "2026-07-14T19:00:00Z",
       "venue": "AT&T Stadium, Arlington, Texas",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "semi_final-home-1",
-        "name": "W97"
+        "team_id": "fra",
+        "name": "France",
+        "slot": 1,
+        "source_match_id": "2026-QF-01",
+        "source_reference": "W97"
       },
       "away_team": {
-        "team_id": "semi_final-away-1",
-        "name": "W98"
+        "team_id": "esp",
+        "name": "Spain",
+        "slot": 1,
+        "source_match_id": "2026-QF-02",
+        "source_reference": "W98"
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-14.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-15.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
       "evaluation": null,
-      "prediction_status": "locked_pre_match_prediction"
+      "prediction_status": "locked_pre_match"
     },
     {
       "match_id": "2026-SF-02",
@@ -66553,16 +67735,22 @@
       "match_number": 102,
       "kickoff_at": "2026-07-15T19:00:00Z",
       "venue": "Mercedes-Benz Stadium, Atlanta",
-      "status": "knockout_placeholder_until_teams_known",
+      "status": "fixture_official",
       "home_team": {
-        "team_id": "semi_final-home-2",
-        "name": "W99"
+        "team_id": "eng",
+        "name": "England",
+        "slot": 1,
+        "source_match_id": "2026-QF-03",
+        "source_reference": "W99"
       },
       "away_team": {
-        "team_id": "semi_final-away-2",
-        "name": "W100"
+        "team_id": "arg",
+        "name": "Argentina",
+        "slot": 1,
+        "source_match_id": "2026-QF-04",
+        "source_reference": "W100"
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-15.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-15.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
@@ -66622,6 +67810,10 @@
     "public_ledger_contains_canonical_104_match_ids_only",
     "local_prediction_reports_and_evaluations_are_not_stored_in_public_layer",
     "external_reference_schedules_must_be_reviewed_before_promotion_to_canonical",
+    "public_facts_are_loaded_before_local_prediction_overrides",
+    "legacy_local_match_ledgers_cannot_add_noncanonical_fixture_cards",
+    "public_facts_are_loaded_before_local_prediction_overrides",
+    "legacy_local_match_ledgers_cannot_add_noncanonical_fixture_cards",
     "public_facts_are_loaded_before_local_prediction_overrides",
     "legacy_local_match_ledgers_cannot_add_noncanonical_fixture_cards",
     "public_facts_are_loaded_before_local_prediction_overrides",

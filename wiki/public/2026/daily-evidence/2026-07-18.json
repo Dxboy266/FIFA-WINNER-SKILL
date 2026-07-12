@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-07-18",
+  "generated_at": "2026-07-12T14:48:32Z",
+  "mode": "daily-evidence",
+  "status": "compiled_partial",
+  "matches": [
+    {
+      "match_id": "2026-TP-01",
+      "home_team_id": "third_place-home-1",
+      "away_team_id": "third_place-away-1",
+      "referee": null,
+      "odds": {
+        "status": "unavailable",
+        "source": "odds_unavailable",
+        "reason": "no live market feed for this matchday",
+        "is_mock": false
+      },
+      "sentiment": null
+    }
+  ],
+  "injuries": {
+    "edition": "2026",
+    "date": "2026-07-18",
+    "teams": {},
+    "summary": {
+      "total_teams": 0,
+      "teams_with_injuries": 0,
+      "total_injuries": 0,
+      "total_suspensions": 0
+    }
+  },
+  "suspensions": [],
+  "probable_lineups": [],
+  "late_news": [],
+  "source_refs": [
+    {
+      "type": "compiled",
+      "path": "evidence/recent-form.json"
+    },
+    {
+      "type": "compiled",
+      "path": "evidence/injury-availability.json"
+    },
+    {
+      "type": "compiled",
+      "path": "evidence/rest-travel-features.json"
+    },
+    {
+      "type": "compiled",
+      "path": "evidence/head-to-head.json"
+    },
+    {
+      "type": "compiled",
+      "path": "history/team-wc-history.json"
+    }
+  ],
+  "data_sources": [
+    "match-ledger",
+    "squad-depth",
+    "fifa-rankings",
+    "team-wc-history",
+    "compiled-evidence"
+  ],
+  "note": "Daily evidence scaffold for unstarted fixtures; refresh odds/news when feeds available."
+}
