@@ -1,7 +1,7 @@
 {
   "version": 1,
   "edition": "2026",
-  "generated_at": "2026-07-12T13:59:22.997974+08:00",
+  "generated_at": "2026-07-15T21:22:51.403815+08:00",
   "mode": "worldcup-match-ledger-merged-public-local",
   "summary": {
     "match_count": 104,
@@ -67666,7 +67666,7 @@
       "match_number": 100,
       "kickoff_at": "2026-07-12T01:00:00Z",
       "venue": "Arrowhead Stadium, Kansas City, Mo.",
-      "status": "final",
+      "status": "fixture_official",
       "home_team": {
         "team_id": "arg",
         "name": "Argentina",
@@ -67705,7 +67705,7 @@
       "match_number": 101,
       "kickoff_at": "2026-07-14T19:00:00Z",
       "venue": "AT&T Stadium, Arlington, Texas",
-      "status": "fixture_official",
+      "status": "final",
       "home_team": {
         "team_id": "fra",
         "name": "France",
@@ -67723,9 +67723,49 @@
       "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-15.json",
       "poster_manifest": "",
       "poster_outputs": [],
-      "final_score": null,
+      "final_score": {
+        "home": 0,
+        "away": 2,
+        "status": "final",
+        "recorded_at": "2026-07-15T21:22:51.403709+08:00",
+        "source_refs": [
+          {
+            "source_id": "football-data.org",
+            "tier": "T2",
+            "fixture_id": 537387,
+            "observed_result": "France 0-2 Spain"
+          }
+        ]
+      },
       "evaluation": null,
-      "prediction_status": "locked_pre_match"
+      "prediction_status": "locked_pre_match",
+      "knockout_result": {
+        "regular_time": {
+          "home": 0,
+          "away": 2,
+          "result": "away_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 0,
+          "away": 2,
+          "result": "away_win"
+        }
+      }
     },
     {
       "match_id": "2026-SF-02",
@@ -67750,7 +67790,7 @@
         "source_match_id": "2026-QF-04",
         "source_reference": "W100"
       },
-      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\daily-predictions\\2026-07-15.json",
+      "prediction_report": "D:\\res\\project\\FIFA-WINNER-SKILL\\knowledge-base\\2026\\data\\reports\\daily-predictions\\2026-07-15.json",
       "poster_manifest": "",
       "poster_outputs": [],
       "final_score": null,
@@ -67810,6 +67850,8 @@
     "public_ledger_contains_canonical_104_match_ids_only",
     "local_prediction_reports_and_evaluations_are_not_stored_in_public_layer",
     "external_reference_schedules_must_be_reviewed_before_promotion_to_canonical",
+    "public_facts_are_loaded_before_local_prediction_overrides",
+    "legacy_local_match_ledgers_cannot_add_noncanonical_fixture_cards",
     "public_facts_are_loaded_before_local_prediction_overrides",
     "legacy_local_match_ledgers_cannot_add_noncanonical_fixture_cards",
     "public_facts_are_loaded_before_local_prediction_overrides",
