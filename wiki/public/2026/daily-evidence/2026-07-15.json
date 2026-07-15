@@ -2,49 +2,410 @@
   "version": 1,
   "edition": "2026",
   "date": "2026-07-15",
-  "generated_at": "2026-07-12T14:48:32Z",
-  "mode": "daily-evidence",
-  "status": "compiled_partial",
+  "generated_at": "2026-07-15T14:45:26Z",
+  "mode": "espn_footballdata_oddsapi_fill",
+  "status": "compiled_live_fill",
   "matches": [
     {
-      "match_id": "2026-SF-02",
-      "home_team_id": "eng",
-      "away_team_id": "arg",
-      "referee": null,
-      "odds": {
-        "status": "unavailable",
-        "source": "odds_unavailable",
-        "reason": "no live market feed for this matchday",
-        "is_mock": false
+      "match_id": "2026-SF-01",
+      "referee": {
+        "name": "Iván Arcides Barton Cisneros",
+        "source": "espn_summary",
+        "role": "referee"
       },
-      "sentiment": null
+      "odds": {
+        "home_win": 2.6,
+        "draw": 2.9,
+        "away_win": 3.1,
+        "source": "DraftKings",
+        "is_mock": false,
+        "status": "available",
+        "raw_american": {
+          "home": 160,
+          "draw": 190.0,
+          "away": 210
+        },
+        "over_under": 2.5,
+        "details": "FRA +160"
+      },
+      "sentiment": null,
+      "home_team_id": "fra",
+      "away_team_id": "esp"
     }
   ],
   "injuries": {
     "edition": "2026",
     "date": "2026-07-15",
     "teams": {
-      "eng": {
+      "fra": {
         "injuries": [],
         "suspensions": [],
-        "status": "no_reports"
+        "status": "checked_no_named_absences",
+        "checked_at": "2026-07-15T14:45:26Z",
+        "source": "espn_roster_summary",
+        "note": "No named injury list from ESPN summary/roster; absence of reports is not full fitness proof."
       },
-      "arg": {
+      "esp": {
         "injuries": [],
         "suspensions": [],
-        "status": "no_reports"
+        "status": "checked_no_named_absences",
+        "checked_at": "2026-07-15T14:45:26Z",
+        "source": "espn_roster_summary",
+        "note": "No named injury list from ESPN summary/roster; absence of reports is not full fitness proof."
       }
     },
     "summary": {
       "total_teams": 2,
       "teams_with_injuries": 0,
       "total_injuries": 0,
-      "total_suspensions": 0
-    }
+      "total_suspensions": 0,
+      "status": "checked_empty"
+    },
+    "checked_at": "2026-07-15T14:45:26Z"
   },
   "suspensions": [],
-  "probable_lineups": [],
-  "late_news": [],
+  "probable_lineups": [
+    {
+      "match_id": "2026-SF-01",
+      "team_id": "fra",
+      "team_name": "France",
+      "formation": "4-2-3-1",
+      "starters": [
+        "16 Mike Maignan (G)",
+        "17 William Saliba (CD-L)",
+        "4 Dayot Upamecano (CD-R)",
+        "3 Lucas Digne (LB)",
+        "5 Jules Koundé (RB)",
+        "11 Michael Olise (AM)",
+        "14 Adrien Rabiot (LM)",
+        "8 Aurélien Tchouaméni (RM)",
+        "10 Kylian Mbappé (F)",
+        "12 Bradley Barcola (AM-L)",
+        "7 Ousmane Dembélé (AM-R)"
+      ],
+      "starter_details": [
+        {
+          "player_name": "Mike Maignan",
+          "jersey": "16",
+          "position": "G",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "William Saliba",
+          "jersey": "17",
+          "position": "CD-L",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Dayot Upamecano",
+          "jersey": "4",
+          "position": "CD-R",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Lucas Digne",
+          "jersey": "3",
+          "position": "LB",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Jules Koundé",
+          "jersey": "5",
+          "position": "RB",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Michael Olise",
+          "jersey": "11",
+          "position": "AM",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Adrien Rabiot",
+          "jersey": "14",
+          "position": "LM",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Aurélien Tchouaméni",
+          "jersey": "8",
+          "position": "RM",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Kylian Mbappé",
+          "jersey": "10",
+          "position": "F",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Bradley Barcola",
+          "jersey": "12",
+          "position": "AM-L",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Ousmane Dembélé",
+          "jersey": "7",
+          "position": "AM-R",
+          "starter": true,
+          "active": true
+        }
+      ],
+      "bench_count": 15,
+      "source": "espn_summary",
+      "status": "confirmed"
+    },
+    {
+      "match_id": "2026-SF-01",
+      "team_id": "esp",
+      "team_name": "Spain",
+      "formation": "4-2-3-1",
+      "starters": [
+        "23 Unai Simón (G)",
+        "14 Aymeric Laporte (CD-L)",
+        "22 Pau Cubarsí (CD-R)",
+        "24 Marc Cucurella (LB)",
+        "12 Pedro Porro (RB)",
+        "10 Dani Olmo (AM)",
+        "8 Fabián Ruiz (LM)",
+        "16 Rodri (RM)",
+        "21 Mikel Oyarzabal (F)",
+        "15 Álex Baena (AM-L)",
+        "19 Lamine Yamal (AM-R)"
+      ],
+      "starter_details": [
+        {
+          "player_name": "Unai Simón",
+          "jersey": "23",
+          "position": "G",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Aymeric Laporte",
+          "jersey": "14",
+          "position": "CD-L",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Pau Cubarsí",
+          "jersey": "22",
+          "position": "CD-R",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Marc Cucurella",
+          "jersey": "24",
+          "position": "LB",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Pedro Porro",
+          "jersey": "12",
+          "position": "RB",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Dani Olmo",
+          "jersey": "10",
+          "position": "AM",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Fabián Ruiz",
+          "jersey": "8",
+          "position": "LM",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Rodri",
+          "jersey": "16",
+          "position": "RM",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Mikel Oyarzabal",
+          "jersey": "21",
+          "position": "F",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Álex Baena",
+          "jersey": "15",
+          "position": "AM-L",
+          "starter": true,
+          "active": true
+        },
+        {
+          "player_name": "Lamine Yamal",
+          "jersey": "19",
+          "position": "AM-R",
+          "starter": true,
+          "active": true
+        }
+      ],
+      "bench_count": 15,
+      "source": "espn_summary",
+      "status": "confirmed"
+    }
+  ],
+  "late_news": [
+    {
+      "headline": "France move from Deschamps to Zidane wondering wha...",
+      "detail": "France's Didier Deschamps era ended with a shock World Cup semifinal defeat to Spain. Is Zinedine Zidane better placed to get more out of this clearly talented group?",
+      "sentiment": "negative",
+      "team_code": "fra",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963585+08:00"
+    },
+    {
+      "headline": "France move from Deschamps to Zidane wondering wha...",
+      "detail": "France's Didier Deschamps era ended with a shock World Cup semifinal defeat to Spain. Is Zinedine Zidane better placed to get more out of this clearly talented group?",
+      "sentiment": "negative",
+      "team_code": "esp",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963599+08:00"
+    },
+    {
+      "headline": "Mbappé critical of tactics in loss by 'sloppy' Fra...",
+      "detail": "Kylian Mbappé seemed to question Didier Deschamps' approach and tactics after France's 2-0 defeat to Spain in the FIFA World Cup semifinal Tuesday.",
+      "sentiment": "negative",
+      "team_code": "fra",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963603+08:00"
+    },
+    {
+      "headline": "Mbappé critical of tactics in loss by 'sloppy' Fra...",
+      "detail": "Kylian Mbappé seemed to question Didier Deschamps' approach and tactics after France's 2-0 defeat to Spain in the FIFA World Cup semifinal Tuesday.",
+      "sentiment": "negative",
+      "team_code": "esp",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963605+08:00"
+    },
+    {
+      "headline": "Spain 'feeling unbeatable' heading into WC final",
+      "detail": "Luis de la Fuente said Spain are \"feeling unbeatable\" after reaching the World Cup final with a 2-0 win over France.",
+      "sentiment": "positive",
+      "team_code": "fra",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963607+08:00"
+    },
+    {
+      "headline": "Spain 'feeling unbeatable' heading into WC final",
+      "detail": "Luis de la Fuente said Spain are \"feeling unbeatable\" after reaching the World Cup final with a 2-0 win over France.",
+      "sentiment": "positive",
+      "team_code": "esp",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963608+08:00"
+    },
+    {
+      "headline": "World Cup favorites France unravel as Spain book s...",
+      "detail": "Spain have sealed their place in the 2026 World Cup final, but why did France collapse so easily?",
+      "sentiment": "neutral",
+      "team_code": "fra",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963610+08:00"
+    },
+    {
+      "headline": "World Cup favorites France unravel as Spain book s...",
+      "detail": "Spain have sealed their place in the 2026 World Cup final, but why did France collapse so easily?",
+      "sentiment": "neutral",
+      "team_code": "esp",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963612+08:00"
+    },
+    {
+      "headline": "France-Spain player ratings: Porro, Rodri earn hig...",
+      "detail": "Spain received strong performances up and down the lineup as they beat France to make the World Cup final.",
+      "sentiment": "neutral",
+      "team_code": "fra",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963613+08:00"
+    },
+    {
+      "headline": "France-Spain player ratings: Porro, Rodri earn hig...",
+      "detail": "Spain received strong performances up and down the lineup as they beat France to make the World Cup final.",
+      "sentiment": "neutral",
+      "team_code": "esp",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963615+08:00"
+    },
+    {
+      "headline": "Odds to win the World Cup: Spain new World Cup fav...",
+      "detail": "Updated odds for the remaining teams to advance to the final and to win the 2026 World Cup.",
+      "sentiment": "positive",
+      "team_code": "esp",
+      "source": "espn_rss",
+      "recorded_at": "2026-07-15T22:24:45.963616+08:00"
+    },
+    {
+      "headline": "Should England focus on Messi or Argentina's midfield?",
+      "description": "Should England focus on Messi or Argentina's midfield?",
+      "url": "https://www.espn.com/video/clip/_/id/49366431/should-england-focus-messi-argentina-midfield",
+      "source": "espn_summary",
+      "match_id": "2026-SF-01",
+      "captured_at": "2026-07-15T14:45:26Z"
+    },
+    {
+      "headline": "World Cup: Grades for every eliminated team as each exits the tournament",
+      "description": "When the World Cup ends, 47 teams will have been eliminated, and we're grading every one on how its run compared with expectations.",
+      "url": "https://www.espn.com/soccer/story/_/id/49178425/world-cup-grades-every-eliminated-team-rating-exit-tournament",
+      "source": "espn_summary",
+      "match_id": "2026-SF-01",
+      "captured_at": "2026-07-15T14:45:26Z"
+    },
+    {
+      "headline": "Spain's Lamine Yamal issues World Cup final warning: 'New York we're coming for you'",
+      "description": "Lamine Yamal is looking forward to take New York by storm after helping Spain reach the World Cup final with a 2-0 win against France.",
+      "url": "https://www.espn.com/soccer/story/_/id/49365585/lamine-yamal-sends-world-cup-final-warning-new-york-coming-you",
+      "source": "espn_summary",
+      "match_id": "2026-SF-01",
+      "captured_at": "2026-07-15T14:45:26Z"
+    },
+    {
+      "headline": "Argentina vice president before World Cup semifinal: England are 'invaders'",
+      "description": "England have been described as \"invaders\" and \"usurping pirates\" by Argentina's vice president ahead of the teams' World Cup semifinal clash.",
+      "url": "https://www.espn.com/soccer/story/_/id/49365557/argentina-vice-president-world-cup-semifinal-england-invaders",
+      "source": "espn_summary",
+      "match_id": "2026-SF-01",
+      "captured_at": "2026-07-15T14:45:26Z"
+    },
+    {
+      "headline": "2026 FIFA World Cup match schedule: Fixtures, results, features",
+      "description": "Check out all the fixtures, features and results for the 2026 FIFA World Cup in the United States, Mexico and Canada.",
+      "url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket",
+      "source": "espn_summary",
+      "match_id": "2026-SF-01",
+      "captured_at": "2026-07-15T14:45:26Z"
+    },
+    {
+      "headline": "Why are there hydration breaks at the 2026 World Cup, and why has FIFA been criticised?",
+      "description": "All 104 matches at the 2026 World Cup are stopping for two hydration breaks. Why have they been stipulated by FIFA, and why have they been criticised?",
+      "url": "https://www.espn.com/soccer/story/_/id/48945011/why-there-drinks-breaks-2026-world-cup-fifa-criticised",
+      "source": "espn_summary",
+      "match_id": "2026-SF-01",
+      "captured_at": "2026-07-15T14:45:26Z"
+    }
+  ],
   "source_refs": [
     {
       "type": "compiled",
@@ -65,6 +426,35 @@
     {
       "type": "compiled",
       "path": "history/team-wc-history.json"
+    },
+    {
+      "source": "the_odds_api",
+      "url": "https://api.the-odds-api.com",
+      "recorded_at": "2026-07-15T22:24:36.634238+08:00"
+    },
+    {
+      "source": "sporttery_fixed_odds",
+      "name": "中国体育彩票竞彩网固定奖金",
+      "url": "https://webapi.sporttery.cn/gateway/uniform/football/getMatchListV1.qry?clientCode=3001",
+      "recorded_at": "2026-07-15T22:24:38.624524+08:00",
+      "status": "ok",
+      "note": "Fixed bonus odds snapshot for entertainment analysis; not betting advice."
+    },
+    {
+      "source": "espn_rss_feed",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "recorded_at": "2026-07-15T22:24:45.963620+08:00"
+    },
+    {
+      "source_id": "espn_summary",
+      "event_id": 760514,
+      "match_id": "2026-SF-01",
+      "captured_at": "2026-07-15T14:45:26Z",
+      "fields": [
+        "referee",
+        "odds",
+        "lineups"
+      ]
     }
   ],
   "data_sources": [
@@ -72,7 +462,10 @@
     "squad-depth",
     "fifa-rankings",
     "team-wc-history",
-    "compiled-evidence"
+    "compiled-evidence",
+    "espn_summary",
+    "football-data.org",
+    "the-odds-api"
   ],
-  "note": "Daily evidence scaffold for unstarted fixtures; refresh odds/news when feeds available."
+  "note": "Live fill from ESPN summary + Odds API/Football-Data. Injuries checked_empty (no named absences). Entertainment use only."
 }

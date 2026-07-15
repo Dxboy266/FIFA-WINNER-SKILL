@@ -315,13 +315,34 @@
         }
       }
     },
-    "referee_analysis": null,
-    "market_odds": null,
-    "market_odds_status": {
-      "status": "none",
-      "source": "odds_unavailable",
+    "referee_analysis": {
+      "referee": {
+        "name": "Iván Arcides Barton Cisneros",
+        "source": "espn_summary",
+        "role": "referee"
+      },
+      "status": "available"
+    },
+    "market_odds": {
+      "home_win": 2.6,
+      "draw": 2.9,
+      "away_win": 3.1,
+      "source": "DraftKings",
       "is_mock": false,
-      "reason": "odds_unavailable"
+      "status": "available",
+      "raw_american": {
+        "home": 160,
+        "draw": 190.0,
+        "away": 210
+      },
+      "over_under": 2.5,
+      "details": "FRA +160"
+    },
+    "market_odds_status": {
+      "status": "available",
+      "source": "DraftKings",
+      "is_mock": false,
+      "note": "filled_post_match_for_audit"
     },
     "dual_track": null,
     "analysis_layers": [
@@ -585,7 +606,212 @@
     "prediction_date": "2026-07-14",
     "run_type": "experiment",
     "run_id": "scoring-model::2026-07-14::2026-07-12T12:00:00+00:00",
-    "experiment_id": "2026-SF-01::2026-07-12T12:00:00+00:00"
+    "experiment_id": "2026-SF-01::2026-07-12T12:00:00+00:00",
+    "probable_lineups_snapshot": [
+      {
+        "match_id": "2026-SF-01",
+        "team_id": "fra",
+        "team_name": "France",
+        "formation": "4-2-3-1",
+        "starters": [
+          "16 Mike Maignan (G)",
+          "17 William Saliba (CD-L)",
+          "4 Dayot Upamecano (CD-R)",
+          "3 Lucas Digne (LB)",
+          "5 Jules Koundé (RB)",
+          "11 Michael Olise (AM)",
+          "14 Adrien Rabiot (LM)",
+          "8 Aurélien Tchouaméni (RM)",
+          "10 Kylian Mbappé (F)",
+          "12 Bradley Barcola (AM-L)",
+          "7 Ousmane Dembélé (AM-R)"
+        ],
+        "starter_details": [
+          {
+            "player_name": "Mike Maignan",
+            "jersey": "16",
+            "position": "G",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "William Saliba",
+            "jersey": "17",
+            "position": "CD-L",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Dayot Upamecano",
+            "jersey": "4",
+            "position": "CD-R",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Lucas Digne",
+            "jersey": "3",
+            "position": "LB",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Jules Koundé",
+            "jersey": "5",
+            "position": "RB",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Michael Olise",
+            "jersey": "11",
+            "position": "AM",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Adrien Rabiot",
+            "jersey": "14",
+            "position": "LM",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Aurélien Tchouaméni",
+            "jersey": "8",
+            "position": "RM",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Kylian Mbappé",
+            "jersey": "10",
+            "position": "F",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Bradley Barcola",
+            "jersey": "12",
+            "position": "AM-L",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Ousmane Dembélé",
+            "jersey": "7",
+            "position": "AM-R",
+            "starter": true,
+            "active": true
+          }
+        ],
+        "bench_count": 15,
+        "source": "espn_summary",
+        "status": "confirmed"
+      },
+      {
+        "match_id": "2026-SF-01",
+        "team_id": "esp",
+        "team_name": "Spain",
+        "formation": "4-2-3-1",
+        "starters": [
+          "23 Unai Simón (G)",
+          "14 Aymeric Laporte (CD-L)",
+          "22 Pau Cubarsí (CD-R)",
+          "24 Marc Cucurella (LB)",
+          "12 Pedro Porro (RB)",
+          "10 Dani Olmo (AM)",
+          "8 Fabián Ruiz (LM)",
+          "16 Rodri (RM)",
+          "21 Mikel Oyarzabal (F)",
+          "15 Álex Baena (AM-L)",
+          "19 Lamine Yamal (AM-R)"
+        ],
+        "starter_details": [
+          {
+            "player_name": "Unai Simón",
+            "jersey": "23",
+            "position": "G",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Aymeric Laporte",
+            "jersey": "14",
+            "position": "CD-L",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Pau Cubarsí",
+            "jersey": "22",
+            "position": "CD-R",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Marc Cucurella",
+            "jersey": "24",
+            "position": "LB",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Pedro Porro",
+            "jersey": "12",
+            "position": "RB",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Dani Olmo",
+            "jersey": "10",
+            "position": "AM",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Fabián Ruiz",
+            "jersey": "8",
+            "position": "LM",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Rodri",
+            "jersey": "16",
+            "position": "RM",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Mikel Oyarzabal",
+            "jersey": "21",
+            "position": "F",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Álex Baena",
+            "jersey": "15",
+            "position": "AM-L",
+            "starter": true,
+            "active": true
+          },
+          {
+            "player_name": "Lamine Yamal",
+            "jersey": "19",
+            "position": "AM-R",
+            "starter": true,
+            "active": true
+          }
+        ],
+        "bench_count": 15,
+        "source": "espn_summary",
+        "status": "confirmed"
+      }
+    ],
+    "post_match_evidence_fill_at": "2026-07-15"
   },
   "summary": {
     "match_id": "2026-SF-01",
@@ -613,6 +839,26 @@
       "market_untracked",
       "tracks_agree",
       "ko_coinflip_penalty"
-    ]
+    ],
+    "market_odds_post_fill": {
+      "home_win": 2.6,
+      "draw": 2.9,
+      "away_win": 3.1,
+      "source": "DraftKings",
+      "is_mock": false,
+      "status": "available",
+      "raw_american": {
+        "home": 160,
+        "draw": 190.0,
+        "away": 210
+      },
+      "over_under": 2.5,
+      "details": "FRA +160"
+    },
+    "referee_post_fill": {
+      "name": "Iván Arcides Barton Cisneros",
+      "source": "espn_summary",
+      "role": "referee"
+    }
   }
 }

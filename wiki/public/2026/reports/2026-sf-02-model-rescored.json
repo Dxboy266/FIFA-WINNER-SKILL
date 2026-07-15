@@ -18,8 +18,8 @@
       "points": 1874.81
     },
     "data_score": {
-      "home": 64.1,
-      "away": 64.8,
+      "home": 63.1,
+      "away": 63.8,
       "components": {
         "ranking_strength": {
           "home": 89.42,
@@ -116,21 +116,21 @@
       "has_physical_conflict": false,
       "calculation_timezone": "America/New_York",
       "local_kickoff_at": "2026-07-15T15:00:00-04:00",
-      "hexagram_number": 17,
-      "hexagram_name": "随",
-      "hexagram": "随",
-      "hexagram_interpretation": "泽中有雷，随",
-      "hexagram_home_modifier": 3.0,
-      "hexagram_away_modifier": 0.0,
+      "hexagram_number": 34,
+      "hexagram_name": "大壮",
+      "hexagram": "大壮",
+      "hexagram_interpretation": "雷在天上，大壮",
+      "hexagram_home_modifier": -0.3,
+      "hexagram_away_modifier": -3.0,
       "weight": 0.18,
       "data_weight": 0.82,
-      "combined_home_fortune": "大吉",
-      "combined_away_fortune": "平",
+      "combined_home_fortune": "小凶",
+      "combined_away_fortune": "大凶",
       "hex_pattern": "low-event"
     },
     "prediction": {
-      "home_final": 64.8,
-      "away_final": 64.8,
+      "home_final": 63.8,
+      "away_final": 63.8,
       "result": "away_win",
       "predicted_outcome": "away_win",
       "score": {
@@ -140,20 +140,20 @@
       "is_opener": false,
       "total_goals": 2,
       "goals_line_2_5": "under",
-      "confidence": "medium",
-      "confidence_label": "中等信心",
-      "result_confidence": "medium",
-      "score_confidence": "medium",
-      "total_goals_confidence": "medium",
-      "confidence_note": "认真评分: score=53.0, edge=coinflip, top_mode=30%, eq=trusted → result=medium, score=medium",
-      "confidence_score": 53.0,
+      "confidence": "low",
+      "confidence_label": "低信心",
+      "result_confidence": "low",
+      "score_confidence": "low",
+      "total_goals_confidence": "low",
+      "confidence_note": "认真评分: score=43.0, edge=coinflip, top_mode=30%, eq=trusted → result=low, score=low",
+      "confidence_score": 43.0,
       "confidence_factors": [
         "data_ok",
         "edge_coinflip",
         "evidence_trusted",
         "partial_gaps:2",
         "mode_flat",
-        "market_untracked",
+        "market_divergent",
         "tracks_agree",
         "ko_coinflip_penalty"
       ],
@@ -163,22 +163,20 @@
       "three_track_votes": {
         "votes": {
           "fundamentals": "away_win",
-          "market": null,
+          "market": "home_win",
           "information": "draw",
           "mystic": "home_win"
         },
         "counts": {
+          "away_win": 1,
           "draw": 1,
-          "home_win": 1,
-          "away_win": 1
+          "home_win": 2
         },
-        "consensus": "draw",
+        "consensus": "home_win",
         "leaders": [
-          "draw",
-          "home_win",
-          "away_win"
+          "home_win"
         ],
-        "tie_on_top": true
+        "tie_on_top": false
       },
       "scoreline_distribution": [
         {
@@ -186,7 +184,7 @@
             "home": 0,
             "away": 2
           },
-          "probability": 0.302,
+          "probability": 0.303,
           "reason": "Primary football script branch settles on 0-2."
         },
         {
@@ -194,7 +192,7 @@
             "home": 0,
             "away": 1
           },
-          "probability": 0.245,
+          "probability": 0.247,
           "reason": "Clean-sheet branch keeps 0-1 alive with away shutout chance 21%."
         },
         {
@@ -202,7 +200,7 @@
             "home": 1,
             "away": 2
           },
-          "probability": 0.23,
+          "probability": 0.229,
           "reason": "Low-event branch: control, patience, and few clear chances keep the score compact."
         },
         {
@@ -210,7 +208,7 @@
             "home": 1,
             "away": 3
           },
-          "probability": 0.223,
+          "probability": 0.221,
           "reason": "Low-event branch: control, patience, and few clear chances keep the score compact."
         }
       ],
@@ -219,8 +217,8 @@
         "away": 0.21
       },
       "expected_goals_proxy": {
-        "home": 1.78,
-        "away": 2.31
+        "home": 1.77,
+        "away": 2.3
       },
       "venue_adaptation_context": {
         "status": "estimated_static_context",
@@ -318,30 +316,52 @@
       }
     },
     "referee_analysis": null,
-    "market_odds": null,
-    "market_odds_status": {
-      "status": "none",
-      "source": "odds_unavailable",
-      "is_mock": false,
-      "reason": "odds_unavailable"
+    "market_odds": {
+      "odds": {
+        "home_win": 2.74,
+        "draw": 2.95,
+        "away_win": 3.09,
+        "source": "Pinnacle",
+        "is_mock": false,
+        "status": "available",
+        "raw_american": null,
+        "over_under": null,
+        "details": null
+      },
+      "implied_probabilities": {
+        "home": 0.355,
+        "draw": 0.33,
+        "away": 0.315
+      },
+      "market_outcome": "home_win"
     },
-    "dual_track": null,
+    "market_odds_status": {
+      "status": "trusted_market",
+      "source": "Pinnacle",
+      "is_mock": false,
+      "reason": "market_consensus_available"
+    },
+    "dual_track": {
+      "alignment": "divergent",
+      "divergence_analysis": "【双轨背离】基本面与市场方向不一致，本场应降档处理。"
+    },
     "analysis_layers": [
       {
         "layer_id": "evidence_integrity",
         "title": "证据完整度层",
         "verdict": "thin_evidence",
-        "confidence": "medium",
+        "confidence": "low",
         "summary": "Evidence has gaps; the model keeps uncertainty visible instead of overclaiming.",
         "key_drivers": [
-          "matchday evidence file available"
+          "matchday evidence file available",
+          "market odds available",
+          "15 late-news items scanned"
         ],
         "counter_signals": [],
         "missing_context": [
           "historical_worldcup_results_partial",
           "venue_rest_travel_partial",
-          "referee_missing",
-          "odds_missing"
+          "referee_missing"
         ],
         "watch_triggers": [
           "refresh daily evidence before kickoff",
@@ -352,7 +372,7 @@
         "layer_id": "fundamentals",
         "title": "基本面强弱层",
         "verdict": "balanced",
-        "confidence": "medium",
+        "confidence": "low",
         "summary": "Fundamentals plus capped overlay lean Argentina 倾向不败或取胜 with final delta 0.0.",
         "key_drivers": [
           "Historical proxy: Argentina edge +17.9",
@@ -373,7 +393,7 @@
         "layer_id": "matchup",
         "title": "阵容对位层",
         "verdict": "balanced",
-        "confidence": "medium",
+        "confidence": "low",
         "summary": "This layer turns roster shape into concrete matchup pressure rather than only a total score.",
         "key_drivers": [
           "England shape: GK3/DF9/MF7/FW7; avg age 27.1, avg height 184.2cm",
@@ -392,7 +412,7 @@
         "layer_id": "live_context",
         "title": "临场变量层",
         "verdict": "balanced",
-        "confidence": "medium",
+        "confidence": "low",
         "summary": "Late news, rest, travel and referee profile are handled as separate pressure rather than hidden inside one score.",
         "key_drivers": [
           "Rest/travel delta: 0.0",
@@ -433,16 +453,15 @@
       {
         "layer_id": "market_track",
         "title": "市场背离层",
-        "verdict": "untracked",
-        "confidence": "medium",
-        "summary": "Market track is unavailable, so the dual-track read cannot confirm or challenge fundamentals.",
+        "verdict": "divergent",
+        "confidence": "low",
+        "summary": "【双轨背离】基本面与市场方向不一致，本场应降档处理。",
         "key_drivers": [
-          "No market odds attached to this match evidence."
+          "Market favorite: England",
+          "Implied probabilities home/draw/away: 0.355/0.33/0.315"
         ],
         "counter_signals": [],
-        "missing_context": [
-          "odds_missing"
-        ],
+        "missing_context": [],
         "watch_triggers": [
           "odds refresh",
           "large implied-probability movement",
@@ -453,7 +472,7 @@
         "layer_id": "scenario_tree",
         "title": "比赛剧本层",
         "verdict": "away_win",
-        "confidence": "medium",
+        "confidence": "low",
         "summary": "Base case: Argentina 倾向不败或取胜, reference score 0-2. The model edge is 0.0 after fundamentals and Tianji overlay.",
         "key_drivers": [
           "Base case: Argentina 倾向不败或取胜, reference score 0-2. The model edge is 0.0 after fundamentals and Tianji overlay.",
@@ -465,17 +484,18 @@
         "watch_triggers": [
           "confirmed starting XI differs from roster-depth baseline",
           "late injury or suspension changes the strongest positional unit",
-          "market probability moves against the model by more than 8 percentage points"
+          "market probability moves against the model by more than 8 percentage points",
+          "market and fundamentals remain divergent close to kickoff"
         ]
       },
       {
         "layer_id": "score_distribution",
         "title": "天纪比分分布",
-        "verdict": "medium",
-        "confidence": "medium",
-        "summary": "比分由天纪卦象推演，非数学概率。各分支代表不同运势走向。天命主线: 0-2 (30%), 0-1 (24%), 1-2 (23%)。",
+        "verdict": "low",
+        "confidence": "low",
+        "summary": "比分由天纪卦象推演，非数学概率。各分支代表不同运势走向。天命主线: 0-2 (30%), 0-1 (25%), 1-2 (23%)。",
         "key_drivers": [
-          "天纪进球气场: 1.78-2.31",
+          "天纪进球气场: 1.77-2.3",
           "零封概率 主/客: 16%/21%"
         ],
         "counter_signals": [
@@ -495,11 +515,12 @@
       {
         "layer_id": "adversarial_review",
         "title": "反方审稿层",
-        "verdict": "medium",
-        "confidence": "medium",
+        "verdict": "high",
+        "confidence": "low",
         "summary": "This layer records why the pick could be wrong before publishing the final entertainment call.",
         "key_drivers": [
-          "Final model edge 0.0 points toward Argentina 倾向不败或取胜."
+          "Final model edge 0.0 points toward Argentina 倾向不败或取胜.",
+          "Fundamentals and market disagree, so the pick is kept with explicit upset risk."
         ],
         "counter_signals": [
           "new injury/lineup evidence changes the strongest positional edge",
@@ -528,13 +549,15 @@
       "watch_triggers": [
         "confirmed starting XI differs from roster-depth baseline",
         "late injury or suspension changes the strongest positional unit",
-        "market probability moves against the model by more than 8 percentage points"
+        "market probability moves against the model by more than 8 percentage points",
+        "market and fundamentals remain divergent close to kickoff"
       ]
     },
     "decision_audit": {
-      "risk_level": "medium",
+      "risk_level": "high",
       "why_this_pick": [
-        "Final model edge 0.0 points toward Argentina 倾向不败或取胜."
+        "Final model edge 0.0 points toward Argentina 倾向不败或取胜.",
+        "Fundamentals and market disagree, so the pick is kept with explicit upset risk."
       ],
       "what_would_change_the_pick": [
         "new injury/lineup evidence changes the strongest positional edge",
@@ -550,20 +573,21 @@
     },
     "analysis_summary": {
       "layer_count": 9,
-      "risk_level": "medium",
+      "risk_level": "high",
       "primary_edge": "balanced",
       "edge_tier": "coinflip",
       "game_script": "low-event",
       "evidence_quality": "trusted",
-      "three_track_consensus": "draw",
+      "three_track_consensus": "home_win",
       "storage_note": "JSON report remains the audit artifact; SQLite is an optional query/index layer."
     },
     "play_card": {
-      "share_title": "England vs Argentina | 娱乐预测 0-2",
+      "share_title": "章鱼哥神算 | England vs Argentina | 娱乐预测 0-2",
       "match_hook": "Argentina 倾向胜出，总进球参考 2 球。淘汰赛阶段，Mercedes-Benz Stadium, Atlanta。",
       "poster_caption": "AI预测比分 0-2，Argentina主线占优，胜负趋势指向客队。",
       "watch_points": [
         "多层分析主线：Final model edge 0.0 points toward Argentina 倾向不败或取胜.",
+        "【双轨背离】基本面与市场方向不一致，本场应降档处理。",
         "双方实力接近，临场发挥将决定走向",
         "中场控制权和定位球效率是关键"
       ],
@@ -571,8 +595,8 @@
         "历史战绩数据不足",
         "休息和旅行因素未充分计算"
       ],
-      "poster_angle": "England vs Argentina, Mercedes-Benz Stadium, Atlanta, vibrant crowd atmosphere, 随 aesthetic overlay, predicted score 0-2, total goals 2",
-      "confidence_meter": "数据 82% | 玄学 18% | 信心: 中等信心",
+      "poster_angle": "England vs Argentina, Mercedes-Benz Stadium, Atlanta, vibrant crowd atmosphere, 大壮 aesthetic overlay, predicted score 0-2, total goals 2",
+      "confidence_meter": "数据 82% | 玄学 18% | 信心: 低信心",
       "gameplay_tags": [
         "胜平负",
         "比分",
@@ -582,12 +606,12 @@
     },
     "disclaimer": "娱乐预测，非投注建议；不得作为投注、购彩或资金决策依据。",
     "lessons_applied": null,
-    "report_json_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\backtests\\2026-07-15-2026-SF-02-prediction-report.json",
-    "generated_at": "2026-07-12T12:00:00+00:00",
-    "prediction_date": "2026-07-15",
+    "report_json_path": "D:\\res\\project\\FIFA-WINNER-SKILL\\wiki\\public\\2026\\reports\\backtests\\2026-07-16-2026-SF-02-prediction-report.json",
+    "generated_at": "2026-07-15T23:10:12.064587+08:00",
+    "prediction_date": "2026-07-16",
     "run_type": "experiment",
-    "run_id": "scoring-model::2026-07-15::2026-07-12T12:00:00+00:00",
-    "experiment_id": "2026-SF-02::2026-07-12T12:00:00+00:00"
+    "run_id": "scoring-model::2026-07-16::2026-07-15T23:10:12.064587+08:00",
+    "experiment_id": "2026-SF-02::2026-07-15T23:10:12.064587+08:00"
   },
   "summary": {
     "match_id": "2026-SF-02",
@@ -596,10 +620,10 @@
       "home": 0,
       "away": 2
     },
-    "home_final": 64.8,
-    "away_final": 64.8,
-    "confidence": "medium",
-    "confidence_score": 53.0,
+    "home_final": 63.8,
+    "away_final": 63.8,
+    "confidence": "low",
+    "confidence_score": 43.0,
     "edge_tier": "coinflip",
     "evidence_quality": "trusted",
     "evidence_gaps": [
@@ -612,9 +636,53 @@
       "evidence_trusted",
       "partial_gaps:2",
       "mode_flat",
-      "market_untracked",
+      "market_divergent",
       "tracks_agree",
       "ko_coinflip_penalty"
-    ]
+    ],
+    "market_odds": {
+      "odds": {
+        "home_win": 2.74,
+        "draw": 2.95,
+        "away_win": 3.09,
+        "source": "Pinnacle",
+        "is_mock": false,
+        "status": "available",
+        "raw_american": null,
+        "over_under": null,
+        "details": null
+      },
+      "implied_probabilities": {
+        "home": 0.355,
+        "draw": 0.33,
+        "away": 0.315
+      },
+      "market_outcome": "home_win"
+    },
+    "market_odds_status": {
+      "status": "trusted_market",
+      "source": "Pinnacle",
+      "is_mock": false,
+      "reason": "market_consensus_available"
+    },
+    "three_track_votes": {
+      "votes": {
+        "fundamentals": "away_win",
+        "market": "home_win",
+        "information": "draw",
+        "mystic": "home_win"
+      },
+      "counts": {
+        "away_win": 1,
+        "draw": 1,
+        "home_win": 2
+      },
+      "consensus": "home_win",
+      "leaders": [
+        "home_win"
+      ],
+      "tie_on_top": false
+    },
+    "rescored_with_live_fill_at": "2026-07-15T15:10:12.493392+00:00"
   }
 }

@@ -91027,12 +91027,29 @@
       ],
       "primary_error": "",
       "has_odds": false,
-      "market_odds": null,
+      "market_odds": {
+        "odds": {
+          "home_win": 2.6,
+          "draw": 2.9,
+          "away_win": 3.1,
+          "source": "DraftKings",
+          "is_mock": false,
+          "status": "available",
+          "raw_american": {
+            "home": 160,
+            "draw": 190.0,
+            "away": 210
+          },
+          "over_under": 2.5,
+          "details": "FRA +160"
+        },
+        "note": "filled_post_match_for_audit"
+      },
       "market_odds_status": {
-        "status": "unavailable",
-        "source": "odds_unavailable",
+        "status": "available",
+        "source": "DraftKings",
         "is_mock": false,
-        "reason": "odds_unavailable"
+        "timing": "post_match_fill"
       },
       "market_odds_source": "odds_unavailable",
       "market_odds_is_mock": false,
@@ -91913,6 +91930,23 @@
         "hit_class": "miss",
         "label": "预测偏差",
         "primary_error": ""
+      },
+      "referee": {
+        "name": "Iván Arcides Barton Cisneros",
+        "source": "espn_summary",
+        "role": "referee"
+      },
+      "live_evidence_fill": {
+        "odds": true,
+        "referee": true,
+        "lineups": true,
+        "injuries": "checked_empty",
+        "timing": "post_match_for_audit",
+        "sources": [
+          "DraftKings/ESPN",
+          "espn_summary",
+          "football-data.org"
+        ]
       }
     },
     {
@@ -91933,14 +91967,14 @@
       "prediction_status": "locked_pre_match_prediction",
       "prediction_origin": "person_local",
       "prediction_source": "person_local",
-      "prediction_source_path": "wiki/person/2026/reports/daily-predictions/2026-07-15.json",
+      "prediction_source_path": "wiki/public/2026/reports/2026-sf-02-model-rescored.json",
       "data_origin": "person_local",
       "predicted_result": "away_win",
       "predicted_result_label": "客胜",
       "score_text": "0-2",
       "total_goals": 2,
-      "confidence": "medium",
-      "confidence_label": "MEDIUM",
+      "confidence": "low",
+      "confidence_label": "低信心",
       "expected_goals_proxy": {
         "home": 1.78,
         "away": 2.31
@@ -91955,7 +91989,7 @@
             "home": 0,
             "away": 2
           },
-          "probability": 0.302,
+          "probability": 0.303,
           "reason": "Primary football script branch settles on 0-2."
         },
         {
@@ -91963,7 +91997,7 @@
             "home": 0,
             "away": 1
           },
-          "probability": 0.245,
+          "probability": 0.247,
           "reason": "Clean-sheet branch keeps 0-1 alive with away shutout chance 21%."
         },
         {
@@ -91971,7 +92005,7 @@
             "home": 1,
             "away": 2
           },
-          "probability": 0.23,
+          "probability": 0.229,
           "reason": "Low-event branch: control, patience, and few clear chances keep the score compact."
         },
         {
@@ -91979,12 +92013,12 @@
             "home": 1,
             "away": 3
           },
-          "probability": 0.223,
+          "probability": 0.221,
           "reason": "Low-event branch: control, patience, and few clear chances keep the score compact."
         }
       ],
-      "result_confidence": "medium",
-      "score_confidence": "medium",
+      "result_confidence": "low",
+      "score_confidence": "low",
       "total_goals_confidence": "medium",
       "confidence_note": "认真评分: score=53.0, edge=coinflip, top_mode=30%, eq=trusted → result=medium, score=medium",
       "venue_adaptation_context": {
@@ -92042,11 +92076,12 @@
       },
       "referee_analysis": null,
       "play_card": {
-        "share_title": "England vs Argentina | 娱乐预测 0-2",
+        "share_title": "章鱼哥神算 | England vs Argentina | 娱乐预测 0-2",
         "match_hook": "Argentina 倾向胜出，总进球参考 2 球。淘汰赛阶段，Mercedes-Benz Stadium, Atlanta。",
         "poster_caption": "AI预测比分 0-2，Argentina主线占优，胜负趋势指向客队。",
         "watch_points": [
           "多层分析主线：Final model edge 0.0 points toward Argentina 倾向不败或取胜.",
+          "【双轨背离】基本面与市场方向不一致，本场应降档处理。",
           "双方实力接近，临场发挥将决定走向",
           "中场控制权和定位球效率是关键"
         ],
@@ -92054,8 +92089,8 @@
           "历史战绩数据不足",
           "休息和旅行因素未充分计算"
         ],
-        "poster_angle": "England vs Argentina, Mercedes-Benz Stadium, Atlanta, vibrant crowd atmosphere, 随 aesthetic overlay, predicted score 0-2, total goals 2",
-        "confidence_meter": "数据 82% | 玄学 18% | 信心: 中等信心",
+        "poster_angle": "England vs Argentina, Mercedes-Benz Stadium, Atlanta, vibrant crowd atmosphere, 大壮 aesthetic overlay, predicted score 0-2, total goals 2",
+        "confidence_meter": "数据 82% | 玄学 18% | 信心: 低信心",
         "gameplay_tags": [
           "胜平负",
           "比分",
@@ -92089,12 +92124,30 @@
       ],
       "primary_error": "",
       "has_odds": false,
-      "market_odds": null,
+      "market_odds": {
+        "odds": {
+          "home_win": 2.74,
+          "draw": 2.95,
+          "away_win": 3.09,
+          "source": "Pinnacle",
+          "is_mock": false,
+          "status": "available",
+          "raw_american": null,
+          "over_under": null,
+          "details": null
+        },
+        "implied_probabilities": {
+          "home": 0.355,
+          "draw": 0.33,
+          "away": 0.315
+        },
+        "market_outcome": "home_win"
+      },
       "market_odds_status": {
-        "status": "unavailable",
-        "source": "odds_unavailable",
+        "status": "trusted_market",
+        "source": "Pinnacle",
         "is_mock": false,
-        "reason": "odds_unavailable"
+        "reason": "market_consensus_available"
       },
       "market_odds_source": "odds_unavailable",
       "market_odds_is_mock": false,
@@ -92105,17 +92158,18 @@
           "layer_id": "evidence_integrity",
           "title": "证据完整度层",
           "verdict": "thin_evidence",
-          "confidence": "medium",
+          "confidence": "low",
           "summary": "Evidence has gaps; the model keeps uncertainty visible instead of overclaiming.",
           "key_drivers": [
-            "matchday evidence file available"
+            "matchday evidence file available",
+            "market odds available",
+            "15 late-news items scanned"
           ],
           "counter_signals": [],
           "missing_context": [
             "historical_worldcup_results_partial",
             "venue_rest_travel_partial",
-            "referee_missing",
-            "odds_missing"
+            "referee_missing"
           ],
           "watch_triggers": [
             "refresh daily evidence before kickoff",
@@ -92126,7 +92180,7 @@
           "layer_id": "fundamentals",
           "title": "基本面强弱层",
           "verdict": "balanced",
-          "confidence": "medium",
+          "confidence": "low",
           "summary": "Fundamentals plus capped overlay lean Argentina 倾向不败或取胜 with final delta 0.0.",
           "key_drivers": [
             "Historical proxy: Argentina edge +17.9",
@@ -92147,7 +92201,7 @@
           "layer_id": "matchup",
           "title": "阵容对位层",
           "verdict": "balanced",
-          "confidence": "medium",
+          "confidence": "low",
           "summary": "This layer turns roster shape into concrete matchup pressure rather than only a total score.",
           "key_drivers": [
             "England shape: GK3/DF9/MF7/FW7; avg age 27.1, avg height 184.2cm",
@@ -92166,7 +92220,7 @@
           "layer_id": "live_context",
           "title": "临场变量层",
           "verdict": "balanced",
-          "confidence": "medium",
+          "confidence": "low",
           "summary": "Late news, rest, travel and referee profile are handled as separate pressure rather than hidden inside one score.",
           "key_drivers": [
             "Rest/travel delta: 0.0",
@@ -92207,16 +92261,15 @@
         {
           "layer_id": "market_track",
           "title": "市场背离层",
-          "verdict": "untracked",
-          "confidence": "medium",
-          "summary": "Market track is unavailable, so the dual-track read cannot confirm or challenge fundamentals.",
+          "verdict": "divergent",
+          "confidence": "low",
+          "summary": "【双轨背离】基本面与市场方向不一致，本场应降档处理。",
           "key_drivers": [
-            "No market odds attached to this match evidence."
+            "Market favorite: England",
+            "Implied probabilities home/draw/away: 0.355/0.33/0.315"
           ],
           "counter_signals": [],
-          "missing_context": [
-            "odds_missing"
-          ],
+          "missing_context": [],
           "watch_triggers": [
             "odds refresh",
             "large implied-probability movement",
@@ -92227,7 +92280,7 @@
           "layer_id": "scenario_tree",
           "title": "比赛剧本层",
           "verdict": "away_win",
-          "confidence": "medium",
+          "confidence": "low",
           "summary": "Base case: Argentina 倾向不败或取胜, reference score 0-2. The model edge is 0.0 after fundamentals and Tianji overlay.",
           "key_drivers": [
             "Base case: Argentina 倾向不败或取胜, reference score 0-2. The model edge is 0.0 after fundamentals and Tianji overlay.",
@@ -92239,17 +92292,18 @@
           "watch_triggers": [
             "confirmed starting XI differs from roster-depth baseline",
             "late injury or suspension changes the strongest positional unit",
-            "market probability moves against the model by more than 8 percentage points"
+            "market probability moves against the model by more than 8 percentage points",
+            "market and fundamentals remain divergent close to kickoff"
           ]
         },
         {
           "layer_id": "score_distribution",
           "title": "天纪比分分布",
-          "verdict": "medium",
-          "confidence": "medium",
-          "summary": "比分由天纪卦象推演，非数学概率。各分支代表不同运势走向。天命主线: 0-2 (30%), 0-1 (24%), 1-2 (23%)。",
+          "verdict": "low",
+          "confidence": "low",
+          "summary": "比分由天纪卦象推演，非数学概率。各分支代表不同运势走向。天命主线: 0-2 (30%), 0-1 (25%), 1-2 (23%)。",
           "key_drivers": [
-            "天纪进球气场: 1.78-2.31",
+            "天纪进球气场: 1.77-2.3",
             "零封概率 主/客: 16%/21%"
           ],
           "counter_signals": [
@@ -92269,11 +92323,12 @@
         {
           "layer_id": "adversarial_review",
           "title": "反方审稿层",
-          "verdict": "medium",
-          "confidence": "medium",
+          "verdict": "high",
+          "confidence": "low",
           "summary": "This layer records why the pick could be wrong before publishing the final entertainment call.",
           "key_drivers": [
-            "Final model edge 0.0 points toward Argentina 倾向不败或取胜."
+            "Final model edge 0.0 points toward Argentina 倾向不败或取胜.",
+            "Fundamentals and market disagree, so the pick is kept with explicit upset risk."
           ],
           "counter_signals": [
             "new injury/lineup evidence changes the strongest positional edge",
@@ -92845,7 +92900,7 @@
             "winner_result": "away_advance"
           }
         },
-        "confidence": "medium",
+        "confidence": "low",
         "confidence_label": "MEDIUM",
         "expected_goals_proxy": {
           "home": 1.78,
@@ -92899,7 +92954,8 @@
           "休息和旅行因素未充分计算"
         ],
         "play_title": "England vs Argentina | 娱乐预测 0-2",
-        "confidence_note": "认真评分: score=53.0, edge=coinflip, top_mode=30%, eq=trusted → result=medium, score=medium"
+        "confidence_note": "认真评分: score=53.0, edge=coinflip, top_mode=30%, eq=trusted → result=medium, score=medium",
+        "confidence_score": 43.0
       },
       "actual": {
         "exists": false,
@@ -92922,6 +92978,43 @@
         "hit_class": "pending",
         "label": "待赛果",
         "primary_error": ""
+      },
+      "edge_tier": "coinflip",
+      "predicted_score": {
+        "home": 0,
+        "away": 2
+      },
+      "confidence_score": 43.0,
+      "home_final": 63.8,
+      "away_final": 63.8,
+      "three_track_votes": {
+        "votes": {
+          "fundamentals": "away_win",
+          "market": "home_win",
+          "information": "draw",
+          "mystic": "home_win"
+        },
+        "counts": {
+          "away_win": 1,
+          "draw": 1,
+          "home_win": 2
+        },
+        "consensus": "home_win",
+        "leaders": [
+          "home_win"
+        ],
+        "tie_on_top": false
+      },
+      "live_evidence_fill": {
+        "odds": true,
+        "referee": false,
+        "lineups": false,
+        "injuries": "checked_empty",
+        "sources": [
+          "Pinnacle",
+          "espn_summary",
+          "football-data.org"
+        ]
       }
     },
     {

@@ -1,0 +1,81 @@
+{
+  "event_id": 760515,
+  "match_id": "2026-SF-02",
+  "beijing_date": "2026-07-16",
+  "home_team_id": "eng",
+  "away_team_id": "arg",
+  "referee": null,
+  "odds": {
+    "home_win": 2.77,
+    "draw": 2.95,
+    "away_win": 3.05,
+    "source": "Pinnacle",
+    "is_mock": false,
+    "status": "available"
+  },
+  "probable_lineups": [
+    {
+      "match_id": "2026-SF-02",
+      "team_id": "eng",
+      "team_name": "England",
+      "formation": null,
+      "starters": [],
+      "starter_details": [],
+      "bench_count": 0,
+      "source": "espn_summary",
+      "status": "unavailable"
+    },
+    {
+      "match_id": "2026-SF-02",
+      "team_id": "arg",
+      "team_name": "Argentina",
+      "formation": null,
+      "starters": [],
+      "starter_details": [],
+      "bench_count": 0,
+      "source": "espn_summary",
+      "status": "unavailable"
+    }
+  ],
+  "news": [
+    {
+      "headline": "Should England focus on Messi or Argentina's midfield?",
+      "description": "Should England focus on Messi or Argentina's midfield?",
+      "url": "https://www.espn.com/video/clip/_/id/49366431/should-england-focus-messi-argentina-midfield",
+      "source": "espn_summary"
+    },
+    {
+      "headline": "World Cup: Grades for every eliminated team as each exits the tournament",
+      "description": "When the World Cup ends, 47 teams will have been eliminated, and we're grading every one on how its run compared with expectations.",
+      "url": "https://www.espn.com/soccer/story/_/id/49178425/world-cup-grades-every-eliminated-team-rating-exit-tournament",
+      "source": "espn_summary"
+    },
+    {
+      "headline": "Spain's Lamine Yamal issues World Cup final warning: 'New York we're coming for you'",
+      "description": "Lamine Yamal is looking forward to take New York by storm after helping Spain reach the World Cup final with a 2-0 win against France.",
+      "url": "https://www.espn.com/soccer/story/_/id/49365585/lamine-yamal-sends-world-cup-final-warning-new-york-coming-you",
+      "source": "espn_summary"
+    },
+    {
+      "headline": "Argentina vice president before World Cup semifinal: England are 'invaders'",
+      "description": "England have been described as \"invaders\" and \"usurping pirates\" by Argentina's vice president ahead of the teams' World Cup semifinal clash.",
+      "url": "https://www.espn.com/soccer/story/_/id/49365557/argentina-vice-president-world-cup-semifinal-england-invaders",
+      "source": "espn_summary"
+    },
+    {
+      "headline": "2026 FIFA World Cup match schedule: Fixtures, results, features",
+      "description": "Check out all the fixtures, features and results for the 2026 FIFA World Cup in the United States, Mexico and Canada.",
+      "url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket",
+      "source": "espn_summary"
+    },
+    {
+      "headline": "Why are there hydration breaks at the 2026 World Cup, and why has FIFA been criticised?",
+      "description": "All 104 matches at the 2026 World Cup are stopping for two hydration breaks. Why have they been stipulated by FIFA, and why have they been criticised?",
+      "url": "https://www.espn.com/soccer/story/_/id/48945011/why-there-drinks-breaks-2026-world-cup-fifa-criticised",
+      "source": "espn_summary"
+    }
+  ],
+  "attendance": null,
+  "venue": "Mercedes-Benz Stadium",
+  "raw_officials": []
+}

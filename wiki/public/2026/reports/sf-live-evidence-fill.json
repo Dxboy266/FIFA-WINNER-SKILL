@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-07-15T14:45:26Z",
+  "matches": {
+    "2026-SF-01": {
+      "referee": {
+        "name": "Iván Arcides Barton Cisneros",
+        "source": "espn_summary",
+        "role": "referee"
+      },
+      "odds": {
+        "home_win": 2.6,
+        "draw": 2.9,
+        "away_win": 3.1,
+        "source": "DraftKings",
+        "raw_american": {
+          "home": 160,
+          "draw": 190.0,
+          "away": 210
+        },
+        "over_under": 2.5,
+        "details": "FRA +160",
+        "is_mock": false,
+        "status": "available"
+      },
+      "lineups": [
+        {
+          "team_id": "fra",
+          "status": "confirmed",
+          "starters": [
+            "16 Mike Maignan (G)",
+            "17 William Saliba (CD-L)",
+            "4 Dayot Upamecano (CD-R)",
+            "3 Lucas Digne (LB)",
+            "5 Jules Koundé (RB)",
+            "11 Michael Olise (AM)",
+            "14 Adrien Rabiot (LM)",
+            "8 Aurélien Tchouaméni (RM)",
+            "10 Kylian Mbappé (F)",
+            "12 Bradley Barcola (AM-L)",
+            "7 Ousmane Dembélé (AM-R)"
+          ]
+        },
+        {
+          "team_id": "esp",
+          "status": "confirmed",
+          "starters": [
+            "23 Unai Simón (G)",
+            "14 Aymeric Laporte (CD-L)",
+            "22 Pau Cubarsí (CD-R)",
+            "24 Marc Cucurella (LB)",
+            "12 Pedro Porro (RB)",
+            "10 Dani Olmo (AM)",
+            "8 Fabián Ruiz (LM)",
+            "16 Rodri (RM)",
+            "21 Mikel Oyarzabal (F)",
+            "15 Álex Baena (AM-L)",
+            "19 Lamine Yamal (AM-R)"
+          ]
+        }
+      ],
+      "injuries": "checked_empty"
+    },
+    "2026-SF-02": {
+      "referee": null,
+      "odds": {
+        "home_win": 2.74,
+        "draw": 2.95,
+        "away_win": 3.09,
+        "source": "Pinnacle",
+        "is_mock": false,
+        "status": "available"
+      },
+      "lineups": [
+        {
+          "team_id": "eng",
+          "status": "unavailable",
+          "starters": []
+        },
+        {
+          "team_id": "arg",
+          "status": "unavailable",
+          "starters": []
+        }
+      ],
+      "injuries": "checked_empty"
+    }
+  },
+  "notes": [
+    "SF-01 lineups are confirmed post-match starting XIs from ESPN.",
+    "SF-02 lineups may be empty until squads are published.",
+    "SF-02 referee may still be unassigned in feeds.",
+    "API_FOOTBALL_KEY is empty in .env; ESPN/Odds/Football-Data used instead."
+  ]
+}

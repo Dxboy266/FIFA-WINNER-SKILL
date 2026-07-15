@@ -1,13 +1,14 @@
 {
   "version": 1,
   "edition": "2026",
-  "generated_at": "2026-07-12T14:48:32Z",
+  "generated_at": "2026-07-15T14:45:26Z",
   "mode": "compiled_checked_empty",
-  "status": "complete",
+  "status": "complete_checked_empty",
   "summary": {
     "items": 4,
     "teams_covered": 4,
-    "total_injuries": 0
+    "total_injuries": 0,
+    "note": "empty means no named reports found, not medical clearance"
   },
   "items": [
     {
@@ -15,58 +16,70 @@
       "team_name": "Argentina",
       "injuries": [],
       "suspensions": [],
-      "status": "no_reports",
-      "checked_at": "2026-07-12T14:48:32Z",
-      "window": "open_fixtures"
+      "status": "checked_no_named_absences",
+      "checked_at": "2026-07-15T14:45:26Z",
+      "window": "open_fixtures",
+      "source": "espn_roster_summary",
+      "note": "Checked ESPN roster/summary; no non-active named absences returned."
     },
     {
       "team_id": "eng",
       "team_name": "England",
       "injuries": [],
       "suspensions": [],
-      "status": "no_reports",
-      "checked_at": "2026-07-12T14:48:32Z",
-      "window": "open_fixtures"
-    },
-    {
-      "team_id": "esp",
-      "team_name": "Spain",
-      "injuries": [],
-      "suspensions": [],
-      "status": "no_reports",
-      "checked_at": "2026-07-12T14:48:32Z",
-      "window": "open_fixtures"
+      "status": "checked_no_named_absences",
+      "checked_at": "2026-07-15T14:45:26Z",
+      "window": "open_fixtures",
+      "source": "espn_roster_summary",
+      "note": "Checked ESPN roster/summary; no non-active named absences returned."
     },
     {
       "team_id": "fra",
       "team_name": "France",
       "injuries": [],
       "suspensions": [],
-      "status": "no_reports",
-      "checked_at": "2026-07-12T14:48:32Z",
-      "window": "open_fixtures"
+      "status": "checked_no_named_absences",
+      "checked_at": "2026-07-15T14:45:26Z",
+      "window": "open_fixtures",
+      "source": "espn_roster_summary",
+      "note": "Checked ESPN roster/summary; no non-active named absences returned."
+    },
+    {
+      "team_id": "esp",
+      "team_name": "Spain",
+      "injuries": [],
+      "suspensions": [],
+      "status": "checked_no_named_absences",
+      "checked_at": "2026-07-15T14:45:26Z",
+      "window": "open_fixtures",
+      "source": "espn_roster_summary",
+      "note": "Checked ESPN roster/summary; no non-active named absences returned."
     }
   ],
   "teams": {
     "arg": {
       "injuries": [],
       "suspensions": [],
-      "status": "no_reports"
+      "status": "checked_no_named_absences",
+      "checked_at": "2026-07-15T14:45:26Z"
     },
     "eng": {
       "injuries": [],
       "suspensions": [],
-      "status": "no_reports"
-    },
-    "esp": {
-      "injuries": [],
-      "suspensions": [],
-      "status": "no_reports"
+      "status": "checked_no_named_absences",
+      "checked_at": "2026-07-15T14:45:26Z"
     },
     "fra": {
       "injuries": [],
       "suspensions": [],
-      "status": "no_reports"
+      "status": "checked_no_named_absences",
+      "checked_at": "2026-07-15T14:45:26Z"
+    },
+    "esp": {
+      "injuries": [],
+      "suspensions": [],
+      "status": "checked_no_named_absences",
+      "checked_at": "2026-07-15T14:45:26Z"
     }
   },
   "note": "Injury check recorded as no_reports for open-fixture teams when live injury feed is unavailable."

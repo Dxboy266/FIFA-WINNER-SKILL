@@ -1,67 +1,29 @@
 {
-  "version": 1,
-  "edition": "2026",
-  "date": "2026-07-14",
-  "generated_at": "2026-07-15T14:45:26Z",
-  "mode": "espn_footballdata_oddsapi_fill",
-  "status": "compiled_live_fill",
-  "matches": [
-    {
-      "match_id": "2026-SF-01",
-      "home_team_id": "fra",
-      "away_team_id": "esp",
-      "referee": {
-        "name": "Iván Arcides Barton Cisneros",
-        "source": "espn_summary",
-        "role": "referee"
-      },
-      "odds": {
-        "home_win": 2.6,
-        "draw": 2.9,
-        "away_win": 3.1,
-        "source": "DraftKings",
-        "is_mock": false,
-        "status": "available",
-        "raw_american": {
-          "home": 160,
-          "draw": 190.0,
-          "away": 210
-        },
-        "over_under": 2.5,
-        "details": "FRA +160"
-      },
-      "sentiment": null
-    }
-  ],
-  "injuries": {
-    "edition": "2026",
-    "date": "2026-07-14",
-    "checked_at": "2026-07-15T14:46:53Z",
-    "teams": {
-      "fra": {
-        "injuries": [],
-        "suspensions": [],
-        "status": "checked_no_named_absences",
-        "checked_at": "2026-07-15T14:46:53Z",
-        "source": "espn_roster_summary"
-      },
-      "esp": {
-        "injuries": [],
-        "suspensions": [],
-        "status": "checked_no_named_absences",
-        "checked_at": "2026-07-15T14:46:53Z",
-        "source": "espn_roster_summary"
-      }
-    },
-    "summary": {
-      "total_teams": 2,
-      "teams_with_injuries": 0,
-      "total_injuries": 0,
-      "total_suspensions": 0,
-      "status": "checked_empty"
-    }
+  "event_id": 760514,
+  "match_id": "2026-SF-01",
+  "beijing_date": "2026-07-15",
+  "home_team_id": "fra",
+  "away_team_id": "esp",
+  "referee": {
+    "name": "Iván Arcides Barton Cisneros",
+    "source": "espn_summary",
+    "role": "referee"
   },
-  "suspensions": [],
+  "odds": {
+    "home_win": 2.6,
+    "draw": 2.9,
+    "away_win": 3.1,
+    "source": "DraftKings",
+    "raw_american": {
+      "home": 160,
+      "draw": 190.0,
+      "away": 210
+    },
+    "over_under": 2.5,
+    "details": "FRA +160",
+    "is_mock": false,
+    "status": "available"
+  },
   "probable_lineups": [
     {
       "match_id": "2026-SF-01",
@@ -266,37 +228,56 @@
       "status": "confirmed"
     }
   ],
-  "late_news": [],
-  "source_refs": [
+  "news": [
     {
-      "type": "compiled",
-      "path": "evidence/recent-form.json"
+      "headline": "Should England focus on Messi or Argentina's midfield?",
+      "description": "Should England focus on Messi or Argentina's midfield?",
+      "url": "https://www.espn.com/video/clip/_/id/49366431/should-england-focus-messi-argentina-midfield",
+      "source": "espn_summary"
     },
     {
-      "type": "compiled",
-      "path": "evidence/injury-availability.json"
+      "headline": "World Cup: Grades for every eliminated team as each exits the tournament",
+      "description": "When the World Cup ends, 47 teams will have been eliminated, and we're grading every one on how its run compared with expectations.",
+      "url": "https://www.espn.com/soccer/story/_/id/49178425/world-cup-grades-every-eliminated-team-rating-exit-tournament",
+      "source": "espn_summary"
     },
     {
-      "type": "compiled",
-      "path": "evidence/rest-travel-features.json"
+      "headline": "Spain's Lamine Yamal issues World Cup final warning: 'New York we're coming for you'",
+      "description": "Lamine Yamal is looking forward to take New York by storm after helping Spain reach the World Cup final with a 2-0 win against France.",
+      "url": "https://www.espn.com/soccer/story/_/id/49365585/lamine-yamal-sends-world-cup-final-warning-new-york-coming-you",
+      "source": "espn_summary"
     },
     {
-      "type": "compiled",
-      "path": "evidence/head-to-head.json"
+      "headline": "Argentina vice president before World Cup semifinal: England are 'invaders'",
+      "description": "England have been described as \"invaders\" and \"usurping pirates\" by Argentina's vice president ahead of the teams' World Cup semifinal clash.",
+      "url": "https://www.espn.com/soccer/story/_/id/49365557/argentina-vice-president-world-cup-semifinal-england-invaders",
+      "source": "espn_summary"
     },
     {
-      "type": "compiled",
-      "path": "history/team-wc-history.json"
+      "headline": "2026 FIFA World Cup match schedule: Fixtures, results, features",
+      "description": "Check out all the fixtures, features and results for the 2026 FIFA World Cup in the United States, Mexico and Canada.",
+      "url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket",
+      "source": "espn_summary"
+    },
+    {
+      "headline": "Why are there hydration breaks at the 2026 World Cup, and why has FIFA been criticised?",
+      "description": "All 104 matches at the 2026 World Cup are stopping for two hydration breaks. Why have they been stipulated by FIFA, and why have they been criticised?",
+      "url": "https://www.espn.com/soccer/story/_/id/48945011/why-there-drinks-breaks-2026-world-cup-fifa-criticised",
+      "source": "espn_summary"
     }
   ],
-  "data_sources": [
-    "match-ledger",
-    "squad-depth",
-    "fifa-rankings",
-    "team-wc-history",
-    "compiled-evidence",
-    "espn_summary",
-    "football-data.org"
-  ],
-  "note": "UTC kickoff-date mirror of SF-01 live fill (Beijing local date is 2026-07-15)."
+  "attendance": 70176,
+  "venue": "AT&T Stadium",
+  "raw_officials": [
+    {
+      "fullName": "Iván Arcides Barton Cisneros",
+      "displayName": "Iván Arcides Barton Cisneros",
+      "position": {
+        "name": "Referee",
+        "displayName": "Referee",
+        "id": "1"
+      },
+      "order": 1
+    }
+  ]
 }
