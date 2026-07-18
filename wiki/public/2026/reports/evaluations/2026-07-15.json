@@ -2,20 +2,20 @@
   "version": 1,
   "edition": "2026",
   "date": "2026-07-15",
-  "generated_at": "2026-07-15T21:27:59.308198+08:00",
+  "generated_at": "2026-07-18T14:01:25.852828+08:00",
   "mode": "worldcup-prediction-post-match-evaluation",
   "summary": {
     "evaluations": 2,
-    "evaluated_matches": 1,
-    "blocked_missing_final_score": 1,
-    "result_hits": 0,
+    "evaluated_matches": 2,
+    "blocked_missing_final_score": 0,
+    "result_hits": 1,
     "score_hits": 0,
     "total_goals_hits": 1,
     "confidence_calibration": {
       "medium": {
-        "evaluated_matches": 1,
-        "result_hits": 0,
-        "result_hit_rate": 0.0
+        "evaluated_matches": 2,
+        "result_hits": 1,
+        "result_hit_rate": 0.5
       }
     }
   },
@@ -112,9 +112,93 @@
     },
     {
       "match_id": "2026-SF-02",
-      "status": "blocked_missing_final_score",
+      "status": "evaluated",
+      "predicted_result": "away_win",
       "prediction_confidence": "medium",
-      "prediction_kept_locked": true
+      "actual_result": "away_win",
+      "actual_score": {
+        "home": 1,
+        "away": 2
+      },
+      "actual_total_goals": 3,
+      "result_hit": true,
+      "score_hit": false,
+      "total_goals_hit": false,
+      "prediction_kept_locked": true,
+      "actual_regular_time_score": {
+        "home": 1,
+        "away": 2
+      },
+      "actual_regular_time_result": "away_win",
+      "regular_time_result_hit": true,
+      "regular_time_score_hit": false,
+      "actual_knockout_result": {
+        "regular_time": {
+          "home": 1,
+          "away": 2,
+          "result": "away_win"
+        },
+        "extra_time": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "result": ""
+        },
+        "penalties": {
+          "played": false,
+          "home": null,
+          "away": null,
+          "winner": ""
+        },
+        "advance": {
+          "winner": "away"
+        },
+        "full_time": {
+          "home": 1,
+          "away": 2,
+          "result": "away_win"
+        }
+      },
+      "knockout_prediction": {
+        "is_knockout": true,
+        "phase": "semi_final",
+        "regular_time": {
+          "result": "away_win",
+          "score": {
+            "home": 0,
+            "away": 2
+          }
+        },
+        "extra_time": {
+          "played": false,
+          "result": "",
+          "score": {
+            "home": null,
+            "away": null
+          },
+          "period_score": {
+            "home": null,
+            "away": null
+          }
+        },
+        "penalties": {
+          "played": false,
+          "winner": "",
+          "winner_name": "",
+          "score": {
+            "home": null,
+            "away": null
+          }
+        },
+        "advance": {
+          "winner": "away",
+          "winner_result": "away_advance",
+          "winner_name": "Argentina"
+        }
+      },
+      "extra_time_hit": true,
+      "penalties_hit": true,
+      "advance_hit": true
     }
   ],
   "safety_invariants": [

@@ -8,7 +8,12 @@
   "matches": [
     {
       "match_id": "2026-SF-02",
-      "referee": null,
+      "referee": {
+        "name": "Ismail Elfath",
+        "source": "football-data.org",
+        "role": "referee",
+        "nationality": "United States"
+      },
       "odds": {
         "home_win": 2.74,
         "draw": 2.95,

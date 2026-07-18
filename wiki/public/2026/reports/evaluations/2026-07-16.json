@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "edition": "2026",
+  "date": "2026-07-16",
+  "generated_at": "2026-07-18T14:00:42.917690+08:00",
+  "mode": "worldcup-prediction-post-match-evaluation",
+  "summary": {
+    "evaluations": 0,
+    "evaluated_matches": 0,
+    "blocked_missing_final_score": 0,
+    "result_hits": 0,
+    "score_hits": 0,
+    "total_goals_hits": 0,
+    "confidence_calibration": {}
+  },
+  "evaluations": [],
+  "safety_invariants": [
+    "post_match_evaluation_does_not_rewrite_locked_pre_match_predictions"
+  ]
+}
